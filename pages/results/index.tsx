@@ -5,7 +5,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>Results</h1>
-      <a href='/resources'>Helper1</a>
+      <a href='/resources/1'>Helper1</a>
       <br />
       <br />
       <a href='/resources'>Helper2</a>

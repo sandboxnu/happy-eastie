@@ -10,7 +10,6 @@ import { doc, getFirestore, setDoc } from "firebase/firestore"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
 const firebaseConfig = {
     apiKey: "AIzaSyCmdJmtmltlGNL9_OiwefAn2VmhLbtpwAg",
     authDomain: "happy-eastie.firebaseapp.com",
@@ -22,15 +21,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
-
+const db = getFirestore()
 const analytics = getAnalytics(app);
 
-const db = getFirestore()
 
-//Example
-//Updates or adds a cool bean to Firestore with the given name.
+// Example
+// Updates or adds a cool bean to Firestore with the given name.
 export async function setCoolBean(name: string) {
     await setDoc(doc(db, "beans"), { name })
 }

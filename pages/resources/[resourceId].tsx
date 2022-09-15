@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>Resource Index {resourceId}</h1>
-      <a href='/'>Back to Home</a>
+      <a href='/results'>Back to Results page</a>
     </div>
   )
 }

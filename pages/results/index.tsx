@@ -8,13 +8,13 @@ const Home: NextPage = () => {
       <a href='/resources/1'>Helper1</a>
       <br />
       <br />
-      <a href='/resources'>Helper2</a>
+      <a href='/resources/2'>Helper2</a>
       <br />
       <br />
-      <a href='/resources'>Helper3</a>
+      <a href='/resources/3'>Helper3</a>
       <br />
       <br />
-      <a href='/resources'>Helper4</a>
+      <a href='/resources/4'>Helper4</a>
       <br />
       <br />
     </div>

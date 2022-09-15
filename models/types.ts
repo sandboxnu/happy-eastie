@@ -5,6 +5,17 @@ export interface User {
   role: Role;
 }
 
+// TODO: build out these types
+export interface FormResponse {
+
+}
+
+export interface FormQuestion {
+    id: number;
+    question: string;
+    description?: string;
+}
+
 export type UID = string;
 
 export interface Event {

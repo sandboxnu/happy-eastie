@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type {Service} from '../../../models/types'
-import {getCollectionData, WhereQuery} from '../../../firebase/firebaseInterface'
+import FirebaseInteractor from '../../../firebase/firebaseInteractor'
+import { WhereQuery } from '../../../firebase/firebaseInteractor'
 import { FirestoreDataConverter, QueryDocumentSnapshot } from 'firebase/firestore'
  
 const serviceConverter : FirestoreDataConverter<Service> = {
@@ -17,6 +18,7 @@ export default async function handler(
 }
 
 async function getServices(queryParams: WhereQuery) : Promise<Service[]> {
-    const serviceList : Service[] = await getCollectionData('services', serviceConverter, queryParams)
+    const firebaseInteractor = new FirebaseInteractor() 
+    const serviceList : Service[] = await firebaseInteractor.getCollectionData('services', serviceConverter, queryParams)
     return serviceList;
 }

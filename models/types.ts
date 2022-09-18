@@ -33,15 +33,16 @@ export interface FormQuestion {
 
 export type UID = string;
 
+// TODO: update this type once Firestore is updated
 export interface Event {
     name: string;
-    location: Address;
     description: string;
-    startTime: Date;
-    endTime: Date;
-    attendees: UID[];
+    summary: string;
+    // location: Address;
+    // startTime: Date;
+    // endTime: Date;
+    // attendees: UID[];
 }
-
 export interface Service extends DocumentData {
   name: string;
   description: string;

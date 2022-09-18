@@ -1,5 +1,5 @@
 import { collection, getDocs } from "firebase/firestore"; 
-import {db} from "./firebaseInteractor"
+import { db } from "./firebaseInteractor"
 
 const getCollectionData = async (collectionName : string) => {
     const querySnapshot = await getDocs(collection(db, collectionName));

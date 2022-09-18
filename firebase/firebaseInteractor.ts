@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { collection, doc, DocumentData, getDoc, getDocs, getFirestore, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signOut } from "firebase/auth";
 import { Role } from "../constants/role";
-import { UID, User } from "../models/types";
+import { UID, User, Event } from "../models/types";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -26,7 +26,6 @@ const auth = getAuth(app);
  * including a reference to the firestore, and the current authenticated user.
  * This adds a level of abstraction around Firebase, so that this is the only
  * object dealing with the server.
- * Stolen from Flow.
  */
  export default class FirebaseInteractor {
     db = db;
@@ -49,9 +48,11 @@ const auth = getAuth(app);
         sendEmailVerification(userAuth.user);
         const userDoc = doc(this.db, "users", userAuth.user.uid);
 
+        // TODO: set role of user (user or admin) here
         await setDoc(userDoc, {
-            email: email,
             role: Role.USER,
+            firstName: "",
+            email: email,
         });
     }
 
@@ -77,8 +78,14 @@ const auth = getAuth(app);
           }
     
           return {
-            email: user.email!,
             role: (docData.role as Role) ?? Role.USER,
+            firstName: docData.firstName,
+            lastName: docData.lastName,
+            email: docData.email,
+            address: docData.address,
+            birthday: docData.birthday,
+            age: docData.age,
+            income: docData.income
           };
         }
     
@@ -91,4 +98,28 @@ const auth = getAuth(app);
     async logout() {
         await signOut(this.auth);
     }
+
+    // TODO: finish this function to get all events
+    /**
+     * Gets the list of all events currently in the Firestore database
+     */
+    async getEventList(): Promise<Event[]> {
+
+      const allEvents = await getDocs(collection(this.db, "rounds"));
+      const eventsInDB: Event[] = [];
+  
+      allEvents.docs.forEach(
+        async (roundDocSnapShot: QueryDocumentSnapshot<DocumentData>) => {
+          eventsInDB.push({
+            name: roundDocSnapShot.name,
+            description: roundDocSnapShot.description,
+            summary: roundDocSnapShot.summary
+          });
+        }
+      );
+  
+      return eventsInDB;
+
+    }
+
 }

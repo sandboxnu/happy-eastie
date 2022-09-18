@@ -1,16 +1,11 @@
-// Import the functions you need from the SDKs you need
-
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { doc, getFirestore, setDoc } from "firebase/firestore"
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signOut } from "firebase/auth";
+import { Role } from "../constants/role";
+import { UID, User } from "../models/types";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
 const firebaseConfig = {
     apiKey: "AIzaSyCmdJmtmltlGNL9_OiwefAn2VmhLbtpwAg",
     authDomain: "happy-eastie.firebaseapp.com",
@@ -22,15 +17,78 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+const auth = getAuth(app);
 
-const analytics = getAnalytics(app);
+/**
+ * A class to interact with Firebase. This class stores the current state,
+ * including a reference to the firestore, and the current authenticated user.
+ * This adds a level of abstraction around Firebase, so that this is the only
+ * object dealing with the server.
+ * Stolen from Flow.
+ */
+ export default class FirebaseInteractor {
+    db = db;
+    auth = auth;
 
-export const db = getFirestore(app)
+    /**
+     * Created an account for a user and stores them in the database
+     */
+    async createAccount(email: string, password: string) {
+        const userAuth = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-//Example
-//Updates or adds a cool bean to Firestore with the given name.
-export async function setCoolBean(name: string) {
-    await setDoc(doc(db, "beans"), { name })
+        if (userAuth.user?.uid == null) {
+            throw new Error("No actual user");
+        }
+
+        sendEmailVerification(userAuth.user);
+        const userDoc = doc(this.db, "users", userAuth.user.uid);
+
+        await setDoc(userDoc, {
+            email: email,
+            role: Role.USER,
+        });
+    }
+
+    /**
+     * Returns the User that is associated with the user id passed in
+     */
+    async getUserById(userId: UID): Promise<User> {
+        return (await getDoc(doc(this.db, "users", userId))).data() as User;
+    }
+
+    /**
+     * Returns the currently-authenticated user and throws an error
+     * if no user is found
+     */
+    async getUser(): Promise<User> {
+        const user = this.auth.currentUser;
+    
+        if (user !== null) {
+          const docData = (await getDoc(doc(this.db, "users", user.uid))).data();
+    
+          if (docData === undefined) {
+            throw new Error("No data found");
+          }
+    
+          return {
+            email: user.email!,
+            role: (docData.role as Role) ?? Role.USER,
+          };
+        }
+    
+        throw new Error("No user found");
+      }
+
+    /**
+     * Logs out the current authenticated user
+     */
+    async logout() {
+        await signOut(this.auth);
+    }
 }

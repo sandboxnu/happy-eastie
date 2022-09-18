@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>Results</h1>
-      <div>{resources.map(resource => <h1 key={resource['name']}>{resource['name']}</h1>)}</div>
+      <div>{resources.map(resource => <div key={resource['name']}><Link href={`resources/${resource['name']}`} >{resource['name']}</Link><br /></div>)}</div>
       <Link href='/quiz'>Back to Quiz</Link>
     </div>
   )

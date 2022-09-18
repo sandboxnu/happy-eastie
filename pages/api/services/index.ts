@@ -13,7 +13,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Service[]>
 ) {
-  const serviceListData = await getServices({field: "incomeLevel", comparison: ">=", value: 0})
+  const incomeLevel = req.query['incomeLevel'] ?? 1000000
+  const serviceListData = await getServices({field: "incomeLevel", comparison: "<=", value: incomeLevel})
   res.status(200).json(serviceListData)
 }
 

@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import { useState } from 'react'
 import styles from '../../styles/Home.module.css'
 
 const Home: NextPage = () => {
@@ -13,7 +14,7 @@ const Home: NextPage = () => {
         <label>Annual Income:</label>
         <br />
         <br />
-        <input type="text" defaultValue="$" />
+        <input type="text" defaultValue="$"/>
         <button type="submit">Submit</button>
       </form>
     </div>

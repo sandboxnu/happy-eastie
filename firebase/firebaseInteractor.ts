@@ -27,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 
 const analytics = getAnalytics(app);
 
-const db = getFirestore()
+export const db = getFirestore(app)
 
 //Example
 //Updates or adds a cool bean to Firestore with the given name.

@@ -1,6 +1,9 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
+import {db} from '../../firebase/firebaseInteractor'
+import { collection, getDocs } from "firebase/firestore"; 
+import { useEffect } from 'react';
 
 const Home: NextPage = () => {
   return (

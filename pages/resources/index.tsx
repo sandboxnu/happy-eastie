@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import styles from '../../styles/Home.module.css'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-      <h1>Generic Resources</h1>
-      <a href='/'>Back to Home</a>
+      <h1>List of Resources Page</h1>
+      <Link href='/'>Back to Home</Link>
     </div>
   )
 }

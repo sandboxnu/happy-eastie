@@ -1,11 +1,12 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>Quiz Page</h1>
-      <a href='/'>Back to Home</a>
+      <Link href='/'>Back to Home</Link>
       <br />
       <br />
       <form action="/results" method="post">

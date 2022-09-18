@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import styles from '../../styles/Home.module.css'
 import { useRouter } from 'next/router'
+import Link from 'next/link';
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -9,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>Resource Index {resourceId}</h1>
-      <a href='/results'>Back to Results page</a>
+      <Link href='/results'>Back to Results page</Link>
     </div>
   )
 }

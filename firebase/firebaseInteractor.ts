@@ -70,15 +70,21 @@ const auth = getAuth(app);
         const user = this.auth.currentUser;
     
         if (user !== null) {
-          const docData = (await getDoc(doc(this.db, "users", user.uid))).data();
+          const userDocData = (await getDoc(doc(this.db, "users", user.uid))).data();
     
-          if (docData === undefined) {
+          if (userDocData === undefined) {
             throw new Error("No data found");
           }
     
           return {
             email: user.email!,
-            role: (docData.role as Role) ?? Role.USER,
+            role: (userDocData.role as Role) ?? Role.USER,
+            firstName: userDocData['firstName'],
+            lastName: userDocData['lastName'],
+            address: userDocData['address'],
+            birthday: userDocData['birthday'],
+            age: userDocData['age'],
+            income: userDocData['income']
           };
         }
     

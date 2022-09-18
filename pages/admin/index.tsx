@@ -12,6 +12,7 @@ const Home: NextPage = () => {
         setCommunityEvent(event.target.value);
     };
 
+    // TODO: need to actually send the updated list of events to Firestore
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (communityEvent !== "") {

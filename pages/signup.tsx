@@ -8,7 +8,9 @@ const Home: NextPage = () => {
       <ul className={styles.formlist}>
         <li>
           <img
-            src={"https://www.bu.edu/files/2012/07/feat-crop-East_Boston-1600x1200.jpg"}
+            src={
+              "https://upload.wikimedia.org/wikipedia/commons/d/d4/2007_OrientHeights_Boston_419566537.jpg"
+            }
             height={300}
           />
         </li>
@@ -23,10 +25,20 @@ const Home: NextPage = () => {
           </label>
         </li>
         <li className={styles.formlistitem}>
+          <label>
+            Confirm password: <input type="password" name="confirmpassword" />
+          </label>
+        </li>
+        <li>
+          <label>
+            Admin: <input type="checkbox" name="admin" />
+          </label>
+        </li>
+        <li className={styles.formlistitem}>
           <div>
             <input type="submit" value="Submit" id={styles.submitbutton} />
-            <Link href="/signup">
-              <button>Sign up</button>
+            <Link href="/login">
+              <a className={styles.a}>Log in with an existing account</a>
             </Link>
           </div>
         </li>

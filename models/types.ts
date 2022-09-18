@@ -1,3 +1,4 @@
+import { DocumentData } from "firebase/firestore";
 import { Role } from "../constants/role";
 
 export interface User {
@@ -41,7 +42,7 @@ export interface Event {
     attendees: UID[];
 }
 
-export interface Service {
+export interface Service extends DocumentData {
   name: string;
   description: string;
   incomeLevel: number;

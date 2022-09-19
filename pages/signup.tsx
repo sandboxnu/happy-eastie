@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import styles from "../styles/form.module.css";
 
-const Home: NextPage = () => {
+const Signup: NextPage = () => {
   return (
     <form>
       <ul className={styles.formlist}>
@@ -47,4 +47,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Signup;

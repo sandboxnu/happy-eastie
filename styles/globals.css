@@ -1,3 +1,13 @@
+:root {
+  --brand-primary: #219EA4;
+  --primary-text: black;
+  --secondary-text: #7E7C7C;
+  --brand-blue: #22A6DD;
+  --brand-purple: #630DF0;
+  --brand-orange: #F0880D;
+  --brand-green: #55C130;
+}
+
 html,
 body {
   padding: 0;
@@ -6,21 +16,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+a {
+  color: var(--brand-primary);
 }

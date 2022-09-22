@@ -13,12 +13,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Service[]>
 ) {
-  const incomeLevel = req.query['incomeLevel'] ?? 1000000
-  const serviceListData = await getServices({field: "incomeLevel", comparison: "<=", value: incomeLevel})
+  const incomeLevel = req.query['incomeLevel'] ?? 1000
+  const serviceListData = await getServices([{field: "incomeLevel", comparison: "<=", value: incomeLevel},{field: "employed", comparison: "==", value: false}])
   res.status(200).json(serviceListData)
 }
 
-async function getServices(queryParams: WhereQuery) : Promise<Service[]> {
+async function getServices(queryParams: WhereQuery[]) : Promise<Service[]> {
     const firebaseInteractor = new FirebaseInteractor() 
     const serviceList : Service[] = await firebaseInteractor.getCollectionData('services', serviceConverter, queryParams)
     return serviceList;

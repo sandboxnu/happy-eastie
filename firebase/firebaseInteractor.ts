@@ -26,9 +26,10 @@ const db = getFirestore(app);
  export default class FirebaseInteractor {
   db = db;
 
-  async getCollectionData<T extends DocumentData>(collectionName : string, converter: FirestoreDataConverter<T>, queryParams: WhereQuery) : Promise<Array<T>> {
+  async getCollectionData<T extends DocumentData>(collectionName : string, converter: FirestoreDataConverter<T>, queryParams: WhereQuery[]) : Promise<Array<T>> {
     const collectionReference : CollectionReference<T> = collection(this.db, collectionName).withConverter(converter)
-    const queryReference = query(collectionReference, where(queryParams.field, queryParams.comparison, queryParams.value))
+    const queryConstraints = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
+    const queryReference = query(collectionReference, ...queryConstraints)
     const querySnapshot = await getDocs(queryReference);
     const list : Array<T> = []
     querySnapshot.forEach((snapshot : QueryDocumentSnapshot<T>) => list.push(converter.fromFirestore(snapshot)))

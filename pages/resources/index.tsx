@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import styles from '../../styles/Home.module.css'
 import Link from 'next/link'
 
-const Home: NextPage = () => {
+const Resources: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>List of Resources Page</h1>
@@ -11,4 +11,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Resources

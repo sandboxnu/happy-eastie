@@ -1,0 +1,13 @@
+.formlist {
+  list-style: none;
+  max-width: 400px;
+  margin: auto;
+}
+
+.formlistitem {
+  margin: 10px 0;
+}
+
+#submitbutton {
+  margin-right: 8px;
+}

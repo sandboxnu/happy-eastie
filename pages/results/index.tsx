@@ -2,9 +2,8 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 import { useEffect, useState } from 'react';
-import { Service } from '../../models/types';
 
-const Home: NextPage = () => {
+const QuizResults: NextPage = () => {
   const [resources, setResources] = useState([])
   useEffect(() => {
     const fetchResources = async () => {
@@ -16,10 +15,10 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>Results</h1>
-      <div>{resources.map(resource => <h1 key={resource['name']}>{resource['name']}</h1>)}</div>
+      <div>{resources.map(resource => <div key={resource['name']}><Link href={`resources/${resource['name']}`} >{resource['name']}</Link><br /></div>)}</div>
       <Link href='/quiz'>Back to Quiz</Link>
     </div>
   )
 }
 
-export default Home
+export default QuizResults

@@ -1,6 +1,5 @@
-import { DocumentData } from "firebase/firestore";
 import { Role } from "../constants/role";
-
+import { DocumentData } from "firebase/firestore";
 export interface User {
   role: Role;
   firstName: string;
@@ -26,20 +25,22 @@ export interface Address {
 // }
 
 export interface FormQuestion {
-    id: number;
-    question: string;
-    description?: string;
+  id: number;
+  question: string;
+  description?: string;
 }
 
 export type UID = string;
 
+// TODO: update this type once Firestore is updated
 export interface Event {
-    name: string;
-    location: Address;
-    description: string;
-    startTime: Date;
-    endTime: Date;
-    attendees: UID[];
+  name: string;
+  description: string;
+  summary: string;
+  // location: Address;
+  // startTime: Date;
+  // endTime: Date;
+  // attendees: UID[];
 }
 
 export interface Service extends DocumentData {

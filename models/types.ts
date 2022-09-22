@@ -11,6 +11,9 @@ export interface SurveyAnswers {
 }
 
 export interface Service {
+    name: string;
+    description: string;
+    url: string;
     income?: Range[];
     language?: String[];
     citizenship?: Citizenship[];

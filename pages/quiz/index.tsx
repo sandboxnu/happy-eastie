@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 
-const Home: NextPage = () => {
+const Quiz: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>Quiz Page</h1>
@@ -20,4 +20,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Quiz

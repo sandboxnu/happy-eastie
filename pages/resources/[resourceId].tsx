@@ -3,7 +3,7 @@ import styles from '../../styles/Home.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 
-const Home: NextPage = () => {
+const Resource: NextPage = () => {
     const router = useRouter();
     const {resourceId} = router.query;
 
@@ -15,4 +15,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Resource

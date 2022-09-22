@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 import { useEffect, useState } from 'react';
 
-const Home: NextPage = () => {
+const QuizResults: NextPage = () => {
   const [resources, setResources] = useState([])
   useEffect(() => {
     const fetchResources = async () => {
@@ -21,4 +21,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default QuizResults

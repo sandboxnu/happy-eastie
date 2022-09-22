@@ -7,69 +7,42 @@ const Quiz: NextPage = () => {
     <div className={styles.container}>
       <h1>Quiz Page</h1>
       <Link href='/'>Back to Home</Link>
-      <br />
-      <br />
+
       <form action="/results" method="post">
-        <label>Estimated Annual Income:</label>
-        <br />
-        <br />
-        <input type="text" defaultValue="$" />
-        <br />
-        <br />
+        <label>Estimated Annual Income</label>
+        <input type="text" id="income" defaultValue="$" />
+        
         <label>Language</label>
-        <br />
-        <br />
         <select name="languages" id="languages">
           <option></option>
           <option>English</option>
           <option>Spanish</option>
         </select>
-        <br />
-        <br />
+
         <label>Citizenship</label>
-        <br />
-        <br />
-        <input type="text"/>
-        <br />
-        <br />
+        <input type="text" id="citizenship"/>
+
         <label>Parent Age</label>
-        <br />
-        <br />
-        <input type="text"/>
-        <br />
-        <br />
+        <input type="text" id="parentAge"/>
+
         <label>Child Age</label>
-        <br />
-        <br />
-        <input type="text"/>
-        <br />
-        <br />
+        <input type="text" id="childAge"/>
+
         <label>Family Type</label>
-        <br />
-        <br />
-        <input type="text"/>
-        <br />
-        <br />
+        <input type="text" id="familyType"/>
+
         <label>Employment Status</label>
-        <br />
-        <br />
-        <input type="text"/>
-        <br />
-        <br />
+        <input type="text" id="employmentType"/>
+
         <label>Insurance Type</label>
-        <br />
-        <br />
-        <input type="text"/>
-        <br />
-        <br />
+        <input type="text" id="insuranceType"/>
+
         <label>Accesibility Needs</label>
-        <br />
-        <br />
-        <input type="text"/>
-        <br />
-        <br />
+        <input type="text" id="accessibility"/>
+
         <button type="submit">Submit</button>
       </form>
+
     </div>
     
   )

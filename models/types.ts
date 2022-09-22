@@ -1,3 +1,15 @@
+export interface SurveyAnswers {
+    income?: number;
+    language?: string;
+    citizenship?: Citizenship;
+    parentAge?: number;
+    childAge?: number;
+    family?: Family;
+    employmentStatus?: EmploymentStatus;
+    insurance?: Insurance;
+    accessibility?: Accessibility;
+}
+
 export interface Service {
     income?: Range[];
     language?: String[];

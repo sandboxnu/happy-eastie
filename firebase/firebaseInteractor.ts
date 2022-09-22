@@ -1,16 +1,8 @@
-// Import the functions you need from the SDKs you need
-
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { doc, getFirestore, setDoc } from "firebase/firestore"
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
+import { collection, CollectionReference, DocumentData, FirestoreDataConverter, getDocs, getFirestore, query, QueryDocumentSnapshot, where, WhereFilterOp } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
 const firebaseConfig = {
     apiKey: "AIzaSyCmdJmtmltlGNL9_OiwefAn2VmhLbtpwAg",
     authDomain: "happy-eastie.firebaseapp.com",
@@ -22,15 +14,30 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-const analytics = getAnalytics(app);
+/**
+ * A class to interact with Firebase. This class stores the current state,
+ * including a reference to the firestore, and the current authenticated user.
+ * This adds a level of abstraction around Firebase, so that this is the only
+ * object dealing with the server.
+ */
+ export default class FirebaseInteractor {
+  db = db;
 
-const db = getFirestore()
+  async getCollectionData<T extends DocumentData>(collectionName : string, converter: FirestoreDataConverter<T>, queryParams: WhereQuery) : Promise<Array<T>> {
+    const collectionReference : CollectionReference<T> = collection(this.db, collectionName).withConverter(converter)
+    const queryReference = query(collectionReference, where(queryParams.field, queryParams.comparison, queryParams.value))
+    const querySnapshot = await getDocs(queryReference);
+    const list : Array<T> = []
+    querySnapshot.forEach((snapshot : QueryDocumentSnapshot<T>) => list.push(converter.fromFirestore(snapshot)))
+    return list
+  }
+}
 
-//Example
-//Updates or adds a cool bean to Firestore with the given name.
-export async function setCoolBean(name: string) {
-    await setDoc(doc(db, "beans"), { name })
+export type WhereQuery = {
+  field: string,
+  comparison: WhereFilterOp,
+  value: any
 }

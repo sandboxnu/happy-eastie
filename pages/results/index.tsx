@@ -7,7 +7,7 @@ const QuizResults: NextPage = () => {
   const [resources, setResources] = useState([])
   useEffect(() => {
     const fetchResources = async () => {
-      const data  = await (await fetch('/api/services')).json()
+      const data  = await (await fetch('/api/resources')).json()
       setResources(data)
     }
     fetchResources()

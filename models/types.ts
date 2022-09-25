@@ -43,7 +43,7 @@ export interface Event {
   // attendees: UID[];
 }
 
-export interface Service extends DocumentData {
+export interface Resource extends DocumentData {
   id: string;
   name: string;
   description: string;

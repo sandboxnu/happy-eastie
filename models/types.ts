@@ -82,26 +82,38 @@ export type Range = {
   maximum: number;
 };
 
-export type Citizenship =
-  | "Undocumented"
-  | "Non-Immigrant"
-  | "Resident"
-  | "Citizen"
-  | "Eligible Non-Citizen";
+export enum Citizenship {
+   "Undocumented",
+   "Non-Immigrant",
+   "Resident",
+   "Citizen",
+   "Eligible Non-Citizen"
+}
 
-export type Family = "Nuclear" | "Expecting" | "Extended" | "Single-Parent";
+export enum Family {
+   "Nuclear",
+   "Expecting",
+   "Extended",
+   "Single-Parent"
+}
 
-export type EmploymentStatus =
-  | "Currently Working"
-  | "Seeking Employment"
-  | "Studying"
-  | "Stay at Home";
+export enum EmploymentStatus {
+  "Currently Working",
+  "Seeking Employment",
+  "Studying",
+  "Stay at Home"
+}
 
-export type Insurance = "Uninsured" | "Private" | "Public";
+export enum Insurance {
+  "Uninsured",
+  "Private",
+  "Public"
+}
 
-export type Accessibility =
-  | "Speech"
-  | "Vision"
-  | "Hearing"
-  | "Mental"
-  | "Digital Literacy";
+export enum Accessibility {
+  "Speech",
+  "Vision",
+  "Hearing",
+  "Mental",
+  "Digital Literacy"
+}

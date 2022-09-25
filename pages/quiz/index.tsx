@@ -9,6 +9,7 @@ const Quiz: NextPage = () => {
       <Link href='/'>Back to Home</Link>
 
       <form action="/results" method="post">
+        <span className={styles.form}>
         <label>Estimated Annual Income</label>
         <input type="text" id="income" defaultValue="$" />
         
@@ -41,6 +42,7 @@ const Quiz: NextPage = () => {
         <input type="text" id="accessibility"/>
 
         <button type="submit">Submit</button>
+        </span>
       </form>
 
     </div>

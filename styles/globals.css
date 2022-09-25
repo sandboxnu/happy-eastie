@@ -24,9 +24,9 @@ a {
   color: var(--brand-primary);
 }
 
-label, input, select {
+/* label, input, select {
   width: 400px;
   padding: 5px;
   margin: 8px 10px;
   display: block;
-}
+} */

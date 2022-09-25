@@ -6,7 +6,11 @@ import { FirestoreDataConverter, QueryDocumentSnapshot } from 'firebase/firestor
  
 const serviceConverter : FirestoreDataConverter<Service> = {
     toFirestore: (data: Service) => data,
-    fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as Service
+    fromFirestore: (snap: QueryDocumentSnapshot) => {
+      let data = snap.data() as Service
+      data.id = snap.id
+      return data
+    }
 }
 
 export default async function handler(

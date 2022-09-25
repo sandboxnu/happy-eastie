@@ -44,6 +44,7 @@ export interface Event {
 }
 
 export interface Service extends DocumentData {
+  id: string;
   name: string;
   description: string;
   incomeLevel: number;

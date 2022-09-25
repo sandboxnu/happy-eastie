@@ -1,0 +1,27 @@
+Backend:
+
+GET api/resources/:resourceID:
+ - Returns: a specific Resource
+
+GET /api/quizresults
+ - Param: quiz results as JSON
+ - Returns: hashed resources string
+
+GET /api/results
+ - Param: hashed string
+ - Returns: decrypted resources
+
+
+Frontend:
+
+/quiz
+Fill out quiz
+Send quiz responses as query params to API and GET resources hash
+Redirect to /resources?hash
+
+/resources?hash
+Make backend request to “decrypt” hash
+Displays decrypted resources JSON
+
+/resources/:resourceId
+Display a single resource

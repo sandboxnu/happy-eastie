@@ -17,7 +17,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Resource[]>
 ) {
-  const incomeLevel : number = parseInt(req.query['incomeLevel'] as string)
+  const incomeLevel : number = parseInt(req.query['incomeLevel'] ? req.query['incomeLevel'] as string : "1000")
   const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: "<=", value: incomeLevel},{field: "employed", comparison: "==", value: false}])
   res.status(200).json(resourceListData)
 }

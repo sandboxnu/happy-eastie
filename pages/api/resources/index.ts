@@ -1,9 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type {Resource} from '../../../models/types'
+import type { Resource } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { WhereQuery } from '../../../firebase/firebaseInteractor'
 import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot } from 'firebase/firestore'
  
+const CryptoJS = require("crypto-js");
+
 const resourceConverter : FirestoreDataConverter<Resource> = {
     toFirestore: (data: Resource) : DocumentData => data,
     fromFirestore: (snap: QueryDocumentSnapshot) : Resource => {
@@ -13,13 +15,19 @@ const resourceConverter : FirestoreDataConverter<Resource> = {
     }
 }
 
+const encodeResourceList = (resourcesString: string) : string => {
+  const encryptedResources = CryptoJS.AES.encrypt(resourcesString, "Secret Passphrase").toString();
+  console.log(encryptedResources)
+  return encryptedResources
+}
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Resource[]>
+  res: NextApiResponse<string>
 ) {
   const incomeLevel : number = parseInt(req.query['incomeLevel'] ? req.query['incomeLevel'] as string : "1000")
-  const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: "<=", value: incomeLevel},{field: "employed", comparison: "==", value: false}])
-  res.status(200).json(resourceListData)
+  const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: "<=", value: incomeLevel}, {field: "employed", comparison: "==", value: false}])
+  res.status(200).json(encodeResourceList(JSON.stringify(resourceListData)));
 }
 
 async function getResources(queryParams: WhereQuery[]) : Promise<Resource[]> {

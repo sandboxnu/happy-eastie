@@ -19,10 +19,15 @@ const ResourcePage : NextPage<ResourcePropsType> = ({resource} : ResourcePropsTy
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const url = `http://localhost:3000/api/resources/${context.params?.resourceId}`
-  const res = await fetch(url)
+  const res : Response = await fetch(`http://localhost:3000/api/resources/${context.params?.resourceId}`)
   const resource: Resource = await res.json()
   return {props: {resource}}
 }
 
 export default ResourcePage
+
+
+/*https://nextjs.org/docs/basic-features/data-fetching/client-side
+https://swr.vercel.app/docs/getting-started
+https://swr.vercel.app/docs/typescript
+*/

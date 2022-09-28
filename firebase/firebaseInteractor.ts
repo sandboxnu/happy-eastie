@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp } from "firebase/firestore";
+import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signOut } from "firebase/auth";
 import { Role } from "../constants/role";
 import { UID, User, Event } from "../models/types";
@@ -28,7 +28,7 @@ const auth = getAuth(app);
  * object dealing with the server.
  */
 export default class FirebaseInteractor {
-  db = db;
+  db : Firestore = db;
   auth = auth;
 
   
@@ -127,16 +127,16 @@ export default class FirebaseInteractor {
 
   async getCollectionData<T extends DocumentData>(collectionName : string, converter: FirestoreDataConverter<T>, queryParams: WhereQuery[]) : Promise<Array<T>> {
     const collectionReference : CollectionReference<T> = collection(this.db, collectionName).withConverter(converter)
-    const queryConstraints = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
-    const queryReference = query(collectionReference, ...queryConstraints)
-    const querySnapshot = await getDocs(queryReference);
+    const queryConstraints : QueryConstraint[] = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
+    const queryReference : Query<T> = query(collectionReference, ...queryConstraints)
+    const querySnapshot : QuerySnapshot<T> = await getDocs(queryReference);
     const list: Array<T> = []
     querySnapshot.forEach((snapshot: QueryDocumentSnapshot<T>) => list.push(converter.fromFirestore(snapshot)))
     return list
   }
 
   async getDocumentById<T extends DocumentData>(collectionName : string, id: string, converter: FirestoreDataConverter<T>) : Promise<T | undefined> {
-    const docSnap = await getDoc(doc(db, collectionName, id))
+    const docSnap : DocumentSnapshot = await getDoc(doc(db, collectionName, id))
     if (docSnap.exists()) {
       return converter.fromFirestore(docSnap)
     } else {

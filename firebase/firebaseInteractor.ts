@@ -134,6 +134,15 @@ export default class FirebaseInteractor {
     querySnapshot.forEach((snapshot: QueryDocumentSnapshot<T>) => list.push(converter.fromFirestore(snapshot)))
     return list
   }
+
+  async getDocumentById<T extends DocumentData>(collectionName : string, id: string, converter: FirestoreDataConverter<T>) : Promise<T | undefined> {
+    const docSnap = await getDoc(doc(db, collectionName, id))
+    if (docSnap.exists()) {
+      return converter.fromFirestore(docSnap)
+    } else {
+      return undefined
+    }
+  }
 }
 
 export type WhereQuery = {

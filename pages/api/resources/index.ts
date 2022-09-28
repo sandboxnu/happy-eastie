@@ -2,11 +2,11 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import type {Resource} from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { WhereQuery } from '../../../firebase/firebaseInteractor'
-import { FirestoreDataConverter, QueryDocumentSnapshot } from 'firebase/firestore'
+import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot } from 'firebase/firestore'
  
 const resourceConverter : FirestoreDataConverter<Resource> = {
-    toFirestore: (data: Resource) => data,
-    fromFirestore: (snap: QueryDocumentSnapshot) => {
+    toFirestore: (data: Resource) : DocumentData => data,
+    fromFirestore: (snap: QueryDocumentSnapshot) : Resource => {
       let data = snap.data() as Resource
       data.id = snap.id
       return data

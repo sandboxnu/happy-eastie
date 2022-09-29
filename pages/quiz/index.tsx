@@ -32,7 +32,8 @@ const Quiz: NextPage = () => {
   };
 
   const onSubmit = (values:any) => {
-    alert(JSON.stringify(values, null, 2));
+    console.log(values)
+   // alert(JSON.stringify(values, null, 2));
   };
 
   // const productOptions = products.map((product, key) => (
@@ -51,24 +52,24 @@ const Quiz: NextPage = () => {
       <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={async (values, { resetForm }) => {
-        await onSubmit(values);
+      onSubmit={ values =>
+        console.log(values)
         // resetForm();
-      }}>
+      }>
 
       {/* <form> */}
         <span className={styles.form}>
-        <label>Estimated Annual Income</label>
+        <label className={styles.label}>Estimated Annual Income</label>
         <Field type="text" name="income" defaultValue="$"/>
         <ErrorMessage name="income" render={renderError} />
         
-        <label>Language</label>
+        <label className={styles.label}>Language</label>
         <Field as='select' name="languages" id="languages">
           <option>English</option>
           <option>Spanish</option>
         </Field>
 
-        <label>Citizenship</label>
+        <label className={styles.label}>Citizenship</label>
         <Field as='select' name="citizenship" id="citizenship">
           <option></option> 
           { 
@@ -78,13 +79,15 @@ const Quiz: NextPage = () => {
           }
         </Field>
 
-        <label>Parent Age</label>
+        <label className={styles.label}>Parent Age</label>
         <Field name="parentAge"/>
+        <ErrorMessage name="parentAge" render={renderError} />
 
-        <label>Child Age</label>
+        <label className={styles.label}>Child Age</label>
         <Field name="childAge"/>
+        <ErrorMessage name="childAge" render={renderError} />
 
-        <label>Family Type</label>
+        <label className={styles.label}>Family Type</label>
         <Field as='select' name="family" id="family">
           <option></option> 
           { 
@@ -94,7 +97,7 @@ const Quiz: NextPage = () => {
           }
         </Field>
 
-        <label>Employment Status</label>
+        <label className={styles.label}>Employment Status</label>
         <Field as='select' name="work" id="work">
           <option></option> 
           { 
@@ -104,7 +107,7 @@ const Quiz: NextPage = () => {
           }
         </Field>
 
-        <label>Insurance Type</label>
+        <label className={styles.label}>Insurance Type</label>
         <Field as='select' name="insurance" id="insurance">
           <option></option> 
           { 
@@ -114,7 +117,7 @@ const Quiz: NextPage = () => {
           }
         </Field>
 
-        <label>Accesibility Needs</label>
+        <label className={styles.label}>Accesibility Needs</label>
         <Field as='select' name="accessibility" id="accessibility">
           <option></option> 
           { 
@@ -124,7 +127,7 @@ const Quiz: NextPage = () => {
           }
         </Field>
 
-        <button type="submit" onClick={onSubmit}>Submit</button>
+        <button className={styles.submit} type="submit">Submit</button>
         </span>
       {/* </form> */}
 

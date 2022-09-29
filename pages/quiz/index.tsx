@@ -48,7 +48,7 @@ const Quiz: NextPage = () => {
       <Link href='/'>Back to Home</Link>
       <br />
       <br />
-      <form onSubmit={handleSubmit}>
+      <form action='/resources' method="get">
         <label>
           Annual Income: <input type="text" name="income" defaultValue="$" />
         </label>

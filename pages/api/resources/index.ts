@@ -15,11 +15,11 @@ const resourceConverter : FirestoreDataConverter<Resource> = {
     }
 }
 
-const encodeResourceList = (resourcesString: string) : string => {
-  const encryptedResources = CryptoJS.AES.encrypt(resourcesString, "Secret Passphrase").toString();
-  console.log(encryptedResources)
-  return encryptedResources
-}
+// const encodeResourceList = (resourcesString: string) : string => {
+//   const encryptedResources = CryptoJS.AES.encrypt(resourcesString, "Secret Passphrase").toString();
+//   console.log(encryptedResources)
+//   return encryptedResources
+// }
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,7 +27,7 @@ export default async function handler(
 ) {
   const incomeLevel : number = parseInt(req.query['incomeLevel'] ? req.query['incomeLevel'] as string : "1000")
   const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: "<=", value: incomeLevel}, {field: "employed", comparison: "==", value: false}])
-  res.status(200).json(encodeResourceList(JSON.stringify(resourceListData)));
+  res.status(200).json(JSON.stringify(resourceListData.map(r => r.id)));
 }
 
 async function getResources(queryParams: WhereQuery[]) : Promise<Resource[]> {

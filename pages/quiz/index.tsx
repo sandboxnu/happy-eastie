@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
-import { Accessibility, Citizenship, EmploymentStatus, Family, Insurance } from '../../models/types'
+import { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, SurveyAnswers } from '../../models/types'
 import * as Yup from 'yup'
+import { Formik, Form, Field, ErrorMessage } from "formik";
+
 
 const Quiz: NextPage = () => {
   const validationSchema = Yup.object({
@@ -17,82 +19,116 @@ const Quiz: NextPage = () => {
     accessibility: Yup.boolean().default(false),
   });
 
+  const initialValues = {
+    income: "",
+    language: "",
+    citizenship: "",
+    parentAge: "",
+    childAge: "",
+    family: new Date(),
+    employmentStatus: false,
+    insurance: "",
+    accessibility: ""
+  };
+
+  const onSubmit = (values:any) => {
+    alert(JSON.stringify(values, null, 2));
+  };
+
+  // const productOptions = products.map((product, key) => (
+  //   <option value={product} key={key}>
+  //     {product}
+  //   </option>
+  // ));
+
+  const renderError = (message: string) => <p className="help is-danger">{message}</p>;
+
   return (
     <div className={styles.container}>
       <h1>Quiz Page</h1>
       <Link href='/'>Back to Home</Link>
 
-      <form action="/results" method="post">
+      <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={async (values, { resetForm }) => {
+        await onSubmit(values);
+        // resetForm();
+      }}>
+
+      {/* <form> */}
         <span className={styles.form}>
         <label>Estimated Annual Income</label>
-        <input type="text" id="income" defaultValue="$" />
+        <Field type="text" name="income" defaultValue="$"/>
+        <ErrorMessage name="income" render={renderError} />
         
         <label>Language</label>
-        <select name="languages" id="languages">
+        <Field as='select' name="languages" id="languages">
           <option>English</option>
           <option>Spanish</option>
-        </select>
+        </Field>
 
         <label>Citizenship</label>
-        <select name="citizenship" id="citizenship">
+        <Field as='select' name="citizenship" id="citizenship">
           <option></option> 
           { 
           Object.keys(Citizenship)
                 .filter((elt: any) => !isNaN(Number(Citizenship[elt])))
                 .map(element => <option key={element}>{element}</option>)
           }
-        </select>
+        </Field>
 
         <label>Parent Age</label>
-        <input type="text" id="parentAge"/>
+        <Field name="parentAge"/>
 
         <label>Child Age</label>
-        <input type="text" id="childAge"/>
+        <Field name="childAge"/>
 
         <label>Family Type</label>
-        <select name="family" id="family">
+        <Field as='select' name="family" id="family">
           <option></option> 
           { 
           Object.keys(Family)
                 .filter((elt: any) => !isNaN(Number(Family[elt])))
                 .map(element => <option key={element}>{element}</option>)
           }
-        </select>
+        </Field>
 
         <label>Employment Status</label>
-        <select name="work" id="work">
+        <Field as='select' name="work" id="work">
           <option></option> 
           { 
           Object.keys(EmploymentStatus)
                 .filter((elt: any) => !isNaN(Number(EmploymentStatus[elt])))
                 .map(element => <option key={element}>{element}</option>)
           }
-        </select>
+        </Field>
 
         <label>Insurance Type</label>
-        <select name="insurance" id="insurance">
+        <Field as='select' name="insurance" id="insurance">
           <option></option> 
           { 
           Object.keys(Insurance)
                 .filter((elt: any) => !isNaN(Number(Insurance[elt])))
                 .map(element => <option key={element}>{element}</option>)
           }
-        </select>
+        </Field>
 
         <label>Accesibility Needs</label>
-        <select name="accessibility" id="accessibility">
+        <Field as='select' name="accessibility" id="accessibility">
           <option></option> 
           { 
           Object.keys(Accessibility)
                 .filter((elt: any) => !isNaN(Number(Accessibility[elt])))
                 .map(element => <option key={element}>{element}</option>)
           }
-        </select>
+        </Field>
 
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={onSubmit}>Submit</button>
         </span>
-      </form>
+      {/* </form> */}
 
+    </Formik>
     </div>
     
   )

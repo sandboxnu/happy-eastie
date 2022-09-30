@@ -143,6 +143,16 @@ export default class FirebaseInteractor {
       return undefined
     }
   }
+
+  async getCollectionIds(collectionName : string, queryParams: WhereQuery[]) : Promise<Array<string>> {
+    const collectionReference : CollectionReference<DocumentData> = collection(this.db, collectionName)
+    const queryConstraints : QueryConstraint[] = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
+    const queryReference : Query = query(collectionReference, ...queryConstraints)
+    const querySnapshot : QuerySnapshot = await getDocs(queryReference);
+    const list: Array<string> = []
+    querySnapshot.forEach((snapshot: QueryDocumentSnapshot) => list.push(snapshot.id))
+    return list
+  }
 }
 
 export type WhereQuery = {

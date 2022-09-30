@@ -12,16 +12,13 @@ const Quiz: NextPage = () => {
     e.preventDefault();
 
     const target = e.target as typeof e.target & {
-      income: { value: number },
-      employed: { value: boolean }
+      incomeLevel: { value: number },
     }
 
-    const income = target.income.value;
-    const employed = target.employed.value;
+    const incomeLevel = target.incomeLevel.value;
 
     const data = {
-      income: income,
-      employed: employed
+      incomeLevel,
     }
 
     const JSONdata = JSON.stringify(data)
@@ -38,8 +35,9 @@ const Quiz: NextPage = () => {
 
     const response = await fetch(endpoint, options);
 
-    const result = await response.json();
-    router.push(`/resources?id=${result}`)
+    const result : string[] = await response.json();
+    const queryString = result.join(",")
+    router.push(`/resources?ids=${queryString}`)
   }
 
   return (
@@ -48,14 +46,9 @@ const Quiz: NextPage = () => {
       <Link href='/'>Back to Home</Link>
       <br />
       <br />
-      <form action='/resources' method="get">
+      <form onSubmit={handleSubmit}>
         <label>
-          Annual Income: <input type="text" name="income" defaultValue="$" />
-        </label>
-        <br />
-        <br />
-        <label>
-          Employed?: <input type="checkbox" name="employed" defaultValue="%" />
+          Annual Income: <input type="text" name="incomeLevel" defaultValue="$" />
         </label>
         <br />
         <br />

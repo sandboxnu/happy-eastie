@@ -3,8 +3,6 @@ import type { Resource } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { WhereQuery } from '../../../firebase/firebaseInteractor'
 import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot } from 'firebase/firestore'
- 
-const CryptoJS = require("crypto-js");
 
 const resourceConverter : FirestoreDataConverter<Resource> = {
     toFirestore: (data: Resource) : DocumentData => data,
@@ -23,11 +21,20 @@ const resourceConverter : FirestoreDataConverter<Resource> = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<string>
+  res: NextApiResponse<any>
 ) {
-  const incomeLevel : number = parseInt(req.query['incomeLevel'] ? req.query['incomeLevel'] as string : "1000")
-  const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: "<=", value: incomeLevel}, {field: "employed", comparison: "==", value: false}])
-  res.status(200).json(JSON.stringify(resourceListData.map(r => r.id)));
+  if (req.method === 'GET') {
+    const idList : string[] = req.query['ids'] as string[]
+    const allResources : Resource[] = await getResources([])
+    const resources : Resource[] = allResources.filter((resource: Resource) => idList.includes(resource.id))
+    res.status(200).json(resources)
+  } else if (req.method === 'POST') {
+    const incomeLevel : number = parseInt(req.body['incomeLevel'] ? req.body['incomeLevel'] as string : "1000000")
+    const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: "<=", value: incomeLevel}])
+    res.status(200).json(resourceListData.map((resource : Resource) => resource.id));
+  } else {
+    res.status(405).json({error: "Unsupported operation"})
+  }
 }
 
 async function getResources(queryParams: WhereQuery[]) : Promise<Resource[]> {

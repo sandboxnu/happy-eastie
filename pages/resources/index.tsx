@@ -17,7 +17,7 @@ const Resources: NextPage = () => {
       }
     }
     fetchResources()
-  }, [])
+  })
   return (
     <div className={styles.container}>
       <h1>Results</h1>

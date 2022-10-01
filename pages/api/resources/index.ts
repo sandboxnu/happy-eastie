@@ -3,6 +3,7 @@ import type { Resource } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { WhereQuery } from '../../../firebase/firebaseInteractor'
 import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot } from 'firebase/firestore'
+import {AES, enc} from 'crypto-js'
 
 const resourceConverter : FirestoreDataConverter<Resource> = {
     toFirestore: (data: Resource) : DocumentData => data,
@@ -13,28 +14,14 @@ const resourceConverter : FirestoreDataConverter<Resource> = {
     }
 }
 
-// const encodeResourceList = (resourcesString: string) : string => {
-//   const encryptedResources = CryptoJS.AES.encrypt(resourcesString, "Secret Passphrase").toString();
-//   console.log(encryptedResources)
-//   return encryptedResources
-// }
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  if (req.method === 'GET') {
-    const idList : string[] = req.query['ids'] as string[]
-    const allResources : Resource[] = await getResources([])
-    const resources : Resource[] = allResources.filter((resource: Resource) => idList.includes(resource.id))
-    res.status(200).json(resources)
-  } else if (req.method === 'POST') {
-    const incomeLevel : number = parseInt(req.body['incomeLevel'] ? req.body['incomeLevel'] as string : "1000000")
-    const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: "<=", value: incomeLevel}])
-    res.status(200).json(resourceListData.map((resource : Resource) => resource.id));
-  } else {
-    res.status(405).json({error: "Unsupported operation"})
-  }
+  const encyrptedFormData : string = req.body['data'] as string
+  const formData = JSON.parse(AES.decrypt(encyrptedFormData, "Secret Passphrase").toString(enc.Utf8));
+  const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: "<=", value: parseInt(formData["incomeLevel"])}])
+  res.status(200).json(resourceListData)
 }
 
 async function getResources(queryParams: WhereQuery[]) : Promise<Resource[]> {

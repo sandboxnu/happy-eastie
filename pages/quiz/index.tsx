@@ -1,16 +1,20 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from '../../styles/Home.module.css'
+import {AES} from 'crypto-js'
+import { AppContext } from '../../context/context'
 
 const Quiz: NextPage = () => {
+
+  const quizState = useContext(AppContext)
 
   const router = useRouter();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-
+    
     const target = e.target as typeof e.target & {
       incomeLevel: { value: number },
     }
@@ -21,23 +25,10 @@ const Quiz: NextPage = () => {
       incomeLevel,
     }
 
-    const JSONdata = JSON.stringify(data)
-
-    const endpoint = '/api/resources'
-
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSONdata,
-    }
-
-    const response = await fetch(endpoint, options);
-
-    const result : string[] = await response.json();
-    const queryString = result.join(",")
-    router.push(`/resources?ids=${queryString}`)
+    const encrypted = AES.encrypt(JSON.stringify(data), "Secret Passphrase")
+    quizState.changeHash(encrypted.toString())
+    router.push(`/resources`)
+    
   }
 
   return (
@@ -48,7 +39,7 @@ const Quiz: NextPage = () => {
       <br />
       <form onSubmit={handleSubmit}>
         <label>
-          Annual Income: <input type="text" name="incomeLevel" defaultValue="$" />
+          Annual Income: <input type="text" name="incomeLevel" defaultValue="5" />
         </label>
         <br />
         <br />

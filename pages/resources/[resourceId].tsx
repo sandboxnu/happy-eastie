@@ -25,9 +25,3 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 }
 
 export default ResourcePage
-
-
-/*https://nextjs.org/docs/basic-features/data-fetching/client-side
-https://swr.vercel.app/docs/getting-started
-https://swr.vercel.app/docs/typescript
-*/

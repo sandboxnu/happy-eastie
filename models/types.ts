@@ -1,5 +1,8 @@
 import { Role } from "../constants/role";
 import { DocumentData } from "firebase/firestore";
+
+// TODO: these types may not all be accurate - refer to quiz-real branch when finalizing
+
 export interface User {
   role: Role;
   firstName: string;
@@ -8,7 +11,7 @@ export interface User {
   address: Address;
   birthday: Date;
   age: number;
-  income: number;
+  incomeLevel: number;
 }
 
 export interface Address {
@@ -18,11 +21,6 @@ export interface Address {
   state: string;
   zip: number;
 }
-
-// TODO: build out these types if storing all data within User becomes unrealistic
-// export interface FormResponse {
-
-// }
 
 export interface FormQuestion {
   id: number;
@@ -43,8 +41,10 @@ export interface Event {
   // attendees: UID[];
 }
 
-export interface Service extends DocumentData {
+export interface Resource extends DocumentData {
+  id: string;
   name: string;
   description: string;
   incomeLevel: number;
+  employed: boolean
 }

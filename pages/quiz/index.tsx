@@ -15,8 +15,7 @@ const Quiz: NextPage = () => {
   const validationSchema = Yup.object({
     income: Yup.number()
       .positive(errorMessages.incomeError)
-      .typeError(errorMessages.incomeError)
-      .required(),
+      .typeError(errorMessages.incomeError),
     language: Yup.string(),
     citizenship: Yup.string(),
     parentAge: Yup.number()

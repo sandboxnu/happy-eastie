@@ -5,7 +5,7 @@ import { Resource } from '../../models/types';
 
 type ResourcePropsType = InferGetServerSidePropsType<typeof getServerSideProps>
 
-const ResourcePage : NextPage<ResourcePropsType> = ({resource} : ResourcePropsType) => {
+const ResourcePage: NextPage<ResourcePropsType> = ({ resource }: ResourcePropsType) => {
   if (resource.error) {
     return <div><h1>Resource Not Found</h1><Link href='/results'>Back to Results page</Link></div>
   }
@@ -19,9 +19,9 @@ const ResourcePage : NextPage<ResourcePropsType> = ({resource} : ResourcePropsTy
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const res : Response = await fetch(`http://localhost:3000/api/resources/${context.params?.resourceId}`)
+  const res: Response = await fetch(`http://localhost:3000/api/resources/${context.params?.resourceId}`)
   const resource: Resource = await res.json()
-  return {props: {resource}}
+  return { props: { resource } }
 }
 
 export default ResourcePage

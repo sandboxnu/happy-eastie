@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useContext } from 'react'
 import styles from '../../styles/Home.module.css'
-import {AES} from 'crypto-js'
+import { AES } from 'crypto-js'
 import { AppContext } from '../../context/context'
 
 const Quiz: NextPage = () => {
@@ -14,7 +14,7 @@ const Quiz: NextPage = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    
+
     const target = e.target as typeof e.target & {
       incomeLevel: { value: number },
     }
@@ -28,7 +28,7 @@ const Quiz: NextPage = () => {
     const encrypted = AES.encrypt(JSON.stringify(data), "Secret Passphrase")
     quizState.changeHash(encrypted.toString())
     router.push(`/resources`)
-    
+
   }
 
   return (

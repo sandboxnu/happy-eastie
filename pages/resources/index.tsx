@@ -11,9 +11,11 @@ const Resources: NextPage = () => {
   useEffect(() => {
     const fetchResources = async () => {
       if (quizState.hash) {
-        const data  = await (await fetch('/api/resources', {method: 'POST', body: JSON.stringify({data: quizState.hash}),
-        headers: { 'Content-Type': 'application/json'}})).json()
-      setResources(data)
+        const data = await (await fetch('/api/resources', {
+          method: 'POST', body: JSON.stringify({ data: quizState.hash }),
+          headers: { 'Content-Type': 'application/json' }
+        })).json()
+        setResources(data)
       }
     }
     fetchResources()
@@ -21,7 +23,9 @@ const Resources: NextPage = () => {
   return (
     <div className={styles.container}>
       <h1>Results</h1>
-      <div>{resources.map(resource => <div key={resource['id']}><Link href={`resources/${resource['id']}`} >{resource['name']}</Link><br /></div>)}</div>
+      <div>
+        {resources.map(resource => <div key={resource['id']}><Link href={`resources/${resource['id']}`} >{resource['name']}</Link><br /></div>)}
+      </div>
       <Link href='/quiz'>Back to Quiz</Link>
     </div>
   )

@@ -86,7 +86,7 @@ export default class FirebaseInteractor {
         address: docData.address,
         birthday: docData.birthday,
         age: docData.age,
-        income: docData.income
+        incomeLevel: docData.incomeLevel
       };
     }
 

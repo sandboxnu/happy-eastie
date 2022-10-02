@@ -18,8 +18,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const encyrptedFormData : string = req.body['data'] as string
-  const formData = JSON.parse(AES.decrypt(encyrptedFormData, "Secret Passphrase").toString(enc.Utf8));
+  const encryptedFormData : string = req.body['data'] as string
+  const formData = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
   const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: ">=", value: parseInt(formData["incomeLevel"])}])
   res.status(200).json(resourceListData)
 }

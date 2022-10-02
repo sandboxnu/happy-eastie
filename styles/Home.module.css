@@ -21,6 +21,13 @@
   margin-top: 15px;
 }
 
+.errorMessage {
+  color: red;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+
 .main {
   min-height: 100vh;
   padding: 4rem 0;

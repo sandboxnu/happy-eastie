@@ -3,20 +3,34 @@ import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 import { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, SurveyAnswers } from '../../models/types'
 import * as Yup from 'yup'
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+
+const errorMessages = {
+  incomeError: 'Please enter a positive number for income',
+  ageError: 'Please enter a valid age'
+}
 
 
 const Quiz: NextPage = () => {
   const validationSchema = Yup.object({
-    income: Yup.number().positive(),
+    income: Yup.number()
+      .positive(errorMessages.incomeError)
+      .typeError(errorMessages.incomeError)
+      .required(),
     language: Yup.string(),
     citizenship: Yup.string(),
-    parentAge: Yup.number().positive().integer(),
-    childAge: Yup.number().positive().integer(),
+    parentAge: Yup.number()
+      .positive(errorMessages.ageError)
+      .integer(errorMessages.ageError)
+      .typeError(errorMessages.ageError),
+    childAge: Yup.number()
+    .positive(errorMessages.ageError)
+    .integer(errorMessages.ageError)
+    .typeError(errorMessages.ageError),
     family: Yup.string(),
     employmentStatus: Yup.number().min(1).max(10).required(),
-    insuranace: Yup.date().default(() => new Date()),
-    accessibility: Yup.boolean().default(false),
+    insuranace: Yup.string(),
+    accessibility: Yup.string(),
   });
 
   const initialValues = {
@@ -25,24 +39,17 @@ const Quiz: NextPage = () => {
     citizenship: "",
     parentAge: "",
     childAge: "",
-    family: new Date(),
-    employmentStatus: false,
+    family: "",
+    employmentStatus: "",
     insurance: "",
     accessibility: ""
   };
 
-  const onSubmit = (values:any) => {
+  const handleSubmit = (values:any) => {
     console.log(values)
-   // alert(JSON.stringify(values, null, 2));
   };
 
-  // const productOptions = products.map((product, key) => (
-  //   <option value={product} key={key}>
-  //     {product}
-  //   </option>
-  // ));
-
-  const renderError = (message: string) => <p className="help is-danger">{message}</p>;
+  const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
 
   return (
     <div className={styles.container}>
@@ -52,89 +59,87 @@ const Quiz: NextPage = () => {
       <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={ values =>
-        console.log(values)
-        // resetForm();
+      onSubmit={ values => {
+          handleSubmit(values)
+        } 
       }>
 
-      {/* <form> */}
-        <span className={styles.form}>
-        <label className={styles.label}>Estimated Annual Income</label>
-        <Field type="text" name="income" defaultValue="$"/>
-        <ErrorMessage name="income" render={renderError} />
-        
-        <label className={styles.label}>Language</label>
-        <Field as='select' name="languages" id="languages">
-          <option>English</option>
-          <option>Spanish</option>
-        </Field>
+      {/* form */}
+        <Form action='/results'>
+          <span className={styles.form}>
+          <label className={styles.label}>Estimated Annual Income</label>
+          <Field type="text" name="income"/>
+          <ErrorMessage name="income" render={renderError} />
+          
+          <label className={styles.label}>Language</label>
+          <Field as='select' name="languages" id="languages">
+            <option>English</option>
+            <option>Spanish</option>
+          </Field>
 
-        <label className={styles.label}>Citizenship</label>
-        <Field as='select' name="citizenship" id="citizenship">
-          <option></option> 
-          { 
-          Object.keys(Citizenship)
-                .filter((elt: any) => !isNaN(Number(Citizenship[elt])))
-                .map(element => <option key={element}>{element}</option>)
-          }
-        </Field>
+          <label className={styles.label}>Citizenship</label>
+          <Field as='select' name="citizenship" id="citizenship">
+            <option></option> 
+            { 
+            enumValues<Citizenship>(Citizenship)
+            }
+          </Field>
 
-        <label className={styles.label}>Parent Age</label>
-        <Field name="parentAge"/>
-        <ErrorMessage name="parentAge" render={renderError} />
+          <label className={styles.label}>Parent Age</label>
+          <Field name="parentAge"/>
+          <ErrorMessage name="parentAge" render={renderError} />
 
-        <label className={styles.label}>Child Age</label>
-        <Field name="childAge"/>
-        <ErrorMessage name="childAge" render={renderError} />
+          <label className={styles.label}>Child Age</label>
+          <Field name="childAge"/>
+          <ErrorMessage name="childAge" render={renderError} />
 
-        <label className={styles.label}>Family Type</label>
-        <Field as='select' name="family" id="family">
-          <option></option> 
-          { 
-          Object.keys(Family)
-                .filter((elt: any) => !isNaN(Number(Family[elt])))
-                .map(element => <option key={element}>{element}</option>)
-          }
-        </Field>
+          <label className={styles.label}>Family Type</label>
+          <Field as='select' name="family" id="family">
+            <option></option> 
+            { 
+            enumValues<Family>(Family)
+            }
+          </Field>
 
-        <label className={styles.label}>Employment Status</label>
-        <Field as='select' name="work" id="work">
-          <option></option> 
-          { 
-          Object.keys(EmploymentStatus)
-                .filter((elt: any) => !isNaN(Number(EmploymentStatus[elt])))
-                .map(element => <option key={element}>{element}</option>)
-          }
-        </Field>
+          <label className={styles.label}>Employment Status</label>
+          <Field as='select' name="work" id="work">
+            <option></option> 
+            { 
+            enumValues<EmploymentStatus>(EmploymentStatus)
+            }
+          </Field>
 
-        <label className={styles.label}>Insurance Type</label>
-        <Field as='select' name="insurance" id="insurance">
-          <option></option> 
-          { 
-          Object.keys(Insurance)
-                .filter((elt: any) => !isNaN(Number(Insurance[elt])))
-                .map(element => <option key={element}>{element}</option>)
-          }
-        </Field>
+          <label className={styles.label}>Insurance Type</label>
+          <Field as='select' name="insurance" id="insurance">
+            <option></option> 
+            { 
+            enumValues<Insurance>(Insurance)
+            }
+          </Field>
 
-        <label className={styles.label}>Accesibility Needs</label>
-        <Field as='select' name="accessibility" id="accessibility">
-          <option></option> 
-          { 
-          Object.keys(Accessibility)
-                .filter((elt: any) => !isNaN(Number(Accessibility[elt])))
-                .map(element => <option key={element}>{element}</option>)
-          }
-        </Field>
+          <label className={styles.label}>Accesibility Needs</label>
+          <Field as='select' name="accessibility" id="accessibility">
+            <option></option> 
+            { 
+            enumValues<Accessibility>(Accessibility)
+            }
+          </Field>
 
-        <button className={styles.submit} type="submit">Submit</button>
-        </span>
-      {/* </form> */}
+          <button className={styles.submit} type="submit" onClick={handleSubmit}>Submit</button>
+          </span>
+        </Form>
+      {/* form */}
 
     </Formik>
     </div>
     
   )
+}
+
+function enumValues<E>(value: any): any {
+  return Object.keys(value)
+                .filter((elt: any) => !isNaN(Number(value[elt])))
+                .map(element => <option key={element}>{element}</option>)
 }
 
 export default Quiz

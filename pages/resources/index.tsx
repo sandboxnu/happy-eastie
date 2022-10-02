@@ -10,14 +10,14 @@ const Resources: NextPage = () => {
 
   useEffect(() => {
     const fetchResources = async () => {
-      if (quizState.hash) {
-        const data  = await (await fetch('/api/resources', {method: 'POST', body: JSON.stringify({data: quizState.hash}),
+      if (quizState.encryptedQuizResponse) {
+        const data  = await (await fetch('/api/resources', {method: 'POST', body: JSON.stringify({data: quizState.encryptedQuizResponse}),
         headers: { 'Content-Type': 'application/json'}})).json()
       setResources(data)
       }
     }
     fetchResources()
-  }, [quizState.hash])
+  }, [quizState.encryptedQuizResponse])
   return (
     <div className={styles.container}>
       <h1>Results</h1>

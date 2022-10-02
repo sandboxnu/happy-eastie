@@ -37,7 +37,7 @@ const Quiz: NextPage = () => {
       .integer(errorMessages.ageError)
       .typeError(errorMessages.ageError),
     family: Yup.string(),
-    employmentStatus: Yup.number().min(1).max(10).required(),
+    employmentStatus: Yup.number().min(1).max(10),
     insuranace: Yup.string(),
     accessibility: Yup.string(),
   });
@@ -78,13 +78,10 @@ const Quiz: NextPage = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values: any) => {
-          handleSubmit(values)
-        }
-        }>
+        onSubmit={handleSubmit}>
 
         {/* form */}
-        <Form action='/resources'>
+        <Form>
           <span className={styles.form}>
             <label className={styles.label}>Estimated Annual Income</label>
             <Field type="text" name="income" />
@@ -144,7 +141,7 @@ const Quiz: NextPage = () => {
               }
             </Field>
 
-            <button className={styles.submit} type="submit" onClick={handleSubmit}>Submit</button>
+            <button className={styles.submit} type="submit">Submit</button>
           </span>
         </Form>
         {/* form */}

@@ -64,7 +64,7 @@ const Quiz: NextPage = () => {
       }>
 
       {/* form */}
-        <Form action='/results'>
+        <Form action='/resources'>
           <span className={styles.form}>
           <label className={styles.label}>Estimated Annual Income</label>
           <Field type="text" name="income"/>

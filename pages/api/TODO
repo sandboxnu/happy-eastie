@@ -3,25 +3,22 @@ Backend:
 GET api/resources/:resourceID:
  - Returns: a specific Resource
 
-GET /api/quizresults
- - Param: quiz results as JSON
- - Returns: hashed resources string
-
-GET /api/results
- - Param: hashed string
- - Returns: decrypted resources
+POST /api/resources
+ - Body param format:
+   {data: EncryptedQuizResponse}
+ - Returns: a list of resources user is eligible for
 
 
 Frontend:
 
 /quiz
 Fill out quiz
-Send quiz responses as query params to API and GET resources hash
-Redirect to /resources?hash
+Encrypt quiz responses and keep in frontend state
+Redirect to /resources
 
-/resources?hash
-Make backend request to “decrypt” hash
-Displays decrypted resources JSON
+/resources
+Gets list of eligible resources for user based on encrypted quiz responses in frontend state
+Displays resources
 
 /resources/:resourceId
 Display a single resource

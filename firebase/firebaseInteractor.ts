@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp } from "firebase/firestore";
+import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signOut } from "firebase/auth";
 import { Role } from "../constants/role";
 import { UID, User, Event } from "../models/types";
@@ -28,9 +28,10 @@ const auth = getAuth(app);
  * object dealing with the server.
  */
 export default class FirebaseInteractor {
-  db = db;
+  db : Firestore = db;
   auth = auth;
 
+  
   /**
    * Created an account for a user and stores them in the database
    */
@@ -85,7 +86,7 @@ export default class FirebaseInteractor {
         address: docData.address,
         birthday: docData.birthday,
         age: docData.age,
-        income: docData.income
+        incomeLevel: docData.incomeLevel
       };
     }
 
@@ -108,6 +109,7 @@ export default class FirebaseInteractor {
     const allEvents = await getDocs(collection(this.db, "rounds"));
     const eventsInDB: Event[] = [];
 
+    /*
     allEvents.docs.forEach(
       async (roundDocSnapShot: QueryDocumentSnapshot<DocumentData>) => {
         eventsInDB.push({
@@ -117,17 +119,38 @@ export default class FirebaseInteractor {
         });
       }
     );
+    */
 
     return eventsInDB;
 
   }
 
-  async getCollectionData<T extends DocumentData>(collectionName: string, converter: FirestoreDataConverter<T>, queryParams: WhereQuery): Promise<Array<T>> {
-    const collectionReference: CollectionReference<T> = collection(this.db, collectionName).withConverter(converter)
-    const queryReference = query(collectionReference, where(queryParams.field, queryParams.comparison, queryParams.value))
-    const querySnapshot = await getDocs(queryReference);
+  async getCollectionData<T extends DocumentData>(collectionName : string, converter: FirestoreDataConverter<T>, queryParams: WhereQuery[]) : Promise<Array<T>> {
+    const collectionReference : CollectionReference<T> = collection(this.db, collectionName).withConverter(converter)
+    const queryConstraints : QueryConstraint[] = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
+    const queryReference : Query<T> = query(collectionReference, ...queryConstraints)
+    const querySnapshot : QuerySnapshot<T> = await getDocs(queryReference);
     const list: Array<T> = []
     querySnapshot.forEach((snapshot: QueryDocumentSnapshot<T>) => list.push(converter.fromFirestore(snapshot)))
+    return list
+  }
+
+  async getDocumentById<T extends DocumentData>(collectionName : string, id: string, converter: FirestoreDataConverter<T>) : Promise<T | undefined> {
+    const docSnap : DocumentSnapshot = await getDoc(doc(db, collectionName, id))
+    if (docSnap.exists()) {
+      return converter.fromFirestore(docSnap)
+    } else {
+      return undefined
+    }
+  }
+
+  async getCollectionIds(collectionName : string, queryParams: WhereQuery[]) : Promise<Array<string>> {
+    const collectionReference : CollectionReference<DocumentData> = collection(this.db, collectionName)
+    const queryConstraints : QueryConstraint[] = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
+    const queryReference : Query = query(collectionReference, ...queryConstraints)
+    const querySnapshot : QuerySnapshot = await getDocs(queryReference);
+    const list: Array<string> = []
+    querySnapshot.forEach((snapshot: QueryDocumentSnapshot) => list.push(snapshot.id))
     return list
   }
 }

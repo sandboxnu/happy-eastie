@@ -6,11 +6,11 @@ import {AES} from 'crypto-js'
 
 function MyApp({ Component, pageProps }: AppProps) {
   // default is a hashed empty object, which the API will respond to with a list of all resources
-  const [hash, changeHash] = useState(AES.encrypt(JSON.stringify("{}"), "Secret Passphrase").toString())
+  const [encryptedQuizResponse, changeEncryptedQuizResponse] = useState(AES.encrypt(JSON.stringify("{}"), "Secret Passphrase").toString())
 
   return (
   <div>
-    <AppContext.Provider value={{hash, changeHash}}>
+    <AppContext.Provider value={{encryptedQuizResponse, changeEncryptedQuizResponse}}>
       <Component {...pageProps} />
     </AppContext.Provider>
   </div>)

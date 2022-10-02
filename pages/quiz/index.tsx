@@ -26,7 +26,7 @@ const Quiz: NextPage = () => {
     }
 
     const encrypted = AES.encrypt(JSON.stringify(data), "Secret Passphrase")
-    quizState.changeHash(encrypted.toString())
+    quizState.changeEncryptedQuizResponse(encrypted.toString())
     router.push(`/resources`)
     
   }

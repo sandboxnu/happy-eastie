@@ -13,7 +13,7 @@ const ResourcePage : NextPage<ResourcePropsType> = ({resource} : ResourcePropsTy
     <div className={styles.container}>
       <h1>Resource {resource.name}</h1>
       <h2>{resource.description}</h2>
-      <Link href='/results'>Back to Results page</Link>
+      <Link href='/resources'>Back to Results page</Link>
     </div>
   )
 }

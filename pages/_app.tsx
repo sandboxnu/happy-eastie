@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <div>
       <AppContext.Provider value={{ encryptedQuizResponse, changeEncryptedQuizResponse }}>
         <Component {...pageProps} />
-      </AppContext.Provider>
+      </AppContext.Provider>      
     </div>
   )
 

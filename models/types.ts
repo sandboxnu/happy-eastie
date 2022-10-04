@@ -1,5 +1,5 @@
 import { Role } from "../constants/role";
-import { DocumentData } from "firebase/firestore";
+import { DocumentData, GeoPoint, Timestamp } from "firebase/firestore";
 
 // TODO: these types may not all be accurate - refer to quiz-real branch when finalizing
 
@@ -35,9 +35,9 @@ export interface Event {
     name: string;
     description: string;
     summary: string;
-    // location: Address;
-    // startTime: Date;
-    // endTime: Date;
+    location: GeoPoint;
+    start: Timestamp;
+    end: Timestamp;
     // attendees: UID[];
 }
 

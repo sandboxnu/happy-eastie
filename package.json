@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/react": "^1.0.0-beta.10",
     "crypto-js": "^4.1.1",
     "firebase": "^9.10.0",
     "formik": "^2.2.9",

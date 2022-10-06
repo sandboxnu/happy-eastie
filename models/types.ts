@@ -32,7 +32,7 @@ export type UID = string;
 
 // TODO: update this type once Firestore is updated
 export interface Event {
-    id: string;
+    id?: string;
     name: string;
     description: string;
     summary: string;

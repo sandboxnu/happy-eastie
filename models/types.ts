@@ -113,7 +113,9 @@ export enum Family {
     "Nuclear",
     "Expecting",
     "Extended",
-    "Single-Parent"
+    "Single-Parent",
+    "Grandparent",
+    "Foster"
 }
 
 export enum EmploymentStatus {

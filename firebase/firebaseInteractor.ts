@@ -157,6 +157,8 @@ export default class FirebaseInteractor {
   async createEvent(event: Event) {
     // Add a new document in collection "cities"
     const docRef = await addDoc(collection(db, "events"), event);
+    event.id = docRef.id
+    return event
   }
 }
 

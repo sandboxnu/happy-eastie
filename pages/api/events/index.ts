@@ -21,9 +21,10 @@ export default async function handler(
         const eventListData : Event[] = await getEvents([])
         res.status(200).json(eventListData)
     } else if (req.method === 'POST') {
-        const requestBody : Object = req.body['data']
-        await createEvent(requestBody as Event)
-        res.status(201)
+        const requestBody : Object = req.body
+        console.log(requestBody)
+        const newEvent = await createEvent(requestBody as Event)
+        res.status(201).json(newEvent)
     } else {
         res.status(402).json({"error": "unsupported"})
     }
@@ -36,7 +37,8 @@ async function getEvents(queryParams: WhereQuery[]) : Promise<Event[]> {
     return eventList;
 }
 
-async function createEvent(event: Event) {
+async function createEvent(event: Event) : Promise<Event> {
     const firebaseInteractor = new FirebaseInteractor()
-    await firebaseInteractor.createEvent(event)
+    const newEvent = await firebaseInteractor.createEvent(event)
+    return newEvent
 }

@@ -32,6 +32,7 @@ export type UID = string;
 
 // TODO: update this type once Firestore is updated
 export interface Event {
+    id: string;
     name: string;
     description: string;
     summary: string;
@@ -40,12 +41,6 @@ export interface Event {
     end: Timestamp;
     // attendees: UID[];
 }
-
-// export interface Service extends DocumentData {
-//   name: string;
-//   description: string;
-//   incomeLevel: number;
-// }
 
 export interface SurveyAnswers {
     income?: number;

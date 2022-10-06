@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot } from "firebase/firestore";
+import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot, addDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signOut } from "firebase/auth";
 import { Role } from "../constants/role";
 import { UID, User, Event } from "../models/types";
@@ -152,6 +152,11 @@ export default class FirebaseInteractor {
     const list: Array<string> = []
     querySnapshot.forEach((snapshot: QueryDocumentSnapshot) => list.push(snapshot.id))
     return list
+  }
+
+  async createEvent(event: Event) {
+    // Add a new document in collection "cities"
+    const docRef = await addDoc(collection(db, "events"), event);
   }
 }
 

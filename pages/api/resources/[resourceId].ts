@@ -20,7 +20,7 @@ export default async function handler(
     res.status(400).json({error: "Invalid resourceId: must be of type string"})
   }
   const resourceId : string = req.query['resourceId'] as string
-  const resource = await getResource(resourceId)
+  const resource : Resource | undefined = await getResource(resourceId)
   if (resource) {
     res.status(200).json(resource)
   } else {

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot, addDoc } from "firebase/firestore";
+import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot, addDoc, deleteDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signOut } from "firebase/auth";
 import { Role } from "../constants/role";
 import { UID, User, Event } from "../models/types";
@@ -100,31 +100,6 @@ export default class FirebaseInteractor {
     await signOut(this.auth);
   }
 
-  // TODO: finish this function to get all events
-  /**
-   * Gets the list of all events currently in the Firestore database
-   */
-  async getEventList(): Promise<Event[]> {
-
-    const allEvents = await getDocs(collection(this.db, "rounds"));
-    const eventsInDB: Event[] = [];
-
-    /*
-    allEvents.docs.forEach(
-      async (roundDocSnapShot: QueryDocumentSnapshot<DocumentData>) => {
-        eventsInDB.push({
-          name: roundDocSnapShot.name,
-          description: roundDocSnapShot.description,
-          summary: roundDocSnapShot.summary
-        });
-      }
-    );
-    */
-
-    return eventsInDB;
-
-  }
-
   async getCollectionData<T extends DocumentData>(collectionName : string, converter: FirestoreDataConverter<T>, queryParams: WhereQuery[]) : Promise<Array<T>> {
     const collectionReference : CollectionReference<T> = collection(this.db, collectionName).withConverter(converter)
     const queryConstraints : QueryConstraint[] = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
@@ -144,6 +119,21 @@ export default class FirebaseInteractor {
     }
   }
 
+  async createDocument<T extends DocumentData>(collectionName: string, obj: T) : Promise<string> {
+    const docRef = await addDoc(collection(db, collectionName), obj);
+    return docRef.id
+  }
+
+  async updateDocument<T extends DocumentData>(collectionName: string, obj: T, id: string) : Promise<T> {
+    await setDoc(doc(db, collectionName, id), obj)
+    return obj
+  }
+
+  async deleteDocument(collectionName : string, id: string) : Promise<void> {
+    await deleteDoc(doc(db, collectionName, id))
+  }
+
+  /* UNUSED - could be useful for getting list of ids for a collection that satisfy where query
   async getCollectionIds(collectionName : string, queryParams: WhereQuery[]) : Promise<Array<string>> {
     const collectionReference : CollectionReference<DocumentData> = collection(this.db, collectionName)
     const queryConstraints : QueryConstraint[] = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
@@ -160,6 +150,8 @@ export default class FirebaseInteractor {
     event.id = docRef.id
     return event
   }
+  */
+  
 }
 
 export type WhereQuery = {

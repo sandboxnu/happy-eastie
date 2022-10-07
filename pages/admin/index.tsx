@@ -5,13 +5,21 @@ import styles from '../../styles/Home.module.css'
 import { useEvents } from '../../hooks/useEvents'
 import { Event } from '../../models/types'
 import { EventCardDisplay } from '../../components/EventCardDisplay'
+import * as Yup from 'yup'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 
 const Home: NextPage = () => {
-    // const { events, isLoading, isError } = useEvents()
-    // TODO: acquire this list of events from Firebase
-    const [eventName, setEventName] = useState("");
-    const [eventDescription, setEventDescription] = useState("");
-    const [eventSummary, setEventSummary] = useState("");
+    const validationSchema = Yup.object({
+        name: Yup.string(),
+        description: Yup.string(),
+        summary: Yup.string(),
+      });
+    
+    const initialValues = {
+        name: "",
+        description: "",
+        summary: "",
+      };
     const [communityEventList, setCommunityEventList] = useState<Event[]>([]);
 
     useEffect(() => {
@@ -19,51 +27,28 @@ const Home: NextPage = () => {
             const eventList = await fetch('/api/events').then(res => res.json());
             setCommunityEventList(eventList)
         }
-        fetchEvents()
+        if (communityEventList.length === 0) {
+            fetchEvents()
+        }
     }, [communityEventList])
 
-    // if (isError) return <div>failed to load</div>
-    // if (isLoading) return <div>loading...</div>
-
-
-    const handleChangeName = (event: { target: { value: any } }) => {
-        setEventName(event.target.value);
-    };
-
-    const handleChangeDescription = (event: { target: { value: any } }) => {
-        setEventDescription(event.target.value);
-    };
-
-    const handleChangeSummary = (event: { target: { value: any } }) => {
-        setEventSummary(event.target.value);
-    };
-
+    
     // TODO: need to actually send the updated list of events to Firestore
-    async function handleSubmit(e: React.SyntheticEvent) {
-        e.preventDefault();
-        const target = e.target as typeof e.target & {
-            name: { value: string },
-            description: { value: string },
-            summary: { value: string }
-        }
+    async function onSubmit(values: any) {
         const bodyContent = {
-            name: target.name.value,
-            description: target.description.value,
-            summary: target.summary.value
+            name: values.name,
+            description: values.description,
+            summary: values.summary
         }
 
-        if (eventName !== "") {
-            setCommunityEventList([...communityEventList]);
-            setEventName("");
-            setEventDescription("");
-            setEventSummary("");
-
+        if (values.name !== "") {
             await fetch('/api/events', { method: 'POST', body: JSON.stringify(bodyContent), headers: { 'Content-Type': 'application/json' } }).then(res => res.json())
             const newEventList = await fetch('/api/events').then(res => res.json())
-            console.log("NEW EVENT LIST", newEventList);
             setCommunityEventList(newEventList)
         }
     };
+
+    const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
 
     return (
         <div className={styles.container}>
@@ -71,53 +56,31 @@ const Home: NextPage = () => {
             <Link href='/'>Back to Home</Link>
             <br />
             <br />
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+                <Form>
+                    <span className={styles.form}>
+                      <label className={styles.label}>Name</label>
+                      <Field type="text" name="name" />
+                      <ErrorMessage name="name" render={renderError} />
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Name of event..."
-                    value={eventName}
-                    className='add-item-input'
-                    name="name"
-                    onChange={handleChangeName}
-                />
+                      <label className={styles.label}>Description</label>
+                      <Field type="text" name="description" />
+                      <ErrorMessage name="description" render={renderError} />
 
-                <br />
-                <br />
+                      <label className={styles.label}>Summary</label>
+                      <Field type="text" name="summary" />
+                      <ErrorMessage name="summary" render={renderError} />
 
-                <input
-                    type="text"
-                    placeholder="Description of event..."
-                    value={eventDescription}
-                    className='add-item-input'
-                    name="description"
-                    onChange={handleChangeDescription}
-                />
-
-                <br />
-                <br />
-
-                <input
-                    type="text"
-                    placeholder="Summary of event..."
-                    value={eventSummary}
-                    className='add-item-input'
-                    name="summary"
-                    onChange={handleChangeSummary}
-                />
-
-                <br />
-                <br />
-
-                <button type="submit">Add</button>
-            </form>
+                      <button className={styles.submit} type="submit">Submit</button>
+                    </span>
+                </Form>
+            </Formik>
 
             <ul>
                 {communityEventList?.map((communityEvent: Event) => (
                     <div style={{}} key={communityEvent.id}>
                         <EventCardDisplay event={communityEvent}></EventCardDisplay>
                     </div>
-                    // <li key={communityEvent.id}>{communityEvent.name}</li>
                 ))}
             </ul>
 

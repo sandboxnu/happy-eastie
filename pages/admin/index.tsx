@@ -1,14 +1,21 @@
 import type { NextPage } from 'next'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
-import { useEvents } from '../../hooks/useEvents'
+import { addEventFunctionGenerator, useEvents } from '../../hooks/useEvents'
 import { Event } from '../../models/types'
 import { EventCardDisplay } from '../../components/EventCardDisplay'
 import * as Yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { useSWRConfig } from 'swr'
 
 const Home: NextPage = () => {
+    const { mutate } = useSWRConfig()
+    const {events, isLoading, isError} = useEvents()
+
+    if (isError) return <div>failed to load</div>
+    if (isLoading) return <div>loading...</div>
+
     const validationSchema = Yup.object({
         name: Yup.string(),
         description: Yup.string(),
@@ -20,31 +27,18 @@ const Home: NextPage = () => {
         description: "",
         summary: "",
       };
-    const [communityEventList, setCommunityEventList] = useState<Event[]>([]);
-
-    useEffect(() => {
-        const fetchEvents = async () => {
-            const eventList = await fetch('/api/events').then(res => res.json());
-            setCommunityEventList(eventList)
-        }
-        if (communityEventList.length === 0) {
-            fetchEvents()
-        }
-    }, [communityEventList])
 
     
     // TODO: need to actually send the updated list of events to Firestore
     async function onSubmit(values: any) {
-        const bodyContent = {
+        const bodyContent : Event = {
             name: values.name,
             description: values.description,
             summary: values.summary
         }
 
         if (values.name !== "") {
-            await fetch('/api/events', { method: 'POST', body: JSON.stringify(bodyContent), headers: { 'Content-Type': 'application/json' } }).then(res => res.json())
-            const newEventList = await fetch('/api/events').then(res => res.json())
-            setCommunityEventList(newEventList)
+            mutate('/api/events', addEventFunctionGenerator(bodyContent), { revalidate: false })
         }
     };
 
@@ -77,7 +71,7 @@ const Home: NextPage = () => {
             </Formik>
 
             <ul>
-                {communityEventList?.map((communityEvent: Event) => (
+                {events?.map((communityEvent: Event) => (
                     <div style={{}} key={communityEvent.id}>
                         <EventCardDisplay event={communityEvent}></EventCardDisplay>
                     </div>

@@ -11,4 +11,12 @@ export const useEvents = () => {
       isLoading: !error && !data,
       isError: error
     }
+}
+
+export const addEventFunctionGenerator = (newEvent : Event) : (e: Event[]) => Promise<Event[]> => {
+  return async (eventList: Event[]) : Promise<Event[]> => {
+    const updatedEvent = await fetch('/api/events', {method: 'POST', body: JSON.stringify(newEvent), headers: {'Content-Type': 'application/json'}}).then(res => res.json())
+    return [...eventList, updatedEvent]
   }
+}
+

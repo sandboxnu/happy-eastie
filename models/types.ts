@@ -36,9 +36,9 @@ export interface Event {
     name: string;
     description: string;
     summary: string;
-    location: GeoPoint;
-    start: Timestamp;
-    end: Timestamp;
+    location?: GeoPoint;
+    start?: Timestamp;
+    end?: Timestamp;
     // attendees: UID[];
 }
 

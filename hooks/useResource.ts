@@ -2,9 +2,18 @@ import {Fetcher} from 'swr'
 import useSWRImmutable from 'swr/immutable'
 import { Resource } from '../models/types'
 
+// hook for getting a single resource from api to display in frontend
+
+// useSWR will pass loading/error state if data not retrieved
+// this hook is designed to first look in the cached resources to see if the resource has already been fetched  
+// if it is not, then it will fetch directly from the api
+
+// data is cached so request is not sent to api every time page is loaded  
 export const useResource = (encryptedQuizResponse: string, id: string) => {
-    const resourcesFetcher : Fetcher<Resource[], string>= () => fetch('/api/resources', {method: 'POST', body: JSON.stringify({data: encryptedQuizResponse}), headers: { 'Content-Type': 'application/json' }}).then(res => res.json())
+    const requestSettings = {method: 'POST', body: JSON.stringify({data: encryptedQuizResponse}), headers: { 'Content-Type': 'application/json' }}
+    const resourcesFetcher : Fetcher<Resource[], string>= () => fetch('/api/resources', requestSettings).then(res => res.json())
     const {data: resourcesData, error: resourcesError}= useSWRImmutable<Resource[]>(`/api/resources/${encryptedQuizResponse}`, resourcesFetcher)
+
     const resourceFetcher : Fetcher<Resource, string> = () => {
         const resource : Resource | undefined = resourcesData!.find((r: Resource) => r.id === id)
         if (resource) {
@@ -13,16 +22,9 @@ export const useResource = (encryptedQuizResponse: string, id: string) => {
             return fetch(`/api/resources/${id}`).then(res => res.json())
         }
     }
-    const {data, error: resourceError} = useSWRImmutable(() => {
-        // @ts-ignore
-        const dummyErrorTrigger = resourcesData.length
-        return `/api/resources/${id}`
-    }, resourceFetcher)
-    return {
-        resource: data,
-        isLoading: !resourcesError && !resourceError && !data,
-        isError: resourcesError || resourceError
-      }
+    // if the resources are not ready, the useSWR key function will throw an error 
+    // and the resource fetcher will not be called
+    const {data: resourceData, error: resourceError} = useSWRImmutable(() => resourcesData ? `/api/resources/${id}` : Error("Don't proceed"), resourceFetcher)
     
-
+    return { resource: resourceData, isLoading: !resourcesError && !resourceError && !resourceData, isError: resourcesError || resourceError }
   }

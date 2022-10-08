@@ -2,16 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Event } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { WhereQuery } from '../../../firebase/firebaseInteractor'
-import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot } from 'firebase/firestore'
-
-const eventConverter : FirestoreDataConverter<Event> = {
-    toFirestore: (data: Event) : DocumentData => data,
-    fromFirestore: (snap: QueryDocumentSnapshot) : Event => {
-      let data = snap.data() as Event
-      data.id = snap.id
-      return data
-    }
-}
+import { eventConverter } from '../../../firebase/converters'
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Textarea, Input, Card } from '@nextui-org/react';
+import { Textarea, Card } from '@nextui-org/react';
 import { Event } from '../models/types';
 
 interface EventCardDisplayProps {

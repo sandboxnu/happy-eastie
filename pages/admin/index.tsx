@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import React from 'react'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
-import { addEventFunctionGenerator, useEvents } from '../../hooks/useEvents'
+import { addEventHandlerGenerator, useEvents } from '../../hooks/useEvents'
 import { Event } from '../../models/types'
 import { EventCardDisplay } from '../../components/EventCardDisplay'
 import * as Yup from 'yup'
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
         }
 
         if (values.name !== "") {
-            mutate('/api/events', addEventFunctionGenerator(bodyContent), { revalidate: false })
+            mutate('/api/events', addEventHandlerGenerator(bodyContent), { revalidate: false })
         }
     };
 

@@ -64,6 +64,7 @@ const Quiz: NextPage = () => {
     }
 
     const encrypted = AES.encrypt(JSON.stringify(data), "Secret Passphrase")
+    // to do: clear cache this point
     quizState.changeEncryptedQuizResponse(encrypted.toString())
     router.push(`/resources`)
   };

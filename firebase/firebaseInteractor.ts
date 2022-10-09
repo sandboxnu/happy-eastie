@@ -121,9 +121,9 @@ export default class FirebaseInteractor {
     return docSnap.data()
   }
 
-  async createDocument<T extends DocumentData>(collectionName: string, obj: T) : Promise<string> {
+  async createDocument<T extends DocumentData>(collectionName: string, obj: T) : Promise<[string, T]> {
     const docRef = await addDoc(collection(db, collectionName), obj);
-    return docRef.id
+    return [docRef.id, obj]
   }
 
   // full object must be passed in for update

@@ -11,7 +11,7 @@ import { Event } from '../models/types'
 // data is cached so request is not sent to api every time page is loaded  
 export const useEvents = () => {
     const eventsFetcher : Fetcher<Event[], string>= () => fetch('/api/events').then(res => res.json())
-    const {data, error}= useSWRImmutable<Event[]>(`/api/events`, eventsFetcher)
+    const {data, error}= useSWRImmutable<Event[]>('/api/events', eventsFetcher)
     return { events: data, isLoading: !error && !data, isError: error }
 }
 
@@ -25,6 +25,21 @@ export const addEventHandlerGenerator = (newEvent : Event) : (e: Event[]) => Pro
     const requestSettings =  { method: 'POST', body: JSON.stringify(newEvent), headers: {'Content-Type': 'application/json'}}
     const updatedEvent = await fetch('/api/events', requestSettings).then(res => res.json())
     return [...eventList, updatedEvent]
+  }
+}
+
+export const modifyEventHandlerGenerator = (newEvent: Event, id: string) : (e: Event[]) => Promise<Event[]> => {
+  return async (eventList: Event[]) : Promise<Event[]> => {
+    const requestSettings =  { method: 'PUT', body: JSON.stringify(newEvent), headers: {'Content-Type': 'application/json'}}
+    const updatedEvent = await fetch(`/api/events/${id}`, requestSettings).then(res => res.json())
+    return eventList.map((e: Event) => e.id == id ? updatedEvent : e)
+  }
+}
+
+export const deleteEventHandlerGenerator = (id: string) : (e: Event[]) => Promise<Event[]> => {
+  return async (eventList: Event[]) : Promise<Event[]> => {
+    await fetch(`/api/events/${id}`,  { method: 'DELETE'})
+    return eventList.filter((e: Event) => e.id != id)
   }
 }
 

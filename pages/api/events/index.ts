@@ -9,30 +9,12 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
     if (req.method === 'GET') {
-        if (req.query['id']) {
-            const id : string = req.query['id'] as string
-            const event : Event | undefined = await getEvent(id)
-            if (event) {
-                res.status(200).json(event)
-            } else {
-                res.status(404).json({ error: `Resource ${id} not found`})
-            }
-        } 
         const eventListData : Event[] = await getEvents([])
         res.status(200).json(eventListData)
     } else if (req.method === 'POST') {
         const requestBody : Event = req.body
         const newEvent = await createEvent(requestBody)
         res.status(201).json(newEvent)
-    } else if (req.method === 'PUT') {
-        const id = req.query['id'] as string
-        const event : Event = req.body
-        const updatedEvent = await modifyEvent(event, id)
-        res.status(200).json(updatedEvent)
-    } else if (req.method === 'DELETE') {
-        const id = req.query['id'] as string
-        await deleteEvent(id)
-        res.status(200).json({"message": `Resource id ${id} deleted successfully`})
     } else {
         res.status(405).json({"error": "unsupported"})
     }
@@ -45,29 +27,9 @@ async function getEvents(queryParams: WhereQuery[]) : Promise<Event[]> {
     return eventList;
 }
 
-async function getEvent(id: string) : Promise<Event | undefined> {
-    const firebaseInteractor = new FirebaseInteractor()
-    const event : Event | undefined = await firebaseInteractor.getDocumentById("events", id, eventConverter)
-    return event
-}
-
 async function createEvent(event: Event) : Promise<Event> {
     const firebaseInteractor = new FirebaseInteractor()
-    const id = await firebaseInteractor.createDocument("events", event)
-    event.id = id
-    return event
+    const eventInfo : [string, Event] = await firebaseInteractor.createDocument("events", event)
+    eventInfo[1].id = eventInfo[0]
+    return eventInfo[1]
 }
-
-async function modifyEvent(newEvent: Event, id: string) : Promise<Event> {
-    const firebaseInteractor = new FirebaseInteractor()
-    delete newEvent.id
-    const event = await firebaseInteractor.updateDocument("events", newEvent, id)
-    event.id = id
-    return event
-}
-
-async function deleteEvent(id: string) : Promise<void> {
-    const firebaseInteractor = new FirebaseInteractor()
-    firebaseInteractor.deleteDocument("events", id)
-}
-

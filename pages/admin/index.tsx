@@ -17,10 +17,10 @@ const Home: NextPage = () => {
     if (isLoading) return <div>loading...</div>
 
     const validationSchema = Yup.object({
-        name: Yup.string(),
+        name: Yup.string().required(),
         description: Yup.string(),
         summary: Yup.string(),
-      });
+    });
     
     const initialValues = {
         name: "",
@@ -37,9 +37,8 @@ const Home: NextPage = () => {
             summary: values.summary
         }
 
-        if (values.name !== "") {
-            mutate('/api/events', addEventHandlerGenerator(bodyContent), { revalidate: false })
-        }
+        mutate('/api/events', addEventHandlerGenerator(bodyContent), { revalidate: false })
+        
     };
 
     const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;

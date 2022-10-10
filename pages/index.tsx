@@ -7,16 +7,16 @@ import { Grid, Image, Text, Button } from "@nextui-org/react";
 const Home: NextPage = () => {
   return (
     <div>
-      <Header/>
-      <Grid.Container gap={2} justify="center" direction='column' css={{color:'$white'}}>
+      <Header />
+      <Grid.Container gap={2} justify="center" direction='column' css={{ color: '$white' }}>
         <Grid>
-          <InfoComponent/>
+          <InfoComponent />
         </Grid>
         <Grid>
-          <TrendingComponent/>
+          <TrendingComponent />
         </Grid>
         <Grid>
-          <DirectoryComponent/>
+          <DirectoryComponent />
         </Grid>
       </Grid.Container>
     </div>
@@ -27,11 +27,11 @@ function InfoComponent() {
   return (
     <Grid.Container gap={2} justify="center">
       <Grid xs={12} md={5}>
-        <Image alt="Default Image" src="/homeImage.svg" objectFit="scale-down"/>
+        <Image alt="Default Image" src="/homeImage.svg" objectFit="scale-down" />
       </Grid>
       <Grid xs={12} md={7} direction="column" justify='space-around' alignItems='center'>
         <Text className={'homepage-title'}>Here to help find the resources for you!</Text>
-        <Text className={'homepage-subtitle'}>Tap "Help My Search" to answer questions and get personalized resoure results.</Text>
+        <Text className={'homepage-subtitle'}>Tap &quot;Help My Search&quot; to answer questions and get personalized resoure results.</Text>
         <Button className='homepage-button' shadow>Help My Search</Button>
       </Grid>
     </Grid.Container>
@@ -40,13 +40,13 @@ function InfoComponent() {
 
 function TrendingComponent() {
   return (
-    <div/>
+    <div />
   );
 }
 
 function DirectoryComponent() {
   return (
-    <div/>
+    <div />
   );
 }
 

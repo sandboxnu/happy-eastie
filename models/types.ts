@@ -81,6 +81,7 @@ export interface ResourceData extends DocumentData {
     name: string;
     description?: string;
     url?: string;
+    category?: string[];
     minimumIncome?: number;
     maximumIncome?: number;
     language?: String[];
@@ -93,7 +94,8 @@ export interface ResourceData extends DocumentData {
     employmentStatus?: EmploymentStatus[];
     insurance?: Insurance[];
     accessibility?: Accessibility[];
-    tags: string[];
+    location?: GeoPoint;
+    tags?: string[];
 }
 
 //Inclusive!!!

@@ -3,11 +3,10 @@ import React from 'react'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 import { addEventHandlerGenerator, useEvents } from '../../hooks/useEvents'
-import { Event, EventInfo } from '../../models/types'
-import { EventCardDisplay } from '../../components/EventCardDisplay'
-import * as Yup from 'yup'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { EventInfo } from '../../models/types'
 import { useSWRConfig } from 'swr'
+import { EventsDisplay } from '../../components/admin/EventsDisplay'
+import { CreateEventForm } from '../../components/admin/CreateEventForm'
 
 const Home: NextPage = () => {
     const { mutate } = useSWRConfig()
@@ -15,19 +14,7 @@ const Home: NextPage = () => {
 
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
-
-    const validationSchema = Yup.object({
-        name: Yup.string().required(),
-        description: Yup.string(),
-        summary: Yup.string(),
-    });
-    
-    const initialValues = {
-        name: "",
-        description: "",
-        summary: "",
-      };
-
+    if (!events) return <div>Interval server: could not load events</div>
     
     async function onSubmit(values: any) {
         const bodyContent : EventInfo = {
@@ -40,45 +27,17 @@ const Home: NextPage = () => {
         
     };
 
-    const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
-
     return (
         <div className={styles.container}>
             <h1>Admin Page</h1>
             <Link href='/'>Back to Home</Link>
             <br />
             <br />
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-                <Form>
-                    <span className={styles.form}>
-                      <label className={styles.label}>Name</label>
-                      <Field type="text" name="name" />
-                      <ErrorMessage name="name" render={renderError} />
-
-                      <label className={styles.label}>Description</label>
-                      <Field type="text" name="description" />
-                      <ErrorMessage name="description" render={renderError} />
-
-                      <label className={styles.label}>Summary</label>
-                      <Field type="text" name="summary" />
-                      <ErrorMessage name="summary" render={renderError} />
-
-                      <button className={styles.submit} type="submit">Submit</button>
-                    </span>
-                </Form>
-            </Formik>
-
-            <ul>
-                {events?.map((communityEvent: Event) => (
-                    <div style={{}} key={communityEvent.id}>
-                        <EventCardDisplay event={communityEvent}></EventCardDisplay>
-                    </div>
-                ))}
-            </ul>
-
+            <CreateEventForm onSubmitHandler={onSubmit}/>
+            <br />
+            <EventsDisplay events={events}/>
             <br />
             <br />
-
             {/* TODO: Currently just goes back to home page */}
             <Link href='/'>Log Out</Link>
         </div>

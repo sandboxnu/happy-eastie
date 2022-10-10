@@ -1,4 +1,3 @@
-import {Fetcher} from 'swr'
 import useSWRImmutable from 'swr/immutable'
 import { Event, EventInfo } from '../models/types'
 

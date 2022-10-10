@@ -1,11 +1,12 @@
 import React from 'react'
 import { Card } from '@nextui-org/react';
-import { Event, EventInfo } from '../models/types';
+import { Event, EventInfo } from '../../models/types';
 import * as Yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 import { useSWRConfig } from 'swr';
-import { deleteEventHandlerGenerator, modifyEventHandlerGenerator } from '../hooks/useEvents';
+import { deleteEventHandlerGenerator, modifyEventHandlerGenerator } from '../../hooks/useEvents';
+
 interface EventCardDisplayProps {
     event: Event;
 }

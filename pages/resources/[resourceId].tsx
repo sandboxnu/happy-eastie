@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { AppContext } from '../../context/context';
 import { useResource } from '../../hooks/useResource';
 import { useRouter } from 'next/router';
-
+import { ResourceDisplay } from '../../components/resources/ResourceDisplay';
 
 const ResourcePage: NextPage = () => {
   const quizState = useContext(AppContext)
@@ -15,11 +15,11 @@ const ResourcePage: NextPage = () => {
 
   if (isError) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
+  if (!resource) return <div>Internal server error: invalid resource loaded</div>
 
   return (
     <div className={styles.container}>
-      <h1>Resource {resource!.name}</h1>
-      <h2>{resource!.description}</h2>
+      <ResourceDisplay resource={resource}/>
       <Link href='/resources'>Back to Results page</Link>
     </div>
   )

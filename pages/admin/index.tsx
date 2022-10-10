@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 import { addEventHandlerGenerator, useEvents } from '../../hooks/useEvents'
-import { Event } from '../../models/types'
+import { Event, EventInfo } from '../../models/types'
 import { EventCardDisplay } from '../../components/EventCardDisplay'
 import * as Yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
@@ -29,9 +29,8 @@ const Home: NextPage = () => {
       };
 
     
-    // TODO: need to actually send the updated list of events to Firestore
     async function onSubmit(values: any) {
-        const bodyContent : Event = {
+        const bodyContent : EventInfo = {
             name: values.name,
             description: values.description,
             summary: values.summary

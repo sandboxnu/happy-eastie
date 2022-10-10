@@ -17,7 +17,6 @@ const errorMessages = {
 
 const Quiz: NextPage = () => {
 
-
   const quizState = useContext(AppContext)
 
   const router = useRouter();
@@ -55,12 +54,8 @@ const Quiz: NextPage = () => {
   };
 
   const handleSubmit = (values: any) => {
-    console.log(values)
-
-    const incomeLevel = values.income;
-
-    const data = {
-      incomeLevel,
+    const data : SurveyAnswers = {
+      income: parseInt(values.income),
     }
 
     const encrypted = AES.encrypt(JSON.stringify(data), "Secret Passphrase")

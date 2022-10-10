@@ -12,12 +12,13 @@ const Resources: NextPage = () => {
 
   if (isError) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
+  if (!resources) return <div>failed to load</div>
 
   return (
     <div className={styles.container}>
       <h1>Results</h1>
       <div>
-        {(resources as Resource[]).map(resource => <div key={resource['id']}><Link href={`resources/${resource['id']}`} >{resource['name']}</Link><br /></div>)}
+        {resources.map(resource => <div key={resource['id']}><Link href={`resources/${resource['id']}`} >{resource['name']}</Link><br /></div>)}
       </div>
       <Link href='/quiz'>Back to Quiz</Link>
     </div>

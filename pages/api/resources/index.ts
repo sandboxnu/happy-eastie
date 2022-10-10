@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Resource } from '../../../models/types'
+import type { Resource, SurveyAnswers } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { WhereQuery } from '../../../firebase/firebaseInteractor'
 import {AES, enc} from 'crypto-js'
@@ -14,18 +14,17 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   if (req.body['data']) {
-    const encryptedFormData : string = req.body['data'] as string
-    const formData = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
-    const resourceListData : Resource[] = await getResources([{field: "incomeLevel", comparison: ">=", value: parseInt(formData["incomeLevel"])}])
+    // TODO: error handling for invalid bodies sent
+    const encryptedFormData = req.body['data']
+    const formData : SurveyAnswers = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
+    const resourceListData = await getResources([{field: "incomeLevel", comparison: ">=", value: formData.income}])
     res.status(200).json(resourceListData)
   } else {
-    const resourceListData : Resource[] = await getResources([])
+    const resourceListData = await getResources([])
     res.status(200).json(resourceListData)
   }
 }
 
 async function getResources(queryParams: WhereQuery[]) : Promise<Resource[]> {
-    const firebaseInteractor = new FirebaseInteractor() 
-    const resourceList : Resource[] = await firebaseInteractor.getCollectionData('resources', resourceConverter, queryParams)
-    return resourceList;
+    return await FirebaseInteractor.getCollectionData('resources', resourceConverter, queryParams)
 }

@@ -11,7 +11,7 @@ import { Resource } from '../models/types'
 // data is cached so request is not sent to api every time page is loaded  
 export const useResources = (encryptedQuizResponse: string) => {
     const requestSettings =  { method: 'POST', body: JSON.stringify({data: encryptedQuizResponse}), headers: {'Content-Type': 'application/json'}}
-    const resourcesFetcher : Fetcher<Resource[], string>= () => fetch('/api/resources', requestSettings).then(res => res.json())
-    const {data, error}= useSWRImmutable<Resource[]>(`/api/resources/${encryptedQuizResponse}`, resourcesFetcher)
+    const resourcesFetcher : Fetcher<Resource[], Error>= () => fetch('/api/resources', requestSettings).then(res => res.json())
+    const {data, error}= useSWRImmutable<Resource[], Error>(`/api/resources/${encryptedQuizResponse}`, resourcesFetcher)
     return { resources: data, isLoading: !error && !data, isError: error }
   }

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot, addDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot, addDoc, deleteDoc, DocumentReference } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signOut } from "firebase/auth";
 import { Role } from "../constants/role";
 import { UID, User, Event } from "../models/types";
@@ -27,7 +27,7 @@ const auth = getAuth(app);
  * This adds a level of abstraction around Firebase, so that this is the only
  * object dealing with the server.
  */
-export default class FirebaseInteractor {
+class FirebaseInteractor {
   db : Firestore = db;
   auth = auth;
 
@@ -105,9 +105,9 @@ export default class FirebaseInteractor {
   // to be able to use this method, a type must be created mimicking the structure of documents in this collection 
   // and an instance of FirestoreDataConverter must be created for that type (see firebase/converters.ts)
   async getCollectionData<T extends DocumentData>(collectionName : string, converter: FirestoreDataConverter<T>, queryParams: WhereQuery[]) : Promise<Array<T>> {
-    const collectionReference : CollectionReference<T> = collection(this.db, collectionName).withConverter(converter)
-    const queryConstraints : QueryConstraint[] = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
-    const querySnapshot : QuerySnapshot<T> = await getDocs(query(collectionReference, ...queryConstraints));
+    const collectionReference = collection(this.db, collectionName).withConverter(converter)
+    const queryConstraints = queryParams.map((q : WhereQuery) => where(q.field, q.comparison, q.value))
+    const querySnapshot = await getDocs(query(collectionReference, ...queryConstraints));
     const list: Array<T> = []
     querySnapshot.forEach((snapshot: QueryDocumentSnapshot<T>) => list.push(converter.fromFirestore(snapshot)))
     return list
@@ -117,19 +117,27 @@ export default class FirebaseInteractor {
   // to be able to use this method, a type must be created mimicking the structure of documents in this collection 
   // and an instance of FirestoreDataConverter must be created for that type (see firebase/converters.ts)
   async getDocumentById<T extends DocumentData>(collectionName : string, id: string, converter: FirestoreDataConverter<T>) : Promise<T | undefined> {
-    const docSnap : DocumentSnapshot<T> = await getDoc(doc(db, collectionName, id).withConverter(converter))
+    const docSnap = await getDoc(doc(db, collectionName, id).withConverter(converter))
     return docSnap.data()
   }
 
-  async createDocument<T extends DocumentData>(collectionName: string, obj: T) : Promise<[string, T]> {
-    const docRef = await addDoc(collection(db, collectionName), obj);
-    return [docRef.id, obj]
+  // we have to annoyingly cast because an invariant is we will call this only when the document has been created/modified
+  // and because of that calling getDoc here will never result in undefined, but getDoc is more generalized and always thinks getting by id could be undefined
+  async getExistingDocById<T extends DocumentData>(collectionName : string, id: string, converter: FirestoreDataConverter<T>) : Promise<T> {
+    const docSnap = await getDoc(doc(db, collectionName, id).withConverter(converter))
+    return docSnap.data() as T
+  }
+
+  // T here is essentially the object without the ID, and U is the object with the ID field
+  async createDocument<T extends DocumentData, U extends T>(collectionName: string, obj: T, converter: FirestoreDataConverter<U>) : Promise<U> {
+    const docRef = await addDoc(collection(db, collectionName), obj)
+    return await this.getExistingDocById(collectionName, docRef.id, converter)
   }
 
   // full object must be passed in for update
-  async updateDocument<T extends DocumentData>(collectionName: string, obj: T, id: string) : Promise<T> {
+  async updateDocument<T extends DocumentData>(collectionName: string, obj: T, id: string, converter: FirestoreDataConverter<T>) : Promise<T> {
     await setDoc(doc(db, collectionName, id), obj)
-    return obj
+    return await this.getExistingDocById(collectionName, id, converter)
   }
 
   async deleteDocument(collectionName : string, id: string) : Promise<void> {
@@ -146,16 +154,12 @@ export default class FirebaseInteractor {
     querySnapshot.forEach((snapshot: QueryDocumentSnapshot) => list.push(snapshot.id))
     return list
   }
-
-  async createEvent(event: Event) : Promise<Event> {
-    // Add a new document in collection "cities"
-    const docRef = await addDoc(collection(db, "events"), event);
-    event.id = docRef.id
-    return event
-  }
   */
   
 }
+
+const firebaseInteractor = new FirebaseInteractor()
+export default firebaseInteractor
 
 export type WhereQuery = {
   field: string,

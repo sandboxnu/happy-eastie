@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from '@nextui-org/react';
-import { Event } from '../models/types';
+import { Event, EventInfo } from '../models/types';
 import * as Yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from '../styles/Home.module.css'
@@ -10,13 +10,12 @@ interface EventCardDisplayProps {
     event: Event;
 }
 
-const errorMessages = {
-    nameError: 'Cannot have empty name event',
-  }
-  
-
 export const EventCardDisplay: React.FC<EventCardDisplayProps> = (props: EventCardDisplayProps) => {
     const { mutate } = useSWRConfig()
+
+    const errorMessages = {
+      nameError: 'Cannot have empty name event',
+    }
 
     const validationSchema = Yup.object({
         name: Yup.string().required(errorMessages.nameError),
@@ -24,28 +23,28 @@ export const EventCardDisplay: React.FC<EventCardDisplayProps> = (props: EventCa
         summary: Yup.string(),
     });
     
-    const initialValues = {
+    const initialValues : {[key: string]: string} = {
         name: props.event.name,
         description: props.event.description,
         summary: props.event.summary,
     };
     
-    const handleSubmit = (values: any) => {        
-        const newEvent : Event = {
+    const handleSubmit = (values: {[key: string]: string}) : void => {        
+        const newEvent : EventInfo = {
           name: values.name,
           description: values.description,
           summary: values.summary  
         }
 
-        mutate('/api/events', modifyEventHandlerGenerator(newEvent, props.event.id as string), { revalidate: false })
+        mutate('/api/events', modifyEventHandlerGenerator(newEvent, props.event.id), { revalidate: false })
     };
 
-    const deleteEvent = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const deleteEvent = (e: React.MouseEvent<HTMLButtonElement>) : void => {
         e.preventDefault()
-        mutate('/api/events', deleteEventHandlerGenerator(props.event.id as string), { revalidate: false })
+        mutate('/api/events', deleteEventHandlerGenerator(props.event.id), { revalidate: false })
     }
     
-    const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
+    const renderError = (message: string) : JSX.Element => <p className={styles.errorMessage}>{message}</p>;
 
     return (
         <Card css={{ mw: "600px" }}>

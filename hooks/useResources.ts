@@ -12,6 +12,6 @@ import { Resource } from '../models/types'
 export const useResources = (encryptedQuizResponse: string) => {
     const requestSettings =  { method: 'POST', body: JSON.stringify({data: encryptedQuizResponse}), headers: {'Content-Type': 'application/json'}}
     const resourcesFetcher : Fetcher<Resource[], Error>= () => fetch('/api/resources', requestSettings).then(res => res.json())
-    const {data, error}= useSWRImmutable<Resource[], Error>(`/api/resources/${encryptedQuizResponse}`, resourcesFetcher)
+    const {data, error}= useSWRImmutable<Resource[], Error>(`/api/resources`, resourcesFetcher)
     return { resources: data, isLoading: !error && !data, isError: error }
-  }
+}

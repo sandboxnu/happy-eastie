@@ -6,10 +6,11 @@ import styles from '../../styles/Home.module.css'
 import { AES } from 'crypto-js'
 import { AppContext } from '../../context/context'
 import { SurveyAnswers } from '../../models/types'
-
 import { QuizForm } from '../../components/quiz/QuizForm'
+import { useSWRConfig } from 'swr'
 
 const Quiz: NextPage = () => {
+  const {cache} = useSWRConfig()
   const quizState = useContext(AppContext)
   const router = useRouter();
 
@@ -19,7 +20,8 @@ const Quiz: NextPage = () => {
     }
 
     const encrypted = AES.encrypt(JSON.stringify(data), "Secret Passphrase")
-    // to do: clear cache this point
+    // clear old resources list from cache so cache never gets populated with too many lists
+    cache.delete('/api/resources')
     quizState.changeEncryptedQuizResponse(encrypted.toString())
     router.push(`/resources`)
   };

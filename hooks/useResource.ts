@@ -12,7 +12,7 @@ import { Resource } from '../models/types'
 export const useResource = (encryptedQuizResponse: string, id: string | string[] | undefined) => {
     const requestSettings = {method: 'POST', body: JSON.stringify({data: encryptedQuizResponse}), headers: { 'Content-Type': 'application/json' }}
     const resourcesFetcher : Fetcher<Resource[], Error>= () => fetch('/api/resources', requestSettings).then(res => res.json())
-    const {data: resourcesData, error: resourcesError}= useSWRImmutable<Resource[], Error>(`/api/resources/${encryptedQuizResponse}`, resourcesFetcher)
+    const {data: resourcesData, error: resourcesError}= useSWRImmutable<Resource[], Error>('/api/resources', resourcesFetcher)
 
     const resourceFetcher : Fetcher<Resource, Error> = () => {
         if (!id || Array.isArray(id)) {

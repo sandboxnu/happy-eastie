@@ -3,9 +3,15 @@ import type {Resource} from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { resourceConverter } from '../../../firebase/converters'
 
+export type ResourceResponse = {
+  data?: Resource
+  error?: string
+}
+
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<ResourceResponse>
 ) {
   const id = req.query['resourceId']
   if (!id || Array.isArray(id)) {

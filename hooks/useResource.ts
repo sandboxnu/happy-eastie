@@ -1,11 +1,9 @@
-import {Fetcher} from 'swr'
+import { useContext } from 'react'
 import useSWRImmutable from 'swr/immutable'
+import { AppContext } from '../context/context'
 import { Resource } from '../models/types'
-
-type GetResourceResponse = {
-    data?: Resource
-    error?: string
-}
+import { ResourcesResponse } from '../pages/api/resources'
+import { ResourceResponse } from '../pages/api/resources/[resourceId]'
 
 // hook for getting a single resource from api to display in frontend
 
@@ -14,13 +12,18 @@ type GetResourceResponse = {
 // if it is not, then it will fetch directly from the api
 
 // data is cached so request is not sent to api every time page is loaded  
-export const useResource = (encryptedQuizResponse: string, id: string | string[] | undefined) => {
-    const requestBody = encryptedQuizResponse ? JSON.stringify({data: encryptedQuizResponse}) : null
+export const useResource = (id: string | string[] | undefined) => {
+    const quizState = useContext(AppContext)
+    const requestBody = quizState.encryptedQuizResponse ? JSON.stringify({data: quizState.encryptedQuizResponse}) : null
     const requestSettings =  { method: 'POST', body: requestBody, headers: {'Content-Type': 'application/json'}}
-    const resourcesFetcher : Fetcher<Resource[], Error>= () => fetch('/api/resources', requestSettings).then(res => res.json())
+    const resourcesFetcher = async () : Promise<Resource[]> => {
+        const response : Response = await fetch('/api/resources', requestSettings)
+        const resources : ResourcesResponse = await response.json()
+        return resources.data
+    } 
     const {data: resourcesData}= useSWRImmutable<Resource[], Error>('/api/resources', resourcesFetcher)
 
-    const resourceFetcher : Fetcher<Resource, Error> = () => {
+    const resourceFetcher = async () : Promise<Resource> => {
         if (!id || Array.isArray(id)) {
             throw Error(`Invalid resource id type: received ${id} instead of string`)    
         } 
@@ -28,25 +31,25 @@ export const useResource = (encryptedQuizResponse: string, id: string | string[]
         if (resource) {
             return resource
         } else {
-            return fetch(`/api/resources/${id}`).then(res => res.json()).then((r : GetResourceResponse) => {
-                // so apparently fetch doesn't throw an "error" when its receives a 404, only on network failure
-                // so we have to manually throw the error here if we get an error obj back from the API
-                if (r.data) {
-                    return r.data
-                } else {
-                    throw new Error(r.error)
-                }
-            })
+            const response : Response = await fetch(`/api/resources/${id}`)
+            const responseJson : ResourceResponse = await response.json()
+            if (responseJson.data) {
+                return responseJson.data
+            } else {
+                throw new Error(responseJson.error)
+            }
         }
     }
-    // if the resources are not ready, the useSWR key function will throw an error 
-    // and the resource fetcher will not be called
-    const {data, error} = useSWRImmutable<Resource, Error>(() => {
+    const resourceKeyFunction = () : string => {
         if (resourcesData != undefined) {
             return `/api/resources/${id}`
         } else {
             throw new Error("Don't proceed")
         }
-    }, resourceFetcher, {shouldRetryOnError: false})
+    }
+    // if the resources are not ready, the useSWR key function will throw an error 
+    // and the resource fetcher will not be called
+    const {data, error} = useSWRImmutable<Resource, Error>(resourceKeyFunction, resourceFetcher, {shouldRetryOnError: false})
     return { resource: data, isLoading: !error && !data, error }
   }
+

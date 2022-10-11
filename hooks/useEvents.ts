@@ -1,27 +1,7 @@
 import useSWRImmutable from 'swr/immutable'
 import { Event, EventInfo } from '../models/types'
-
-type GetEventsResponse = {
-  data?: Event[]
-  error?: string
-}
-
-type CreateEventResponse = {
-  data?: Event
-  error?: string
-}
-
-
-type ModifyEventResponse = {
-  data?: Event
-  error?: string
-}
-
-
-type DeleteEventResponse = {
-  message?: string
-  error?: string
-}
+import { EventsResponse } from '../pages/api/events'
+import { DeleteEventResponse, EventResponse } from '../pages/api/events/[eventId]'
 
 // hook for getting events from api to display in frontend
 
@@ -31,18 +11,19 @@ type DeleteEventResponse = {
 
 // data is cached so request is not sent to api every time page is loaded  
 export const useEvents = () => {
-    const eventsFetcher = () => fetch('/api/events')
-      .then((res : Response) => res.json())
-      .then((r: GetEventsResponse) => {
-        if (r.data) {
-          return r.data
-        } else {
-          throw new Error(r.error)
-        }
-      })
     const {data, error} = useSWRImmutable<Event[], Error>('/api/events', eventsFetcher)
     return { events: data, isLoading: !error && !data, error}
 }
+
+const eventsFetcher = async () : Promise<Event[]> => {
+  const response : Response = await fetch('/api/events')
+  const responseJson : EventsResponse = await response.json()
+  if (responseJson.data) {
+    return responseJson.data
+  } else {
+    throw new Error(responseJson.error)
+  }
+} 
 
 // when the data in the cache needs to be updated, the mutate method can be called
 // the mutate method takes a function of type Event[] => Event[], when determines how cached data should be updated
@@ -50,41 +31,41 @@ export const useEvents = () => {
 // so the frontend can call this function and pass in "newEvent", and gets back the appropriate Event[] => Event[] function
 // see https://swr.vercel.app/docs/mutation for clarity
 export const addEventHandlerGenerator = (newEvent : EventInfo) : (e: Event[]) => Promise<Event[]> => {
-  return (eventList: Event[]) : Promise<Event[]> => {
+  return async (eventList: Event[]) : Promise<Event[]> => {
     const requestSettings =  { method: 'POST', body: JSON.stringify(newEvent), headers: {'Content-Type': 'application/json'}}
-    return fetch('/api/events', requestSettings).then(res => res.json()).then((r: CreateEventResponse) => {
-      if (r.data) {
-        return [...eventList, r.data] 
-      } else {
-        throw new Error(r.error)
-      }
-    })
+    const response : Response = await fetch('/api/events', requestSettings)
+    const responseJson : EventResponse = await response.json()
+    if (responseJson.data) {
+      return [...eventList, responseJson.data]
+    } else {
+      throw new Error(responseJson.error)
+    }
   }
 }
 
 export const modifyEventHandlerGenerator = (newEvent: EventInfo, id: string) : (e: Event[]) => Promise<Event[]> => {
   return async (eventList: Event[]) : Promise<Event[]> => {
     const requestSettings =  { method: 'PUT', body: JSON.stringify(newEvent), headers: {'Content-Type': 'application/json'}}
-    return fetch(`/api/events/${id}`, requestSettings).then(res => res.json()).then((r: ModifyEventResponse) => {
-      if (r.data) {
-        const updatedEvent = r.data
-        return eventList.map(event => event.id === id ? updatedEvent : event)
-      } else {
-        throw new Error(r.error)
-      }
-    }) 
+    const response : Response = await fetch(`/api/events/${id}`, requestSettings)
+    const responseData : EventResponse = await response.json()
+    if (responseData.data) {
+      const updatedEvent = responseData.data
+      return eventList.map(event => event.id === id ? updatedEvent : event)
+    } else {
+      throw new Error(responseData.error)
+    }
   }
 }
 
 export const deleteEventHandlerGenerator = (id: string) : (e: Event[]) => Promise<Event[]> => {
-  return (eventList: Event[]) : Promise<Event[]> => {
-    return fetch(`/api/events/${id}`,  { method: 'DELETE'}).then(res => res.json()).then((r: DeleteEventResponse) => {
-      if (r.message) {
-        return eventList.filter(event => event.id != id)
-      } else {
-        throw new Error(r.error)
-      }
-    })
+  return async (eventList: Event[]) : Promise<Event[]> => {
+    const response : Response = await fetch(`/api/events/${id}`, { method: 'DELETE'})
+    const responseData : DeleteEventResponse = await response.json()
+    if (responseData.message) {
+      return eventList.filter(event => event.id != id)
+    } else {
+      throw new Error(responseData.error)
+    }
   }
 }
 

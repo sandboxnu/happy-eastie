@@ -5,13 +5,17 @@ import { WhereQuery } from '../../../firebase/firebaseInteractor'
 import {AES, enc} from 'crypto-js'
 import { resourceConverter } from '../../../firebase/converters'
 
+export type ResourcesResponse = {
+  data: Resource[]
+}
+
 // this endpoint supports two ways of getting resources:
 // 1. it expects a post request with body of structure {data: encryptedQuizResponses}
 // the quiz response is decrypted and then used to filter relevant resources
 // 2. it returns all resources by default if no body is sent
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<ResourcesResponse>
 ) {
   if (req.body['data']) {
     // TODO: error handling for invalid bodies sent

@@ -3,10 +3,16 @@ import type { Event, EventInfo } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { WhereQuery } from '../../../firebase/firebaseInteractor'
 import { eventConverter } from '../../../firebase/converters'
+import { EventResponse } from './[eventId]'
 
+export type EventsResponse = {
+    data?: Event[]
+    error?: string
+  }
+  
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<EventsResponse | EventResponse>
 ) {
     if (req.method === 'GET') {
         const eventListData = await getEvents([])

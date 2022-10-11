@@ -10,12 +10,12 @@ export default async function handler(
 ) {
     if (req.method === 'GET') {
         const eventListData = await getEvents([])
-        res.status(200).json(eventListData)
+        res.status(200).json({data: eventListData})
     } else if (req.method === 'POST') {
         // TODO: validate body sent in post request
         const requestBody : EventInfo = req.body
         const newEvent = await createEvent(requestBody)
-        res.status(201).json(newEvent)
+        res.status(201).json({data: newEvent})
     } else {
         res.status(405).json({"error": "unsupported"})
     }

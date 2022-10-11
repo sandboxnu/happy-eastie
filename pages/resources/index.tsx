@@ -8,14 +8,13 @@ import { ResourcesDisplay } from "../../components/resources/ResourcesDisplay";
 
 const Resources: NextPage = () => {
   const quizState = useContext(AppContext)
-  const {resources, isLoading, isError} = useResources(quizState.encryptedQuizResponse)
+  const {resources, isLoading, error} = useResources(quizState.encryptedQuizResponse)
 
-  if (isError) return <div>failed to load</div>
+  if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>
   if (!resources) return <div>Internal server error: invalid resources loaded</div>
 
   return  (
-
     <div className={styles.container}>
       <h1>Results</h1>
       <ResourcesDisplay resources={resources}/>

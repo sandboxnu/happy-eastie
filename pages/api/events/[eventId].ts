@@ -14,12 +14,12 @@ export default async function handler(
 
     if (req.method === 'GET') {
         const event = await getEvent(id)
-        return event ? res.status(200).json(event) : res.status(404).json({ error: `Resource ${id} not found`})
+        return event ? res.status(200).json({data: event}) : res.status(404).json({ error: `Resource ${id} not found`})
     } else if (req.method === 'PUT') {
         // TODO: error handling for invalid event passed here?
         const event : EventInfo = req.body
         const updatedEvent = await modifyEvent(event, id)
-        res.status(200).json(updatedEvent)
+        res.status(200).json({data: updatedEvent})
     } else if (req.method === 'DELETE') {
         await deleteEvent(id)
         res.status(200).json({"message": `Resource id ${id} deleted successfully`})

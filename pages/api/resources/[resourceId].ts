@@ -9,10 +9,10 @@ export default async function handler(
 ) {
   const id = req.query['resourceId']
   if (!id || Array.isArray(id)) {
-    return res.status(401).json({"error": `Invalid value for required query param eventId: received ${id}`})
+    return res.status(401).json({"error": `Invalid value for required string query param eventId: received ${id}`})
   } 
   const resource = await getResource(id)
-  return resource ? res.status(200).json(resource) : res.status(404).json({ error: `Resource ${id} not found`})
+  return resource ? res.status(200).json({data: resource}) : res.status(404).json({ error: `Resource ${id} not found`})
 }
 
 async function getResource(id: string) : Promise<Resource | undefined> {

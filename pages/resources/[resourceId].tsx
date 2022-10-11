@@ -11,9 +11,9 @@ const ResourcePage: NextPage = () => {
   const quizState = useContext(AppContext)
   const router = useRouter()
   const {resourceId} = router.query
-  const {resource, isLoading, isError} = useResource(quizState.encryptedQuizResponse, resourceId)
+  const {resource, isLoading, error} = useResource(quizState.encryptedQuizResponse, resourceId)
 
-  if (isError) return <div>failed to load</div>
+  if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>
   if (!resource) return <div>Internal server error: invalid resource loaded</div>
 

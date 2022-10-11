@@ -10,9 +10,9 @@ import { CreateEventForm } from '../../components/admin/CreateEventForm'
 
 const Home: NextPage = () => {
     const { mutate } = useSWRConfig()
-    const {events, isLoading, isError} = useEvents()
+    const {events, isLoading, error} = useEvents()
 
-    if (isError) return <div>failed to load</div>
+    if (error) return <div>{error.message}</div>
     if (isLoading) return <div>loading...</div>
     if (!events) return <div>Interval server: could not load events</div>
     

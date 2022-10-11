@@ -2,6 +2,10 @@ import {Fetcher} from 'swr'
 import useSWRImmutable from 'swr/immutable'
 import { Resource } from '../models/types'
 
+type GetResourcesResponse = {
+    data: Resource[]
+}
+
 // hook for getting resources from api to display in frontend
 
 // useSWR will pass loading/error state if data not retrieved
@@ -10,8 +14,11 @@ import { Resource } from '../models/types'
 
 // data is cached so request is not sent to api every time page is loaded  
 export const useResources = (encryptedQuizResponse: string) => {
-    const requestSettings =  { method: 'POST', body: JSON.stringify({data: encryptedQuizResponse}), headers: {'Content-Type': 'application/json'}}
-    const resourcesFetcher : Fetcher<Resource[], Error>= () => fetch('/api/resources', requestSettings).then(res => res.json())
+    const requestBody = encryptedQuizResponse ? JSON.stringify({data: encryptedQuizResponse}) : null
+    const requestSettings =  { method: 'POST', body: requestBody, headers: {'Content-Type': 'application/json'}}
+    const resourcesFetcher : Fetcher<Resource[], Error>= () => fetch('/api/resources', requestSettings)
+      .then((res : Response) => res.json())
+      .then((r: GetResourcesResponse) => r.data)
     const {data, error}= useSWRImmutable<Resource[], Error>(`/api/resources`, resourcesFetcher)
-    return { resources: data, isLoading: !error && !data, isError: error }
+    return { resources: data, isLoading: !error && !data, error }
 }

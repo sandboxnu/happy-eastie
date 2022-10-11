@@ -121,8 +121,9 @@ class FirebaseInteractor {
     return docSnap.data()
   }
 
-  // we have to annoyingly cast because an invariant is we will call this only when the document has been created/modified
-  // and because of that calling getDoc here will never result in undefined, but getDoc is more generalized and always thinks getting by id could be undefined
+  // we have to annoyingly cast because an invariant is we will call this directly after a document has been created/modified
+  // and because of that calling getDoc here will never result in undefined, but getDoc is more generalized and has to handle
+  // when getting by id could be undefined
   async getExistingDocById<T extends DocumentData>(collectionName : string, id: string, converter: FirestoreDataConverter<T>) : Promise<T> {
     const docSnap = await getDoc(doc(db, collectionName, id).withConverter(converter))
     return docSnap.data() as T

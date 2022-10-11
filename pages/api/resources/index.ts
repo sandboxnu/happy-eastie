@@ -18,10 +18,10 @@ export default async function handler(
     const encryptedFormData = req.body['data']
     const formData : SurveyAnswers = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
     const resourceListData = await getResources([{field: "incomeLevel", comparison: ">=", value: formData.income}])
-    res.status(200).json(resourceListData)
+    res.status(200).json({data: resourceListData})
   } else {
     const resourceListData = await getResources([])
-    res.status(200).json(resourceListData)
+    res.status(200).json({data: resourceListData})
   }
 }
 

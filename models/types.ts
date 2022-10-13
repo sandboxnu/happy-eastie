@@ -54,9 +54,12 @@ export interface SurveyAnswers {
     family?: Family;
     employmentStatus?: EmploymentStatus;
     insurance?: Insurance;
-    accessibility?: Accessibility;
+    accessibility?: Accessibility; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
 }
 
+/**
+ * @deprecated Use ResourceData instead. This should be deleted after ticket #.
+ */
 export interface Service extends DocumentData {
     name: string;
     description: string;
@@ -70,6 +73,27 @@ export interface Service extends DocumentData {
     employmentStatus?: EmploymentStatus[];
     insurance?: Insurance[];
     accessibility?: Accessibility[];
+}
+
+export interface ResourceData extends DocumentData {
+    name: string;
+    description?: string;
+    url?: string;
+    category?: string[];
+    minimumIncome?: number;
+    maximumIncome?: number;
+    language?: String[];
+    citizenship?: Citizenship[];
+    minimumParentAge?: number;
+    maximumParentAge?: number;
+    minimumChildAge?: number;
+    maximumChildAge?: number;
+    family?: Family[];
+    employmentStatus?: EmploymentStatus[];
+    insurance?: Insurance[];
+    accessibility?: Accessibility[];
+    location?: GeoPoint;
+    tags?: string[];
 }
 
 //Inclusive!!!
@@ -90,7 +114,9 @@ export enum Family {
     "Nuclear",
     "Expecting",
     "Extended",
-    "Single-Parent"
+    "Single-Parent",
+    "Grandparent",
+    "Foster"
 }
 
 export enum EmploymentStatus {

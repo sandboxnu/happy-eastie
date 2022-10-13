@@ -1,14 +1,25 @@
-import useSWR, {Fetcher} from 'swr'
+import { useContext } from 'react'
 import useSWRImmutable from 'swr/immutable'
+import { AppContext } from '../context/context'
 import { Resource } from '../models/types'
+import { ResourcesResponse } from '../pages/api/resources'
 
-export const useResources = (encryptedQuizResponse: string) => {
-    const resourcesFetcher : Fetcher<Resource[], string>= () => fetch('/api/resources', {method: 'POST', body: JSON.stringify({data: encryptedQuizResponse}), headers: { 'Content-Type': 'application/json' }}).then(res => res.json())
-    const {data, error}= useSWRImmutable<Resource[]>(`/api/resources/${encryptedQuizResponse}`, resourcesFetcher)
+// hook for getting resources from api to display in frontend
 
-    return {
-      resources: data,
-      isLoading: !error && !data,
-      isError: error
-    }
-  }
+// useSWR will pass loading/error state if data not retrieved
+// when resources are ready (not in state isLoading or isError) the data will be propogated 
+// to components using useEvents and can be accessed in events field 
+
+// data is cached so request is not sent to api every time page is loaded  
+export const useResources = () => {
+  const quizState = useContext(AppContext)
+  const requestBody = quizState.encryptedQuizResponse ? JSON.stringify({data: quizState.encryptedQuizResponse}) : null
+  const requestSettings =  { method: 'POST', body: requestBody, headers: {'Content-Type': 'application/json'}}
+  const resourcesFetcher = async () : Promise<Resource[]> => {
+      const response : Response = await fetch('/api/resources', requestSettings)
+      const resources : ResourcesResponse = await response.json()
+      return resources.data
+  } 
+  const {data, error}= useSWRImmutable<Resource[], Error>(`/api/resources`, resourcesFetcher)
+  return { resources: data, isLoading: !error && !data, error }
+}

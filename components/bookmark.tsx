@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { Image } from "@nextui-org/react";
 
 type BookmarkProps = {
@@ -8,8 +8,9 @@ type BookmarkProps = {
 export default function Bookmark(props: BookmarkProps) {
   const [state, setState] = useState(props.enabled);
 
-  const onClick = () => {
+  const onClick = (e: SyntheticEvent) => {
     setState(!state);
+    e.stopPropagation()
   };
 
   return (

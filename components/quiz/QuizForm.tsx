@@ -1,9 +1,11 @@
+import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from 'yup'
-import { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Language, ResourceCategory } from "../../models/types";
+import { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Language, ResourceCategory, SurveyAnswers } from "../../models/types";
 import styles from '../../styles/Home.module.css'
 
 interface QuizFormProps {
+  initialValues: string
   onSubmitHandler: (values: any) => void
 }
 
@@ -39,7 +41,7 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
     accessibility: Yup.string(),
   });
 
-  const initialValues = {
+  let initialValues =  {
     category: [],
     income: null,
     language: "",
@@ -51,6 +53,10 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
     insurance: "",
     accessibility: ""
   };
+  if (props.initialValues) {
+    initialValues = JSON.parse(AES.decrypt(props.initialValues, "Secret Passphrase").toString(enc.Utf8))
+  }
+  
 
 
   const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;

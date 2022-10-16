@@ -120,7 +120,7 @@ function DirectoryComponent() {
   );
 
   return (
-    <Grid.Container justify="center" gap={8}>
+    <Grid.Container justify="center">
       <Row align="baseline">
         <img src="star.svg" />
         <Spacer x={0.8} />

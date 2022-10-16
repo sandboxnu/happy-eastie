@@ -3,9 +3,12 @@ import styles from "../../styles/Home.module.css";
 import Link from "next/link";
 import { useResources } from "../../hooks/useResources";
 import { ResourcesDisplay } from "../../components/resources/ResourcesDisplay";
+import { useContext } from "react";
+import { AppContext } from "../../context/context";
 
 const Resources: NextPage = () => {
-  const {requestedResources, additionalResources, isLoading, error} = useResources()
+  const quizState = useContext(AppContext)
+  const {requestedResources, additionalResources, isLoading, error} = useResources(quizState.encryptedQuizResponse)
 
   if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>

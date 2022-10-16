@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from 'yup'
-import { Accessibility, Citizenship, EmploymentStatus, Family, Insurance } from "../../models/types";
+import { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Language, ResourceCategory } from "../../models/types";
 import styles from '../../styles/Home.module.css'
 
 interface QuizFormProps {
@@ -10,11 +10,13 @@ interface QuizFormProps {
 export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
 
    const errorMessages = {
+    categoryError: 'Please select at least 1 category to get resources for',
     incomeError: 'Please enter a positive number for income',
     ageError: 'Please enter a valid age'
    }
 
     const validationSchema = Yup.object({
+      category: Yup.array().min(0, errorMessages.categoryError),
       income: Yup.number()
         .positive(errorMessages.incomeError)
         .typeError(errorMessages.incomeError),
@@ -29,12 +31,13 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
         .integer(errorMessages.ageError)
         .typeError(errorMessages.ageError),
       family: Yup.string(),
-      employmentStatus: Yup.number().min(1).max(10),
-      insuranace: Yup.string(),
+      employmentStatus: Yup.string(),
+      insurance: Yup.string(),
       accessibility: Yup.string(),
     });
     
     const initialValues = {
+        category: [],
         income: "",
         language: "",
         citizenship: "",
@@ -58,18 +61,29 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
           {/* form */}
           <Form>
             <span className={styles.form}>
+              <label className={styles.label}>Categories</label>
+              <div>
+                {Object.values(ResourceCategory).map(c => 
+                <label key={c}>
+                  <Field type="checkbox" name="category" value={c} id={c}/>{c}
+                </label>)}
+              </div>
+              <ErrorMessage name="category" render={renderError} />
+
               <label className={styles.label}>Estimated Annual Income</label>
-              <Field type="text" name="income" />
+              <Field type="number" name="income" />
               <ErrorMessage name="income" render={renderError} />
   
               <label className={styles.label}>Language</label>
-              <Field as='select' name="languages" id="languages">
-                <option>English</option>
-                <option>Spanish</option>
+              <Field as='select' name="language">
+              <option></option>
+                {
+                  enumValues<Language>(Language)
+                }
               </Field>
 
               <label className={styles.label}>Citizenship</label>
-              <Field as='select' name="citizenship" id="citizenship">
+              <Field as='select' name="citizenship">
                 <option></option>
                 {
                   enumValues<Citizenship>(Citizenship)
@@ -77,15 +91,15 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
               </Field>
 
               <label className={styles.label}>Parent Age</label>
-              <Field name="parentAge" />
+              <Field type="number" name="parentAge" />
               <ErrorMessage name="parentAge" render={renderError} />
 
               <label className={styles.label}>Child Age</label>
-              <Field name="childAge" />
+              <Field type="number" name="childAge" />
               <ErrorMessage name="childAge" render={renderError} />
 
               <label className={styles.label}>Family Type</label>
-              <Field as='select' name="family" id="family">
+              <Field as='select' name="family">
                 <option></option>
                 {
                   enumValues<Family>(Family)
@@ -93,7 +107,7 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
               </Field>
 
               <label className={styles.label}>Employment Status</label>
-              <Field as='select' name="work" id="work">
+              <Field as='select' name="employmentStatus">
                 <option></option>
                 {
                   enumValues<EmploymentStatus>(EmploymentStatus)
@@ -101,7 +115,7 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
               </Field>
 
               <label className={styles.label}>Insurance Type</label>
-              <Field as='select' name="insurance" id="insurance">
+              <Field as='select' name="insurance">
                 <option></option>
                 {
                   enumValues<Insurance>(Insurance)
@@ -109,7 +123,7 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
               </Field>
 
               <label className={styles.label}>Accesibility Needs</label>
-              <Field as='select' name="accessibility" id="accessibility">
+              <Field as='select' name="accessibility">
                 <option></option>
                 {
                   enumValues<Accessibility>(Accessibility)

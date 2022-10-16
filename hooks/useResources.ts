@@ -1,6 +1,4 @@
-import { useContext } from 'react'
 import useSWRImmutable from 'swr/immutable'
-import { AppContext } from '../context/context'
 import { ResourceData, ResourcesResponse } from '../pages/api/resources'
 
 // hook for getting resources from api to display in frontend
@@ -10,9 +8,8 @@ import { ResourceData, ResourcesResponse } from '../pages/api/resources'
 // to components using useEvents and can be accessed in events field 
 
 // data is cached so request is not sent to api every time page is loaded  
-export const useResources = () => {
-  const quizState = useContext(AppContext)
-  const requestBody = quizState.encryptedQuizResponse ? JSON.stringify({data: quizState.encryptedQuizResponse}) : null
+export const useResources = (encryptedQuizResponse: string = "") => {
+  const requestBody = encryptedQuizResponse ? JSON.stringify({data: encryptedQuizResponse}) : null
   const requestSettings =  { method: 'POST', body: requestBody, headers: {'Content-Type': 'application/json'}}
   const resourcesFetcher = async () : Promise<ResourceData> => {
       const response : Response = await fetch('/api/resources', requestSettings)

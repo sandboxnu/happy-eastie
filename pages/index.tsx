@@ -9,17 +9,11 @@ const Home: NextPage = () => {
   return (
     <div>
       <Header />
-      <Grid.Container gap={2} justify="center" direction="column" css={{ color: "$white" }}>
-        <Grid>
-          <InfoComponent />
-        </Grid>
-        <Grid>
-          <TrendingComponent />
-        </Grid>
-        <Grid>
-          <DirectoryComponent />
-        </Grid>
-      </Grid.Container>
+      <div style={{ maxWidth: "100%" }}>
+        <InfoComponent />
+        <TrendingComponent />
+        <DirectoryComponent />
+      </div>
     </div>
   );
 };
@@ -27,15 +21,15 @@ const Home: NextPage = () => {
 function InfoComponent() {
   return (
     <Grid.Container gap={2} justify="center">
-      <Grid xs={12} md={5}>
+      <Grid xs={12} sm={5}>
         <Image alt="Default Image" src="/homeImage.svg" objectFit="scale-down" />
       </Grid>
-      <Grid xs={12} md={7} direction="column" alignItems="center">
+      <Grid xs={12} sm={7} direction="column" alignItems="center">
         <Text className={"homepage-title"}>Here to help find the resources for you!</Text>
         <Spacer y={2} />
         <Text className={"homepage-subtitle"}>
           Tap &quot;Help My Search&quot; to answer questions and get personalized resoure results.
-        </Text>{" "}
+        </Text>
         <Spacer y={2} />
         <Button className="homepage-button" shadow>
           Help My Search

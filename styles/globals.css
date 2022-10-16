@@ -86,6 +86,6 @@ table {
 
 td {
   border: 0.75px solid var(--secondary-text);
-  padding: 40px 80px;
+  padding: 0;
 }
 

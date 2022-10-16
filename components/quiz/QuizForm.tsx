@@ -16,20 +16,23 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
    }
 
     const validationSchema = Yup.object({
-      category: Yup.array().min(0, errorMessages.categoryError),
+      category: Yup.array().min(1, errorMessages.categoryError),
       income: Yup.number()
         .positive(errorMessages.incomeError)
-        .typeError(errorMessages.incomeError),
+        .typeError(errorMessages.incomeError)
+        .nullable(),
       language: Yup.string(),
       citizenship: Yup.string(),
       parentAge: Yup.number()
         .positive(errorMessages.ageError)
         .integer(errorMessages.ageError)
-        .typeError(errorMessages.ageError),
+        .typeError(errorMessages.ageError)
+        .nullable(),
       childAge: Yup.number()
         .positive(errorMessages.ageError)
         .integer(errorMessages.ageError)
-        .typeError(errorMessages.ageError),
+        .typeError(errorMessages.ageError)
+        .nullable(),
       family: Yup.string(),
       employmentStatus: Yup.string(),
       insurance: Yup.string(),
@@ -38,11 +41,11 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
     
     const initialValues = {
         category: [],
-        income: "",
+        income: null,
         language: "",
         citizenship: "",
-        parentAge: "",
-        childAge: "",
+        parentAge: null,
+        childAge: null,
         family: "",
         employmentStatus: "",
         insurance: "",

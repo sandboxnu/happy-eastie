@@ -60,13 +60,13 @@ function TrendingComponent() {
       name: "Women, Infants, & Children",
       imageFilename: "happychildliftingbarbell.png",
       summary: "Tap to learn more about WIC, providing free services for those who qualify.",
-      tags: ["Childcare", "Healthcare", "Any Income"],
+      tags: ["Childcare", "Any Income"],
     },
     {
       name: "Women, Infants, & Children",
       imageFilename: "happychildliftingbarbell.png",
       summary: "Tap to learn more about WIC, providing free services for those who qualify.",
-      tags: ["Childcare", "Healthcare", "Any Income"],
+      tags: ["Any Income"],
     },
   ];
 
@@ -75,7 +75,7 @@ function TrendingComponent() {
       <Row align="baseline">
         <img src="triangle.svg" />
         <Spacer x={0.8} />
-        <Text h1>Trending near you</Text>
+        <Text h1>Trending Near You</Text>
       </Row>
       <div
         style={{
@@ -100,7 +100,7 @@ function TrendingComponent() {
                   <Spacer y={0.5} />
                   <Text>{event.summary}</Text>
                   <Spacer y={1} />
-                  <Row justify="space-between">
+                  <Row justify="flex-start" css={{ gap: 10 }}>
                     {event.tags.map((tag, index) => (
                       <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
                     ))}
@@ -116,7 +116,46 @@ function TrendingComponent() {
 }
 
 function DirectoryComponent() {
-  return <div />;
+  type TableLinkProps = {
+    name: string;
+  };
+
+  const TableLink = (props: TableLinkProps) => (
+    <td>
+      <a href="resources" style={{ color: "var(--text-primary)" }}>
+        {props.name}
+      </a>
+    </td>
+  );
+
+  return (
+    <Grid.Container justify="center" gap={8}>
+      <Row align="baseline">
+        <img src="star.svg" />
+        <Spacer x={0.8} />
+        <Text h1>Resource Directory</Text>
+      </Row>
+      <Row>{/* Add the search bar and buttons here */}</Row>
+      <Row justify="center">
+        <table className="table-content" style={{}}>
+          <tbody>
+            <tr>
+              <TableLink name="Early Childhood" />
+              <TableLink name="Cash Assistance" />
+            </tr>
+            <tr>
+              <TableLink name="Healthcare" />
+              <TableLink name="Housing" />
+            </tr>
+            <tr>
+              <TableLink name="Food" />
+              <TableLink name="Young Parents" />
+            </tr>
+          </tbody>
+        </table>
+      </Row>
+    </Grid.Container>
+  );
 }
 
 export default Home;

@@ -71,3 +71,21 @@ h1 {
   font-weight: 600;
   color: black;
 }
+
+.table-content {
+  font-family: 'Raleway';
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary-text) !important;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+td {
+  border: 0.75px solid var(--secondary-text);
+  padding: 40px 80px;
+}
+

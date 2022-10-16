@@ -1,11 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Resource, SurveyAnswers } from '../../../models/types'
+import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Resource, ResourceCategory, SurveyAnswers } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import {AES, enc} from 'crypto-js'
 import { resourceConverter } from '../../../firebase/converters'
 
+
+export type ResourceData = {
+  requested: Resource[],
+  additional: Resource[]
+} 
 export type ResourcesResponse = {
-  data: Resource[]
+  data: ResourceData
 }
 
 // this endpoint supports two ways of getting resources:
@@ -20,22 +25,37 @@ export default async function handler(
     // TODO: error handling for invalid bodies sent
     const encryptedFormData = req.body['data']
     const formData : SurveyAnswers = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
-    const resourceListData = await getResources(formData)
-    res.status(200).json({data: resourceListData})
+    const resourceData = await getResources(formData)
+    res.status(200).json(resourceData)
   } else {
-    const resourceListData = await getAllResources()
-    res.status(200).json({data: resourceListData})
+    const resourceData = await getAllResources()
+    res.status(200).json(resourceData)
   }
 }
 
-async function getAllResources() : Promise<Resource[]> {
-  return await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
+async function getAllResources() : Promise<ResourcesResponse> {
+  const requested = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
+  return {
+    data: {
+      requested,
+      additional: []
+    }
+  }
 }
 
-async function getResources(answers: SurveyAnswers) : Promise<Resource[]> {
-    let resources =  await FirebaseInteractor.getCollectionData('resources', resourceConverter, 
-      [{field: "category", comparison: 'array-contains-any', value: answers.category}])
-    return resources.filter((r : Resource) => matchesSurvey(answers, r))
+async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse> {
+    let resources =  await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
+    resources = resources.filter((r : Resource) => matchesSurvey(answers, r))
+    const requested : Resource[] = []
+    const additional : Resource[] = []
+    resources.reduce((prev: Resource, curr: Resource) => {
+      (curr.category && curr.category.some((c1: ResourceCategory) => answers.category.some((c2: ResourceCategory) => c1 === c2))) ? requested.push(curr) : additional.push(curr)
+      return curr
+    })
+    return {data: {
+      requested,
+      additional
+    }}
 }
 
 function matchesSurvey(answers: SurveyAnswers, r: Resource) {

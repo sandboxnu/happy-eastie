@@ -31,7 +31,7 @@ const Quiz: NextPage = () => {
       <div className={styles.container}>
         <h1>Quiz Page</h1>
         <Link href='/'>Back to Home</Link>
-        <QuizForm onSubmitHandler={handleSubmit}/>
+        <QuizForm onSubmitHandler={handleSubmit} initialValues={quizState.encryptedQuizResponse}/>
       </div>
     )
   } else {

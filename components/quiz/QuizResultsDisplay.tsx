@@ -4,7 +4,7 @@ import { useResources } from "../../hooks/useResources"
 import styles from "../../styles/Home.module.css";
 import { ResourcesDisplay } from "../resources/ResourcesDisplay";
 
-export const QuizResults: React.FC = () => {
+export const QuizResultsDisplay: React.FC = () => {
   const quizState = useContext(AppContext)
   const {requestedResources, additionalResources, isLoading, error} = useResources(quizState.encryptedQuizResponse)
 

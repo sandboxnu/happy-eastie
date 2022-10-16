@@ -1,7 +1,4 @@
 import type { NextPage } from "next";
-import Link from "next/link";
-import styles from "../styles/Home.module.css";
-import { Event } from "../models/types";
 import Header from "../components/header";
 import { Grid, Image, Text, Button, Spacer, Card, Row, Col } from "@nextui-org/react";
 import Tag from "../components/tag";
@@ -71,7 +68,7 @@ function TrendingComponent() {
   ];
 
   return (
-    <Grid.Container justify="center" gap={8}>
+    <Grid.Container justify="center" gap={8} xs={12}>
       <Row align="baseline">
         <img src="triangle.svg" />
         <Spacer x={0.8} />

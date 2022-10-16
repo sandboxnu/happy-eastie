@@ -23,7 +23,7 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
       .positive(errorMessages.incomeError)
       .typeError(errorMessages.incomeError)
       .nullable(),
-    language: Yup.string(),
+    language: Yup.array(),
     citizenship: Yup.string(),
     parentAge: Yup.number()
       .positive(errorMessages.ageError)
@@ -38,7 +38,7 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
     family: Yup.string(),
     employmentStatus: Yup.string(),
     insurance: Yup.string(),
-    accessibility: Yup.string(),
+    accessibility: Yup.array(),
   });
 
   let initialValues =  {
@@ -86,12 +86,14 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
           <ErrorMessage name="income" render={renderError} />
 
           <label className={styles.label}>Language</label>
-          <Field as='select' name="language">
-            <option></option>
-            {
-              enumValues<Language>(Language)
-            }
-          </Field>
+          <div>
+            {Object.values(Language).map(c =>
+              <label key={c}>
+                <Field type="checkbox" name="language" value={c} id={c} />{c}
+                <br></br>
+              </label>
+            )}
+          </div>
 
           <label className={styles.label}>Citizenship</label>
           <Field as='select' name="citizenship">
@@ -134,12 +136,14 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
           </Field>
 
           <label className={styles.label}>Accessibility Needs</label>
-          <Field as='select' name="accessibility">
-            <option></option>
-            {
-              enumValues<Accessibility>(Accessibility)
-            }
-          </Field>
+          <div>
+            {Object.values(Accessibility).map(c =>
+              <label key={c}>
+                <Field type="checkbox" name="accessibility" value={c} id={c} />{c}
+                <br></br>
+              </label>
+            )}
+          </div>
 
           <button className={styles.submit} type="submit">Submit</button>
         </span>

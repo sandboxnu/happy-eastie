@@ -10,8 +10,7 @@ export const QuizResultsDisplay: React.FC = () => {
 
   if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>
-  if (requestedResources == undefined) return <div>Internal server error: invalid resources loaded</div>
-  if (additionalResources == undefined) return <div>Internal server error: invalid resources loaded</div>
+  if (requestedResources == undefined || additionalResources == undefined) return <div>Internal server error: invalid resources loaded</div>
 
   return  (
     <div className={styles.container}>

@@ -73,7 +73,7 @@ function TrendingComponent() {
           display: "flex",
           justifyContent: "safe center",
           overflowX: "auto",
-          width: "100vw",
+          width: "95vw",
         }}
       >
         {events.map((event, index) => (

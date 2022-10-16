@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Resource, ResourceCategory, SurveyAnswers } from '../../../models/types'
+import type { Resource, SurveyAnswers } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import {AES, enc} from 'crypto-js'
 import { resourceConverter } from '../../../firebase/converters'

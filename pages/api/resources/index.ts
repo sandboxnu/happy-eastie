@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Resource, SurveyAnswers } from '../../../models/types'
+import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Resource, SurveyAnswers } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
-import { WhereQuery } from '../../../firebase/firebaseInteractor'
 import {AES, enc} from 'crypto-js'
 import { resourceConverter } from '../../../firebase/converters'
 
@@ -21,14 +20,73 @@ export default async function handler(
     // TODO: error handling for invalid bodies sent
     const encryptedFormData = req.body['data']
     const formData : SurveyAnswers = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
-    const resourceListData = await getResources([{field: "incomeLevel", comparison: ">=", value: formData.income}])
+    const resourceListData = await getResources(formData)
     res.status(200).json({data: resourceListData})
   } else {
-    const resourceListData = await getResources([])
+    const resourceListData = await getAllResources()
     res.status(200).json({data: resourceListData})
   }
 }
 
-async function getResources(queryParams: WhereQuery[]) : Promise<Resource[]> {
-    return await FirebaseInteractor.getCollectionData('resources', resourceConverter, queryParams)
+async function getAllResources() : Promise<Resource[]> {
+  return await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
 }
+
+async function getResources(answers: SurveyAnswers) : Promise<Resource[]> {
+    let resources =  await FirebaseInteractor.getCollectionData('resources', resourceConverter, 
+      [{field: "category", comparison: 'array-contains-any', value: answers.category}])
+    return resources.filter((r : Resource) => matchesSurvey(answers, r))
+}
+
+function matchesSurvey(answers: SurveyAnswers, r: Resource) {
+  return (!answers.income || !r.maximumIncome || answers.income < r.maximumIncome) 
+    && (!answers.income || !r.minimumIncome || answers.income > r.minimumIncome)
+    && (!answers.language || !r.language || r.language.some((l : String) => l === answers.language))
+    && (!answers.citizenship || !r.citizenship || r.citizenship.some((c : Citizenship) => c === answers.citizenship))
+    && (!answers.parentAge || !r.maximumParentAge || answers.parentAge < r.maximumParentAge) 
+    && (!answers.parentAge || !r.minimumParentAge || answers.parentAge > r.minimumParentAge) 
+    && (!answers.childAge || !r.maximumChildAge || answers.childAge < r.maximumChildAge) 
+    && (!answers.childAge || !r.minimumChildAge || answers.childAge > r.minimumChildAge)
+    && (!answers.family || !r.family || r.family.some((f: Family) => f === answers.family))
+    && (!answers.employmentStatus || !r.employmentStatus || r.employmentStatus.some((e : EmploymentStatus) => e === answers.employmentStatus))
+    && (!answers.insurance || !r.insurance || r.insurance.some((i : Insurance) => i === answers.insurance))
+    && (!answers.accessibility || !r.accessibility || r.accessibility.some((a : Accessibility) => a === answers.accessibility))  
+}
+
+/*
+Legacy function that makes a bunch of where queries on firebase b
+but apparently you can't have compound queries on different fields so r.i.p.
+function getWhereQueries(answers : SurveyAnswers) : WhereQuery[] {
+  const q : WhereQuery[] = []
+  if (answers.category) {
+    q.push({field: "category", comparison: 'array-contains-any', value: answers.category})
+  } 
+  if (answers.income) {
+    q.push({field: "maximumIncome", comparison: '<=', value: answers.income})
+    q.push({field: "minimumIncome", comparison: '>=', value: answers.income})
+  }
+  if (answers.language) {
+    q.push({field: "language", comparison: 'array-contains', value: answers.language})
+  }
+  if (answers.citizenship) {
+    q.push({field: "citizenship", comparison: 'array-contains', value: answers.citizenship})
+  } 
+  if (answers.parentAge) {
+    q.push({field: "minimumParentAge", comparison: '>=', value: answers.parentAge})
+    q.push({field: "maximumParentAge", comparison: '<=', value: answers.parentAge})
+  }
+  if (answers.family) {
+    q.push({field: "family", comparison: 'array-contains', value: answers.family})
+  }
+  if (answers.employmentStatus) {
+    q.push({field: "employmentStatus", comparison: 'array-contains', value: answers.employmentStatus})
+  }
+  if (answers.insurance) {
+    q.push({field: "insurance", comparison: 'array-contains', value: answers.insurance})
+  }
+  if (answers.accessibility) {
+    q.push({field: "accessibility", comparison: 'array-contains', value: answers.accessibility})
+  }
+  return q
+}
+*/

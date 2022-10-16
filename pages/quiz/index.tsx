@@ -5,7 +5,6 @@ import React, { useContext } from 'react'
 import styles from '../../styles/Home.module.css'
 import { AES } from 'crypto-js'
 import { AppContext } from '../../context/context'
-import { SurveyAnswers } from '../../models/types'
 import { QuizForm } from '../../components/quiz/QuizForm'
 import { useSWRConfig } from 'swr'
 
@@ -15,11 +14,7 @@ const Quiz: NextPage = () => {
   const router = useRouter();
 
   const handleSubmit = (values: any) => {
-    const data : SurveyAnswers = {
-      income: parseInt(values.income),
-    }
-
-    const encrypted = AES.encrypt(JSON.stringify(data), "Secret Passphrase")
+    const encrypted = AES.encrypt(JSON.stringify(values), "Secret Passphrase")
     // clear old resources list from cache so cache never gets populated with too many lists
     cache.delete('/api/resources')
     quizState.changeEncryptedQuizResponse(encrypted.toString())

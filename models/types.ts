@@ -46,6 +46,7 @@ export interface EventInfo {
 }
 
 export interface SurveyAnswers {
+    category?: ResourceCategory[];
     income?: number;
     language?: string;
     citizenship?: Citizenship;
@@ -140,10 +141,37 @@ export enum Accessibility {
     "Digital Literacy"
 }
 
+export enum Language {
+    "English",
+    "Spanish"
+}
+
 export interface Resource extends DocumentData {
     id: string;
     name: string;
-    description: string;
-    incomeLevel: number;
-    employed: boolean
+    description?: string;
+    url?: string;
+    category?: ResourceCategory[];
+    minimumIncome?: number;
+    maximumIncome?: number;
+    language?: String[];
+    citizenship?: Citizenship[];
+    minimumParentAge?: number;
+    maximumParentAge?: number;
+    minimumChildAge?: number;
+    maximumChildAge?: number;
+    family?: Family[];
+    employmentStatus?: EmploymentStatus[];
+    insurance?: Insurance[];
+    accessibility?: Accessibility[];
+    location?: GeoPoint;
+    tags?: string[];
+}
+
+export enum ResourceCategory {
+    Childcare = "Childcare", 
+    Healthcare = "Healthcare", 
+    FinancialHelp = "Financial Help", 
+    ImmigrationAssistance = "Immigration Assistance", 
+    Housing = "Housing"
 }

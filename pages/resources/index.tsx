@@ -12,8 +12,8 @@ const Resources: NextPage = () => {
 
   if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>
-  if (!requestedResources) return <div>Internal server error: invalid resources loaded</div>
-  if (!additionalResources) return <div>Internal server error: invalid resources loaded</div>
+  if (requestedResources == undefined) return <div>Internal server error: invalid resources loaded</div>
+  if (additionalResources == undefined) return <div>Internal server error: invalid resources loaded</div>
 
   return  (
     <div className={styles.container}>

@@ -8,10 +8,11 @@ interface ResourcesDisplayProps {
 export const ResourcesDisplay: React.FC<ResourcesDisplayProps> = (props: ResourcesDisplayProps) => {
     return (
         <div>
-            {props.resources.map(resource => 
+            {props.resources.map(resource =>
                 <div key={resource.id}>
-                  <Link href={`resources/${resource.id}`} >{resource.name}</Link><br />
-                </div>)}
+                    <Link href={`resources/${resource.id}`} >{resource.name}</Link><br />
+                </div>
+            )}
         </div>
     )
 }

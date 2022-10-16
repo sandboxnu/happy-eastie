@@ -6,6 +6,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Link href='/quiz'><h1><a>Quiz Link</a></h1></Link>
+      <Link href='/directory'><h1><a>Resource Directory Link</a></h1></Link>
     </div>
   )
 }

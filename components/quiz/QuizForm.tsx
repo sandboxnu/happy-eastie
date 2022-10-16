@@ -127,7 +127,7 @@ export const QuizForm: React.FC<QuizFormProps> = (props: QuizFormProps) => {
             }
           </Field>
 
-          <label className={styles.label}>Accesibility Needs</label>
+          <label className={styles.label}>Accessibility Needs</label>
           <Field as='select' name="accessibility">
             <option></option>
             {

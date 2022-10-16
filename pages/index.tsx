@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Header />
-      <div style={{ maxWidth: "100%" }}>
+      <div style={{margin: "0 20px"}}>
         <InfoComponent />
         <TrendingComponent />
         <DirectoryComponent />

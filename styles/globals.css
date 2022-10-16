@@ -80,12 +80,14 @@ h1 {
 }
 
 table {
+  max-width: 800px;
+  width: 90%;
   border-collapse: collapse;
   text-align: center;
 }
 
 td {
   border: 0.75px solid var(--secondary-text);
-  padding: 0;
+  padding: 40px 0px;
 }
 

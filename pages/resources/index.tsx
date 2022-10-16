@@ -5,16 +5,20 @@ import { useResources } from "../../hooks/useResources";
 import { ResourcesDisplay } from "../../components/resources/ResourcesDisplay";
 
 const Resources: NextPage = () => {
-  const {resources, isLoading, error} = useResources()
+  const {requestedResources, additionalResources, isLoading, error} = useResources()
 
   if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>
-  if (!resources) return <div>Internal server error: invalid resources loaded</div>
+  if (!requestedResources) return <div>Internal server error: invalid resources loaded</div>
+  if (!additionalResources) return <div>Internal server error: invalid resources loaded</div>
 
   return  (
     <div className={styles.container}>
       <h1>Results</h1>
-      <ResourcesDisplay resources={resources}/>
+      <h2>Requested</h2>
+      <ResourcesDisplay resources={requestedResources}/>
+      <h2>Additional</h2>
+      <ResourcesDisplay resources={additionalResources}/>
       <Link href='/quiz'>Back to Quiz</Link>
     </div>
   )

@@ -46,7 +46,7 @@ export interface EventInfo {
 }
 
 export interface SurveyAnswers {
-    category?: ResourceCategory[];
+    category: ResourceCategory[];
     income?: number;
     language?: string;
     citizenship?: Citizenship;

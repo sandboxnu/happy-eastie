@@ -1,26 +1,23 @@
-import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from 'next'
+import type { NextPage } from 'next'
 import styles from '../../styles/Home.module.css'
 import Link from 'next/link';
-import { Resource } from '../../models/types';
-import { useContext } from 'react';
-import { AppContext } from '../../context/context';
+
 import { useResource } from '../../hooks/useResource';
 import { useRouter } from 'next/router';
-
+import { ResourceDisplay } from '../../components/resources/ResourceDisplay';
 
 const ResourcePage: NextPage = () => {
-  const quizState = useContext(AppContext)
   const router = useRouter()
   const {resourceId} = router.query
-  const {resource, isLoading, isError} = useResource(quizState.encryptedQuizResponse, resourceId as string)
+  const {resource, isLoading, error} = useResource(resourceId)
 
-  if (isError) return <div>failed to load</div>
+  if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>
+  if (!resource) return <div>Internal server error: invalid resource loaded</div>
 
   return (
     <div className={styles.container}>
-      <h1>Resource {resource!.name}</h1>
-      <h2>{resource!.description}</h2>
+      <ResourceDisplay resource={resource}/>
       <Link href='/resources'>Back to Results page</Link>
     </div>
   )

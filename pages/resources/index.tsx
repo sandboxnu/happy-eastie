@@ -1,24 +1,20 @@
 import type { NextPage } from "next";
 import styles from "../../styles/Home.module.css";
 import Link from "next/link";
-import { useContext } from "react";
-import { AppContext } from "../../context/context";
-import { Resource } from "../../models/types";
 import { useResources } from "../../hooks/useResources";
+import { ResourcesDisplay } from "../../components/resources/ResourcesDisplay";
 
 const Resources: NextPage = () => {
-  const quizState = useContext(AppContext)
-  const {resources, isLoading, isError} = useResources(quizState.encryptedQuizResponse)
+  const {resources, isLoading, error} = useResources()
 
-  if (isError) return <div>failed to load</div>
+  if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>
+  if (!resources) return <div>Internal server error: invalid resources loaded</div>
 
-  return (
+  return  (
     <div className={styles.container}>
       <h1>Results</h1>
-      <div>
-        {(resources as Resource[]).map(resource => <div key={resource['id']}><Link href={`resources/${resource['id']}`} >{resource['name']}</Link><br /></div>)}
-      </div>
+      <ResourcesDisplay resources={resources}/>
       <Link href='/quiz'>Back to Quiz</Link>
     </div>
   )

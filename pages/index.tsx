@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Header />
-      <div style={{margin: "0 20px"}}>
+      <div style={{ margin: "0 20px" }}>
         <InfoComponent />
         <TrendingComponent />
         <DirectoryComponent />
@@ -144,6 +144,7 @@ function DirectoryComponent() {
           </tbody>
         </table>
       </Row>
+      <Spacer />
     </Grid.Container>
   );
 }

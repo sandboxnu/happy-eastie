@@ -71,8 +71,7 @@ function TrendingComponent() {
       <div
         style={{
           display: "flex",
-          justifyContent: "safe center",
-          overflowX: "auto",
+          overflowX: "scroll",
           width: "95vw",
         }}
       >

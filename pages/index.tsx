@@ -65,7 +65,7 @@ function TrendingComponent() {
   return (
     <Grid.Container justify="center" gap={8} xs={12}>
       <Row align="baseline">
-        <Image src="triangle.svg" alt="" />
+        <Image src="triangle.svg" alt="" containerCss={{ margin: 0 }} />
         <Spacer x={0.8} />
         <Text h1>Trending Near You</Text>
       </Row>
@@ -122,7 +122,7 @@ function DirectoryComponent() {
   return (
     <Grid.Container justify="center">
       <Row align="baseline">
-        <Image src="star.svg" alt="" />
+        <Image src="star.svg" alt="" containerCss={{ margin: 0 }} />
         <Spacer x={0.8} />
         <Text h1>Resource Directory</Text>
       </Row>

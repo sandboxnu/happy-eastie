@@ -46,15 +46,16 @@ export interface EventInfo {
 }
 
 export interface SurveyAnswers {
+    category: ResourceCategory[];
     income?: number;
-    language?: string;
+    language: Language[];
     citizenship?: Citizenship;
     parentAge?: number;
     childAge?: number;
     family?: Family;
     employmentStatus?: EmploymentStatus;
     insurance?: Insurance;
-    accessibility?: Accessibility; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
+    accessibility: Accessibility[]; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
 }
 
 /**
@@ -133,17 +134,44 @@ export enum Insurance {
 }
 
 export enum Accessibility {
-    "Speech",
-    "Vision",
-    "Hearing",
-    "Mental",
-    "Digital Literacy"
+    Speech = "Speech",
+    Vision = "Vision",
+    Hearing = "Hearing",
+    Mental = "Mental",
+    DigitalLiteracy = "Digital Literacy"
+}
+
+export enum Language {
+    English = "English",
+    Spanish = "Spanish"
 }
 
 export interface Resource extends DocumentData {
     id: string;
     name: string;
-    description: string;
-    incomeLevel: number;
-    employed: boolean
+    description?: string;
+    url?: string;
+    category?: ResourceCategory[];
+    minimumIncome?: number;
+    maximumIncome?: number;
+    language?: String[];
+    citizenship?: Citizenship[];
+    minimumParentAge?: number;
+    maximumParentAge?: number;
+    minimumChildAge?: number;
+    maximumChildAge?: number;
+    family?: Family[];
+    employmentStatus?: EmploymentStatus[];
+    insurance?: Insurance[];
+    accessibility?: Accessibility[];
+    location?: GeoPoint;
+    tags?: string[];
+}
+
+export enum ResourceCategory {
+    Childcare = "Childcare", 
+    Healthcare = "Healthcare", 
+    FinancialHelp = "Financial Help", 
+    ImmigrationAssistance = "Immigration Assistance", 
+    Housing = "Housing"
 }

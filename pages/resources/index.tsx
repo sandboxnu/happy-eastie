@@ -1,21 +1,20 @@
 import type { NextPage } from "next";
 import styles from "../../styles/Home.module.css";
-import Link from "next/link";
 import { useResources } from "../../hooks/useResources";
 import { ResourcesDisplay } from "../../components/resources/ResourcesDisplay";
 
 const Resources: NextPage = () => {
-  const {resources, isLoading, error} = useResources()
+  const {requestedResources, additionalResources, isLoading, error} = useResources()
 
   if (error) return <div>{error.message}</div>
   if (isLoading) return <div>loading...</div>
-  if (!resources) return <div>Internal server error: invalid resources loaded</div>
+  if (requestedResources == undefined) return <div>Internal server error: invalid resources loaded</div>
+  if (additionalResources == undefined) return <div>Internal server error: invalid resources loaded</div>
 
   return  (
     <div className={styles.container}>
-      <h1>Results</h1>
-      <ResourcesDisplay resources={resources}/>
-      <Link href='/quiz'>Back to Quiz</Link>
+      <h1>Resources</h1>
+      <ResourcesDisplay resources={requestedResources}/>
     </div>
   )
 };

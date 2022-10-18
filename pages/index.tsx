@@ -4,6 +4,7 @@ import { Grid, Image, Text, Button, Spacer, Card, Row, Col } from "@nextui-org/r
 import Tag from "../components/tag";
 import TagsMap from "../models/TagsMap";
 import Bookmark from "../components/bookmark";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -32,7 +33,7 @@ function InfoComponent() {
         </Text>
         <Spacer y={2} />
         <Button className="homepage-button" shadow>
-          Help My Search
+          <Link href="/quiz">Help My Search</Link>
         </Button>
       </Grid>
     </Grid.Container>

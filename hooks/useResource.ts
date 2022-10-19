@@ -19,7 +19,7 @@ export const useResource = (id: string | string[] | undefined) => {
     const resourcesFetcher = async () : Promise<Resource[]> => {
         const response : Response = await fetch('/api/resources', requestSettings)
         const resources : ResourcesResponse = await response.json()
-        return resources.data
+        return resources.data.requested.concat(resources.data.additional)
     } 
     const {data: resourcesData}= useSWRImmutable<Resource[], Error>('/api/resources', resourcesFetcher)
 

@@ -4,13 +4,16 @@ import { useRouter } from "next/router";
 import { QuizCategoriesForm } from "../../components/quiz/QuizCategoriesForm";
 import { QuizPersonalForm } from "../../components/quiz/QuizPersonalForm";
 import { QuizFamilyForm } from "../../components/quiz/QuizFamilyForm";
+import { Grid, Progress } from "@nextui-org/react";
 
 const QuizPage: NextPage = () => {
   const router = useRouter();
   const { pageId } = router.query;
 
+  const pageNumber = parseInt(pageId as string);
+
   let QuizComponent: React.FC;
-  switch (parseInt(pageId as string)) {
+  switch (pageNumber) {
     case 1:
       QuizComponent = QuizCategoriesForm;
       break;
@@ -26,9 +29,14 @@ const QuizPage: NextPage = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <QuizComponent />
-    </div>
+    <Grid.Container xs={12}>
+      <Grid>
+        <Progress max={4} value={pageNumber} size="md"/>
+      </Grid>
+      <Grid>
+        <QuizComponent />
+      </Grid>
+    </Grid.Container>
   );
 };
 

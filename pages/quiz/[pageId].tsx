@@ -1,10 +1,6 @@
 import type { NextPage } from "next";
 import styles from "../../styles/Home.module.css";
-import Link from "next/link";
-
-import { useResource } from "../../hooks/useResource";
 import { useRouter } from "next/router";
-import { ResourceDisplay } from "../../components/resources/ResourceDisplay";
 import { QuizCategoriesForm } from "../../components/quiz/QuizCategoriesForm";
 import { QuizPersonalForm } from "../../components/quiz/QuizPersonalForm";
 import { QuizFamilyForm } from "../../components/quiz/QuizFamilyForm";

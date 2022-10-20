@@ -48,7 +48,7 @@ async function getAllResources() : Promise<ResourcesResponse> {
 }
 
 async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse> {
-    let resources =  await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
+    let resources = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
     resources = resources.filter((r : Resource) => matchesSurvey(answers, r))
     const requested : Resource[] = []
     const additional : Resource[] = []
@@ -63,7 +63,17 @@ async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse>
 }
 
 async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesResponse> {
+  let resources = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
+  let requested = resources.filter((r : Resource) => matchesSearchQuery(searchQuery, r))
+  return {data: {
+    requested,
+    additional: []
+  }}
+}
 
+function matchesSearchQuery(searchQuery: string, r: Resource) {
+  return r.name.toLowerCase().includes(searchQuery.toLowerCase())
+  || r.description?.toLowerCase().includes(searchQuery.toLowerCase());
 }
 
 function matchesSurvey(answers: SurveyAnswers, r: Resource) {

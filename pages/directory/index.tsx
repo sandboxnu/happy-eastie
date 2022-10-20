@@ -6,7 +6,7 @@ import { Resource, ResourceCategory } from '../../models/types'
 import { useResources } from '../../hooks/useResources'
 import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
 import { FormElement, Input } from '@nextui-org/react';
-import { useResourcesDirectory } from '../../hooks/useResourcesDirectory'
+import { ResourcesResponse } from '../api/resources'
 
 const ResourceDirectory: NextPage = () => {
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
@@ -18,8 +18,19 @@ const ResourceDirectory: NextPage = () => {
     }, [requestedResources])
 
     useEffect(() => {
-        console.log("GET UPDATED LIST OF RESOURCES BASED ON SEARCH QUERY HERE!")
+        const requestBody = searchQuery ? JSON.stringify({ searchParam: searchQuery }) : null
+        const requestSettings = { method: 'POST', body: requestBody, headers: { 'Content-Type': 'application/json' } }
+        makeResourcesRequest(requestSettings).then((data) => {
+            const resources: Resource[] = data.requested;
+            setDisplayResources(resources);
+        })
     }, [searchQuery])
+
+    async function makeResourcesRequest(requestSettings: any) {
+        const response: Response = await fetch('/api/resources', requestSettings)
+        const responseJson: ResourcesResponse = await response.json()
+        return responseJson.data;
+    }
 
     if (error) return <div>{error.message}</div>
     if (isLoading) return <div>loading...</div>

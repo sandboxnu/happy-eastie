@@ -18,5 +18,4 @@ export const useResourcesDirectory = (searchQuery: string = "") => {
   } 
   const {data, error}= useSWRImmutable<ResourceData, Error>(`/api/resources`, resourcesFetcher)
   return data?.requested
-  return { requestedResources: data?.requested, additionalResources: data?.additional, isLoading: !error && !data, error }
 }

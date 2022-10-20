@@ -10,12 +10,11 @@ const theme = createTheme({
     colors: {
       primary: '#219EA4',
       link: '#219EA4',
-
-      // you can also create your own color
       brandBlue: '#22A6DD',
       brandPurple: '#630DF0',
       brandOrange: '#F0880D',
       brandGreen: '#55C130',
+      secondaryText: '#7E7C7C'
     },
     space: {},
     fonts: {}

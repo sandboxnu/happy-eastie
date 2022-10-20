@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { QuizCategoriesForm } from "../../components/quiz/QuizCategoriesForm";
 import { QuizPersonalForm } from "../../components/quiz/QuizPersonalForm";
 import { QuizFamilyForm } from "../../components/quiz/QuizFamilyForm";
-import { Grid, Progress } from "@nextui-org/react";
+import { Grid, Progress, Text, Row, Col, Spacer} from "@nextui-org/react";
 
 const QuizPage: NextPage = () => {
   const router = useRouter();
@@ -29,13 +29,17 @@ const QuizPage: NextPage = () => {
   }
 
   return (
-    <Grid.Container xs={12}>
-      <Grid>
-        <Progress max={4} value={pageNumber} size="md"/>
-      </Grid>
-      <Grid>
-        <QuizComponent />
-      </Grid>
+    <Grid.Container direction="column" xs={12} justify="center" css={{ "margin": "auto"}}>
+      <Spacer y={5} />
+      <Row>
+        <Spacer x={25}/>
+        <Col span={4}>
+          <Text color="primary" h2>Resources Quiz</Text>
+          <Progress max={4} value={pageNumber} size='sm' css={{"width": "300px"}}/>
+          <QuizComponent />
+        </Col>
+        <Spacer x={25}/>
+      </Row>
     </Grid.Container>
   );
 };

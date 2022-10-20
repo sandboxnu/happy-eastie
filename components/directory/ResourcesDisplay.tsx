@@ -1,3 +1,4 @@
+import { Grid } from "@nextui-org/react";
 import { Resource } from "../../models/types";
 import { ResourceCardDisplay } from "./ResourceCardDisplay";
 
@@ -7,13 +8,13 @@ interface ResourcesDisplayProps {
 
 export const ResourcesDisplay: React.FC<ResourcesDisplayProps> = (props: ResourcesDisplayProps) => {
     return (
-        <ul>
+        <Grid.Container gap={4} direction="row" justify="flex-start" wrap="wrap">
             {props.resources?.map((resourceResult: Resource) => (
-                <div style={{}} key={resourceResult.id}>
+                <Grid xs={6} key={resourceResult.id}>
                     <ResourceCardDisplay resource={resourceResult}></ResourceCardDisplay>
                     <br />
-                </div>
+                </Grid>
             ))}
-        </ul>
+        </Grid.Container>
     )
 }

@@ -27,6 +27,10 @@ export default async function handler(
     const formData : SurveyAnswers = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
     const resourceData = await getResources(formData)
     res.status(200).json(resourceData)
+  } else if (req.body['searchParam']) {
+    const searchQuery = req.body['searchParam']
+    const resourceData = await getResourcesDirectory(searchQuery)
+    res.status(200).json(resourceData)
   } else {
     const resourceData = await getAllResources()
     res.status(200).json(resourceData)
@@ -56,6 +60,10 @@ async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse>
       requested,
       additional
     }}
+}
+
+async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesResponse> {
+
 }
 
 function matchesSurvey(answers: SurveyAnswers, r: Resource) {

@@ -17,7 +17,9 @@ const theme = createTheme({
       secondaryText: '#7E7C7C'
     },
     space: {},
-    fonts: {}
+    fonts: {
+      primary: 'Raleway'
+    }
   }
 })
 

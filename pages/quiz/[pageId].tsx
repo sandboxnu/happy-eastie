@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
-import styles from "../../styles/Home.module.css";
 import { useRouter } from "next/router";
 import { QuizCategoriesForm } from "../../components/quiz/QuizCategoriesForm";
 import { QuizPersonalForm } from "../../components/quiz/QuizPersonalForm";
 import { QuizFamilyForm } from "../../components/quiz/QuizFamilyForm";
-import { Grid, Progress, Text, Row, Col, Spacer } from "@nextui-org/react";
+import { Grid, Progress, Text, Col, Spacer } from "@nextui-org/react";
+import Header from "../../components/header";
 
 const QuizPage: NextPage = () => {
   const router = useRouter();
@@ -30,13 +30,15 @@ const QuizPage: NextPage = () => {
 
   return (
     <Grid.Container gap={2} justify="center">
+      <Header />
       <Grid xs={8} md={4}>
         <Col>
-          <Text color="primary" h2 css={{textAlign: "center"}}>
-            Resources Quiz
+          <Text color="primary" h2 css={{textAlign: "center", fontSize: "24pt", fontFamily: "Raleway", fontWeight: "600"}}>
+            Resource Quiz
           </Text>
           <Progress max={4} value={pageNumber} size={"sm"} />
-          <Text color="$secondaryText" css={{textAlign: "center"}}>
+          <Spacer y={1} />
+          <Text color="$secondaryText" css={{textAlign: "center", fontSize: "12pt", fontFamily: "Raleway", fontWeight: "600"}}>
             Select what you need help with.
           </Text>
           <QuizComponent />

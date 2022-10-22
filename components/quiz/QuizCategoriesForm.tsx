@@ -1,11 +1,13 @@
 import { AES, enc } from "crypto-js";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, FieldInputProps } from "formik";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
 import { ResourceCategory } from "../../models/types";
+import { Checkbox } from "@nextui-org/react";
 import styles from "../../styles/Home.module.css";
+import { CategoryCheckbox } from "./CategoryCheckbox";
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
@@ -53,31 +55,18 @@ export const QuizCategoriesForm: React.FC = () => {
     >
       {/* form */}
       <Form>
-        <span className={styles.form}>
-          <label className={styles.label}>Categories</label>
-          <div>
-            {Object.values(ResourceCategory).map((c) => (
-              <label key={c}>
-                <Field type="checkbox" name="category" value={c} id={c} />
-                {c}
-                <br></br>
-              </label>
-            ))}
-          </div>
-          <ErrorMessage name="category" render={renderError} />
+        {Object.values(ResourceCategory).map(c => (
+          <label key={c}>
+            <Field type="checkbox" name="category" value={c} id={c}/>{c}
+          </label>
+        ))}
+        <ErrorMessage name="category" render={renderError} />
 
-          <button className={styles.submit} type="submit">
-            Continue
-          </button>
-        </span>
+        <button className={styles.submit} type="submit">
+          Continue
+        </button>
       </Form>
       {/* form */}
     </Formik>
   );
 };
-
-function enumValues<E>(value: any): any {
-  return Object.keys(value)
-    .filter((elt: any) => !isNaN(Number(value[elt])))
-    .map((element) => <option key={element}>{element}</option>);
-}

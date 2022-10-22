@@ -33,12 +33,13 @@ const QuizPage: NextPage = () => {
       <Header />
       <Grid xs={8} md={4}>
         <Col>
-          <Text color="primary" h2 css={{textAlign: "center", fontSize: "24pt", fontFamily: "Raleway", fontWeight: "600"}}>
+          <Text id="quiz-title" css={{textAlign: "center"}}>
             Resource Quiz
           </Text>
+          <Spacer y={1} />
           <Progress max={4} value={pageNumber} size={"sm"} />
           <Spacer y={1} />
-          <Text color="$secondaryText" css={{textAlign: "center", fontSize: "12pt", fontFamily: "Raleway", fontWeight: "600"}}>
+          <Text id="quiz-subtitle" css={{textAlign: "center"}}>
             Select what you need help with.
           </Text>
           <QuizComponent />

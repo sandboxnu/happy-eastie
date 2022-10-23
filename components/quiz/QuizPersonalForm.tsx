@@ -64,12 +64,16 @@ export const QuizPersonalForm: React.FC = () => {
     >
       <Form>
         <Grid.Container gap={8} justify="center">
-          <Grid md={6} xs={12} direction="column">
-            <label className={styles.quizFieldText}>Estimated Annual Income</label>
+          <Grid md={2} xs={0} />
+
+          <Grid md={3} xs={12} direction="column">
+            <label className={styles.quizFieldText}>Annual Income</label>
             <Field type="number" name="income" className={styles.select} />
             <ErrorMessage name="income" render={renderError} />
           </Grid>
-          <Grid md={6} xs={12} direction="column">
+          <Grid md={2} xs={0} />
+
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Language</label>
             {Object.values(Language).map((c) => (
               <label key={c} className={styles.checkboxItem}>
@@ -79,7 +83,11 @@ export const QuizPersonalForm: React.FC = () => {
               </label>
             ))}
           </Grid>
-          <Grid md={6} xs={12} direction="column">
+          <Grid md={2} xs={0} />
+
+          <Grid md={2} xs={0} />
+
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Citizenship</label>
             <Field as="select" name="citizenship" className={styles.select}>
               <optgroup label="Citizenship">
@@ -88,7 +96,9 @@ export const QuizPersonalForm: React.FC = () => {
               </optgroup>
             </Field>
           </Grid>
-          <Grid md={6} xs={12} direction="column">
+          <Grid md={2} xs={0} />
+
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Employment Status</label>
             <Field as="select" name="employmentStatus" className={styles.select}>
               <optgroup label="Employment Status">
@@ -97,7 +107,9 @@ export const QuizPersonalForm: React.FC = () => {
               </optgroup>
             </Field>
           </Grid>
-          <Grid md={6} xs={12} direction="column">
+          <Grid md={2} xs={0} />
+
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Insurance Type</label>
             <Field as="select" name="insurance" className={styles.select}>
               <optgroup label="Insurance status">
@@ -106,7 +118,9 @@ export const QuizPersonalForm: React.FC = () => {
               </optgroup>
             </Field>
           </Grid>
-          <Grid md={6} xs={12} direction="column">
+          <Grid md={2} xs={0} />
+
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Accessibility Needs</label>
             {Object.values(Accessibility).map((c) => (
               <label key={c} className={styles.checkboxItem}>

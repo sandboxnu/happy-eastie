@@ -1,3 +1,4 @@
+import { Grid, Row, Col, Spacer} from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -8,7 +9,6 @@ import {
   Accessibility,
   Citizenship,
   EmploymentStatus,
-  Family,
   Insurance,
   Language,
 } from "../../models/types";
@@ -61,41 +61,95 @@ export const QuizPersonalForm: React.FC = () => {
     >
       {/* form */}
       <Form>
+        <Grid.Container gap={8} justify="center">
+          <Grid md={6} direction="column">
+            <label className='quiz-field-text'>Estimated Annual Income</label>
+            <br />
+            <Field type="number" name="income" css={{textAlign: "center"}}/>
+            <ErrorMessage name="income" render={renderError} />
+          </Grid>
+          <Grid md={6} direction="column">
+            <label className='quiz-field-text'>Language</label>
+            <br/>
+            {Object.values(Language).map((c) => (
+              <label key={c}>
+              <Field type="checkbox" name="language" value={c} id={c} css={{textAlign: "center"}} />
+              <span>{c}</span>
+              <br/>
+            </label>
+            ))}
+           </Grid> 
+          <Grid md={6} direction="column">
+            <label className='quiz-field-text'>Citizenship</label>
+            <Field as="select" name="citizenship">
+              <option></option>
+              {enumValues<Citizenship>(Citizenship)}
+            </Field>
+          </Grid>
+          <Grid md={6} direction="column">
+            <label className='quiz-field-text'>Employment Status</label>
+            <Field as="select" name="employmentStatus">
+              <option></option>
+              {enumValues<EmploymentStatus>(EmploymentStatus)}
+            </Field>
+          </Grid>
+          <Grid md={6} direction="column">
+            <label className='quiz-field-text'>Insurance Type</label>
+            <Field as="select" name="insurance">
+              <option></option>
+              {enumValues<Insurance>(Insurance)}
+            </Field>
+          </Grid>
+          <Grid md={6} direction="column">
+            <label className='quiz-field-text'>Accessibility Needs</label>
+            <div>
+              {Object.values(Accessibility).map((c) => (
+                <label key={c}>
+                  <Field type="checkbox" name="accessibility" value={c} id={c} />
+                  {c}
+                  <br></br>
+                </label>
+              ))}
+            </div>
+          </Grid>
+        </Grid.Container>
+        {/* 
+
         <span className={styles.form}>
-          <label className={styles.label}>Estimated Annual Income</label>
+          <label className='quiz-field-text'>Estimated Annual Income</label>
           <Field type="number" name="income" />
           <ErrorMessage name="income" render={renderError} />
 
-          <label className={styles.label}>Language</label>
+          <label className='quiz-field-text'>Language</label>
           <div>
             {Object.values(Language).map((c) => (
               <label key={c}>
                 <Field type="checkbox" name="language" value={c} id={c} />
-                {c}
+                <span>{c}</span>
                 <br></br>
               </label>
             ))}
           </div>
 
-          <label className={styles.label}>Citizenship</label>
+          <label className='quiz-field-text'>Citizenship</label>
           <Field as="select" name="citizenship">
             <option></option>
             {enumValues<Citizenship>(Citizenship)}
           </Field>
 
-          <label className={styles.label}>Employment Status</label>
+          <label className='quiz-field-text'>Employment Status</label>
           <Field as="select" name="employmentStatus">
             <option></option>
             {enumValues<EmploymentStatus>(EmploymentStatus)}
           </Field>
 
-          <label className={styles.label}>Insurance Type</label>
+          <label className='quiz-field-text'>Insurance Type</label>
           <Field as="select" name="insurance">
             <option></option>
             {enumValues<Insurance>(Insurance)}
           </Field>
 
-          <label className={styles.label}>Accessibility Needs</label>
+          <label className='quiz-field-text'>Accessibility Needs</label>
           <div>
             {Object.values(Accessibility).map((c) => (
               <label key={c}>
@@ -109,7 +163,7 @@ export const QuizPersonalForm: React.FC = () => {
           <button className={styles.submit} type="submit">
             Submit
           </button>
-        </span>
+        </span> */}
       </Form>
       {/* form */}
     </Formik>
@@ -121,3 +175,26 @@ function enumValues<E>(value: any): any {
     .filter((elt: any) => !isNaN(Number(value[elt])))
     .map((element) => <option key={element}>{element}</option>);
 }
+
+{/*
+          <Row gap={4}>
+            <Col>
+              <label className='quiz-field-text'>Estimated Annual Income</label>
+              <br />
+              <Field type="number" name="income" />
+              <ErrorMessage name="income" render={renderError} />
+            </Col>
+            <Col>
+              <label className='quiz-field-text'>Language</label>
+              <br/>
+              {Object.values(Language).map((c) => (
+                <label key={c}>
+                  <Field type="checkbox" name="language" value={c} id={c} />
+                  <span>{c}</span>
+                  <br/>
+                </label>
+              ))}
+            </Col>
+            
+          </Row>
+              */}

@@ -55,13 +55,15 @@ export const QuizCategoriesForm: React.FC = () => {
     >
       {/* form */}
       <Form>
-        {Object.values(ResourceCategory).map(c => (
-          <label key={c}>
-            <Field type="checkbox" name="category" value={c} id={c}/>{c}
-          </label>
-        ))}
-        <ErrorMessage name="category" render={renderError} />
-
+        <Checkbox.Group>
+          {Object.values(ResourceCategory).map(c => (
+            <label key={c}>
+              <Field type="checkbox" name="category" value={c} id={c}/><span className="category-text">{c}</span> 
+            </label>
+          ))}
+          <ErrorMessage name="category" render={renderError} />
+        </Checkbox.Group>
+      
         <button className={styles.submit} type="submit">
           Continue
         </button>

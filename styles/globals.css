@@ -87,6 +87,18 @@ a {
   letter-spacing: 0.25px;
 }
 
+.quiz-field-text {
+  font-size: 30px;
+  font-family: 'Raleway';
+  font-weight: 600;
+  line-height: 35px;
+  color: var(--secondary-text);
+  letter-spacing: 0.25px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
 .category-text {
   font-size: 22px;
   font-family: 'Raleway';

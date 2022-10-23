@@ -1,13 +1,12 @@
 import { AES, enc } from "crypto-js";
-import { ErrorMessage, Field, Form, Formik, FieldInputProps } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
 import { ResourceCategory } from "../../models/types";
-import { Checkbox } from "@nextui-org/react";
-import styles from "../../styles/Home.module.css";
-import { CategoryCheckbox } from "./CategoryCheckbox";
+import { Checkbox, Grid, Spacer } from "@nextui-org/react";
+import styles from "../../styles/quiz.module.css";
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
@@ -53,22 +52,27 @@ export const QuizCategoriesForm: React.FC = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {/* form */}
       <Form>
-        <Checkbox.Group>
-          {Object.values(ResourceCategory).map(c => (
-            <label key={c}>
-              <Field type="checkbox" name="category" value={c} id={c}/><span className="category-text">{c}</span> 
-            </label>
-          ))}
-          <ErrorMessage name="category" render={renderError} />
-        </Checkbox.Group>
-      
-        <button className={styles.submit} type="submit">
-          Continue
-        </button>
+        <Grid.Container gap={8} css={{w: "100vw"}} justify="center">
+          <Grid xs={10} sm={7} md={3}>
+            <Checkbox.Group>
+              {Object.values(ResourceCategory).map((c) => (
+                <label key={c} className={styles.checkboxItem}>
+                  <Field type="checkbox" name="category" value={c} id={c} />
+                  <span className={styles.categoryText}>{` ${c}`}</span>
+                </label>
+              ))}
+              <ErrorMessage name="category" render={renderError} />
+            </Checkbox.Group>
+          </Grid>
+
+          <Grid xs={12} md={12} justify="flex-end">
+            <button className={styles.submit} type="submit">
+              Continue
+            </button>
+          </Grid>
+        </Grid.Container>
       </Form>
-      {/* form */}
     </Formik>
   );
 };

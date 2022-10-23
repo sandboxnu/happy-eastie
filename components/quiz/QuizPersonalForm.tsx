@@ -1,4 +1,4 @@
-import { Grid, Row, Col, Spacer } from "@nextui-org/react";
+import { Grid } from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import {
   Insurance,
   Language,
 } from "../../models/types";
-import styles from "../../styles/Home.module.css";
+import styles from "../../styles/quiz.module.css";
 
 export const QuizPersonalForm: React.FC = () => {
   const router = useRouter();
@@ -38,7 +38,7 @@ export const QuizPersonalForm: React.FC = () => {
 
   if (quizState.encryptedQuizResponse === "") {
     router.push("/quiz/1");
-    return <></>
+    return <></>;
   }
 
   let initialValues = JSON.parse(
@@ -65,65 +65,66 @@ export const QuizPersonalForm: React.FC = () => {
       <Form>
         <Grid.Container gap={8} justify="center">
           <Grid md={6} xs={12} direction="column">
-            <label className="quiz-field-text">Estimated Annual Income</label>
+            <label className={styles.quizFieldText}>Estimated Annual Income</label>
             <br />
             <Field type="number" name="income" css={{ textAlign: "center" }} />
             <ErrorMessage name="income" render={renderError} />
           </Grid>
           <Grid md={6} xs={12} direction="column">
-            <label className="quiz-field-text">Language</label>
+            <label className={styles.quizFieldText}>Language</label>
             <br />
             {Object.values(Language).map((c) => (
-              <label key={c}>
+              <label key={c} className={styles.checkboxItem}>
                 <Field
                   type="checkbox"
                   name="language"
                   value={c}
                   id={c}
-                  css={{ textAlign: "center" }}
                 />
-                <span>{c}</span>
+                <span className={styles.categoryText}>{c}</span>
                 <br />
               </label>
             ))}
           </Grid>
           <Grid md={6} xs={12} direction="column">
-            <label className="quiz-field-text">Citizenship</label>
+            <label className={styles.quizFieldText}>Citizenship</label>
             <Field as="select" name="citizenship">
               <option></option>
               {enumValues<Citizenship>(Citizenship)}
             </Field>
           </Grid>
           <Grid md={6} xs={12} direction="column">
-            <label className="quiz-field-text">Employment Status</label>
+            <label className={styles.quizFieldText}>Employment Status</label>
             <Field as="select" name="employmentStatus">
               <option></option>
               {enumValues<EmploymentStatus>(EmploymentStatus)}
             </Field>
           </Grid>
           <Grid md={6} xs={12} direction="column">
-            <label className="quiz-field-text">Insurance Type</label>
+            <label className={styles.quizFieldText}>Insurance Type</label>
             <Field as="select" name="insurance">
               <option></option>
               {enumValues<Insurance>(Insurance)}
             </Field>
           </Grid>
           <Grid md={6} xs={12} direction="column">
-            <label className="quiz-field-text">Accessibility Needs</label>
+            <label className={styles.quizFieldText}>Accessibility Needs</label>
             <div>
               {Object.values(Accessibility).map((c) => (
-                <label key={c}>
+                <label key={c} className={styles.checkboxItem}>
                   <Field type="checkbox" name="accessibility" value={c} id={c} />
-                  {c}
-                  <br></br>
+                  <span className={styles.categoryText}>{` ${c}`}</span>
+                  <br />
                 </label>
               ))}
             </div>
           </Grid>
 
-          <button className={styles.submit} type="submit">
-            Continue
-          </button>
+          <Grid xs={12} justify="flex-end">
+            <button className={styles.submit} type="submit">
+              Continue
+            </button>
+          </Grid>
         </Grid.Container>
       </Form>
     </Formik>

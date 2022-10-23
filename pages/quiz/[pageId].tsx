@@ -43,9 +43,7 @@ const QuizPage: NextPage = () => {
         </Text>
       </Grid>
 
-      <Grid xs={8} md={8}>
-        <QuizComponent />
-      </Grid>
+      <QuizComponent />
     </Grid.Container>
   );
 };

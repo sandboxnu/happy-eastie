@@ -1,0 +1,66 @@
+.submit {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  color: var(--brand-primary);
+  font-family: 'Raleway';
+  font-size: 30px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+.submit:hover {
+  filter: brightness(85%);
+  cursor: pointer;
+}
+
+.errorMessage {
+  font-family: 'Raleway';
+  font-weight: 500;
+  color: red;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+#quizTitle {
+  font-size: 38px;
+  font-family: 'Raleway';
+  font-weight: 600;
+  line-height: 44.61px;
+  color: var(--brand-primary);
+  letter-spacing: 1px;
+}
+
+#quizSubtitle {
+  font-size: 20px;
+  font-family: 'Raleway';
+  font-weight: 400;
+  line-height: 23px;
+  color: var(--secondary-text);
+  letter-spacing: 0.25px;
+}
+
+.quizFieldText {
+  font-size: 30px;
+  font-family: 'Raleway';
+  font-weight: 600;
+  line-height: 35px;
+  color: var(--secondary-text);
+  letter-spacing: 0.25px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.categoryText {
+  font-size: 22px;
+  font-family: 'Raleway';
+  font-weight: 600;
+  line-height: 26px;
+  color: var(--brand-primary);
+  letter-spacing: 0.25px;
+}
+
+.checkboxItem {
+  margin-bottom: 10px;
+}

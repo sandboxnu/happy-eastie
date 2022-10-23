@@ -66,7 +66,7 @@ export const QuizPersonalForm: React.FC = () => {
         <Grid.Container gap={8} justify="center">
           <Grid md={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>Estimated Annual Income</label>
-            <Field type="number" name="income" css={{ textAlign: "center" }} />
+            <Field type="number" name="income" className={styles.select} />
             <ErrorMessage name="income" render={renderError} />
           </Grid>
           <Grid md={6} xs={12} direction="column">
@@ -81,34 +81,40 @@ export const QuizPersonalForm: React.FC = () => {
           </Grid>
           <Grid md={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>Citizenship</label>
-            <Field as="select" name="citizenship">
-              <option></option>
-              {enumValues<Citizenship>(Citizenship)}
+            <Field as="select" name="citizenship" className={styles.select}>
+              <optgroup label="Citizenship">
+                <option></option>
+                {enumValues<Citizenship>(Citizenship)}
+              </optgroup>
             </Field>
           </Grid>
           <Grid md={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>Employment Status</label>
-            <Field as="select" name="employmentStatus">
-              <option></option>
-              {enumValues<EmploymentStatus>(EmploymentStatus)}
+            <Field as="select" name="employmentStatus" className={styles.select}>
+              <optgroup label="Employment Status">
+                <option></option>
+                {enumValues<EmploymentStatus>(EmploymentStatus)}
+              </optgroup>
             </Field>
           </Grid>
           <Grid md={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>Insurance Type</label>
-            <Field as="select" name="insurance">
-              <option></option>
-              {enumValues<Insurance>(Insurance)}
+            <Field as="select" name="insurance" className={styles.select}>
+              <optgroup label="Insurance status">
+                <option></option>
+                {enumValues<Insurance>(Insurance)}
+              </optgroup>
             </Field>
           </Grid>
           <Grid md={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>Accessibility Needs</label>
-              {Object.values(Accessibility).map((c) => (
-                <label key={c} className={styles.checkboxItem}>
-                  <Field type="checkbox" name="accessibility" value={c} id={c} />
-                  <span className={styles.categoryText}>{` ${c}`}</span>
-                  <br />
-                </label>
-              ))}
+            {Object.values(Accessibility).map((c) => (
+              <label key={c} className={styles.checkboxItem}>
+                <Field type="checkbox" name="accessibility" value={c} id={c} />
+                <span className={styles.categoryText}>{` ${c}`}</span>
+                <br />
+              </label>
+            ))}
           </Grid>
 
           <Grid xs={12} justify="flex-end">

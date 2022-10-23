@@ -32,8 +32,9 @@ export const QuizFamilyForm: React.FC = () => {
     family: Yup.string(),
   });
 
-  if (!quizState.encryptedQuizResponse) {
-    router.push("quiz/1");
+  if (quizState.encryptedQuizResponse === '') {
+    router.push("/quiz/1");
+    return <></>
   }
 
   let initialValues = JSON.parse(

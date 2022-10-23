@@ -30,7 +30,7 @@ export const QuizCategoriesForm: React.FC = () => {
     accessibility: "",
   };
 
-  if (quizState.encryptedQuizResponse) {
+  if (quizState.encryptedQuizResponse != "") {
     initialValues = JSON.parse(
       AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(enc.Utf8)
     );

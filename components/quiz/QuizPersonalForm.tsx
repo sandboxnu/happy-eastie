@@ -36,8 +36,9 @@ export const QuizPersonalForm: React.FC = () => {
     accessibility: Yup.array(),
   });
 
-  if (!quizState.encryptedQuizResponse) {
-    router.push("quiz/1");
+  if (quizState.encryptedQuizResponse === "") {
+    router.push("/quiz/1");
+    return <></>
   }
 
   let initialValues = JSON.parse(

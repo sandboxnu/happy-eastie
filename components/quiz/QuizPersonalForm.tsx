@@ -20,7 +20,7 @@ export const QuizPersonalForm: React.FC = () => {
 
   const errorMessages = {
     incomeError: "Please enter a positive number for income",
-    wholeNumberError: "Please enter a whole number"
+    wholeNumberError: "Please enter a whole number",
   };
 
   const validationSchema = Yup.object({
@@ -119,6 +119,10 @@ export const QuizPersonalForm: React.FC = () => {
               ))}
             </div>
           </Grid>
+
+          <button className={styles.submit} type="submit">
+            Continue
+          </button>
         </Grid.Container>
       </Form>
     </Formik>

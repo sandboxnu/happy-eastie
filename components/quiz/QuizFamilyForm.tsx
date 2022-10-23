@@ -1,3 +1,4 @@
+import { Grid } from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -57,29 +58,31 @@ export const QuizFamilyForm: React.FC = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {/* form */}
       <Form>
-        <span className={styles.form}>
-          <label className={styles.label}>Parent Age</label>
-          <Field type="number" name="parentAge" />
-          <ErrorMessage name="parentAge" render={renderError} />
-
-          <label className={styles.label}>Child Age</label>
-          <Field type="number" name="childAge" />
-          <ErrorMessage name="childAge" render={renderError} />
-
-          <label className={styles.label}>Family Type</label>
-          <Field as="select" name="family">
-            <option></option>
-            {enumValues<Family>(Family)}
-          </Field>
+        <Grid.Container gap={8} justify="center">
+          <Grid md={8} xs={12} direction="column">
+            <label className={styles.label}>Family Type</label>
+            <Field as="select" name="family">
+              <option></option>
+              {enumValues<Family>(Family)}
+            </Field>
+          </Grid>
+          <Grid md={6} xs={12} direction="column">
+            <label className={styles.label}>Parent Age</label>
+            <Field type="number" name="parentAge" />
+            <ErrorMessage name="parentAge" render={renderError} />
+          </Grid>
+          <Grid md={6} xs={12} direction="column">
+            <label className={styles.label}>Child Age</label>
+            <Field type="number" name="childAge" />
+            <ErrorMessage name="childAge" render={renderError} />
+          </Grid>
 
           <button className={styles.submit} type="submit">
             Submit
           </button>
-        </span>
+        </Grid.Container>
       </Form>
-      {/* form */}
     </Formik>
   );
 };

@@ -23,8 +23,7 @@ export const QuizPersonalForm: React.FC = () => {
   };
 
   const validationSchema = Yup.object({
-    income: Yup.number()
-      .positive(errorMessages.incomeError)
+    income: Yup.number().integer(errorMessages.incomeError)
       .typeError(errorMessages.incomeError)
       .nullable(),
     language: Yup.array(),

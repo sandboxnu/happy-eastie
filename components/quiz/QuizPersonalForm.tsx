@@ -66,22 +66,15 @@ export const QuizPersonalForm: React.FC = () => {
         <Grid.Container gap={8} justify="center">
           <Grid md={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>Estimated Annual Income</label>
-            <br />
             <Field type="number" name="income" css={{ textAlign: "center" }} />
             <ErrorMessage name="income" render={renderError} />
           </Grid>
           <Grid md={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>Language</label>
-            <br />
             {Object.values(Language).map((c) => (
               <label key={c} className={styles.checkboxItem}>
-                <Field
-                  type="checkbox"
-                  name="language"
-                  value={c}
-                  id={c}
-                />
-                <span className={styles.categoryText}>{c}</span>
+                <Field type="checkbox" name="language" value={c} id={c} />
+                <span className={styles.categoryText}>{` ${c}`}</span>
                 <br />
               </label>
             ))}
@@ -109,7 +102,6 @@ export const QuizPersonalForm: React.FC = () => {
           </Grid>
           <Grid md={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>Accessibility Needs</label>
-            <div>
               {Object.values(Accessibility).map((c) => (
                 <label key={c} className={styles.checkboxItem}>
                   <Field type="checkbox" name="accessibility" value={c} id={c} />
@@ -117,7 +109,6 @@ export const QuizPersonalForm: React.FC = () => {
                   <br />
                 </label>
               ))}
-            </div>
           </Grid>
 
           <Grid xs={12} justify="flex-end">

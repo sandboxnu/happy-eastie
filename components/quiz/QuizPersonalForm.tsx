@@ -20,12 +20,14 @@ export const QuizPersonalForm: React.FC = () => {
 
   const errorMessages = {
     incomeError: "Please enter a positive number for income",
+    wholeNumberError: "Please enter a whole number"
   };
 
   const validationSchema = Yup.object({
     income: Yup.number()
-      .positive(errorMessages.incomeError)
-      .typeError(errorMessages.incomeError)
+      .integer(errorMessages.wholeNumberError)
+      .min(0, errorMessages.incomeError)
+      .typeError(errorMessages.wholeNumberError)
       .nullable(),
     language: Yup.array(),
     citizenship: Yup.string(),

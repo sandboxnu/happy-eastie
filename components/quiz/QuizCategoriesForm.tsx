@@ -67,7 +67,7 @@ export const QuizCategoriesForm: React.FC = () => {
           </Grid>
 
           <Grid xs={12} md={12} justify="flex-end">
-            <button className={styles.submit} type="submit">
+            <button className={styles.continue} type="submit">
               Continue
             </button>
           </Grid>

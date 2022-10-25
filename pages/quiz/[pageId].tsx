@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { QuizCategoriesForm } from "../../components/quiz/QuizCategoriesForm";
 import { QuizPersonalForm } from "../../components/quiz/QuizPersonalForm";
 import { QuizFamilyForm } from "../../components/quiz/QuizFamilyForm";
-import { Grid, Progress, Text, Row, Col, Spacer } from "@nextui-org/react";
+import { Grid, Progress, Text, Spacer } from "@nextui-org/react";
+import styles from "../../styles/quiz.module.css"
 import Header from "../../components/header";
 
 const QuizPage: NextPage = () => {
@@ -32,13 +33,13 @@ const QuizPage: NextPage = () => {
     <Grid.Container gap={2} alignItems="center" direction="column">
       <Header />
       <Grid xs={4} md={4} direction="column">
-        <Text id="quiz-title" css={{ textAlign: "center" }}>
+        <Text id={styles.quizTitle}>
           Resource Quiz
         </Text>
         <Spacer y={1} />
         <Progress max={4} value={pageNumber} size={"sm"} />
         <Spacer y={1} />
-        <Text id="quiz-subtitle" css={{ textAlign: "center" }}>
+        <Text id={styles.quizSubtitle}>
           Select what you need help with.
         </Text>
       </Grid>

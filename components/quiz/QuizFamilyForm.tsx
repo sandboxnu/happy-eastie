@@ -32,9 +32,9 @@ export const QuizFamilyForm: React.FC = () => {
     family: Yup.string(),
   });
 
-  if (quizState.encryptedQuizResponse === '') {
+  if (quizState.encryptedQuizResponse === "") {
     router.push("/quiz/1");
-    return <></>
+    return <></>;
   }
 
   let initialValues = JSON.parse(
@@ -44,8 +44,8 @@ export const QuizFamilyForm: React.FC = () => {
   const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
 
   const handleBack = () => {
-    router.push("/quiz/2")
-  }
+    router.push("/quiz/2");
+  };
 
   const handleSubmit = (values: any) => {
     const combinedValues = Object.assign(initialValues, values);
@@ -64,7 +64,7 @@ export const QuizFamilyForm: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <Form>
-        <Grid.Container gap={8} justify="center" css={{w: "100vw"}}>
+        <Grid.Container gap={8} justify="center" css={{ w: "100vw" }}>
           <Grid md={8} xs={12} direction="column">
             <label className={styles.quizFieldText}>Family Type</label>
             <Field className={styles.select} as="select" name="family">
@@ -82,7 +82,7 @@ export const QuizFamilyForm: React.FC = () => {
             <Field className={styles.select} type="number" name="childAge" />
             <ErrorMessage name="childAge" render={renderError} />
           </Grid>
-          
+
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="button" onClick={handleBack}>
               Back

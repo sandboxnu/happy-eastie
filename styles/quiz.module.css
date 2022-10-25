@@ -1,8 +1,9 @@
-.continue, .back {
+.continue,
+.back {
   border: none;
   background-color: transparent;
   outline: none;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-size: 30px;
   font-weight: 600;
   margin-top: 15px;
@@ -22,7 +23,7 @@
   padding: 10px 80px;
   outline: none;
   color: white;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-size: 30px;
   font-weight: 600;
   margin-top: 15px;
@@ -30,13 +31,15 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.continue:hover, .submit:hover, .back:hover {
+.continue:hover,
+.submit:hover,
+.back:hover {
   filter: brightness(85%);
   cursor: pointer;
 }
 
 .errorMessage {
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-weight: 500;
   color: red;
   margin-top: 2px;
@@ -45,7 +48,7 @@
 
 #quizTitle {
   font-size: 38px;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-weight: 600;
   line-height: 44.61px;
   color: var(--brand-primary);
@@ -55,7 +58,7 @@
 
 #quizSubtitle {
   font-size: 20px;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-weight: 400;
   line-height: 23px;
   color: var(--secondary-text);
@@ -65,7 +68,7 @@
 
 .quizFieldText {
   font-size: 30px;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-weight: 600;
   line-height: 35px;
   color: var(--secondary-text);
@@ -76,7 +79,7 @@
 
 .categoryText {
   font-size: 22px;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-weight: 600;
   line-height: 26px;
   color: var(--brand-primary);
@@ -89,7 +92,7 @@
 
 .select {
   font-size: 20px;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-weight: 500;
   color: var(--secondary-text);
   padding: 8px;

@@ -48,8 +48,8 @@ export const QuizPersonalForm: React.FC = () => {
   const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
 
   const handleBack = () => {
-    router.push("/quiz/1")
-  }
+    router.push("/quiz/1");
+  };
 
   const handleSubmit = (values: any) => {
     const combinedValues = Object.assign(initialValues, values);

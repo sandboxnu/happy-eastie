@@ -53,7 +53,7 @@ export const QuizCategoriesForm: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <Form>
-        <Grid.Container gap={8} css={{w: "100vw"}} justify="center">
+        <Grid.Container gap={8} css={{ w: "100vw" }} justify="center">
           <Grid xs={10} sm={7} md={3}>
             <Checkbox.Group>
               {Object.values(ResourceCategory).map((c) => (

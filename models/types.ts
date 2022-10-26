@@ -75,12 +75,12 @@ export interface Service extends DocumentData {
     insurance?: Insurance[];
     accessibility?: Accessibility[];
 }
-
-export interface ResourceData extends DocumentData {
+export interface Resource extends DocumentData {
+    id: string;
     name: string;
     description?: string;
     url?: string;
-    category?: string[];
+    category?: ResourceCategory[];
     minimumIncome?: number;
     maximumIncome?: number;
     language?: String[];
@@ -144,28 +144,6 @@ export enum Accessibility {
 export enum Language {
     English = "English",
     Spanish = "Spanish"
-}
-
-export interface Resource extends DocumentData {
-    id: string;
-    name: string;
-    description?: string;
-    url?: string;
-    category?: ResourceCategory[];
-    minimumIncome?: number;
-    maximumIncome?: number;
-    language?: String[];
-    citizenship?: Citizenship[];
-    minimumParentAge?: number;
-    maximumParentAge?: number;
-    minimumChildAge?: number;
-    maximumChildAge?: number;
-    family?: Family[];
-    employmentStatus?: EmploymentStatus[];
-    insurance?: Insurance[];
-    accessibility?: Accessibility[];
-    location?: GeoPoint;
-    tags?: string[];
 }
 
 export enum ResourceCategory {

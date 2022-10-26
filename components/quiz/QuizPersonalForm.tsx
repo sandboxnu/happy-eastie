@@ -46,18 +46,17 @@ export const QuizPersonalForm: React.FC = () => {
   );
 
   const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
-
-  const handleBack = () => {
-    router.push("/quiz/1");
-  };
-
+  
   const handleSubmit = (values: any) => {
     const combinedValues = Object.assign(initialValues, values);
-    console.log(combinedValues);
     const encrypted = AES.encrypt(JSON.stringify(combinedValues), "Secret Passphrase");
     // clear old resources list from cache so cache never gets populated with too many lists
     quizState.changeEncryptedQuizResponse(encrypted.toString());
-    router.push("/quiz/3");
+    if (document.activeElement?.id === 'back') {
+      router.push("/quiz/1");
+    } else {
+      router.push("/quiz/3");
+    }
   };
 
   return (
@@ -136,11 +135,11 @@ export const QuizPersonalForm: React.FC = () => {
           </Grid>
 
           <Grid xs={12} justify="space-between">
-            <button className={styles.back} type="button" onClick={handleBack}>
+            <button className={styles.back} type="submit" id="back">
               Back
             </button>
 
-            <button className={styles.continue} type="submit">
+            <button className={styles.continue} type="submit" id="continue">
               Continue
             </button>
           </Grid>

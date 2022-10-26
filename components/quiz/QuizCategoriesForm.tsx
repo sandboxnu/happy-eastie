@@ -37,7 +37,6 @@ export const QuizCategoriesForm: React.FC = () => {
 
   const handleSubmit = (values: any) => {
     const combinedValues = Object.assign(initialValues, values);
-    console.log(combinedValues);
     const encrypted = AES.encrypt(JSON.stringify(combinedValues), "Secret Passphrase");
     // clear old resources list from cache so cache never gets populated with too many lists
     quizState.changeEncryptedQuizResponse(encrypted.toString());
@@ -67,7 +66,7 @@ export const QuizCategoriesForm: React.FC = () => {
           </Grid>
 
           <Grid xs={12} md={12} justify="flex-end">
-            <button className={styles.continue} type="submit">
+            <button id="continue" className={styles.continue} type="submit">
               Continue
             </button>
           </Grid>

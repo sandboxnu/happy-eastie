@@ -5,7 +5,7 @@ import styles from '../../styles/Home.module.css'
 import { Resource, ResourceCategory, ResourceSortingMethod } from '../../models/types'
 import { useResources } from '../../hooks/useResources'
 import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
-import { FormElement, Input } from '@nextui-org/react';
+import { FormElement } from '@nextui-org/react';
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
 
@@ -25,6 +25,7 @@ const ResourceDirectory: NextPage = () => {
     // the filtering and sorting to the API
     useEffect(() => {
         // TODO: probably want to change this so you don't have to check if search query is the placeholder
+        // TODO: Add filters and sorting method to this request
         const requestBody = (searchQuery && !viewingAll && searchQuery !== "Search resources...") ? JSON.stringify({ searchParam: searchQuery }) : null
         const requestSettings = { method: 'POST', body: requestBody, headers: { 'Content-Type': 'application/json' } }
         makeResourcesRequest(requestSettings).then((data) => {

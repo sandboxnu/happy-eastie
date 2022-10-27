@@ -24,7 +24,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = (props: FilterDropd
                 color="secondary"
                 selectionMode="multiple"
                 selectedKeys={selected}
-                onSelectionChange={setSelected}
+                onSelectionChange={(keys) => setSelected}
             >
 
                 {Object.values(ResourceCategory).map(c =>

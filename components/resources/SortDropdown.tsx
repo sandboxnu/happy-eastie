@@ -24,7 +24,7 @@ export const SortDropdown: React.FC<SortDropdownProps> = (props: SortDropdownPro
                 disallowEmptySelection
                 selectionMode="single"
                 selectedKeys={selected}
-                onSelectionChange={setSelected}
+                onSelectionChange={(keys) => setSelected}
             >
                 {/* TODO: pull these sorting methods directly from the ResourceSortingMethod type */}
                 <Dropdown.Item key="alphabetical">Alphabetical</Dropdown.Item>

@@ -28,7 +28,7 @@ export default async function handler(
     res.status(200).json(resourceData)
   } else if (req.body['searchParam']) {
     const searchQuery = req.body['searchParam']
-    const resourceData = await getResourcesDirectory(req.body['searchParam'], req.body['filters'], req.body['sortingMethod'])
+    const resourceData = await getResourcesDirectory(req.body['searchParam'])
     res.status(200).json(resourceData)
   } else {
     const resourceData = await getAllResources()

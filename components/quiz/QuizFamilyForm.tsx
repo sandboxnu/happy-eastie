@@ -49,10 +49,10 @@ export const QuizFamilyForm: React.FC = () => {
     // clear old resources list from cache so cache never gets populated with too many lists
     cache.delete("/api/resources");
     quizState.changeEncryptedQuizResponse(encrypted.toString());
-    if (document.activeElement?.id === 'back') {
+    if (document.activeElement?.id === "back") {
       router.push("/quiz/2");
     } else {
-      router.push("/quiz/results");    
+      router.push("/quiz/results");
     }
   };
 
@@ -64,19 +64,24 @@ export const QuizFamilyForm: React.FC = () => {
     >
       <Form>
         <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
-          <Grid md={8} xs={12} direction="column">
+          <Grid md={5} xs={0} />
+
+          <Grid md={2} xs={8} direction="column">
             <label className={styles.quizFieldText}>Family Type</label>
             <Field className={styles.familySelect} as="select" name="family">
               <option></option>
               {enumValues<Family>(Family)}
             </Field>
           </Grid>
-          <Grid md={8} xs={12} direction="column">
+
+          <Grid md={5} xs={0} />
+
+          <Grid md={2} xs={8} direction="column">
             <label className={styles.quizFieldText}>Parent Age</label>
             <Field className={styles.ageInput} type="number" name="parentAge" />
             <ErrorMessage name="parentAge" render={renderError} />
           </Grid>
-          <Grid md={8} xs={12} direction="column">
+          <Grid md={2} xs={8} direction="column">
             <label className={styles.quizFieldText}>Child Age</label>
             <Field className={styles.ageInput} type="number" name="childAge" />
             <ErrorMessage name="childAge" render={renderError} />

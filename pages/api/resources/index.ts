@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Resource, ResourceCategory, SurveyAnswers } from '../../../models/types'
+import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import {AES, enc} from 'crypto-js'
 import { resourceConverter } from '../../../firebase/converters'
-
 
 export type ResourceData = {
   requested: Resource[],
@@ -29,7 +28,7 @@ export default async function handler(
     res.status(200).json(resourceData)
   } else if (req.body['searchParam']) {
     const searchQuery = req.body['searchParam']
-    const resourceData = await getResourcesDirectory(searchQuery)
+    const resourceData = await getResourcesDirectory(req.body['searchParam'], req.body['filters'], req.body['sortingMethod'])
     res.status(200).json(resourceData)
   } else {
     const resourceData = await getAllResources()
@@ -65,6 +64,10 @@ async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse>
 async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesResponse> {
   let resources = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
   let requested = resources.filter((r : Resource) => matchesSearchQuery(searchQuery, r))
+  // TODO: eventually implement the filtering and sorting either by doing it using Mongo (if we
+  // switch over, or implemenet the two functions below)
+  // let requestedFiltered = requestedSearchResults.filter((r: Resource) => matchesFilters(filters, r))
+  // let requestedSorted = sort(requestedFiltered, sortingMethod)
   return {data: {
     requested,
     additional: []
@@ -74,6 +77,14 @@ async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesRes
 function matchesSearchQuery(searchQuery: string, r: Resource) {
   return r.name.toLowerCase().includes(searchQuery.toLowerCase())
   || r.description?.toLowerCase().includes(searchQuery.toLowerCase());
+}
+
+function matchesFilters(filters: ResourceCategory[], r: Resource) {
+
+}
+
+function sort(resources: Resource[], sortingMethod: ResourceSortingMethod) {
+
 }
 
 function matchesSurvey(answers: SurveyAnswers, r: Resource) {

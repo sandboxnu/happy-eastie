@@ -80,7 +80,7 @@ export const QuizPersonalForm: React.FC = () => {
             <label className={styles.quizFieldText}>Language</label>
             {Object.values(Language).map((c) => (
               <label key={c} className={styles.checkboxItem}>
-                <Field type="checkbox" name="language" value={c} id={c} />
+                <Field type="checkbox" name="language" value={c} id={c} style={{"height": "24px", "width": "24px"}} />
                 <span className={styles.categoryText}>{` ${c}`}</span>
                 <br />
               </label>
@@ -127,7 +127,7 @@ export const QuizPersonalForm: React.FC = () => {
             <label className={styles.quizFieldText}>Accessibility Needs</label>
             {Object.values(Accessibility).map((c) => (
               <label key={c} className={styles.checkboxItem}>
-                <Field type="checkbox" name="accessibility" value={c} id={c} />
+                <Field type="checkbox" name="accessibility" value={c} id={c} style={{"height": "24px", "width": "24px"}} />
                 <span className={styles.categoryText}>{` ${c}`}</span>
                 <br />
               </label>

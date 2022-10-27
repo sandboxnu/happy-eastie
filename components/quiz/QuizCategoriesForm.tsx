@@ -5,7 +5,7 @@ import { useContext } from "react";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
 import { ResourceCategory } from "../../models/types";
-import { Checkbox, Grid, Spacer } from "@nextui-org/react";
+import { Checkbox, Grid } from "@nextui-org/react";
 import styles from "../../styles/quiz.module.css";
 
 export const QuizCategoriesForm: React.FC = () => {
@@ -57,8 +57,8 @@ export const QuizCategoriesForm: React.FC = () => {
             <Checkbox.Group>
               {Object.values(ResourceCategory).map((c) => (
                 <label key={c} className={styles.checkboxItem}>
-                  <Field type="checkbox" name="category" value={c} id={c} />
-                  <span className={styles.categoryText}>{` ${c}`}</span>
+                  <Field type="checkbox" name="category" value={c} id={c} className={styles.checkbox} style={{"height": "24px", "width": "24px"}}/>
+                  <span className={styles.categoryText}>{c}</span>
                 </label>
               ))}
               <ErrorMessage name="category" render={renderError} />

@@ -10,7 +10,7 @@ export const ResourcesDisplay: React.FC<ResourcesDisplayProps> = (props: Resourc
         <div>
             {props.resources.map(resource => 
                 <div key={resource.id}>
-                  <Link href={`resources/${resource.id}`} >{resource.name}</Link><br />
+                  <Link href={`/resources/${resource.id}`} >{resource.name}</Link><br />
                 </div>)}
         </div>
     )

@@ -73,21 +73,23 @@
   line-height: 35px;
   color: var(--secondary-text);
   letter-spacing: 0.25px;
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
 
 .categoryText {
-  font-size: 22px;
+  font-size: 30px;
   font-family: "Raleway";
   font-weight: 600;
-  line-height: 26px;
-  color: var(--brand-primary);
+  line-height: 35px;
+  color: var(--primary-text);
   letter-spacing: 0.25px;
+  margin-left: 60px;
 }
 
 .checkboxItem {
-  margin-bottom: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
 }
 
 .select {
@@ -97,3 +99,23 @@
   color: var(--secondary-text);
   padding: 8px;
 }
+
+.familySelect {
+  font-size: 20px;
+  font-family: "Raleway";
+  font-weight: 500;
+  color: var(--secondary-text);
+  padding: 8px;
+}
+
+.ageInput {
+  font-size: 20px;
+  font-family: "Raleway";
+  font-weight: 500;
+  color: var(--secondary-text);
+  padding: 8px;
+}
+
+/*
+max-width: min-content;
+*/

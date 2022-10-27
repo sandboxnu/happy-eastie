@@ -63,22 +63,22 @@ export const QuizFamilyForm: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <Form>
-        <Grid.Container gap={8} justify="center" css={{ w: "100vw" }}>
+        <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
           <Grid md={8} xs={12} direction="column">
             <label className={styles.quizFieldText}>Family Type</label>
-            <Field className={styles.select} as="select" name="family">
+            <Field className={styles.familySelect} as="select" name="family">
               <option></option>
               {enumValues<Family>(Family)}
             </Field>
           </Grid>
-          <Grid md={6} xs={12} direction="column">
+          <Grid md={8} xs={12} direction="column">
             <label className={styles.quizFieldText}>Parent Age</label>
-            <Field className={styles.select} type="number" name="parentAge" />
+            <Field className={styles.ageInput} type="number" name="parentAge" />
             <ErrorMessage name="parentAge" render={renderError} />
           </Grid>
-          <Grid md={6} xs={12} direction="column">
+          <Grid md={8} xs={12} direction="column">
             <label className={styles.quizFieldText}>Child Age</label>
-            <Field className={styles.select} type="number" name="childAge" />
+            <Field className={styles.ageInput} type="number" name="childAge" />
             <ErrorMessage name="childAge" render={renderError} />
           </Grid>
 

@@ -14,7 +14,7 @@ export default function Tag(props: TagProps) {
         padding: "5px 22px",
         borderRadius: "5px",
         color: "white",
-        fontSize: "12pt",
+        fontSize: "12px",
         fontFamily: "Raleway",
         fontWeight: "600",
       }}

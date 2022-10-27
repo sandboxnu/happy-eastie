@@ -7,7 +7,7 @@ interface FilterDropdownProps {
 }
 
 export const FilterDropdown: React.FC<FilterDropdownProps> = (props: FilterDropdownProps) => {
-    const [selected, setSelected] = useState(new Set());
+    const [selected, setSelected] = useState(new Set([]));
     const updateResourceFilters = props.setResourceFilters;
 
     useEffect(() => {

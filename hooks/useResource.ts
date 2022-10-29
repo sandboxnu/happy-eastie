@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import useSWRImmutable from 'swr/immutable'
 import { AppContext } from '../context/context'
 import { Resource } from '../models/types'
-import { ResourcesResponse } from '../pages/api/resources'
+import { ResourceData, ResourcesResponse } from '../pages/api/resources'
 import { ResourceResponse } from '../pages/api/resources/[resourceId]'
 
 // hook for getting a single resource from api to display in frontend
@@ -16,18 +16,18 @@ export const useResource = (id: string | string[] | undefined) => {
     const quizState = useContext(AppContext)
     const requestBody = quizState.encryptedQuizResponse ? JSON.stringify({data: quizState.encryptedQuizResponse}) : null
     const requestSettings =  { method: 'POST', body: requestBody, headers: {'Content-Type': 'application/json'}}
-    const resourcesFetcher = async () : Promise<Resource[]> => {
+    const resourcesFetcher = async () : Promise<ResourceData> => {
         const response : Response = await fetch('/api/resources', requestSettings)
         const resources : ResourcesResponse = await response.json()
         return resources.data
     } 
-    const {data: resourcesData}= useSWRImmutable<Resource[], Error>('/api/resources', resourcesFetcher)
+    const {data: resourcesData}= useSWRImmutable<ResourceData, Error>('/api/resources', resourcesFetcher)
 
     const resourceFetcher = async () : Promise<Resource> => {
         if (!id || Array.isArray(id)) {
             throw Error(`Invalid resource id type: received ${id} instead of string`)    
         } 
-        const resource : Resource | undefined = resourcesData!.find((r: Resource) => r.id === id)
+        const resource : Resource | undefined = resourcesData?.requested.concat(resourcesData.additional).find((r: Resource) => r.id === id)
         if (resource) {
             return resource
         } else {

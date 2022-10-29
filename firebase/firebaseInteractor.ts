@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { collection, doc, DocumentData, getDoc, getDocs, QueryDocumentSnapshot, setDoc, CollectionReference, FirestoreDataConverter, getFirestore, query, where, WhereFilterOp, Firestore, QueryConstraint, Query, QuerySnapshot, DocumentSnapshot, addDoc, deleteDoc, DocumentReference } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signOut } from "firebase/auth";
 import { Role } from "../constants/role";
-import { UID, User, Event } from "../models/types";
+import { UID, User } from "../models/types";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -161,6 +161,7 @@ class FirebaseInteractor {
 
 const firebaseInteractor = new FirebaseInteractor()
 export default firebaseInteractor
+
 
 export type WhereQuery = {
   field: string,

@@ -31,7 +31,7 @@ const ResourceDirectory: NextPage = () => {
         makeResourcesRequest(requestSettings).then((data) => {
             const resources: Resource[] = data.requested;
             setDisplayResources(resources);
-        })
+        }) //TODO: This currently returns a stray promise. We should probably add some indication of loading and blocking other search requests.
     }, [searchQuery, viewingAll])
 
     async function makeResourcesRequest(requestSettings: any) {

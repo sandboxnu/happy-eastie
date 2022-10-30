@@ -52,4 +52,4 @@ export const useResource = (id: string | string[] | undefined) => {
     const {data, error} = useSWRImmutable<Resource, Error>(resourceKeyFunction, resourceFetcher, {shouldRetryOnError: false})
     return { resource: data, isLoading: !error && !data, error }
   }
-
+  

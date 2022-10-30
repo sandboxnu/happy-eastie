@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Resource, SurveyAnswers } from '../../../models/types'
+import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import {AES, enc} from 'crypto-js'
 import { resourceConverter } from '../../../firebase/converters'
@@ -27,6 +27,10 @@ export default async function handler(
     const formData : SurveyAnswers = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
     const resourceData = await getResources(formData)
     res.status(200).json(resourceData)
+  } else if (req.body['searchParam']) {
+    const searchQuery = req.body['searchParam']
+    const resourceData = await getResourcesDirectory(req.body['searchParam'])
+    res.status(200).json(resourceData)
   } else {
     const resourceData = await getAllResources()
     res.status(200).json(resourceData)
@@ -44,18 +48,44 @@ async function getAllResources() : Promise<ResourcesResponse> {
 }
 
 async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse> {
-    let resources =  await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
+    let resources = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
     resources = resources.filter((r : Resource) => matchesSurvey(answers, r))
     const requested : Resource[] = []
     const additional : Resource[] = []
     resources.reduce((prev: Resource, curr: Resource) => {
-      (curr.category && curr.category.some(c1 => answers.category.some(c2 => c1 === c2))) ? requested.push(curr) : additional.push(curr)
+      (curr.category && curr.category.some((c1: ResourceCategory) => answers.category.some((c2: ResourceCategory) => c1 === c2))) ? requested.push(curr) : additional.push(curr)
       return curr
     })
     return {data: {
       requested,
       additional
     }}
+}
+
+async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesResponse> {
+  let resources = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
+  let requested = resources.filter((r : Resource) => matchesSearchQuery(searchQuery, r))
+  // TODO: eventually implement the filtering and sorting either by doing it using Mongo (if we
+  // switch over, or implemenet the two functions below)
+  // let requestedFiltered = requestedSearchResults.filter((r: Resource) => matchesFilters(filters, r))
+  // let requestedSorted = sort(requestedFiltered, sortingMethod)
+  return {data: {
+    requested,
+    additional: []
+  }}
+}
+
+function matchesSearchQuery(searchQuery: string, r: Resource) {
+  return r.name.toLowerCase().includes(searchQuery.toLowerCase())
+  || r.description?.toLowerCase().includes(searchQuery.toLowerCase());
+}
+
+function matchesFilters(filters: ResourceCategory[], r: Resource) {
+
+}
+
+function sort(resources: Resource[], sortingMethod: ResourceSortingMethod) {
+
 }
 
 function matchesSurvey(answers: SurveyAnswers, r: Resource) {

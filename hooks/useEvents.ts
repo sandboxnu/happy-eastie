@@ -68,4 +68,3 @@ export const deleteEventHandlerGenerator = (id: string) : (e: Event[]) => Promis
     }
   }
 }
-

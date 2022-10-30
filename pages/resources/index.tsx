@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import styles from "../../styles/Home.module.css";
 import { useResources } from "../../hooks/useResources";
 import { ResourcesDisplay } from "../../components/resources/ResourcesDisplay";
+import { useContext } from "react";
+import { AppContext } from "../../context/context";
 
 const Resources: NextPage = () => {
   const {requestedResources, additionalResources, isLoading, error} = useResources()

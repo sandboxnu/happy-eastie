@@ -124,7 +124,7 @@ function DirectoryComponent() {
       <Row align="baseline">
         <Image src="star.svg" alt="" containerCss={{ margin: 0 }} />
         <Spacer x={0.8} />
-        <Text h1>Resource Directory</Text>
+        <Link href="/directory"><Text h1>Resource Directory</Text></Link>
       </Row>
       <Row>{/* Add the search bar and buttons here */}</Row>
       <Row justify="center">

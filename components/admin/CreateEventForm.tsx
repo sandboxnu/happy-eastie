@@ -13,24 +13,24 @@ export const CreateEventForm: React.FC = () => {
         description: Yup.string(),
         summary: Yup.string(),
     });
-    
+
     const initialValues = {
         name: "",
         description: "",
         summary: "",
-      };
-    
+    };
+
     const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
 
     async function onSubmit(values: any) {
-        const bodyContent : EventInfo = {
+        const bodyContent: EventInfo = {
             name: values.name,
             description: values.description,
             summary: values.summary
         }
 
         mutate('/api/events', addEventHandlerGenerator(bodyContent), { revalidate: false })
-        
+
     };
 
     return (

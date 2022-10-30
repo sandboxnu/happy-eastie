@@ -7,8 +7,8 @@ import { useSWRConfig } from 'swr'
 import { EventsDisplay } from '../../components/admin/EventsDisplay'
 import { CreateEventForm } from '../../components/admin/CreateEventForm'
 
-const Home: NextPage = () => {
-    const {events, isLoading, error} = useEvents()
+const Admin: NextPage = () => {
+    const { events, isLoading, error } = useEvents()
 
     if (error) return <div>{error.message}</div>
     if (isLoading) return <div>loading...</div>
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
             <br />
             <CreateEventForm />
             <br />
-            <EventsDisplay events={events}/>
+            <EventsDisplay events={events} />
             <br />
             <br />
             {/* TODO: Currently just goes back to home page */}
@@ -31,4 +31,4 @@ const Home: NextPage = () => {
     )
 }
 
-export default Home
+export default Admin

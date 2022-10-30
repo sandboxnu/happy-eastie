@@ -153,3 +153,13 @@ export enum ResourceCategory {
     ImmigrationAssistance = "Immigration Assistance", 
     Housing = "Housing"
 }
+
+// TODO: update this type with all sorting methods possible
+// once we know what those are
+export enum ResourceSortingMethod {
+    Alphabetical = "Alphabetical",
+    Sort2 = "Sort2",
+    Sort3 = "Sort3",
+    Sort4 = "Sort4",
+    Sort5 = "Sort5"
+}

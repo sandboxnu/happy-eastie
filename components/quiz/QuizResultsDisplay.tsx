@@ -2,7 +2,8 @@ import { useContext } from "react"
 import { AppContext } from "../../context/context"
 import { useResources } from "../../hooks/useResources"
 import styles from "../../styles/Home.module.css";
-import { ResourcesDisplay } from "../resources/ResourcesDisplay";
+import styles2 from "../../styles/resource.module.css";
+import { ResourcesDisplay } from "../directory/ResourcesDisplay";
 
 export const QuizResultsDisplay: React.FC = () => {
   const quizState = useContext(AppContext)
@@ -14,10 +15,11 @@ export const QuizResultsDisplay: React.FC = () => {
 
   return  (
     <div className={styles.container}>
-      <h1>Quiz Results</h1>
-      <h2>Requested</h2>
+      <h1 className={styles2.title}>Your Matches</h1>
+      <p className={styles2.subtitle}>In order of best fit for you.</p>
       <ResourcesDisplay resources={requestedResources}/>
-      <h2>Additional</h2>
+      <h2 className={styles2.title}>Additional Resources</h2>
+      <p className={styles2.subtitle}>Services you also qualify for.</p>
       <ResourcesDisplay resources={additionalResources}/>
     </div>
   )

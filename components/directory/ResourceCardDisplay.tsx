@@ -15,7 +15,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
     // TODO: make this go to specific resource page once those are built
     const goToResourcePage = () => {
-        router.push("/")
+        router.push(`/resources/${props.resource.id}`)
     }
 
     return (

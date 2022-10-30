@@ -48,14 +48,14 @@ export interface EventInfo {
 export interface SurveyAnswers {
     category: ResourceCategory[];
     income?: number;
-    language?: string;
+    language: Language[];
     citizenship?: Citizenship;
     parentAge?: number;
     childAge?: number;
     family?: Family;
     employmentStatus?: EmploymentStatus;
     insurance?: Insurance;
-    accessibility?: Accessibility; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
+    accessibility: Accessibility[]; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
 }
 
 /**
@@ -75,12 +75,12 @@ export interface Service extends DocumentData {
     insurance?: Insurance[];
     accessibility?: Accessibility[];
 }
-
-export interface ResourceData extends DocumentData {
+export interface Resource extends DocumentData {
+    id: string;
     name: string;
     description?: string;
     url?: string;
-    category?: string[];
+    category?: ResourceCategory[];
     minimumIncome?: number;
     maximumIncome?: number;
     language?: String[];
@@ -134,38 +134,16 @@ export enum Insurance {
 }
 
 export enum Accessibility {
-    "Speech",
-    "Vision",
-    "Hearing",
-    "Mental",
-    "Digital Literacy"
+    Speech = "Speech",
+    Vision = "Vision",
+    Hearing = "Hearing",
+    Mental = "Mental",
+    DigitalLiteracy = "Digital Literacy"
 }
 
 export enum Language {
-    "English",
-    "Spanish"
-}
-
-export interface Resource extends DocumentData {
-    id: string;
-    name: string;
-    description?: string;
-    url?: string;
-    category?: ResourceCategory[];
-    minimumIncome?: number;
-    maximumIncome?: number;
-    language?: String[];
-    citizenship?: Citizenship[];
-    minimumParentAge?: number;
-    maximumParentAge?: number;
-    minimumChildAge?: number;
-    maximumChildAge?: number;
-    family?: Family[];
-    employmentStatus?: EmploymentStatus[];
-    insurance?: Insurance[];
-    accessibility?: Accessibility[];
-    location?: GeoPoint;
-    tags?: string[];
+    English = "English",
+    Spanish = "Spanish"
 }
 
 export enum ResourceCategory {

@@ -3,6 +3,7 @@ import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, R
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import {AES, enc} from 'crypto-js'
 import { resourceConverter } from '../../../firebase/converters'
+import MongoDbInteractor from '../../../firebase/mongoDbInteractor'
 
 
 export type ResourceData = {
@@ -19,7 +20,7 @@ export type ResourcesResponse = {
 // 2. it returns all resources by default if no body is sent
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResourcesResponse>
+  res: NextApiResponse<ResourcesResponse | Array<Resource>>
 ) {
   if (req.body['data']) {
     // TODO: error handling for invalid bodies sent
@@ -32,7 +33,9 @@ export default async function handler(
     const resourceData = await getResourcesDirectory(req.body['searchParam'])
     res.status(200).json(resourceData)
   } else {
-    const resourceData = await getAllResources()
+    const mongoInteractor = new MongoDbInteractor()
+    const resourceData = await mongoInteractor.getDocuments()
+    //const resourceData = await getAllResources()
     res.status(200).json(resourceData)
   }
 }

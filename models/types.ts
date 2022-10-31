@@ -1,5 +1,6 @@
 import { Role } from "../constants/role";
 import { DocumentData, GeoPoint, Timestamp } from "firebase/firestore";
+import { Document, ObjectId, WithId } from "mongodb";
 
 // TODO: these types may not all be accurate - refer to quiz-real branch when finalizing
 
@@ -75,8 +76,7 @@ export interface Service extends DocumentData {
     insurance?: Insurance[];
     accessibility?: Accessibility[];
 }
-export interface Resource extends DocumentData {
-    id: string;
+export interface Resource {
     name: string;
     description?: string;
     url?: string;

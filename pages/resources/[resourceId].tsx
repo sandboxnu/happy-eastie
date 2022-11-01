@@ -3,6 +3,7 @@ import { useResource } from "../../hooks/useResource";
 import { useRouter } from "next/router";
 import { ResourceHeader } from "../../components/resources/ResourceHeader";
 import ReactMarkdown from "react-markdown";
+import { ResourceDescription } from "../../components/resources/ResourceDescription";
 
 const ResourcePage: NextPage = () => {
   const router = useRouter();
@@ -16,11 +17,10 @@ const ResourcePage: NextPage = () => {
 
   const howToApply = resource.howToApply?.replaceAll("\\n", "\n");
 
-  console.log(resource.howToApply?.split("\\n"));
-
   return (
     <div>
       <ResourceHeader resource={resource} />
+      <ResourceDescription resource={resource} />
       {howToApply && <ReactMarkdown children={howToApply} />}
     </div>
   );

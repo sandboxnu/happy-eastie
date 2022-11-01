@@ -29,6 +29,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
   return (
     <div>
       <Image src={props.resource.headerImageUrl} objectFit="cover" alt="Resource header image" />
+
       <Grid.Container justify="center" gap={1}>
         {props.resource.category?.map((c, i) => (
           <Grid key={i} md={1}>
@@ -36,6 +37,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
           </Grid>
         ))}
       </Grid.Container>
+
       <Grid.Container justify="center" gap={4}>
         <Grid>
           <Button

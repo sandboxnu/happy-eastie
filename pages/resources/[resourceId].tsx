@@ -16,6 +16,8 @@ const ResourcePage: NextPage = () => {
 
   const howToApply = resource.howToApply?.replaceAll("\\n", "\n");
 
+  console.log(resource.howToApply?.split("\\n"));
+
   return (
     <div>
       <ResourceHeader resource={resource} />

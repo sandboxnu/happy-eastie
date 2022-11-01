@@ -104,3 +104,7 @@ input[type="checkbox"] ~ label {
 input[type="checkbox"] {
   position: absolute;
 }
+
+ul {
+  list-style: disc;
+}

@@ -1,7 +1,7 @@
 import {  MongoClient, WithId } from "mongodb";
 import { Resource } from "../models/types";
 
-const uri = "mongodb+srv://happy-eastie:XTgZ9LoF92LxzzZO@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://happy-eastie:<password>@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 export default class MongoDbInteractor {

@@ -34,7 +34,7 @@ export default async function handler(
     res.status(200).json(resourceData)
   } else {
     const mongoInteractor = new MongoDbInteractor()
-    const resourceData = await mongoInteractor.getDocuments()
+    const resourceData = await mongoInteractor.getDocuments<Resource>('resources')
     //const resourceData = await getAllResources()
     res.status(200).json(resourceData)
   }

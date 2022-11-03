@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import type {Resource} from '../../../models/types'
 import FirebaseInteractor from '../../../firebase/firebaseInteractor'
 import { resourceConverter } from '../../../firebase/converters'
+import MongoDbInteractor from '../../../firebase/mongoDbInteractor'
 
 export type ResourceResponse = {
   data?: Resource
@@ -21,6 +22,7 @@ export default async function handler(
   return resource ? res.status(200).json({data: resource}) : res.status(404).json({ error: `Resource ${id} not found`})
 }
 
-async function getResource(id: string) : Promise<Resource | undefined> {
-    return await FirebaseInteractor.getDocumentById('resources', id, resourceConverter)
+async function getResource(id: string) : Promise<Resource | null> {
+    const db = new MongoDbInteractor();
+    return await db.getDocument<Resource>('resources', id);
 }

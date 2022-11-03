@@ -28,7 +28,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
   };
 
   return (
-    <div>
+    <Grid>
       <Header/>
 
       <Image src={props.resource.headerImageUrl} objectFit="cover" alt="Resource header image" />
@@ -77,6 +77,6 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
           ></Button>
         </Grid>
       </Grid.Container>
-    </div>
+    </Grid>
   );
 };

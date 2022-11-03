@@ -25,6 +25,10 @@ a {
   color: var(--brand-primary);
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 @font-face {
   font-family: 'Raleway';
   src: url(../fonts/Raleway-VariableFont_wght.ttf);
@@ -46,6 +50,27 @@ a {
   line-height: 41px;
   color: var(--secondary-text);
   letter-spacing: 0.5px;
+}
+
+h3 {
+  font-size: 25px;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+p {
+  font-size: 20px;
+  font-family: 'Raleway';
+  font-weight: 400;
+  color: var(--secondary-text);
+}
+
+li {
+  font-size: 20px;
+  font-family: 'Raleway';
+  font-weight: 400;
+  color: var(--secondary-text);
 }
 
 .homepage-button {

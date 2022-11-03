@@ -18,11 +18,17 @@ const ResourcePage: NextPage = () => {
   const howToApply = resource.howToApply?.replaceAll("\\n", "\n");
 
   return (
-    <div>
+    <Grid.Container direction="column" justify="center" wrap="nowrap">
       <ResourceHeader resource={resource} />
       <ResourceDescription resource={resource} />
-      {howToApply && <ReactMarkdown children={howToApply} />}
-    </div>
+
+      <Grid.Container justify="center">
+        <Grid direction="column" css={{maxWidth: 440}}>
+          <Text h3 css={{textAlign: "center"}}>How to Apply</Text>
+          {howToApply && <ReactMarkdown children={howToApply} />}
+        </Grid>
+      </Grid.Container>
+    </Grid.Container>
   );
 };
 

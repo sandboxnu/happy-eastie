@@ -4,6 +4,7 @@ import Tag from "../tag";
 import styles from "../../styles/resource.module.css";
 import { useRouter } from "next/router";
 import Header from "../header";
+import TagsMap from "../../models/TagsMap"
 
 interface ResourceHeaderProps {
   resource: Resource;
@@ -40,7 +41,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
       <Grid.Container justify="center" gap={1}>
         {props.resource.category?.map((c, i) => (
           <Grid key={i} md={1}>
-            <Tag text={c} color="green" />
+            <Tag text={c} color={TagsMap().get(c) ?? "black"} />
           </Grid>
         ))}
       </Grid.Container>

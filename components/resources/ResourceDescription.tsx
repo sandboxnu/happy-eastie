@@ -1,5 +1,6 @@
 import { Resource } from "../../models/types";
 import { Grid, Image, Text } from "@nextui-org/react";
+import styles from "../../styles/resource.module.css";
 
 interface ResourceDescriptionProps {
     resource: Resource;
@@ -10,10 +11,10 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (props: R
         <div>
             <Grid.Container justify="center" gap={8} wrap="nowrap">
                 <Grid>
-                    <Text>{props.resource.description}</Text>
+                    <Text className={styles.descriptionText}>{props.resource.description}</Text>
                     <br />
-                    <Text weight="semibold">Point of Contact: {props.resource.pointOfContact}</Text>
-                    <Text weight="semibold">Waitlist: {props.resource.waitlist?.description}</Text>
+                    <Text weight="semibold" className={styles.descriptionText}>Point of Contact: {props.resource.pointOfContact}</Text>
+                    <Text weight="semibold" className={styles.descriptionText}>Waitlist: {props.resource.waitlist?.description}</Text>
                 </Grid>
                 <Grid>
                     {/* TODO: put map of relevant locations here */}

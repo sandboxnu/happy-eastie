@@ -1,8 +1,9 @@
 import { Resource } from "../../models/types";
-import { Button, Grid, Image } from "@nextui-org/react";
+import { Button, Grid, Image, Text } from "@nextui-org/react";
 import Tag from "../tag";
 import styles from "../../styles/resource.module.css";
 import { useRouter } from "next/router";
+import Header from "../header";
 
 interface ResourceHeaderProps {
   resource: Resource;
@@ -28,8 +29,14 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
 
   return (
     <div>
+      <Header/>
+
       <Image src={props.resource.headerImageUrl} objectFit="cover" alt="Resource header image" />
 
+      <Grid.Container justify="center" gap={1}>
+        <Text className={styles.resourceHeader}>{props.resource.name}</Text>
+      </Grid.Container>
+      
       <Grid.Container justify="center" gap={1}>
         {props.resource.category?.map((c, i) => (
           <Grid key={i} md={1}>

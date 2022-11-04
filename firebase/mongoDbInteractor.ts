@@ -1,23 +1,21 @@
-import {  Db, DeleteResult, Document, Filter, FilterOperations, MongoClient, OptionalUnlessRequiredId, WithId, WithoutId } from "mongodb";
-import { Resource } from "../models/types";
+import { Db, DeleteResult, Document, Filter, MongoClient, OptionalUnlessRequiredId, WithId, WithoutId } from "mongodb";
 
 const uri = "mongodb+srv://happy-eastie:password@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 export default class MongoDbInteractor {
-    async getDocument<T extends Document>(collectionName : string, id : string) : Promise<WithId<T> | null> {
+    
+    async getDocument<T extends Document>(collectionName : string, id : string) : Promise<WithId<T>> {
         try {
             await client.connect();
             const database = client.db('happy-eastie');
-            const results = await database.collection<T>(collectionName).findOne({ _id: id } as Filter<T>);
-            // const resources = await results.toArray();
-            console.log("reeeeee ", results);
+            const results = database.collection(collectionName).find({ _id : id});
+            const resources = (await results.toArray()) as WithId<T>[];
             await client.close();
-            return results;
+            return resources[0];
         } catch (e) {
             console.log(e)
-            await client.close();
-            return null
+            throw e;
         } 
     }
 
@@ -36,6 +34,7 @@ export default class MongoDbInteractor {
 
     async createDocument<T extends Document>(doc : OptionalUnlessRequiredId<T>, collectionName : string) : Promise<T> {
         try {
+            await client.connect();
             const database = client.db('happy-eastie');
             const result = await database.collection<T>(collectionName).insertOne(doc);
             await client.close();
@@ -48,6 +47,7 @@ export default class MongoDbInteractor {
 
     async createDocuments<T extends Document>(doc : Array<OptionalUnlessRequiredId<T>>, collectionName : string) : Promise<Array<T>> {
         try {
+            await client.connect();
             const database = client.db('happy-eastie');
             const result = await database.collection<T>(collectionName).insertMany(doc);
             await client.close();
@@ -60,6 +60,7 @@ export default class MongoDbInteractor {
 
     async updateDocument<T extends Document>(collectionName : string, filter : Filter<T>, replacement : WithoutId<T>) : Promise<any>  {
         try {
+            await client.connect();
             const database = client.db('happy-eastie');
             const result = await database.collection<T>(collectionName).replaceOne(filter, replacement);
             client.close();
@@ -72,6 +73,7 @@ export default class MongoDbInteractor {
 
     async deleteDocument<T extends Document>(collectionName : string, filter : Filter<T>) : Promise<DeleteResult> {
         try {
+            await client.connect();
             const database = client.db('happy-eastie');
             const result = await database.collection<T>(collectionName).deleteOne(filter);
             client.close();

@@ -1,6 +1,6 @@
-import { Db, DeleteResult, Document, Filter, MongoClient, OptionalUnlessRequiredId, WithId, WithoutId } from "mongodb";
+import { Db, DeleteResult, Document, Filter, MongoClient, ObjectId, OptionalUnlessRequiredId, WithId, WithoutId } from "mongodb";
 
-const uri = "mongodb+srv://happy-eastie:password@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://happy-eastie:XTgZ9LoF92LxzzZO@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 export default class MongoDbInteractor {
@@ -9,7 +9,7 @@ export default class MongoDbInteractor {
         try {
             await client.connect();
             const database = client.db('happy-eastie');
-            const results = database.collection(collectionName).find({ _id : id});
+            const results = database.collection(collectionName).find({ _id : new ObjectId(id)});
             const resources = (await results.toArray()) as WithId<T>[];
             await client.close();
             return resources[0];

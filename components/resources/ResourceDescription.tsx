@@ -43,7 +43,7 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
               }%2C${location!.latitude - mapRadius}&layer=mapnik&marker=${
                 location!.latitude
               }%2C${location!.longitude}`}
-              style={{ border: "1px solid black" }}
+              style={{ border: "1px solid black", overflow: "hidden" }}
             ></iframe>
           </Grid>
         )}

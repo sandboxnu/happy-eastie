@@ -1,10 +1,11 @@
 import type { NextPage } from "next";
 import { useResource } from "../../hooks/useResource";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { ResourceHeader } from "../../components/resources/ResourceHeader";
 import ReactMarkdown from "react-markdown";
 import { Grid, Text } from "@nextui-org/react";
 import styles from "../../styles/resource.module.css"
+import { ResourceDescription } from "../../components/resources/ResourceDescription";
 
 const ResourcePage: NextPage = () => {
   const router = useRouter();

@@ -34,7 +34,7 @@ export default async function handler(
   } else {
     //const resourceData = await mongoInteractor.getDocuments<Resource>('resources', {category: {"$exists": true, "$elemMatch": {"$in": ["Housing", "Financial Help"]}}})
     //const resourceData = await getAllResources()
-    const resourceData = await mongoDbInteractor.getDocuments<Resource>('resources', { mininumIncome: { '$lte': 10000 }, maximumIncome: { '$gte': 10000 }})
+    const resourceData = await mongoDbInteractor.getDocuments<Resource>('resources', {maximumIncome: {"$gte": 10000}, minimumIncome: {"$lte": 10000}})
     res.status(200).json(resourceData)
   }
 }

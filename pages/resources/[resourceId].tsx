@@ -28,15 +28,16 @@ const ResourcePage: NextPage = () => {
       <ResourceDescription resource={resource} />
 
       <Grid.Container justify="center">
-        <Grid direction="column" css={{maxWidth: 440}}>
-          <Text h3 css={{textAlign: "center"}}>How to Apply</Text>
-          {howToApply && <ReactMarkdown children={howToApply} />}
+        <Grid direction="column" css={{ maxWidth: 440 }}>
+          <Text h3 css={{ textAlign: "center" }}>How to Apply</Text>
+          {howToApply &&
+            <ReactMarkdown>{howToApply}</ReactMarkdown>}
         </Grid>
       </Grid.Container>
       <Grid.Container justify="flex-start">
         <Grid direction="row" md={1}>
           <button className={styles.back} onClick={goBack}>
-                  Back
+            Back
           </button>
         </Grid>
       </Grid.Container>

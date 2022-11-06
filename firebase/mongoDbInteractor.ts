@@ -1,6 +1,6 @@
 import { Db, DeleteResult, Document, Filter, MongoClient, ObjectId, OptionalUnlessRequiredId, WithId, WithoutId } from "mongodb";
 
-const uri = "mongodb+srv://happy-eastie:XTgZ9LoF92LxzzZO@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://happy-eastie:${process.env.PASSWORD}@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri);
 
 export default class MongoDbInteractor {

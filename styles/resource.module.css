@@ -37,3 +37,20 @@
   font-family: 'Raleway';
   color: var(--secondary-text);
 }
+
+.back {
+  color: var(--secondary-text);
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: "Raleway";
+  font-size: 30px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-left: 50px;
+  margin-bottom: 15px;
+}
+
+.back:hover {
+  color: var(--primary-text);
+}

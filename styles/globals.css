@@ -92,6 +92,11 @@ li {
   font-size: 25px;
   font-weight: 600;
   color: var(--secondary-text);
+  text-decoration: none;
+}
+
+.navbar-content:hover {
+  text-decoration: none;
 }
 
 h1 {

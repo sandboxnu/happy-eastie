@@ -1,7 +1,21 @@
-.title {
-    color: var(--brand-primary);
+.container {
+    padding: 0 2rem;
 }
 
-.subtitle {
-    color: var(--secondary-text)
+.container h2,.container h1 {
+  font-family: "Raleway";
+  font-weight: 600;
+  line-height: 44.61px;
+  color: var(--brand-primary);
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.container p {
+    font-family: "Raleway";
+    font-weight: 400;
+    line-height: 23px;
+    color: var(--secondary-text);
+    letter-spacing: 0.25px;
+    text-align: center;
 }

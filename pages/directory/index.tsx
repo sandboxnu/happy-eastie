@@ -8,7 +8,7 @@ import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
 import { FormElement } from '@nextui-org/react';
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
-
+import Header from '../../components/header'
 const ResourceDirectory: NextPage = () => {
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
     const [viewingAll, setViewingAll] = useState<boolean>(false)
@@ -55,9 +55,8 @@ const ResourceDirectory: NextPage = () => {
 
     return (
         <div className={styles.container}>
-            <h1>Resource Directory</h1>
-            <Link href='/'>Back to Home</Link>
-
+            <Header/>
+            <h1 style={{textAlign: "center"}}>Resource Directory</h1>
             <br />
             <br />
 

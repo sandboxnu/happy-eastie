@@ -1,15 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
-import FirebaseInteractor from '../../../firebase/firebaseInteractor'
+import type { Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
 import {AES, enc} from 'crypto-js'
-import { resourceConverter } from '../../../firebase/converters'
-import MongoDbInteractor from '../../../firebase/mongoDbInteractor'
-
+import mongoDbInteractor, { MongoDbInteractor } from '../../../firebase/mongoDbInteractor'
+import { Filter, WithId } from 'mongodb'
 
 export type ResourceData = {
-  requested: Resource[],
-  additional: Resource[]
-} 
+  requested: WithId<Resource>[],
+  additional: WithId<Resource>[]
+}
+
 export type ResourcesResponse = {
   data: ResourceData
 }
@@ -29,19 +28,19 @@ export default async function handler(
     const resourceData = await getResources(formData)
     res.status(200).json(resourceData)
   } else if (req.body['searchParam']) {
-    const searchQuery = req.body['searchParam']
-    const resourceData = await getResourcesDirectory(req.body['searchParam'])
-    res.status(200).json(resourceData)
+    //const searchQuery = req.body['searchParam']
+    //const resourceData = await getResourcesDirectory(req.body['searchParam'])
+    res.status(200).json([])
   } else {
-    const mongoInteractor = new MongoDbInteractor()
-    const resourceData = await mongoInteractor.getDocuments<Resource>('resources')
+    //const resourceData = await mongoInteractor.getDocuments<Resource>('resources', {category: {"$exists": true, "$elemMatch": {"$in": ["Housing", "Financial Help"]}}})
     //const resourceData = await getAllResources()
+    const resourceData = await mongoDbInteractor.getDocuments<Resource>('resources', { mininumIncome: { '$lte': 10000 }, maximumIncome: { '$gte': 10000 }})
     res.status(200).json(resourceData)
   }
 }
 
 async function getAllResources() : Promise<ResourcesResponse> {
-  const requested = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
+  const requested = await mongoDbInteractor.getDocuments<Resource>('resources', {})
   return {
     data: {
       requested,
@@ -51,11 +50,13 @@ async function getAllResources() : Promise<ResourcesResponse> {
 }
 
 async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse> {
-    let resources = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
-    resources = resources.filter((r : Resource) => matchesSurvey(answers, r))
-    const requested : Resource[] = []
-    const additional : Resource[] = []
-    resources.reduce((prev: Resource, curr: Resource) => {
+    const filter : Filter<Resource> = convertToFilter(answers)
+    console.log(filter)
+    let resources = await mongoDbInteractor.getDocuments<Resource>('resources', filter )
+    console.log(resources)
+    const requested : WithId<Resource>[] = []
+    const additional : WithId<Resource>[] = []
+    resources.reduce((prev: WithId<Resource>, curr: WithId<Resource>) => {
       (curr.category && curr.category.some((c1: ResourceCategory) => answers.category.some((c2: ResourceCategory) => c1 === c2))) ? requested.push(curr) : additional.push(curr)
       return curr
     })
@@ -65,6 +66,15 @@ async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse>
     }}
 }
 
+function convertToFilter(answers: SurveyAnswers) : Filter<Resource> {
+  let filter = {}
+  if (answers.income) {
+    filter = {mininumIncome: {"$lte": answers.income},maximumIncome: {"$gte": answers.income}, ...filter}
+  }
+  return filter
+}
+
+/*
 async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesResponse> {
   let resources = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
   let requested = resources.filter((r : Resource) => matchesSearchQuery(searchQuery, r))
@@ -77,6 +87,7 @@ async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesRes
     additional: []
   }}
 }
+*/
 
 function matchesSearchQuery(searchQuery: string, r: Resource) {
   return r.name.toLowerCase().includes(searchQuery.toLowerCase())

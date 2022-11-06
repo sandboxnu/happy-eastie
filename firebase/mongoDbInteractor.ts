@@ -3,7 +3,7 @@ import { Db, DeleteResult, Document, Filter, MongoClient, ObjectId, OptionalUnle
 const uri = `mongodb+srv://happy-eastie:${process.env.PASSWORD}@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri);
 
-export default class MongoDbInteractor {
+export class MongoDbInteractor {
     
     async getDocument<T extends Document>(collectionName : string, id : string) : Promise<WithId<T>> {
         try {
@@ -19,12 +19,12 @@ export default class MongoDbInteractor {
         } 
     }
 
-    async getDocuments<T extends Document>(collectionName : string) : Promise<Array<WithId<T>>> {
+    async getDocuments<T extends Document>(collectionName : string, filter: Filter<T>) : Promise<Array<WithId<T>>> {
         try {
             await client.connect();
             const database = client.db('happy-eastie');
             const resources = database.collection<T>(collectionName);
-            const resourceList = resources.find();
+            const resourceList = resources.find(filter);
             return await resourceList.toArray();
         } catch (e) {
             console.log(e)
@@ -84,6 +84,9 @@ export default class MongoDbInteractor {
         }
     }
 }
+
+const mongoDbInteractor = new MongoDbInteractor()
+export default mongoDbInteractor
 
 
 /*

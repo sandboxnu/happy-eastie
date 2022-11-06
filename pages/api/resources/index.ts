@@ -52,7 +52,7 @@ async function getAllResources() : Promise<ResourcesResponse> {
 async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse> {
     const filter : Filter<Resource> = convertToFilter(answers)
     console.log(filter)
-    let resources = await mongoDbInteractor.getDocuments<Resource>('resources', filter )
+    let resources = await mongoDbInteractor.getDocuments<Resource>('resources', filter)
     console.log(resources)
     const requested : WithId<Resource>[] = []
     const additional : WithId<Resource>[] = []
@@ -69,9 +69,10 @@ async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse>
 function convertToFilter(answers: SurveyAnswers) : Filter<Resource> {
   let filter = {}
   if (answers.income) {
-    filter = {mininumIncome: {"$lte": answers.income},maximumIncome: {"$gte": answers.income}, ...filter}
+    filter = {mininumIncome: {"$lte": answers.income},maximumIncome: {"$gte": answers.income}}
   }
-  return filter
+  //return filter
+  return {maximumIncome: {"$gte": 10000}, minimumIncome: {"$lte": 10000}}
 }
 
 /*

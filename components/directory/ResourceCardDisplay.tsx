@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
+import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
+import { useRouter } from "next/router";
 import { Resource } from '../../models/types';
-import router from 'next/router';
 import styles from '../../styles/Directory.module.css';
 import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
@@ -12,6 +12,7 @@ interface ResourceCardDisplayProps {
 }
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {
+    const router = useRouter();
 
     // TODO: make this go to specific resource page once those are built
     const goToResourcePage = () => {
@@ -29,9 +30,9 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
             <Card.Body css={{ py: "$10", pb: "$15" }}>
                 <Col>
-                    <Row justify="flex-start" css={{ gap: 10, pb: "$10"}}>
+                    <Row justify="flex-start" css={{ gap: 10, pb: "$10" }}>
                         {props.resource.tags?.map((tag, index) => (
-                        <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
+                            <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
                         ))}
                     </Row>
                     <Row>
@@ -46,8 +47,8 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
             <Card.Footer>
                 <Row justify="flex-start">
-                    <ApplyForResourceButtons/>
-                    <CallResourceButtons/>
+                    <ApplyForResourceButtons />
+                    <CallResourceButtons />
                 </Row>
             </Card.Footer>
         </Card>
@@ -57,7 +58,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 function ApplyForResourceButtons() {
     return (
         <Link href="#">
-            <Row css={{px: "0"}}>
+            <Row css={{ px: "0" }}>
                 <Image src="/laptop.svg"></Image>
                 <Text className={styles.cardFooter}>Apply Online</Text>
             </Row>
@@ -68,7 +69,7 @@ function ApplyForResourceButtons() {
 function CallResourceButtons() {
     return (
         <Link href="#">
-            <Row css={{px: "0"}}>
+            <Row css={{ px: "0" }}>
                 <Image src="/phone.svg"></Image>
                 <Text className={styles.cardFooter}>By Phone</Text>
             </Row>

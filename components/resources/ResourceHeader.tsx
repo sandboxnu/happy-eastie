@@ -32,7 +32,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
     <Grid>
       <Header/>
 
-      <Image src={props.resource.headerImageUrl} objectFit="cover" alt="Resource header image" />
+      <Image src={props.resource.headerImageUrl} objectFit="cover" alt="Resource header image" css={{h: 254}} />
 
       <Grid.Container justify="center" gap={1}>
         <Text className={styles.resourceHeader}>{props.resource.name}</Text>

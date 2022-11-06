@@ -52,5 +52,6 @@
 }
 
 .back:hover {
-  color: var(--primary-text);
+  filter: brightness(0.85);
+  cursor: pointer;
 }

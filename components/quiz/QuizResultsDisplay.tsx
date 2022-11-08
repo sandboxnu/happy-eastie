@@ -1,4 +1,4 @@
-import { Progress } from "@nextui-org/react";
+import { Progress, Row } from "@nextui-org/react";
 import { useContext } from "react";
 import { AppContext } from "../../context/context";
 import { useResources } from "../../hooks/useResources";
@@ -7,6 +7,7 @@ import { ResourcesDisplay } from "../directory/ResourcesDisplay";
 import { Star } from "../star";
 import { Grid, Spacer, Text } from "@nextui-org/react";
 import Header from "../header";
+import { HelpTooltip } from "../HelpTooltip";
 
 export const QuizResultsDisplay: React.FC = () => {
   const quizState = useContext(AppContext);
@@ -19,22 +20,32 @@ export const QuizResultsDisplay: React.FC = () => {
     return <div>Internal server error: invalid resources loaded</div>;
 
   return (
-    <Grid.Container gap={2} alignItems="center" direction="column" className={styles.container}>
+    <Grid.Container
+      gap={2}
+      alignItems="center"
+      direction="column"
+      className={styles.container}
+    >
       <Grid direction="column">
-        <Text h1>
-          Your Matches
-        </Text>
-        <Text>In order of best fit for you.</Text>
-        <Spacer y={1} />
+        <Text h1>Your Matches</Text>
         <Progress max={4} value={4} size={"sm"} />
-        <Spacer y={1} />
+        <Spacer y={0.7} />
+        <Row align="center" justify="center">
+          <Text>In order of best fit for you.</Text>
+          <Spacer x={0.5} />
+          <HelpTooltip diameter={15} text="Test" />
+        </Row>
       </Grid>
       <Grid direction="column">
         <ResourcesDisplay resources={requestedResources} />
         {additionalResources.length > 0 && (
           <>
             <Text h2>Additional Resources</Text>
-            <p>Services you also qualify for.</p>
+            <Row align="center" justify="center">
+              <p>Services you also qualify for.</p>
+              <Spacer x={0.5} />
+              <HelpTooltip diameter={15} text="Test" />
+            </Row>
             <ResourcesDisplay resources={additionalResources} />
           </>
         )}

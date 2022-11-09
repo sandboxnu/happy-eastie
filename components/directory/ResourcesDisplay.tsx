@@ -10,7 +10,7 @@ export const ResourcesDisplay: React.FC<ResourcesDisplayProps> = (props: Resourc
     return (
         <Grid.Container gap={4} direction="row" justify="flex-start" wrap="wrap">
             {props.resources?.map((resourceResult: Resource) => (
-                <Grid xs={6} key={resourceResult.id}>
+                <Grid md={6} sm={12} justify="center" key={resourceResult.id}>
                     <ResourceCardDisplay resource={resourceResult}></ResourceCardDisplay>
                     <br />
                 </Grid>

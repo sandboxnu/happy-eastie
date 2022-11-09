@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
 import { Resource } from '../../models/types';
-import router from 'next/router';
+import {useRouter} from 'next/router';
 import styles from '../../styles/Directory.module.css';
 import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
@@ -12,14 +12,14 @@ interface ResourceCardDisplayProps {
 }
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {
+    const router = useRouter();
 
-    // TODO: make this go to specific resource page once those are built
     const goToResourcePage = () => {
-        router.push(`/resources/${props.resource.id}`)
+        router.push(`/resources/${props.resource.id}`);
     }
 
     return (
-        <Card isPressable onPress={goToResourcePage} isHoverable css={{ mw: "500px" }}>
+        <Card isPressable onPress={goToResourcePage} isHoverable css={{ mw: "500px", backgroundColor: "var(--brand-light-blue)"}}>
             <Card.Header>
                 <Row justify='space-between'>
                     <Text b className={styles.cardHeader}>{props.resource.name}</Text>

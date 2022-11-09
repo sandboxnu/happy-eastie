@@ -74,6 +74,8 @@ h1 {
   font-size: 35px;
   font-weight: 600;
   color: black;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .table-content {

@@ -4,9 +4,7 @@ import { AppContext } from "../../context/context";
 import { useResources } from "../../hooks/useResources";
 import styles from "../../styles/resource.module.css";
 import { ResourcesDisplay } from "../directory/ResourcesDisplay";
-import { Star } from "../star";
-import { Grid, Spacer, Text } from "@nextui-org/react";
-import Header from "../header";
+import { Grid, Spacer, Text, Image } from "@nextui-org/react";
 import { HelpTooltip } from "../HelpTooltip";
 
 export const QuizResultsDisplay: React.FC = () => {
@@ -21,13 +19,18 @@ export const QuizResultsDisplay: React.FC = () => {
 
   return (
     <Grid.Container
-      gap={2}
+      gap={1}
       alignItems="center"
       direction="column"
       className={styles.container}
     >
       <Grid direction="column">
-        <Text h1>Your Matches</Text>
+        <Row align="center">
+          <Image src={"/star.svg"} alt="" width={31} height={31} />
+          <Spacer x={0.4} />
+          <Text h1>Your Matches</Text>
+        </Row>
+        <Spacer y={0.4} />
         <Progress max={4} value={4} size={"sm"} />
         <Spacer y={0.7} />
         <Row align="center" justify="center">

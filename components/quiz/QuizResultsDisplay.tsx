@@ -36,7 +36,7 @@ export const QuizResultsDisplay: React.FC = () => {
         <Row align="center" justify="center">
           <Text>In order of best fit for you.</Text>
           <Spacer x={0.5} />
-          <HelpTooltip diameter={15} text="Test" />
+          <HelpTooltip diameter={15} text="These are resources that you qualify for and that are under the categories you requested in the first page." />
         </Row>
       </Grid>
       <Grid direction="column">
@@ -47,7 +47,7 @@ export const QuizResultsDisplay: React.FC = () => {
             <Row align="center" justify="center">
               <p>Services you also qualify for.</p>
               <Spacer x={0.5} />
-              <HelpTooltip diameter={15} text="Test" />
+              <HelpTooltip diameter={15} text="These are other resources you might qualify for but did not specifically request." />
             </Row>
             <ResourcesDisplay resources={additionalResources} />
           </>

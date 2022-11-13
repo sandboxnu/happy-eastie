@@ -87,7 +87,7 @@ li {
   color: white;
 }
 
-.navbar-content {
+.navbar-content *{
   font-family: 'Raleway';
   font-size: 25px;
   font-weight: 600;
@@ -95,7 +95,7 @@ li {
   text-decoration: none;
 }
 
-.navbar-content:hover {
+.navbar-content a:hover {
   text-decoration: none;
 }
 

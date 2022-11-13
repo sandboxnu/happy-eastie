@@ -113,7 +113,7 @@ function DirectoryComponent() {
 
   const TableLink = (props: TableLinkProps) => (
     <td>
-      <a href="resources" style={{ color: "var(--text-primary)" }}>
+      <a href="/directory" style={{color: "black"}}>
         {props.name}
       </a>
     </td>

@@ -21,6 +21,8 @@ const ResourcePage: NextPage = () => {
       <Link href='/resources'>Back to Results page</Link>
     </div>
   )
+
+  // Note: maybe it shouldn't always go back to resources?
 }
 
 

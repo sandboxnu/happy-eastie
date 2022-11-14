@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type {Resource} from '../../../models/types'
-import MongoDbInteractor from '../../../firebase/mongoDbInteractor'
 import mongoDbInteractor from '../../../firebase/mongoDbInteractor'
+import { WithId } from 'mongodb'
 
 export type ResourceResponse = {
-  data?: Resource
+  data?: WithId<Resource>
   error?: string
 }
 
@@ -21,6 +21,6 @@ export default async function handler(
   return resource ? res.status(200).json({data: resource}) : res.status(404).json({ error: `Resource ${id} not found`})
 }
 
-async function getResource(id: string) : Promise<Resource | null> {
+async function getResource(id: string) : Promise<WithId<Resource> | null> {
     return await mongoDbInteractor.getDocument<Resource>('resources', id);
 }

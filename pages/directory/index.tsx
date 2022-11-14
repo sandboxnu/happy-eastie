@@ -8,17 +8,18 @@ import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
 import { FormElement } from '@nextui-org/react';
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
+import { WithId } from 'mongodb'
 
 const ResourceDirectory: NextPage = () => {
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
     const [viewingAll, setViewingAll] = useState<boolean>(false)
     const [filters, setFilters] = useState<ResourceCategory[]>([])
     const [sortingMethod, setSortingMethod] = useState<ResourceSortingMethod>(ResourceSortingMethod.Alphabetical)
-    const [displayResources, setDisplayResources] = useState<Resource[]>([])
+    const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>([])
     const { requestedResources, additionalResources, isLoading, error } = useResources()
 
     useEffect(() => {
-        setDisplayResources(requestedResources as Resource[])
+        setDisplayResources(requestedResources as WithId<Resource>[])
     }, [requestedResources])
 
     // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
@@ -29,7 +30,7 @@ const ResourceDirectory: NextPage = () => {
         const requestBody = (searchQuery && !viewingAll && searchQuery !== "Search resources...") ? JSON.stringify({ searchParam: searchQuery }) : null
         const requestSettings = { method: 'POST', body: requestBody, headers: { 'Content-Type': 'application/json' } }
         makeResourcesRequest(requestSettings).then((data) => {
-            const resources: Resource[] = data.requested;
+            const resources: WithId<Resource>[] = data.requested;
             setDisplayResources(resources);
         }) //TODO: This currently returns a stray promise. We should probably add some indication of loading and blocking other search requests.
     }, [searchQuery, viewingAll])

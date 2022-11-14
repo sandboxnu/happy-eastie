@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Accessibility, Citizenship, Family, Insurance, Language, Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
+import { Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
 import {AES, enc} from 'crypto-js'
-import mongoDbInteractor, { MongoDbInteractor } from '../../../firebase/mongoDbInteractor'
+import mongoDbInteractor from '../../../firebase/mongoDbInteractor'
 import { Filter, WithId } from 'mongodb'
 
 export type ResourceData = {
@@ -25,12 +25,11 @@ export default async function handler(
     // TODO: error handling for invalid bodies sent
     const encryptedFormData = req.body['data']
     const formData : SurveyAnswers = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
-    console.log(formData)
     const resourceData = await getResources(formData)
     res.status(200).json(resourceData)
   } else if (req.body['searchParam']) {
-    //const searchQuery = req.body['searchParam']
-    //const resourceData = await getResourcesDirectory(req.body['searchParam'])
+    const searchQuery = req.body['searchParam']
+    const resourceData = await getResourcesDirectory(req.body['searchParam'])
     res.status(200).json([])
   } else {
     const resourceData = await getAllResources()
@@ -64,14 +63,13 @@ async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse>
       return curr
     })
     return {data: {
-      requested: resources,
-      additional: []
+      requested,
+      additional
     }}
 }
 
 function convertToFilter(answers: SurveyAnswers) : Filter<Resource> {
   let filter : Filter<Resource>[] = []
-  console.log(answers)
   if (answers.income) {
     filter.push({"$or": [{minimumIncome: {"$exists": false}}, {minimumIncome: {"$lte": answers.income}}]})
     filter.push({"$or": [{maximumIncome: {"$exists": false}}, {maximumIncome: {"$gte": answers.income}}]}) 
@@ -102,10 +100,13 @@ function convertToFilter(answers: SurveyAnswers) : Filter<Resource> {
   if (answers.accessibility) {
     filter.push({"$or": [{accessibility: {"$exists": false}}, {accessibility: {"$in": answers.accessibility}}]})
   }
+  if (filter.length == 0) {
+    return {}
+  }
   return {"$and": filter} 
 }
 
-/*
+
 async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesResponse> {
   let resources = await FirebaseInteractor.getCollectionData('resources', resourceConverter, [])
   let requested = resources.filter((r : Resource) => matchesSearchQuery(searchQuery, r))
@@ -118,7 +119,6 @@ async function getResourcesDirectory(searchQuery: string) : Promise<ResourcesRes
     additional: []
   }}
 }
-*/
 
 function matchesSearchQuery(searchQuery: string, r: Resource) {
   return r.name.toLowerCase().includes(searchQuery.toLowerCase())

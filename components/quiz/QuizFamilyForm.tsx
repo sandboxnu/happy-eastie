@@ -70,7 +70,7 @@ export const QuizFamilyForm: React.FC = () => {
             <label className={styles.quizFieldText}>Family Type</label>
             <Field className={styles.familySelect} as="select" name="family">
               <option></option>
-              {enumValues<Family>(Family)}
+              {Object.values(Family).map((element) => <option key={element}>{element}</option>)}
             </Field>
           </Grid>
 

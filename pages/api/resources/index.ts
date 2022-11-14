@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Citizenship, Family, Insurance, Language, Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
+import { Accessibility, Citizenship, Family, Insurance, Language, Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
 import {AES, enc} from 'crypto-js'
 import mongoDbInteractor, { MongoDbInteractor } from '../../../firebase/mongoDbInteractor'
 import { Filter, WithId } from 'mongodb'
@@ -34,7 +34,7 @@ export default async function handler(
   } else {
     //const resourceData = await mongoInteractor.getDocuments<Resource>('resources', {category: {"$exists": true, "$elemMatch": {"$in": ["Housing", "Financial Help"]}}})
     //const resourceData = await getAllResources()
-    const resourceData = await getResources({category: [], insurance: Insurance.Uninsured})
+    const resourceData = await getResources({category: [], accessibility: [Accessibility.Mental]})
     res.status(200).json(resourceData)
   }
 }
@@ -99,6 +99,9 @@ function convertToFilter(answers: SurveyAnswers) : Filter<Resource> {
   }
   if (answers.insurance) {
     filter.push({"$or": [{insurance: {"$exists": false}}, {insurance: answers.insurance}]})
+  }
+  if (answers.accessibility) {
+    filter.push({"$or": [{accessibility: {"$exists": false}}, {accessibility: {"$in": answers.accessibility}}]})
   }
   return {"$and": filter} 
 }

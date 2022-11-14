@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
+import { Citizenship, Family, Insurance, Language, Resource, ResourceCategory, ResourceSortingMethod, SurveyAnswers } from '../../../models/types'
 import {AES, enc} from 'crypto-js'
 import mongoDbInteractor, { MongoDbInteractor } from '../../../firebase/mongoDbInteractor'
 import { Filter, WithId } from 'mongodb'
@@ -34,7 +34,7 @@ export default async function handler(
   } else {
     //const resourceData = await mongoInteractor.getDocuments<Resource>('resources', {category: {"$exists": true, "$elemMatch": {"$in": ["Housing", "Financial Help"]}}})
     //const resourceData = await getAllResources()
-    const resourceData = await mongoDbInteractor.getDocuments<Resource>('resources', {maximumIncome: {"$gte": 10000}, minimumIncome: {"$lte": 10000}})
+    const resourceData = await getResources({category: [], insurance: Insurance.Uninsured})
     res.status(200).json(resourceData)
   }
 }
@@ -51,28 +51,56 @@ async function getAllResources() : Promise<ResourcesResponse> {
 
 async function getResources(answers: SurveyAnswers) : Promise<ResourcesResponse> {
     const filter : Filter<Resource> = convertToFilter(answers)
-    console.log(filter)
     let resources = await mongoDbInteractor.getDocuments<Resource>('resources', filter)
-    console.log(resources)
     const requested : WithId<Resource>[] = []
     const additional : WithId<Resource>[] = []
+    if (resources.length == 0) {
+      return {data: {
+        requested: [],
+        additional: []
+      }}
+    }
     resources.reduce((prev: WithId<Resource>, curr: WithId<Resource>) => {
       (curr.category && curr.category.some((c1: ResourceCategory) => answers.category.some((c2: ResourceCategory) => c1 === c2))) ? requested.push(curr) : additional.push(curr)
       return curr
     })
     return {data: {
-      requested,
-      additional
+      requested: resources,
+      additional: []
     }}
 }
 
 function convertToFilter(answers: SurveyAnswers) : Filter<Resource> {
-  let filter = {}
+  let filter : Filter<Resource>[] = []
+  console.log(answers)
   if (answers.income) {
-    filter = {mininumIncome: {"$lte": answers.income},maximumIncome: {"$gte": answers.income}}
+    filter.push({"$or": [{minimumIncome: {"$exists": false}}, {minimumIncome: {"$lte": answers.income}}]})
+    filter.push({"$or": [{maximumIncome: {"$exists": false}}, {maximumIncome: {"$gte": answers.income}}]}) 
   }
-  //return filter
-  return {maximumIncome: {"$gte": 10000}, minimumIncome: {"$lte": 10000}}
+  if (answers.language) {
+    filter.push({"$or": [{language: {"$exists": false}}, {language: {"$in": answers.language}}]})
+  }
+  if (answers.citizenship) {
+    filter.push({"$or": [{citizenship: {"$exists": false}}, {citizenship: answers.citizenship}]})
+  }
+  if (answers.parentAge) {
+    filter.push({"$or": [{minimumParentAge: {"$exists": false}}, {minimumParentAge: {"$lte": answers.parentAge}}]})
+    filter.push({"$or": [{maximumParentAge: {"$exists": false}}, {maximumParentAge: {"$gte": answers.parentAge}}]})
+  }
+  if (answers.childAge) {
+    filter.push({"$or": [{minimumChildAge: {"$exists": false}}, {minimumChildAge: {"$lte": answers.childAge}}]})
+    filter.push({"$or": [{maximumChildAge: {"$exists": false}}, {maximumChildAge: {"$gte": answers.childAge}}]})
+  }
+  if (answers.family) {
+    filter.push({"$or": [{family: {"$exists": false}}, {family: answers.family}]})
+  }
+  if (answers.employmentStatus) {
+    filter.push({"$or": [{employmentStatus: {"$exists": false}}, {employmentStatus: answers.employmentStatus}]})
+  }
+  if (answers.insurance) {
+    filter.push({"$or": [{insurance: {"$exists": false}}, {insurance: answers.insurance}]})
+  }
+  return {"$and": filter} 
 }
 
 /*
@@ -106,7 +134,7 @@ function sort(resources: Resource[], sortingMethod: ResourceSortingMethod) {
 function matchesSurvey(answers: SurveyAnswers, r: Resource) {
   return (!answers.income || !r.maximumIncome || answers.income < r.maximumIncome) 
     && (!answers.income || !r.minimumIncome || answers.income > r.minimumIncome)
-    && (!answers.language || !r.language || r.language.some(l1 => answers.language.some(l2 => l1 === l2))
+    && (!answers.language || !r.language || r.language.some(l1 => answers.language?.some(l2 => l1 === l2))
     && (!answers.citizenship || !r.citizenship || r.citizenship.some(c => c === answers.citizenship))
     && (!answers.parentAge || !r.maximumParentAge || answers.parentAge < r.maximumParentAge) 
     && (!answers.parentAge || !r.minimumParentAge || answers.parentAge > r.minimumParentAge) 
@@ -115,7 +143,7 @@ function matchesSurvey(answers: SurveyAnswers, r: Resource) {
     && (!answers.family || !r.family || r.family.some(f => f === answers.family))
     && (!answers.employmentStatus || !r.employmentStatus || r.employmentStatus.some(e => e === answers.employmentStatus))
     && (!answers.insurance || !r.insurance || r.insurance.some(i => i === answers.insurance))
-    && (!answers.accessibility || !r.accessibility || r.accessibility.some(a1 => answers.accessibility.some(a2 => a1 === a2))))  
+    && (!answers.accessibility || !r.accessibility || r.accessibility.some(a1 => answers.accessibility?.some(a2 => a1 === a2))))  
 }
 
 /*

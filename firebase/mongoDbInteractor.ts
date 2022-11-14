@@ -1,32 +1,36 @@
 import { Db, DeleteResult, Document, Filter, MongoClient, ObjectId, OptionalUnlessRequiredId, WithId, WithoutId } from "mongodb";
 
 const uri = `mongodb+srv://happy-eastie:${process.env.PASSWORD}@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority`;
-const client = new MongoClient(uri);
-
+let client : MongoClient
 export class MongoDbInteractor {
     
     async getDocument<T extends Document>(collectionName : string, id : string) : Promise<WithId<T>> {
+        const tempClient : MongoClient = new MongoClient(uri)
         try {
-            await client.connect();
-            const database = client.db('happy-eastie');
+            await tempClient.connect();
+            const database = tempClient.db('happy-eastie');
             const results = database.collection(collectionName).find({ _id : new ObjectId(id)});
             const resources = (await results.toArray()) as WithId<T>[];
-            await client.close();
+            await tempClient.close();
             return resources[0];
         } catch (e) {
+            await tempClient.close()
             console.log(e)
-            throw e;
+            throw e
         } 
     }
 
     async getDocuments<T extends Document>(collectionName : string, filter: Filter<T>) : Promise<Array<WithId<T>>> {
+        const tempClient : MongoClient = new MongoClient(uri)
         try {
-            await client.connect();
-            const database = client.db('happy-eastie');
-            const resources = database.collection<T>(collectionName);
-            const resourceList = resources.find(filter);
-            return await resourceList.toArray();
+            await tempClient.connect();
+            const database = tempClient.db('happy-eastie');
+            const resources = database.collection<T>(collectionName).find(filter);
+            const resourceList = await resources.toArray();
+            await tempClient.close()
+            return resourceList;
         } catch (e) {
+            await tempClient.close()
             console.log(e)
             return []
         } 

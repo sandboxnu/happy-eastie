@@ -24,7 +24,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
                 <Card.Body css={{ py: "$10", pb: "$15" }}>
                     <Col>
-                        <Row justify="flex-start" css={{ gap: 10, pb: "$10" }}>
+                        <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20 }}>
                             {props.resource.category?.map((tag, index) => (
                                 <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
                             ))}

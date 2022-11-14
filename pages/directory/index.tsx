@@ -55,8 +55,8 @@ const ResourceDirectory: NextPage = () => {
 
     return (
         <div className={styles.container}>
-            <Header/>
-            <h1 style={{textAlign: "center"}}>Resource Directory</h1>
+            <Header />
+            <h1 style={{ textAlign: "center" }}>Resource Directory</h1>
             <br />
             <br />
 

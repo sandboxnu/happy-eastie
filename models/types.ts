@@ -78,8 +78,7 @@ export interface Service extends DocumentData {
 export interface Resource extends DocumentData {
     id: string;
     name: string;
-    description?: string;
-    url?: string;
+    description?: string; // Markdown
     category?: ResourceCategory[];
     minimumIncome?: number;
     maximumIncome?: number;
@@ -95,6 +94,18 @@ export interface Resource extends DocumentData {
     accessibility?: Accessibility[];
     location?: GeoPoint;
     tags?: string[];
+    url?: string;
+    headerImageUrl: string;
+    phoneNumber?: string;
+    email?: string;
+    pointOfContact: string;
+    waitlist?: Waitlist;
+    howToApply?: string; // Markdown
+}
+
+export type Waitlist = {
+  description: string;
+  helpText?: string;
 }
 
 //Inclusive!!!

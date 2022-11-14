@@ -1,4 +1,4 @@
-import { Grid } from "@nextui-org/react";
+import { Grid, Row, Spacer } from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -13,6 +13,7 @@ import {
   Language,
 } from "../../models/types";
 import styles from "../../styles/quiz.module.css";
+import { HelpTooltip } from "../HelpTooltip";
 
 export const QuizPersonalForm: React.FC = () => {
   const router = useRouter();
@@ -42,17 +43,24 @@ export const QuizPersonalForm: React.FC = () => {
   }
 
   let initialValues = JSON.parse(
-    AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(enc.Utf8)
+    AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(
+      enc.Utf8
+    )
   );
 
-  const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
-  
+  const renderError = (message: string) => (
+    <p className={styles.errorMessage}>{message}</p>
+  );
+
   const handleSubmit = (values: any) => {
     const combinedValues = Object.assign(initialValues, values);
-    const encrypted = AES.encrypt(JSON.stringify(combinedValues), "Secret Passphrase");
+    const encrypted = AES.encrypt(
+      JSON.stringify(combinedValues),
+      "Secret Passphrase"
+    );
     // clear old resources list from cache so cache never gets populated with too many lists
     quizState.changeEncryptedQuizResponse(encrypted.toString());
-    if (document.activeElement?.id === 'back') {
+    if (document.activeElement?.id === "back") {
       router.push("/quiz/1");
     } else {
       router.push("/quiz/3");
@@ -71,6 +79,7 @@ export const QuizPersonalForm: React.FC = () => {
 
           <Grid md={3} xs={10} direction="column">
             <label className={styles.quizFieldText}>Annual Income</label>
+            <Spacer y={1} />
             <Field type="number" name="income" className={styles.select} />
             <ErrorMessage name="income" render={renderError} />
           </Grid>
@@ -78,9 +87,16 @@ export const QuizPersonalForm: React.FC = () => {
 
           <Grid md={3} xs={10} direction="column">
             <label className={styles.quizFieldText}>Language</label>
+            <Spacer y={1} />
             {Object.values(Language).map((c) => (
               <label key={c} className={styles.checkboxItem}>
-                <Field type="checkbox" name="language" value={c} id={c} style={{"height": "24px", "width": "24px"}} />
+                <Field
+                  type="checkbox"
+                  name="language"
+                  value={c}
+                  id={c}
+                  style={{ height: "24px", width: "24px" }}
+                />
                 <span className={styles.categoryText}>{` ${c}`}</span>
                 <br />
               </label>
@@ -91,7 +107,12 @@ export const QuizPersonalForm: React.FC = () => {
           <Grid md={2} xs={0} />
 
           <Grid md={3} xs={10} direction="column">
-            <label className={styles.quizFieldText}>Citizenship</label>
+            <Row align="center">
+              <label className={styles.quizFieldText}>Citizenship</label>
+              <Spacer x={0.5} />
+              <HelpTooltip diameter={27} text="Test" />
+            </Row>
+            <Spacer y={1} />
             <Field as="select" name="citizenship" className={styles.select}>
               <optgroup label="Citizenship">
                 <option></option>
@@ -103,7 +124,12 @@ export const QuizPersonalForm: React.FC = () => {
 
           <Grid md={3} xs={10} direction="column">
             <label className={styles.quizFieldText}>Employment Status</label>
-            <Field as="select" name="employmentStatus" className={styles.select}>
+            <Spacer y={1} />
+            <Field
+              as="select"
+              name="employmentStatus"
+              className={styles.select}
+            >
               <optgroup label="Employment Status">
                 <option></option>
                 {enumValues<EmploymentStatus>(EmploymentStatus)}
@@ -114,6 +140,7 @@ export const QuizPersonalForm: React.FC = () => {
 
           <Grid md={3} xs={10} direction="column">
             <label className={styles.quizFieldText}>Insurance Type</label>
+            <Spacer y={1} />
             <Field as="select" name="insurance" className={styles.select}>
               <optgroup label="Insurance status">
                 <option></option>
@@ -125,9 +152,16 @@ export const QuizPersonalForm: React.FC = () => {
 
           <Grid md={3} xs={10} direction="column">
             <label className={styles.quizFieldText}>Accessibility Needs</label>
+            <Spacer y={1} />
             {Object.values(Accessibility).map((c) => (
               <label key={c} className={styles.checkboxItem}>
-                <Field type="checkbox" name="accessibility" value={c} id={c} style={{"height": "24px", "width": "24px"}} />
+                <Field
+                  type="checkbox"
+                  name="accessibility"
+                  value={c}
+                  id={c}
+                  style={{ height: "24px", width: "24px" }}
+                />
                 <span className={styles.categoryText}>{` ${c}`}</span>
                 <br />
               </label>

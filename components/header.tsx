@@ -18,7 +18,7 @@ export default function Header() {
       <Navbar.Content enableCursorHighlight="true" gap={90} hideIn="xs">
         <Navbar.Link className="navbar-content" href="/quiz">Quiz</Navbar.Link>
         <Navbar.Link className="navbar-content" href="#">Community Events</Navbar.Link>
-        <Navbar.Link className="navbar-content" href="#">Resources</Navbar.Link>
+        <Navbar.Link className="navbar-content" href="/directory">Resources</Navbar.Link>
       </Navbar.Content>
       <Navbar.Content>
         <Dropdown>

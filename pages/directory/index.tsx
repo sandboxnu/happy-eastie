@@ -5,10 +5,11 @@ import styles from '../../styles/Home.module.css'
 import { Resource, ResourceCategory, ResourceSortingMethod } from '../../models/types'
 import { useResources } from '../../hooks/useResources'
 import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
-import { FormElement } from '@nextui-org/react';
+import { FormElement, Row, Spacer, Image, Text, Grid } from '@nextui-org/react';
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
 import Header from '../../components/header'
+
 const ResourceDirectory: NextPage = () => {
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
     const [viewingAll, setViewingAll] = useState<boolean>(false)
@@ -56,10 +57,16 @@ const ResourceDirectory: NextPage = () => {
     return (
         <div className={styles.container}>
             <Header />
-            <h1 style={{ textAlign: "center" }}>Resource Directory</h1>
-            <br />
-            <br />
-
+            <Grid.Container justify="center">
+                <Grid>
+                    <Row align="center">
+                        <Image src={"/star.svg"} alt="" width={31} height={31} />
+                        <Spacer x={0.4} />
+                        <Text h1>Resource Directory</Text>
+                    </Row>
+                </Grid>
+            </Grid.Container>
+            <Spacer y={1.25} />
             <ResourceSearchBar
                 placeholder={searchQuery}
                 onChange={updateSearchQuery}
@@ -68,18 +75,11 @@ const ResourceDirectory: NextPage = () => {
                 setFilters={setFilters}
                 setSortingMethod={setSortingMethod}
             />
-
-            <br />
-            <br />
-
+            <Spacer y={2} />
             <ResourcesDisplay resources={displayResources} />
-
-            <br />
-
+            <Spacer y={1} />
             <Link href='/'>Back</Link>
-
-            <br />
-            <br />
+            <Spacer y={2} />
         </div>
     )
 }

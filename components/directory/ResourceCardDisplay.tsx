@@ -11,7 +11,6 @@ interface ResourceCardDisplayProps {
 }
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {
-
     return (
         <Link href={"/resources/" + props.resource.id}>
             <Card isHoverable css={{ width: "515px", height: "300px", backgroundColor: "var(--brand-light-blue)" }}>

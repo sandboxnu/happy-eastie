@@ -25,6 +25,7 @@ export default async function handler(
     // TODO: error handling for invalid bodies sent
     const encryptedFormData = req.body['data']
     const formData : SurveyAnswers = JSON.parse(AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8));
+    console.log(formData)
     const resourceData = await getResources(formData)
     res.status(200).json(resourceData)
   } else if (req.body['searchParam']) {
@@ -32,9 +33,7 @@ export default async function handler(
     //const resourceData = await getResourcesDirectory(req.body['searchParam'])
     res.status(200).json([])
   } else {
-    //const resourceData = await mongoInteractor.getDocuments<Resource>('resources', {category: {"$exists": true, "$elemMatch": {"$in": ["Housing", "Financial Help"]}}})
-    //const resourceData = await getAllResources()
-    const resourceData = await getResources({category: [], accessibility: [Accessibility.Mental]})
+    const resourceData = await getAllResources()
     res.status(200).json(resourceData)
   }
 }

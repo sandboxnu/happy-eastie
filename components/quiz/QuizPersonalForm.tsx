@@ -110,7 +110,7 @@ export const QuizPersonalForm: React.FC = () => {
             <Row align="center">
               <label className={styles.quizFieldText}>Citizenship</label>
               <Spacer x={0.5} />
-              <HelpTooltip diameter={27} text="Test" />
+              <HelpTooltip diameter={27} text="This lets us match you to resources focused on non-citizens, if applicable. This field is optional." />
             </Row>
             <Spacer y={1} />
             <Field as="select" name="citizenship" className={styles.select}>

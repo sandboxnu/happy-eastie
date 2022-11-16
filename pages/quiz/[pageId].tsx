@@ -41,7 +41,7 @@ const QuizPage: NextPage = () => {
         <Row align="center">
           <Text id={styles.quizSubtitle}>Select what you need help with.</Text>
           <Spacer x={0.3} />
-          <HelpTooltip diameter={15} text={"Test"} />
+          <HelpTooltip diameter={15} text={"All answer fields are optional to ensure that you only share as much information as you like."} />
         </Row>
       </Grid>
 

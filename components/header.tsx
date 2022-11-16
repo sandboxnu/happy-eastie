@@ -3,22 +3,28 @@ import { Navbar, Dropdown, Image, useTheme, Link } from "@nextui-org/react";
 
 export default function Header() {
   const collapseItems = [
+    { title: "Home", href: "/"},
     { title: "Quiz", href: "/quiz" },
     { title: "Community Events" },
-    { title: "Resources" },
-    { title: "About" }
+    { title: "Resources", href: "/directory" },
+    { title: "About", href: "/about"}
   ];
 
   return (
     <Navbar maxWidth={"fluid"} variant={"sticky"} disableShadow>
       <Navbar.Brand>
         <Navbar.Toggle aria-label="toggle navigation" showIn="xs" />
-        <Image alt="HappyEastie" height="20px" src="/HappyEastie.svg" />
+        <Link href="/">
+          <Image alt="HappyEastie" height="20px" src="/HappyEastie.svg" />
+        </Link>
       </Navbar.Brand>
-      <Navbar.Content enableCursorHighlight="true" gap={90} hideIn="xs">
-        <Navbar.Link className="navbar-content" href="/quiz">Quiz</Navbar.Link>
-        <Navbar.Link className="navbar-content" href="#">Community Events</Navbar.Link>
-        <Navbar.Link className="navbar-content" href="/directory">Resources</Navbar.Link>
+      <Navbar.Content enableCursorHighlight="true" gap={90} hideIn="xs" className="navbar-content" activeColor="primary">
+        {collapseItems.map(item => 
+          <Navbar.Link 
+          key={item.title}
+          href={item.href ?? "#"}>
+            {item.title}
+          </Navbar.Link>)}
       </Navbar.Content>
       <Navbar.Content>
         <Dropdown>

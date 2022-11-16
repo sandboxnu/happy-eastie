@@ -1,16 +1,18 @@
 import type { NextPage } from 'next'
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import Link from 'next/link'
-import styles from '../../styles/Home.module.css'
+import homeStyles from '../../styles/Home.module.css'
+import resourceStyles from "../../styles/resource.module.css"
 import { Resource, ResourceCategory, ResourceSortingMethod } from '../../models/types'
 import { useResources } from '../../hooks/useResources'
 import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
-import { FormElement, Row, Spacer, Image, Text, Grid } from '@nextui-org/react';
+import { FormElement, Row, Spacer, Image, Text, Grid, Link } from '@nextui-org/react';
+import { useRouter } from "next/router";
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
 import Header from '../../components/header'
 
 const ResourceDirectory: NextPage = () => {
+    const router = useRouter();
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
     const [viewingAll, setViewingAll] = useState<boolean>(false)
     const [filters, setFilters] = useState<ResourceCategory[]>([])
@@ -55,7 +57,7 @@ const ResourceDirectory: NextPage = () => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={homeStyles.container}>
             <Header />
             <Grid.Container justify="center">
                 <Grid>
@@ -78,7 +80,9 @@ const ResourceDirectory: NextPage = () => {
             <Spacer y={2} />
             <ResourcesDisplay resources={displayResources} />
             <Spacer y={1} />
-            <Link href='/'>Back</Link>
+            <button className={resourceStyles.back} onClick={() => router.back()}>
+                Back
+            </button>
             <Spacer y={2} />
         </div>
     )

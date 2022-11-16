@@ -12,10 +12,6 @@ const ResourcePage: NextPage = () => {
   const { resourceId } = router.query;
   const { resource, isLoading, error } = useResource(resourceId);
 
-  function goBack() {
-    router.push("/");
-  }
-
   if (error) return <div>{error.message}</div>;
   if (isLoading) return <div>loading...</div>;
   if (!resource)
@@ -37,7 +33,7 @@ const ResourcePage: NextPage = () => {
       </Grid.Container>
       <Grid.Container justify="flex-start">
         <Grid direction="row" md={1}>
-          <button className={styles.back} onClick={goBack}>
+          <button className={styles.back} onClick={() => router.back()}>
             Back
           </button>
         </Grid>

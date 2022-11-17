@@ -91,20 +91,3 @@ export class MongoDbInteractor {
 
 const mongoDbInteractor = new MongoDbInteractor()
 export default mongoDbInteractor
-
-
-/*
-async function run() {
-    try {
-        const db = client.db('happy-eastie')
-        const resources = db.collection('resources')
-        const resource = await resources.findOne()
-        console.log(resource)
-    } catch(err) {
-        console.log(err)
-    }
-    await client.close()
-}
-
-run()
-*/

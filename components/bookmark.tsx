@@ -1,5 +1,6 @@
 import React, { SyntheticEvent, useState } from "react";
 import { Image } from "@nextui-org/react";
+import Dialog from "./dialog";
 
 type BookmarkProps = {
   enabled: boolean;
@@ -14,8 +15,11 @@ export default function Bookmark(props: BookmarkProps) {
   };
 
   return (
-    <button style={{all: "unset", padding: 0, margin: 0 }} onClick={onClick}>
-      <Image src={`${state ? "/filledbookmark.svg" : "/bookmark.svg"}`} alt="Bookmark" />
-    </button>
+    <div>
+      <button style={{ all: "unset", padding: 0, margin: 0 }} onClick={onClick}>
+        <Image src={`${state ? "/filledbookmark.svg" : "/bookmark.svg"}`} alt="Bookmark" />
+      </button>
+      {/* <Dialog message="test" visible={state} /> */}
+    </div>
   );
 }

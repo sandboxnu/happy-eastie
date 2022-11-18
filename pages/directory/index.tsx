@@ -1,16 +1,19 @@
 import type { NextPage } from 'next'
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import Link from 'next/link'
-import styles from '../../styles/Home.module.css'
+import homeStyles from '../../styles/Home.module.css'
+import resourceStyles from "../../styles/resource.module.css"
 import { Resource, ResourceCategory, ResourceSortingMethod } from '../../models/types'
 import { useResources } from '../../hooks/useResources'
 import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
-import { FormElement } from '@nextui-org/react';
+import { FormElement, Row, Spacer, Image, Text, Grid, Link } from '@nextui-org/react';
+import { useRouter } from "next/router";
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
 import { WithId } from 'mongodb'
+import Header from '../../components/header'
 
 const ResourceDirectory: NextPage = () => {
+    const router = useRouter();
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
     const [viewingAll, setViewingAll] = useState<boolean>(false)
     const [filters, setFilters] = useState<ResourceCategory[]>([])
@@ -55,13 +58,18 @@ const ResourceDirectory: NextPage = () => {
     }
 
     return (
-        <div className={styles.container}>
-            <h1>Resource Directory</h1>
-            <Link href='/'>Back to Home</Link>
-
-            <br />
-            <br />
-
+        <div className={homeStyles.container}>
+            <Header />
+            <Grid.Container justify="center">
+                <Grid>
+                    <Row align="center">
+                        <Image src={"/star.svg"} alt="" width={31} height={31} />
+                        <Spacer x={0.4} />
+                        <Text h1>Resource Directory</Text>
+                    </Row>
+                </Grid>
+            </Grid.Container>
+            <Spacer y={1.25} />
             <ResourceSearchBar
                 placeholder={searchQuery}
                 onChange={updateSearchQuery}
@@ -70,18 +78,13 @@ const ResourceDirectory: NextPage = () => {
                 setFilters={setFilters}
                 setSortingMethod={setSortingMethod}
             />
-
-            <br />
-            <br />
-
+            <Spacer y={2} />
             <ResourcesDisplay resources={displayResources} />
-
-            <br />
-
-            <Link href='/'>Back</Link>
-
-            <br />
-            <br />
+            <Spacer y={1} />
+            <button className={resourceStyles.back} onClick={() => router.back()}>
+                Back
+            </button>
+            <Spacer y={2} />
         </div>
     )
 }

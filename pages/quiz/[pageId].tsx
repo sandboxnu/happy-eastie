@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import { QuizCategoriesForm } from "../../components/quiz/QuizCategoriesForm";
 import { QuizPersonalForm } from "../../components/quiz/QuizPersonalForm";
 import { QuizFamilyForm } from "../../components/quiz/QuizFamilyForm";
-import { Grid, Progress, Text, Spacer } from "@nextui-org/react";
+import { Grid, Progress, Text, Spacer, Row } from "@nextui-org/react";
 import styles from "../../styles/quiz.module.css";
 import Header from "../../components/header";
+import { HelpTooltip } from "../../components/HelpTooltip";
 
 const QuizPage: NextPage = () => {
   const router = useRouter();
@@ -37,7 +38,11 @@ const QuizPage: NextPage = () => {
         <Spacer y={1} />
         <Progress max={4} value={pageNumber} size={"sm"} />
         <Spacer y={1} />
-        <Text id={styles.quizSubtitle}>Select what you need help with.</Text>
+        <Row align="center">
+          <Text id={styles.quizSubtitle}>Select what you need help with.</Text>
+          <Spacer x={0.3} />
+          <HelpTooltip diameter={15} text={"All answer fields are optional to ensure that you only share as much information as you like."} />
+        </Row>
       </Grid>
 
       <QuizComponent />

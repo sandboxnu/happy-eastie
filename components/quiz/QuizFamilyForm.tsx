@@ -1,4 +1,4 @@
-import { Grid } from "@nextui-org/react";
+import { Grid, Spacer } from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -68,6 +68,7 @@ export const QuizFamilyForm: React.FC = () => {
 
           <Grid md={2} xs={8} direction="column">
             <label className={styles.quizFieldText}>Family Type</label>
+            <Spacer y={1} />
             <Field className={styles.familySelect} as="select" name="family">
               <option></option>
               {Object.values(Family).map((element) => <option key={element}>{element}</option>)}
@@ -78,11 +79,13 @@ export const QuizFamilyForm: React.FC = () => {
 
           <Grid md={2} xs={8} direction="column">
             <label className={styles.quizFieldText}>Parent Age</label>
+            <Spacer y={1} />
             <Field className={styles.ageInput} type="number" name="parentAge" />
             <ErrorMessage name="parentAge" render={renderError} />
           </Grid>
           <Grid md={2} xs={8} direction="column">
             <label className={styles.quizFieldText}>Child Age</label>
+            <Spacer y={1} />
             <Field className={styles.ageInput} type="number" name="childAge" />
             <ErrorMessage name="childAge" render={renderError} />
           </Grid>

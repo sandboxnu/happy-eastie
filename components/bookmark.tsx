@@ -15,7 +15,7 @@ export default function Bookmark(props: BookmarkProps) {
 
   return (
     <button style={{all: "unset", padding: 0, margin: 0 }} onClick={onClick}>
-      <Image src={`${state ? "filledbookmark.svg" : "bookmark.svg"}`} alt="Bookmark" />
+      <Image src={`${state ? "/filledbookmark.svg" : "/bookmark.svg"}`} alt="Bookmark" />
     </button>
   );
 }

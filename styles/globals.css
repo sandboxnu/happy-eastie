@@ -6,6 +6,7 @@
   --brand-purple: #630DF0;
   --brand-orange: #F0880D;
   --brand-green: #55C130;
+  --brand-light-blue: #F4F8FA;
 }
 
 html,
@@ -23,6 +24,10 @@ body {
 
 a {
   color: var(--brand-primary);
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 @font-face {
@@ -48,6 +53,27 @@ a {
   letter-spacing: 0.5px;
 }
 
+h3 {
+  font-size: 25px;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+p {
+  font-size: 20px;
+  font-family: 'Raleway';
+  font-weight: 400;
+  color: var(--secondary-text);
+}
+
+li {
+  font-size: 20px;
+  font-family: 'Raleway';
+  font-weight: 400;
+  color: var(--secondary-text);
+}
+
 .homepage-button {
   background-color: var(--brand-primary);
 
@@ -62,11 +88,16 @@ a {
   color: white;
 }
 
-.navbar-content {
+.navbar-content *{
   font-family: 'Raleway';
   font-size: 25px;
   font-weight: 600;
   color: var(--secondary-text);
+  text-decoration: none;
+}
+
+.navbar-content a:hover {
+  text-decoration: none;
 }
 
 h1 {
@@ -74,6 +105,8 @@ h1 {
   font-size: 35px;
   font-weight: 600;
   color: black;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .table-content {
@@ -95,6 +128,14 @@ td {
   padding: 40px 0px;
 }
 
+.tooltip-text {
+  font-family: 'Raleway';
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
 
 input[type="checkbox"] ~ label {
   padding-left: 1.4em;
@@ -103,4 +144,8 @@ input[type="checkbox"] ~ label {
 
 input[type="checkbox"] {
   position: absolute;
+}
+
+ul {
+  list-style: disc;
 }

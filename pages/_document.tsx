@@ -11,6 +11,9 @@ class MyDocument extends Document {
     };
   }
 
+  // pages/_document.js
+  // TODO: https://nextjs.org/docs/deployment#manual-graceful-shutdowns
+
   render() {
     return (
       <Html lang="en">

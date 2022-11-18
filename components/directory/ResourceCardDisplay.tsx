@@ -5,14 +5,15 @@ import styles from '../../styles/Directory.module.css';
 import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
+import { WithId } from 'mongodb';
 
 interface ResourceCardDisplayProps {
-    resource: Resource;
+    resource: WithId<Resource>;
 }
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {
     return (
-        <Link href={"/resources/" + props.resource.id}>
+        <Link href={"/resources/" + props.resource._id}>
             <Card isHoverable css={{ width: "515px", height: "300px", backgroundColor: "var(--brand-light-blue)" }}>
                 <Card.Header>
                     <Row justify='space-between'>

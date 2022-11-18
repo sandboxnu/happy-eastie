@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
-import { ResourceCategory } from "../../models/types";
+import { ResourceCategory, SurveyAnswers } from "../../models/types";
 import { Checkbox, Grid } from "@nextui-org/react";
 import styles from "../../styles/quiz.module.css";
 
@@ -16,17 +16,8 @@ export const QuizCategoriesForm: React.FC = () => {
 
   const validationSchema = Yup.object({ category: Yup.array().min(1, errorMessage) });
 
-  let initialValues = {
-    category: [],
-    income: null,
-    language: "",
-    citizenship: "",
-    parentAge: null,
-    childAge: null,
-    family: "",
-    employmentStatus: "",
-    insurance: "",
-    accessibility: "",
+  let initialValues : SurveyAnswers = {
+    category: []
   };
 
   if (quizState.encryptedQuizResponse != "") {

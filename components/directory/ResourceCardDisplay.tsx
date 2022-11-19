@@ -5,9 +5,10 @@ import styles from '../../styles/Directory.module.css';
 import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
+import { WithId } from 'mongodb';
 
 interface ResourceCardDisplayProps {
-    resource: Resource;
+    resource: WithId<Resource>;
 }
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {

@@ -116,7 +116,7 @@ export const QuizPersonalForm: React.FC = () => {
             <Field as="select" name="citizenship" className={styles.select}>
               <optgroup label="Citizenship">
                 <option></option>
-                {enumValues<Citizenship>(Citizenship)}
+                {Object.values(Citizenship).map((element) => <option key={element}>{element}</option>)}
               </optgroup>
             </Field>
           </Grid>
@@ -132,7 +132,7 @@ export const QuizPersonalForm: React.FC = () => {
             >
               <optgroup label="Employment Status">
                 <option></option>
-                {enumValues<EmploymentStatus>(EmploymentStatus)}
+                {Object.values(EmploymentStatus).map((element) => <option key={element}>{element}</option>)}
               </optgroup>
             </Field>
           </Grid>
@@ -144,7 +144,7 @@ export const QuizPersonalForm: React.FC = () => {
             <Field as="select" name="insurance" className={styles.select}>
               <optgroup label="Insurance status">
                 <option></option>
-                {enumValues<Insurance>(Insurance)}
+                {Object.values(Insurance).map((element) => <option key={element}>{element}</option>)}
               </optgroup>
             </Field>
           </Grid>
@@ -182,9 +182,3 @@ export const QuizPersonalForm: React.FC = () => {
     </Formik>
   );
 };
-
-function enumValues<E>(value: any): any {
-  return Object.keys(value)
-    .filter((elt: any) => !isNaN(Number(value[elt])))
-    .map((element) => <option key={element}>{element}</option>);
-}

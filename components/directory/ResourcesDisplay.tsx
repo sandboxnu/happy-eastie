@@ -1,9 +1,10 @@
 import { Grid } from "@nextui-org/react";
+import { WithId } from "mongodb";
 import { Resource } from "../../models/types";
 import { ResourceCardDisplay } from "./ResourceCardDisplay";
 
 interface ResourcesDisplayProps {
-    resources: Resource[];
+    resources: WithId<Resource>[];
 }
 
 export const ResourcesDisplay: React.FC<ResourcesDisplayProps> = (props: ResourcesDisplayProps) => {

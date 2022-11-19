@@ -1,3 +1,4 @@
+import { WithId } from 'mongodb'
 import { useContext } from 'react'
 import useSWRImmutable from 'swr/immutable'
 import { AppContext } from '../context/context'
@@ -23,11 +24,11 @@ export const useResource = (id: string | string[] | undefined) => {
     } 
     const {data: resourcesData}= useSWRImmutable<ResourceData, Error>('/api/resources', resourcesFetcher)
 
-    const resourceFetcher = async () : Promise<Resource> => {
+    const resourceFetcher = async () : Promise<WithId<Resource>> => {
         if (!id || Array.isArray(id)) {
             throw Error(`Invalid resource id type: received ${id} instead of string`)    
         } 
-        const resource : Resource | undefined = resourcesData?.requested.concat(resourcesData.additional).find((r: Resource) => r.id === id)
+        const resource : WithId<Resource> | undefined = resourcesData?.requested.concat(resourcesData.additional).find(r => r._id.toString() === id)
         if (resource) {
             return resource
         } else {
@@ -49,7 +50,7 @@ export const useResource = (id: string | string[] | undefined) => {
     }
     // if the resources are not ready, the useSWR key function will throw an error 
     // and the resource fetcher will not be called
-    const {data, error} = useSWRImmutable<Resource, Error>(resourceKeyFunction, resourceFetcher, {shouldRetryOnError: false})
+    const {data, error} = useSWRImmutable<WithId<Resource>, Error>(resourceKeyFunction, resourceFetcher, {shouldRetryOnError: false})
     return { resource: data, isLoading: !error && !data, error }
   }
   

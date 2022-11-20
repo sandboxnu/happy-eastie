@@ -21,12 +21,14 @@ const ResourceDirectory: NextPage = () => {
     const { requestedResources, additionalResources, isLoading, error } = useResources()
 
     useEffect(() => {
+        console.log("first effect")
         setDisplayResources(requestedResources as Resource[])
     }, [requestedResources])
 
     // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
     // the filtering and sorting to the API
     useEffect(() => {
+        console.log("second effect")
         // TODO: probably want to change this so you don't have to check if search query is the placeholder
         // TODO: Add filters and sorting method to this request
         const requestBody = (searchQuery && !viewingAll && searchQuery !== "Search resources...") ? JSON.stringify({ searchParam: searchQuery }) : null

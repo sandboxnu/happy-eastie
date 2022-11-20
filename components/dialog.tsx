@@ -4,18 +4,16 @@ import { Modal, Button, Text } from "@nextui-org/react";
 type DialogProps = {
     title: string,
     message: string,
-    visible: boolean,
     onCloseHandler: () => void,
 }
 export default function Dialog(props: DialogProps) {
-  const [visible, setVisible] = useState(props.visible);
+  const [visible, setVisible] = useState(true);
 
   const closeHandler = () => {
     setVisible(false);
     props.onCloseHandler();
   };
 
-  console.log(visible);
   return (
       <Modal
         closeButton

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { ResourceHeader } from "../../components/resources/ResourceHeader";
 import ReactMarkdown from "react-markdown";
 import { Grid, Text } from "@nextui-org/react";
-import styles from "../../styles/resource.module.css"
+import styles from "../../styles/resource.module.css";
 import { ResourceDescription } from "../../components/resources/ResourceDescription";
 
 const ResourcePage: NextPage = () => {
@@ -24,11 +24,12 @@ const ResourcePage: NextPage = () => {
       <ResourceHeader resource={resource} />
       <ResourceDescription resource={resource} />
 
-      <Grid.Container justify="center">
-        <Grid direction="column" css={{ maxWidth: 440 }}>
-          <Text h3 css={{ textAlign: "center" }}>How to Apply</Text>
-          {howToApply &&
-            <ReactMarkdown>{howToApply}</ReactMarkdown>}
+      <Grid.Container justify="center" gap={8}>
+        <Grid direction="column">
+          <Text h3 css={{ textAlign: "center" }}>
+            How to Apply
+          </Text>
+          {howToApply && <ReactMarkdown>{howToApply}</ReactMarkdown>}
         </Grid>
       </Grid.Container>
       <Grid.Container justify="flex-start">

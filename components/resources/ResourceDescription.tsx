@@ -16,7 +16,7 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
   return (
     <Grid>
       <Grid.Container justify="center" gap={8}>
-        <Grid md={7}>
+        <Grid sm={6}>
           <div>
             <Text className={styles.descriptionText}>
               {props.resource.description}
@@ -31,11 +31,10 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
           </div>
         </Grid>
         {props.resource.location && (
-          <Grid md={4}>
-            {/* TODO: put map of relevant locations here */}
+          <Grid sm={5} xs={12}>
             <iframe
-              width="850"
-              height="700"
+              width="100%"
+              height="100%"
               src={`https://www.openstreetmap.org/export/embed.html?bbox=${
                 location!.longitude + mapRadius
               }%2C${location!.latitude + mapRadius}%2C${
@@ -43,7 +42,11 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
               }%2C${location!.latitude - mapRadius}&layer=mapnik&marker=${
                 location!.latitude
               }%2C${location!.longitude}`}
-              style={{ border: "1px solid black", overflow: "hidden" }}
+              style={{
+                border: "1px solid black",
+                overflow: "hidden",
+                aspectRatio: "16/9",
+              }}
             ></iframe>
           </Grid>
         )}

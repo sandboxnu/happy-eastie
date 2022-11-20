@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
 import { Resource } from '../../models/types';
 import styles from '../../styles/Directory.module.css';
 import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
+import Dialog from '../dialog';
 
 interface ResourceCardDisplayProps {
     resource: Resource;
@@ -50,23 +51,30 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 }
 
 function ApplyForResourceButtons() {
+    const [state, setState] = useState(false);
+    const onCloseHandler = () => {setState(false)}
     return (
-        <Link href="#">
+        <Link href="#" onClick={() => setState(true)}>
             <Row css={{ px: "0" }}>
                 <Image src="/laptop.svg" alt="Apply"></Image>
                 <Text className={styles.cardFooter}>Apply Online</Text>
             </Row>
+            { state ? <Dialog title="New feature" message="This feature is coming soon!!" visible={true} onCloseHandler={onCloseHandler}/> : <div></div>}
         </Link>
     )
 }
 
 function CallResourceButtons() {
+    const [state, setState] = useState(false);
+    const onCloseHandler = () => {setState(false)}
+
     return (
-        <Link href="#">
+        <Link href="#" onClick={() => setState(true)}>
             <Row css={{ px: "0" }}>
                 <Image src="/phone.svg" alt="Call"></Image>
                 <Text className={styles.cardFooter}>By Phone</Text>
-            </Row>
+            </Row> 
+            { state ? <Dialog title="New feature" message="This feature is coming soon!!" visible={true} onCloseHandler={onCloseHandler}/> : <div></div>}
         </Link>
     )
 }

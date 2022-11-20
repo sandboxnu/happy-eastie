@@ -10,7 +10,7 @@ const QuizResults: NextPage = () => {
     <div className={styles.container}>
       <Header/>
       <QuizResultsDisplay />
-      <Link href='/quiz/3'>Back to Home</Link>
+      <Link href='/quiz/3'>Back</Link>
     </div>)
 }
 

@@ -3,9 +3,10 @@ import { useResource } from "../../hooks/useResource";
 import { useRouter } from "next/router";
 import { ResourceHeader } from "../../components/resources/ResourceHeader";
 import ReactMarkdown from "react-markdown";
-import { Grid, Text } from "@nextui-org/react";
+import { Image, Spacer, Text } from "@nextui-org/react";
 import styles from "../../styles/resource.module.css";
 import { ResourceDescription } from "../../components/resources/ResourceDescription";
+import Header from "../../components/header";
 
 const ResourcePage: NextPage = () => {
   const router = useRouter();
@@ -20,26 +21,32 @@ const ResourcePage: NextPage = () => {
   const howToApply = resource.howToApply?.replaceAll("\\n", "\n");
 
   return (
-    <Grid.Container direction="column" justify="center" wrap="nowrap">
-      <ResourceHeader resource={resource} />
-      <ResourceDescription resource={resource} />
-
-      <Grid.Container justify="center" gap={8}>
-        <Grid direction="column">
+    <>
+      <Header />
+      <Image
+        src={resource.headerImageUrl}
+        width="100%"
+        height={254}
+        objectFit="cover"
+        alt="Resource header image"
+      />
+      <div style={{ margin: "0 40px" }}>
+        <ResourceHeader resource={resource} />
+        <Spacer y={2} />
+        <ResourceDescription resource={resource} />
+        <Spacer y={2} />
+        <div>
           <Text h3 css={{ textAlign: "center" }}>
             How to Apply
           </Text>
           {howToApply && <ReactMarkdown>{howToApply}</ReactMarkdown>}
-        </Grid>
-      </Grid.Container>
-      <Grid.Container justify="flex-start">
-        <Grid direction="row" md={1}>
-          <button className={styles.back} onClick={() => router.back()}>
-            Back
-          </button>
-        </Grid>
-      </Grid.Container>
-    </Grid.Container>
+        </div>
+      </div>
+
+      <button className={styles.back} onClick={() => router.back()}>
+        Back
+      </button>
+    </>
   );
 };
 

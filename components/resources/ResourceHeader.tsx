@@ -3,14 +3,15 @@ import { Button, Grid, Image, Text } from "@nextui-org/react";
 import Tag from "../tag";
 import styles from "../../styles/resource.module.css";
 import { useRouter } from "next/router";
-import Header from "../header";
-import TagsMap from "../../models/TagsMap"
+import TagsMap from "../../models/TagsMap";
 
 interface ResourceHeaderProps {
   resource: Resource;
 }
 
-export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHeaderProps) => {
+export const ResourceHeader: React.FC<ResourceHeaderProps> = (
+  props: ResourceHeaderProps
+) => {
   const router = useRouter();
 
   const phoneNumberClicked = () => {
@@ -29,57 +30,69 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
   };
 
   return (
-    <Grid>
-      <Header/>
+    <>
+      <Text className={styles.resourceHeader}>{props.resource.name}</Text>
 
-      <Image src={props.resource.headerImageUrl} objectFit="cover" alt="Resource header image" css={{h: 254}} />
-
-      <Grid.Container justify="center" gap={1}>
-        <Grid xs={10} justify="center">
-          <Text className={styles.resourceHeader}>{props.resource.name}</Text>
-        </Grid>
-      </Grid.Container>
-      
-      <Grid.Container justify="center" gap={1}>
+      <Grid.Container gap={2} justify="center">
         {props.resource.category?.map((c, i) => (
-          <Grid key={i} md={1}>
+          <Grid>
             <Tag text={c} color={TagsMap().get(c) ?? "black"} />
           </Grid>
         ))}
       </Grid.Container>
 
-      <Grid.Container justify="center" gap={4}>
+      <Grid.Container gap={2} justify="center">
         <Grid>
           <Button
             auto
             color="primary"
-            icon={<Image src="/phonewhite.svg" objectFit="fill" alt="Call the organization" />}
+            icon={
+              <Image
+                src="/phonewhite.svg"
+                objectFit="fill"
+                alt="Call the organization"
+              />
+            }
             rounded={true}
             className={styles.button}
             onClick={phoneNumberClicked}
           ></Button>
         </Grid>
+
         <Grid>
           <Button
             auto
             color="primary"
-            icon={<Image src="/email.svg" objectFit="fill" alt="Email the organization" />}
+            icon={
+              <Image
+                src="/email.svg"
+                objectFit="fill"
+                alt="Email the organization"
+              />
+            }
             rounded={true}
             className={styles.button}
             onClick={emailClicked}
           ></Button>
         </Grid>
+
         <Grid>
           <Button
             auto
             color="primary"
-            icon={<Image src="/share.svg" objectFit="fill" alt="Share the organization" />}
+            icon={
+              <Image
+                src="/share.svg"
+                objectFit="fill"
+                alt="Share the organization"
+              />
+            }
             rounded={true}
             className={styles.button}
             onClick={shareClicked}
           ></Button>
         </Grid>
       </Grid.Container>
-    </Grid>
+    </>
   );
 };

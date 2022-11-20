@@ -14,43 +14,41 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
   const location = props.resource.location;
   console.log(location);
   return (
-    <Grid>
-      <Grid.Container justify="center" gap={8}>
-        <Grid sm={6}>
-          <div>
-            <Text className={styles.descriptionText}>
-              {props.resource.description}
-            </Text>
-            <br />
-            <ReactMarkdown
-              className={styles.descriptionText}
-            >{`**Point of Contact:** ${props.resource.pointOfContact}`}</ReactMarkdown>
-            <ReactMarkdown
-              className={styles.descriptionText}
-            >{`**Waitlist:** ${props.resource.waitlist?.description}`}</ReactMarkdown>
-          </div>
+    <Grid.Container justify="space-between">
+      <Grid xs={12} sm={6}>
+        <div>
+          <Text className={styles.descriptionText}>
+            {props.resource.description}
+          </Text>
+          <br />
+          <ReactMarkdown
+            className={styles.descriptionText}
+          >{`**Point of Contact:** ${props.resource.pointOfContact}`}</ReactMarkdown>
+          <ReactMarkdown
+            className={styles.descriptionText}
+          >{`**Waitlist:** ${props.resource.waitlist?.description}`}</ReactMarkdown>
+        </div>
+      </Grid>
+      {props.resource.location && (
+        <Grid xs={12} sm={5}>
+          <iframe
+            width="100%"
+            height="100%"
+            src={`https://www.openstreetmap.org/export/embed.html?bbox=${
+              location!.longitude + mapRadius
+            }%2C${location!.latitude + mapRadius}%2C${
+              location!.longitude - mapRadius
+            }%2C${location!.latitude - mapRadius}&layer=mapnik&marker=${
+              location!.latitude
+            }%2C${location!.longitude}`}
+            style={{
+              border: "1px solid black",
+              overflow: "hidden",
+              aspectRatio: "16/9",
+            }}
+          ></iframe>
         </Grid>
-        {props.resource.location && (
-          <Grid sm={5} xs={12}>
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.openstreetmap.org/export/embed.html?bbox=${
-                location!.longitude + mapRadius
-              }%2C${location!.latitude + mapRadius}%2C${
-                location!.longitude - mapRadius
-              }%2C${location!.latitude - mapRadius}&layer=mapnik&marker=${
-                location!.latitude
-              }%2C${location!.longitude}`}
-              style={{
-                border: "1px solid black",
-                overflow: "hidden",
-                aspectRatio: "16/9",
-              }}
-            ></iframe>
-          </Grid>
-        )}
-      </Grid.Container>
-    </Grid>
+      )}
+    </Grid.Container>
   );
 };

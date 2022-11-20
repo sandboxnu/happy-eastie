@@ -1,5 +1,5 @@
 import { Resource } from "../../models/types";
-import { Grid, Image, Text } from "@nextui-org/react";
+import { Grid, Text } from "@nextui-org/react";
 import styles from "../../styles/resource.module.css";
 import ReactMarkdown from "react-markdown";
 

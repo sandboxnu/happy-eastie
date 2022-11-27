@@ -13,10 +13,13 @@
     "crypto-js": "^4.1.1",
     "firebase": "^9.10.0",
     "formik": "^2.2.9",
+    "i18next": "^22.0.6",
+    "i18next-browser-languagedetector": "^7.0.1",
     "mongodb": "^4.11.0",
     "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-i18next": "^12.0.0",
     "react-markdown": "^8.0.3",
     "swr": "^1.3.0",
     "yup": "^0.32.11"

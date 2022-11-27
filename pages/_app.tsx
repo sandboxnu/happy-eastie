@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { AppContext } from '../context/context'
 import { useState } from 'react'
 import { createTheme, NextUIProvider, Text } from "@nextui-org/react"
+import '../i18n';
 
 const theme = createTheme({
   type: "light",

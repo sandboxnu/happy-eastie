@@ -5,6 +5,7 @@ import Tag from "../components/tag";
 import TagsMap from "../models/TagsMap";
 import Bookmark from "../components/bookmark";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const Home: NextPage = () => {
   return (
@@ -20,20 +21,20 @@ const Home: NextPage = () => {
 };
 
 function InfoComponent() {
+  const { t, i18n } = useTranslation()
+
   return (
     <Grid.Container gap={2} justify="center">
       <Grid xs={12} sm={5}>
         <Image alt="Default Image" src="/homeImage.svg" objectFit="scale-down" />
       </Grid>
       <Grid xs={12} sm={7} direction="column" alignItems="center">
-        <Text className={"homepage-title"}>Here to help find the resources for you!</Text>
+        <Text className={"homepage-title"}>{t('home.title')}</Text>
         <Spacer y={2} />
-        <Text className={"homepage-subtitle"}>
-          Tap &quot;Help My Search&quot; to answer questions and get personalized resoure results.
-        </Text>
+        <Text className={"homepage-subtitle"}>{t('home.subtitle')}</Text>
         <Spacer y={2} />
         <Button className="homepage-button" shadow>
-          <Link href="/quiz">Help My Search</Link>
+          <Link href="/quiz">{t('home.helpMySearch')}</Link>
         </Button>
       </Grid>
     </Grid.Container>
@@ -41,6 +42,9 @@ function InfoComponent() {
 }
 
 function TrendingComponent() {
+  const { t, i18n } = useTranslation();
+
+  // TODO: Translations once the backend supports them
   const events = [
     {
       name: "Women, Infants, & Children",
@@ -67,7 +71,7 @@ function TrendingComponent() {
       <Row align="baseline">
         <Image src="triangle.svg" alt="" containerCss={{ margin: 0 }} />
         <Spacer x={0.8} />
-        <Text h1>Trending Near You</Text>
+        <Text h1>{t('home.trendingNearYou')}</Text>
       </Row>
       <div
         style={{
@@ -107,6 +111,8 @@ function TrendingComponent() {
 }
 
 function DirectoryComponent() {
+  const { t, i18n } = useTranslation()
+  
   type TableLinkProps = {
     name: string;
   };
@@ -124,23 +130,23 @@ function DirectoryComponent() {
       <Row align="baseline">
         <Image src="star.svg" alt="" containerCss={{ margin: 0 }} />
         <Spacer x={0.8} />
-        <Link href="/directory"><Text h1>Resource Directory</Text></Link>
+        <Link href="/directory"><Text h1>{t('home.resourceDirectory')}</Text></Link>
       </Row>
       <Row>{/* Add the search bar and buttons here */}</Row>
       <Row justify="center">
         <table className="table-content" style={{}}>
           <tbody>
             <tr>
-              <TableLink name="Early Childhood" />
-              <TableLink name="Cash Assistance" />
+              <TableLink name={t('home.earlyChildhood')} />
+              <TableLink name={t('home.cashAssistance')} />
             </tr>
             <tr>
-              <TableLink name="Healthcare" />
-              <TableLink name="Housing" />
+              <TableLink name={t('home.healthcare')} />
+              <TableLink name={t('home.housing')} />
             </tr>
             <tr>
-              <TableLink name="Food" />
-              <TableLink name="Young Parents" />
+              <TableLink name={t('home.food')} />
+              <TableLink name={t('home.youngParents')} />
             </tr>
           </tbody>
         </table>

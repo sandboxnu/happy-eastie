@@ -18,7 +18,7 @@ i18n
       "en-US": {
         translation: {
           home: {
-            header: "Here to help find the resources for you!",
+            title: "Here to help find the resources for you!",
             subtitle: "Tap \"Help My Search\" to answer questions and get personalized resoure results.",
             helpMySearch: "Help My Search",
             trendingNearYou: "Trending Near You",

@@ -110,7 +110,7 @@ export const QuizPersonalForm: React.FC = () => {
 
           <Grid md={3} xs={10} direction="column">
             <Row align="center">
-              <label className={styles.quizFieldText}>Citizenship</label>
+              <label className={styles.quizFieldText}>{t('citizenship')}</label>
               <Spacer x={0.5} />
               <HelpTooltip diameter={27} text={t('help.citizenship')} />
             </Row>

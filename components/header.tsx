@@ -1,9 +1,15 @@
 import React from "react";
 import { Navbar, Dropdown, Image, useTheme, Link, Button } from "@nextui-org/react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 export default function Header() {
-  const { t, i18n } = useTranslation()
+  const router = useRouter()
+  const { i18n } = useTranslation()
+
+  const changeLanguage = (key: string) => {
+    router.push("/", router.asPath, { locale: key });
+  }
 
   const collapseItems = [
     { title: "Home", href: "/"},
@@ -35,8 +41,10 @@ export default function Header() {
             <Image width={20} height={20} style={{ paddingRight: 4 }} src="/globe.svg" alt="Select language" />
             EN
           </Dropdown.Button>
-          <Dropdown.Menu aria-label="Static Actions" onAction={(key) => i18n.changeLanguage(key.toString())}>
-            <Dropdown.Item key="en-US">English</Dropdown.Item>
+          <Dropdown.Menu aria-label="Static Actions" onAction={(key) => {
+            changeLanguage(key.toString())
+          }}>
+            <Dropdown.Item key="en">English</Dropdown.Item>
             <Dropdown.Item key="fr">français</Dropdown.Item>
             <Dropdown.Item key="es">español</Dropdown.Item>
           </Dropdown.Menu>

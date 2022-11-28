@@ -1,4 +1,9 @@
 {
+  "home": "Home",
+  "quiz": "Quiz",
+  "communityEvents": "Community Events",
+  "resources": "Resources",
+  "about": "About",
   "title": "Here to help find the resources for you!",
   "subtitle": "Tap \"Help My Search\" to answer questions and get personalized resoure results.",
   "helpMySearch": "Help My Search",

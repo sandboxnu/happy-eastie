@@ -3,6 +3,7 @@ import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
 import {
@@ -18,10 +19,11 @@ import { HelpTooltip } from "../HelpTooltip";
 export const QuizPersonalForm: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
+  const { t } = useTranslation(['common'])
 
   const errorMessages = {
-    incomeError: "Please enter a positive number for income",
-    wholeNumberError: "Please enter a whole number",
+    incomeError: t('error.negativeIncome'),
+    wholeNumberError: t('error.wholeNumber'),
   };
 
   const validationSchema = Yup.object({
@@ -78,7 +80,7 @@ export const QuizPersonalForm: React.FC = () => {
           <Grid md={2} xs={0} />
 
           <Grid md={3} xs={10} direction="column">
-            <label className={styles.quizFieldText}>Annual Income</label>
+            <label className={styles.quizFieldText}>{t('annualIncome')}</label>
             <Spacer y={1} />
             <Field type="number" name="income" className={styles.select} />
             <ErrorMessage name="income" render={renderError} />
@@ -86,7 +88,7 @@ export const QuizPersonalForm: React.FC = () => {
           <Grid md={2} xs={0} />
 
           <Grid md={3} xs={10} direction="column">
-            <label className={styles.quizFieldText}>Language</label>
+            <label className={styles.quizFieldText}>{t('language')}</label>
             <Spacer y={1} />
             {Object.values(Language).map((c) => (
               <label key={c} className={styles.checkboxItem}>
@@ -97,7 +99,7 @@ export const QuizPersonalForm: React.FC = () => {
                   id={c}
                   style={{ height: "24px", width: "24px" }}
                 />
-                <span className={styles.categoryText}>{` ${c}`}</span>
+                <span className={styles.categoryText}>{t(`languages.${c}`)}</span>
                 <br />
               </label>
             ))}
@@ -110,48 +112,48 @@ export const QuizPersonalForm: React.FC = () => {
             <Row align="center">
               <label className={styles.quizFieldText}>Citizenship</label>
               <Spacer x={0.5} />
-              <HelpTooltip diameter={27} text="This lets us match you to resources focused on non-citizens, if applicable. This field is optional." />
+              <HelpTooltip diameter={27} text={t('help.citizenship')} />
             </Row>
             <Spacer y={1} />
             <Field as="select" name="citizenship" className={styles.select}>
-              <optgroup label="Citizenship">
+              <optgroup label={t("citizenship") ?? ""}>
                 <option></option>
-                {Object.values(Citizenship).map((element) => <option key={element}>{element}</option>)}
+                {Object.values(Citizenship).map((element) => <option key={element}>{t(`citizenships.${element}`)}</option>)}
               </optgroup>
             </Field>
           </Grid>
           <Grid md={2} xs={0} />
 
           <Grid md={3} xs={10} direction="column">
-            <label className={styles.quizFieldText}>Employment Status</label>
+            <label className={styles.quizFieldText}>{t('employmentStatus')}</label>
             <Spacer y={1} />
             <Field
               as="select"
               name="employmentStatus"
               className={styles.select}
             >
-              <optgroup label="Employment Status">
+              <optgroup label={t('employmentStatus') ?? ""}>
                 <option></option>
-                {Object.values(EmploymentStatus).map((element) => <option key={element}>{element}</option>)}
+                {Object.values(EmploymentStatus).map((element) => <option key={element}>{t(`employmentStatuses.${element}`)}</option>)}
               </optgroup>
             </Field>
           </Grid>
           <Grid md={2} xs={0} />
 
           <Grid md={3} xs={10} direction="column">
-            <label className={styles.quizFieldText}>Insurance Type</label>
+            <label className={styles.quizFieldText}>{t('insuranceType')}</label>
             <Spacer y={1} />
             <Field as="select" name="insurance" className={styles.select}>
               <optgroup label="Insurance status">
                 <option></option>
-                {Object.values(Insurance).map((element) => <option key={element}>{element}</option>)}
+                {Object.values(Insurance).map((element) => <option key={element}>{t(`insuranceTypes.${element}`)}</option>)}
               </optgroup>
             </Field>
           </Grid>
           <Grid md={2} xs={0} />
 
           <Grid md={3} xs={10} direction="column">
-            <label className={styles.quizFieldText}>Accessibility Needs</label>
+            <label className={styles.quizFieldText}>{t('accessibilityNeeds')}</label>
             <Spacer y={1} />
             {Object.values(Accessibility).map((c) => (
               <label key={c} className={styles.checkboxItem}>
@@ -162,7 +164,7 @@ export const QuizPersonalForm: React.FC = () => {
                   id={c}
                   style={{ height: "24px", width: "24px" }}
                 />
-                <span className={styles.categoryText}>{` ${c}`}</span>
+                <span className={styles.categoryText}>{t(`accessibility.${c}`)}</span>
                 <br />
               </label>
             ))}
@@ -170,11 +172,11 @@ export const QuizPersonalForm: React.FC = () => {
 
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="submit" id="back">
-              Back
+              {t('back')}
             </button>
 
             <button className={styles.continue} type="submit" id="continue">
-              Continue
+              {t('continue')}
             </button>
           </Grid>
         </Grid.Container>

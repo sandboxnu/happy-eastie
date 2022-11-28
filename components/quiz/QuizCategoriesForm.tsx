@@ -7,12 +7,14 @@ import { AppContext } from "../../context/context";
 import { ResourceCategory, SurveyAnswers } from "../../models/types";
 import { Checkbox, Grid } from "@nextui-org/react";
 import styles from "../../styles/quiz.module.css";
+import { useTranslation } from "next-i18next";
 
 export const QuizCategoriesForm: React.FC = () => {
+  const { t } = useTranslation(['common'])
   const router = useRouter();
   const quizState = useContext(AppContext);
 
-  const errorMessage = "Please select at least 1 category to get resources for";
+  const errorMessage = t('error.category');
 
   const validationSchema = Yup.object({ category: Yup.array().min(1, errorMessage) });
 
@@ -49,7 +51,7 @@ export const QuizCategoriesForm: React.FC = () => {
               {Object.values(ResourceCategory).map((c) => (
                 <label key={c} className={styles.checkboxItem}>
                   <Field type="checkbox" name="category" value={c} id={c} className={styles.checkbox} style={{"height": "24px", "width": "24px"}}/>
-                  <span className={styles.categoryText}>{c}</span>
+                  <span className={styles.categoryText}>{t(c)}</span>
                 </label>
               ))}
               <ErrorMessage name="category" render={renderError} />

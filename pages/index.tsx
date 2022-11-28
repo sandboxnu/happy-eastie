@@ -31,7 +31,7 @@ const Home: NextPage = () => {
 };
 
 function InfoComponent() {
-  const { t } = useTranslation(["home"]);
+  const { t } = useTranslation(["common"]);
 
   return (
     <Grid.Container gap={2} justify="center">
@@ -56,7 +56,7 @@ function InfoComponent() {
 }
 
 function TrendingComponent() {
-  const { t } = useTranslation(["home"]);
+  const { t } = useTranslation(["common"]);
 
   // TODO: Translations once the backend supports them
   const events = [
@@ -138,7 +138,7 @@ function TrendingComponent() {
 }
 
 function DirectoryComponent() {
-  const { t } = useTranslation(["home"]);
+  const { t } = useTranslation(["common"]);
 
   type TableLinkProps = {
     name: string;
@@ -188,7 +188,7 @@ function DirectoryComponent() {
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["home"])),
+      ...(await serverSideTranslations(locale, ["common"])),
     },
   };
 }

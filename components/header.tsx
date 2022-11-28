@@ -1,14 +1,13 @@
 import React from "react";
 import { Navbar, Dropdown, Image, useTheme, Link, Button } from "@nextui-org/react";
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 
 export default function Header() {
   const router = useRouter()
-  const { i18n } = useTranslation()
+  const { pathname, asPath, query } = router  
 
   const changeLanguage = (key: string) => {
-    router.push("/", router.asPath, { locale: key });
+    router.push({ pathname, query }, asPath, { locale: key })
   }
 
   const collapseItems = [
@@ -31,7 +30,7 @@ export default function Header() {
         {collapseItems.map(item => 
           <Navbar.Link 
           key={item.title}
-          href={item.href ?? "#"}>
+          href={`/${router.locale}${item.href ?? "#"}`}>
             {item.title}
           </Navbar.Link>)}
       </Navbar.Content>
@@ -58,7 +57,7 @@ export default function Header() {
               css={{
                 minWidth: "100%",
               }}
-              href={item.href ?? "#"}
+              href={`/${router.locale}${item.href ?? "#"}`}
             >
               {item.title}
             </Link>

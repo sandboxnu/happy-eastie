@@ -1,0 +1,82 @@
+{
+  "title": "Here to help find the resources for you!",
+  "subtitle": "Tap \"Help My Search\" to answer questions and get personalized resoure results.",
+  "helpMySearch": "Help My Search",
+  "trendingNearYou": "Trending Near You",
+  "resourceDirectory": "Resource Directory",
+  "earlyChildhood": "Early Childhood",
+  "cashAssistance": "Cash Assistance",
+  "healthcare": "Healthcare",
+  "housing": "Housing",
+  "food": "Food",
+  "youngParents": "Young Parents",
+  "quizTitle": "Resource Quiz",
+  "quizSubtitle": "Select what you need help with.",
+  "error": {
+    "category": "Please select at least 1 category to get resources for",
+    "negativeIncome": "Please enter a positive number for income",
+    "wholeNumber": "Please enter a whole number",
+    "age": "Please enter a valid age"
+  },
+  "childcare": "Childcare",
+  "financialHelp": "Financial Help",
+  "immigrationAssistance": "Immigration Assistance",
+  "help": {
+    "quizSubtitle": "All answer fields are optional to ensure that you only share as much information as you like.",
+    "citizenship": "This lets us match you to resources focused on non-citizens, if applicable. This field is optional."
+  },
+  "continue": "Continue",
+  "back": "Back",
+  "submit": "Submit",
+  "annualIncome": "Annual Income",
+  "language": "Language",
+  "languages": {
+    "english": "English",
+    "spanish": "Spanish",
+    "portuguese": "Portuguese",
+    "chinese": "Chinese",
+    "vietnamese": "Vietnamese",
+    "arabic": "Arabic",
+    "haitianCreole": "Haitian Creole"
+  },
+  "citizenship": "Citizenship",
+  "citizenships": {
+    "undocumented": "Undocumented",
+    "nonImmigrant": "Non-Immigrant",
+    "resident": "Resident",
+    "citizen": "Citizen",
+    "eligibleNonCitizen": "Eligible Non-Citizen"
+  },
+  "employmentStatus": "Employment Status",
+  "employmentStatuses": {
+    "currentlyWorking": "Currently Working",
+    "seekingEmployment": "Seeking Employment",
+    "studying": "Studying",
+    "stayAtHome": "Stay at Home"
+  },
+  "insuranceType": "Insurance Type",
+  "insuranceTypes": {
+    "uninsured": "Uninsured",
+    "private": "Private",
+    "public": "Public"
+  },
+  "accessibilityNeeds": "Accessibility Needs",
+  "accessibility": {
+    "speech": "Speech",
+    "vision": "Vision",
+    "hearing": "Hearing",
+    "mental": "Mental",
+    "digitalLiteracy": "Digital Literacy"
+  },
+  "familyType": "Family Type",
+  "family": {
+    "nuclear": "Nuclear",
+    "expected": "Expected",
+    "extended": "Extended",
+    "singleParent": "Single-Parent",
+    "grandparent": "Grandparent",
+    "foster": "Foster"
+  },
+  "parentAge": "Parent Age",
+  "childAge": "Child Age"
+}

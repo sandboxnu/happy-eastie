@@ -7,10 +7,13 @@ import { Grid, Progress, Text, Spacer, Row } from "@nextui-org/react";
 import styles from "../../styles/quiz.module.css";
 import Header from "../../components/header";
 import { HelpTooltip } from "../../components/HelpTooltip";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 const QuizPage: NextPage = () => {
   const router = useRouter();
   const { pageId } = router.query;
+  const { t } = useTranslation(['common'])
 
   const pageNumber = parseInt(pageId as string);
 
@@ -34,14 +37,14 @@ const QuizPage: NextPage = () => {
     <Grid.Container gap={2} alignItems="center" direction="column">
       <Header />
       <Grid xs={4} md={4} direction="column">
-        <Text id={styles.quizTitle}>Resource Quiz</Text>
+        <Text id={styles.quizTitle}>{t('quizTitle')}</Text>
         <Spacer y={1} />
         <Progress max={4} value={pageNumber} size={"sm"} />
         <Spacer y={1} />
         <Row align="center">
-          <Text id={styles.quizSubtitle}>Select what you need help with.</Text>
+          <Text id={styles.quizSubtitle}>{t('quizSubtitle')}</Text>
           <Spacer x={0.3} />
-          <HelpTooltip diameter={15} text={"All answer fields are optional to ensure that you only share as much information as you like."} />
+          <HelpTooltip diameter={15} text={t('help.quizSubtitle')} />
         </Row>
       </Grid>
 
@@ -49,5 +52,13 @@ const QuizPage: NextPage = () => {
     </Grid.Container>
   );
 };
+
+export async function getServerSideProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 export default QuizPage;

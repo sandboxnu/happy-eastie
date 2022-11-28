@@ -3,6 +3,7 @@ import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import { useTranslation } from "next-i18next";
 import { useSWRConfig } from "swr";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
@@ -13,9 +14,10 @@ export const QuizFamilyForm: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
   const { cache } = useSWRConfig();
+  const { t } = useTranslation(['common'])
 
   const errorMessages = {
-    ageError: "Please enter a valid age",
+    ageError: t('error.age'),
   };
 
   const validationSchema = Yup.object({
@@ -67,24 +69,24 @@ export const QuizFamilyForm: React.FC = () => {
           <Grid md={5} xs={0} />
 
           <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>Family Type</label>
+            <label className={styles.quizFieldText}>{t('familyType')}</label>
             <Spacer y={1} />
             <Field className={styles.familySelect} as="select" name="family">
               <option></option>
-              {Object.values(Family).map((element) => <option key={element}>{element}</option>)}
+              {Object.values(Family).map((element) => <option key={element}>{t(`family.${element}`)}</option>)}
             </Field>
           </Grid>
 
           <Grid md={5} xs={0} />
 
           <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>Parent Age</label>
+            <label className={styles.quizFieldText}>{t('parentAge')}</label>
             <Spacer y={1} />
             <Field className={styles.ageInput} type="number" name="parentAge" />
             <ErrorMessage name="parentAge" render={renderError} />
           </Grid>
           <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>Child Age</label>
+            <label className={styles.quizFieldText}>{t('childAge')}</label>
             <Spacer y={1} />
             <Field className={styles.ageInput} type="number" name="childAge" />
             <ErrorMessage name="childAge" render={renderError} />
@@ -92,11 +94,11 @@ export const QuizFamilyForm: React.FC = () => {
 
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="submit" id="back">
-              Back
+              {t('back')}
             </button>
 
             <button className={styles.submit} type="submit" id="submit">
-              Submit
+              {t('submit')}
             </button>
           </Grid>
         </Grid.Container>

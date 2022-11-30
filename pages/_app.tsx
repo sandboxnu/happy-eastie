@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { AppContext } from '../context/context'
 import { useState } from 'react'
 import { createTheme, NextUIProvider, Text } from "@nextui-org/react"
+import { appWithTranslation } from 'next-i18next';
 
 const theme = createTheme({
   type: "light",
@@ -38,4 +39,4 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

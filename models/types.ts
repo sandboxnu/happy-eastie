@@ -115,59 +115,59 @@ export type Range = {
 };
 
 export enum Citizenship {
-    Undocumented = "Undocumented",
-    Non_Immigrant = "Non-Immigrant",
-    Resident="Resident",
-    Citizen="Citizen",
-    Eligible_Non_Citizen="Eligible Non-Citizen"
+    Undocumented = "undocumented",
+    Non_Immigrant = "nonImmigrant",
+    Resident="resident",
+    Citizen="citizen",
+    Eligible_Non_Citizen="eligibleNonCitizen"
 }
 
 export enum Family {
-    Nuclear = "Nuclear",
-    Expected = "Expecting",
-    Extended = "Extended",
-    Single_Parent = "Single-Parent",
-    Grandparent = "Grandparent",
-    Foster = "Foster"
+    Nuclear = "nuclear",
+    Expected = "expected",
+    Extended = "extended",
+    Single_Parent = "singleParent",
+    Grandparent = "grandparent",
+    Foster = "foster"
 }
 
 export enum EmploymentStatus {
-    Currently_Working = "Currently Working",
-    Seeking_Employment = "Seeking Employment",
-    Studying = "Studying",
-    Stay_At_Home = "Stay at Home"
+    Currently_Working = "currentlyWorking",
+    Seeking_Employment = "seekingEmployment",
+    Studying = "studying",
+    Stay_At_Home = "stayAtHome"
 }
 
 export enum Insurance {
-    Uninsured = "Uninsured",
-    Private = "Private",
-    Public = "Public"
+    Uninsured = "uninsured",
+    Private = "private",
+    Public = "public"
 }
 
 export enum Accessibility {
-    Speech = "Speech",
-    Vision = "Vision",
-    Hearing = "Hearing",
-    Mental = "Mental",
-    DigitalLiteracy = "Digital Literacy"
+    Speech = "speech",
+    Vision = "vision",
+    Hearing = "hearing",
+    Mental = "mental",
+    DigitalLiteracy = "digitalLiteracy"
 }
 
 export enum Language {
-   English = "English",
-   Spanish = "Spanish",
-   Portuguese = "Portuguese",
-   Chinese = "Chinese",
-   Vietnamese = "Vietnamese",
-   Arabic = "Arabic",
-   Haitian_Creole = "Haitian Creole"
+   English = "english",
+   Spanish = "spanish",
+   Portuguese = "portuguese",
+   Chinese = "chinese",
+   Vietnamese = "vietnamese",
+   Arabic = "arabic",
+   Haitian_Creole = "haitianCreole"
 }
 
 export enum ResourceCategory {
-    Childcare = "Childcare", 
-    Healthcare = "Healthcare", 
-    FinancialHelp = "Financial Help", 
-    ImmigrationAssistance = "Immigration Assistance", 
-    Housing = "Housing"
+    Childcare = "childcare", 
+    Healthcare = "healthcare", 
+    FinancialHelp = "financialHelp", 
+    ImmigrationAssistance = "immigrationAssistance", 
+    Housing = "housing"
 }
 
 // TODO: update this type with all sorting methods possible

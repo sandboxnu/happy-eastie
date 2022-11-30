@@ -1,0 +1,88 @@
+{
+    "home" : "Accueil",
+    "quiz" : "Quiz",
+    "communityEvents" : "Événements communautaires",
+    "resources" : "Ressources",
+    "about" : "À propos",
+    "title" : "Ici pour aider à trouver les ressources pour vous !",
+    "subtitle" : "Appuyez sur \"Aider ma recherche\" pour répondre à vos questions et obtenir des résultats de recherche personnalisés.",
+    "helpMySearch" : "Aider ma recherche",
+    "trendingNearYou" : "Tendance près de chez vous",
+    "resourceDirectory" : "Répertoire des ressources",
+    "earlyChildhood" : "Petite Enfance",
+    "cashAssistance" : "Aide en Espèces",
+    "healthcare" : "Soins de Santé",
+    "housing" : "Logement",
+    "food" : "Alimentation",
+    "youngParents" : "Jeunes parents",
+    "quizTitle" : "Quiz sur les ressources",
+    "quizSubtitle" : "Sélectionnez ce pour quoi vous avez besoin d'aide.",
+    "error" : {
+      "category" : "Veuillez sélectionner au moins 1 catégorie pour laquelle vous souhaitez obtenir des ressources",
+      "negativeIncome" : "Veuillez entrer un nombre positif pour le revenu",
+      "wholeNumber" : "Veuillez saisir un nombre entier",
+      "age" : "Veuillez saisir un âge valide"
+    },
+    "childcare" : "Garde d'enfants",
+    "financialHelp" : "Aide financière",
+    "immigrationAssistance" : "Aide à l'immigration",
+    "help" : {
+      "quizSubtitle" : "Tous les champs de réponse sont facultatifs afin que vous ne partagiez que les informations que vous souhaitez.",
+      "citizenship" : "Ceci nous permet de vous faire correspondre à des ressources axées sur les non-citoyens, le cas échéant. Ce champ est facultatif."
+    },
+    "continue" : "Continuer",
+    "back" : "Retourner",
+    "submit" : "Soumettre",
+    "annualIncome" : "Revenu annuel",
+    "language" : "Langue",
+    "languages" : {
+      "english" : "Anglais",
+      "spanish" : "Espagnol",
+      "portuguese" : "Portugais",
+      "chinese" : "Chinois",
+      "vietnamese" : "Vietnamien",
+      "arabic" : "Arabe",
+      "haitianCreole" : "Créole haïtien"
+    },
+    "citizenship" : "Citoyenneté",
+    "citizenships" : {
+      "undocumented" : "Sans-papiers",
+      "nonImmigrant" : "Non-immigrant",
+      "resident" : "Résident",
+      "citizen" : "Citizen",
+      "eligibleNonCitizen" : "Non-Citoyen Éligible"
+    },
+    "employmentStatus" : "Statut d'emploi",
+    "employmentStatuses" : {
+      "currentlyWorking" : "Employé(e)",
+      "seekingEmployment" : "Chercher un emploi",
+      "studying" : "Étudier",
+      "stayAtHome" : "Rester à la maison"
+    },
+    "insuranceType" : "Type d'assurance",
+    "insuranceTypes" : {
+      "uninsured" : "Non assuré",
+      "private" : "Privé",
+      "public" : "Public"
+    },
+    "accessibilityNeeds" : "Besoins en matière d'accessibilité",
+    "accessibility" : {
+      "speech" : "Speech",
+      "vision" : "Vision",
+      "hearing" : "Ouïe",
+      "mental" : "Mental",
+      "digitalLiteracy" : "Littératie numérique"
+    },
+    "familyType" : "Type de Famille",
+    "family" : {
+      "nuclear" : "Nucléaire",
+      "expected" : "Attendu",
+      "extended" : "Élargie",
+      "singleParent" : "Monoparentale",
+      "grandparent" : "Grand-parent",
+      "foster" : "D'accueil"
+    },
+    "parentAge" : "Âge du Parent",
+    "childAge" : "Âge de l'enfant"
+  }
+  

@@ -1,13 +1,23 @@
 import React from "react";
-import { Navbar, Dropdown, Image, useTheme, Link } from "@nextui-org/react";
+import { Navbar, Dropdown, Image, useTheme, Link, Button } from "@nextui-org/react";
+import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 export default function Header() {
+  const router = useRouter()
+  const { pathname, asPath, query } = router 
+  const { t } = useTranslation(['common'])
+
+  const changeLanguage = (key: string) => {
+    router.push({ pathname, query }, asPath, { locale: key })
+  }
+
   const collapseItems = [
-    { title: "Home", href: "/"},
-    { title: "Quiz", href: "/quiz" },
-    { title: "Community Events" },
-    { title: "Resources", href: "/directory" },
-    { title: "About", href: "/about"}
+    { title: t('home'), href: "/"},
+    { title: t('quiz'), href: "/quiz" },
+    { title: t('communityEvents') },
+    { title: t('resources'), href: "/directory" },
+    { title: t('about'), href: "/about"}
   ];
 
   return (
@@ -22,7 +32,7 @@ export default function Header() {
         {collapseItems.map(item => 
           <Navbar.Link 
           key={item.title}
-          href={item.href ?? "#"}>
+          href={`/${router.locale}${item.href ?? "#"}`}>
             {item.title}
           </Navbar.Link>)}
       </Navbar.Content>
@@ -30,11 +40,14 @@ export default function Header() {
         <Dropdown>
           <Dropdown.Button light>
             <Image width={20} height={20} style={{ paddingRight: 4 }} src="/globe.svg" alt="Select language" />
-            EN
+            {router.locale}
           </Dropdown.Button>
-          <Dropdown.Menu aria-label="Static Actions">
-            <Dropdown.Item key="fr">FR</Dropdown.Item>
-            <Dropdown.Item key="es">ES</Dropdown.Item>
+          <Dropdown.Menu aria-label="Static Actions" onAction={(key) => {
+            changeLanguage(key.toString())
+          }}>
+            <Dropdown.Item key="en">English</Dropdown.Item>
+            <Dropdown.Item key="fr">français</Dropdown.Item>
+            <Dropdown.Item key="es">español</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Navbar.Content>
@@ -46,7 +59,7 @@ export default function Header() {
               css={{
                 minWidth: "100%",
               }}
-              href={item.href ?? "#"}
+              href={`/${router.locale}${item.href ?? "#"}`}
             >
               {item.title}
             </Link>

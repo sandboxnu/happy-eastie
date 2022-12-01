@@ -1,5 +1,6 @@
 import { Role } from "../constants/role";
 import { DocumentData, GeoPoint, Timestamp } from "firebase/firestore";
+import { Document, ObjectId, WithId } from "mongodb";
 
 // TODO: these types may not all be accurate - refer to quiz-real branch when finalizing
 
@@ -48,14 +49,14 @@ export interface EventInfo {
 export interface SurveyAnswers {
     category: ResourceCategory[];
     income?: number;
-    language: Language[];
+    language?: Language[];
     citizenship?: Citizenship;
     parentAge?: number;
     childAge?: number;
     family?: Family;
     employmentStatus?: EmploymentStatus;
     insurance?: Insurance;
-    accessibility: Accessibility[]; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
+    accessibility?: Accessibility[]; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
 }
 
 /**
@@ -67,7 +68,7 @@ export interface Service extends DocumentData {
     url: string;
     income?: Range[];
     language?: String[];
-    citizenship?: Citizenship[];
+    citizenship?: Citizenship;
     parentAge?: Range[];
     childAge?: Range[];
     family?: Family[];
@@ -75,8 +76,7 @@ export interface Service extends DocumentData {
     insurance?: Insurance[];
     accessibility?: Accessibility[];
 }
-export interface Resource extends DocumentData {
-    id: string;
+export interface Resource {
     name: string;
     description?: string; // Markdown
     category?: ResourceCategory[];
@@ -115,33 +115,33 @@ export type Range = {
 };
 
 export enum Citizenship {
-    "Undocumented",
-    "Non-Immigrant",
-    "Resident",
-    "Citizen",
-    "Eligible Non-Citizen"
+    Undocumented = "Undocumented",
+    Non_Immigrant = "Non-Immigrant",
+    Resident="Resident",
+    Citizen="Citizen",
+    Eligible_Non_Citizen="Eligible Non-Citizen"
 }
 
 export enum Family {
-    "Nuclear",
-    "Expecting",
-    "Extended",
-    "Single-Parent",
-    "Grandparent",
-    "Foster"
+    Nuclear = "Nuclear",
+    Expected = "Expecting",
+    Extended = "Extended",
+    Single_Parent = "Single-Parent",
+    Grandparent = "Grandparent",
+    Foster = "Foster"
 }
 
 export enum EmploymentStatus {
-    "Currently Working",
-    "Seeking Employment",
-    "Studying",
-    "Stay at Home"
+    Currently_Working = "Currently Working",
+    Seeking_Employment = "Seeking Employment",
+    Studying = "Studying",
+    Stay_At_Home = "Stay at Home"
 }
 
 export enum Insurance {
-    "Uninsured",
-    "Private",
-    "Public"
+    Uninsured = "Uninsured",
+    Private = "Private",
+    Public = "Public"
 }
 
 export enum Accessibility {
@@ -153,8 +153,13 @@ export enum Accessibility {
 }
 
 export enum Language {
-    English = "English",
-    Spanish = "Spanish"
+   English = "English",
+   Spanish = "Spanish",
+   Portuguese = "Portuguese",
+   Chinese = "Chinese",
+   Vietnamese = "Vietnamese",
+   Arabic = "Arabic",
+   Haitian_Creole = "Haitian Creole"
 }
 
 export enum ResourceCategory {

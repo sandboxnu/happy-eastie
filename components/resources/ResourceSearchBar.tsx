@@ -11,12 +11,12 @@ interface ResourceSearchBarProps {
     onChange: (e: ChangeEvent<FormElement>) => void
     viewingAll: boolean;
     toggleViewingAll: () => void;
-    setFilters: React.Dispatch<React.SetStateAction<ResourceCategory[]>>;
+    setFilters: React.Dispatch<React.SetStateAction<string>>;
     setSortingMethod: React.Dispatch<React.SetStateAction<ResourceSortingMethod>>;
 }
 
 export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: ResourceSearchBarProps) => {
-    const [filters, setFilters] = useState<ResourceCategory[]>([])
+    const [filters, setFilters] = useState<string>("")
 
     // TODO: update this so it pulls from the ResourceCategory type
     const updateFilterCategories = (filters: string[]) => {
@@ -35,8 +35,8 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
             }
         })
 
-        setFilters(resourceCategoryFilters)
-        props.setFilters(resourceCategoryFilters)
+        setFilters(resourceCategoryFilters.toString())
+        props.setFilters(resourceCategoryFilters.toString())
     }
 
     // TODO: write this so it pulls directly from the ResourceSortingMethod type
@@ -81,7 +81,7 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
             </div>
 
             <FiltersList
-                categories={filters}
+                categories={filters ? JSON.parse(filters) : []}
             />
         </div>
     )

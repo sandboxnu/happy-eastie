@@ -4,22 +4,19 @@ import { Modal, Button, Text } from "@nextui-org/react";
 type DialogProps = {
     title: string,
     message: string,
+    visible: boolean,
     onCloseHandler: () => void,
 }
 export default function Dialog(props: DialogProps) {
-  const [visible, setVisible] = useState(true);
 
   const closeHandler = () => {
-    setVisible(false);
     props.onCloseHandler();
   };
 
   return (
       <Modal
-        closeButton
         aria-labelledby="modal-title"
-        open={visible}
-        onClose={closeHandler}
+        open={props.visible}
       >
         <Modal.Header>
           <Text id="modal-title" size={18}>
@@ -30,8 +27,8 @@ export default function Dialog(props: DialogProps) {
             <Text> {props.message} </Text>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color="error" onClick={closeHandler}>
-            Close
+          <Button auto flat color="error" onPress={props.onCloseHandler}>
+            Got it!
           </Button>
         </Modal.Footer>
       </Modal>

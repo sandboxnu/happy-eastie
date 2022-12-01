@@ -9,19 +9,19 @@ import { FormElement, Row, Spacer, Image, Text, Grid, Link } from '@nextui-org/r
 import { useRouter } from "next/router";
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
+import { WithId } from 'mongodb'
 import Header from '../../components/header'
 
 const ResourceDirectory: NextPage = () => {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
     const [viewingAll, setViewingAll] = useState<boolean>(false)
-    const [filters, setFilters] = useState<ResourceCategory[]>([])
+    const [filters, setFilters] = useState<string>("")
     const [sortingMethod, setSortingMethod] = useState<ResourceSortingMethod>(ResourceSortingMethod.Alphabetical)
-    const [displayResources, setDisplayResources] = useState<Resource[]>([])
+    const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>([])
     const { requestedResources, additionalResources, isLoading, error } = useResources()
 
     useEffect(() => {
-        console.log("first effect")
         setDisplayResources(requestedResources as Resource[])
     }, [requestedResources])
 
@@ -34,7 +34,7 @@ const ResourceDirectory: NextPage = () => {
         const requestBody = (searchQuery && !viewingAll && searchQuery !== "Search resources...") ? JSON.stringify({ searchParam: searchQuery }) : null
         const requestSettings = { method: 'POST', body: requestBody, headers: { 'Content-Type': 'application/json' } }
         makeResourcesRequest(requestSettings).then((data) => {
-            const resources: Resource[] = data.requested;
+            const resources: WithId<Resource>[] = data.requested;
             setDisplayResources(resources);
         }) //TODO: This currently returns a stray promise. We should probably add some indication of loading and blocking other search requests.
     }, [searchQuery, viewingAll])

@@ -6,17 +6,20 @@ import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
+import {WithId} from 'mongodb';
 
 interface ResourceCardDisplayProps {
-    resource: Resource;
+    resource: WithId<Resource>;
 }
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {
     const [visible, setVisible] = useState(false);
-    const toggleState = () => {setVisible(!visible)};
+    const toggleState = () => {setVisible(!visible);
+        console.log("toggle state to " + visible)};
 
     return (
-        <Link href={"/resources/" + props.resource.id}>
+        <div>
+        <Link href={"/resources/" + props.resource._id}>
             <Card isHoverable css={{ width: "515px", height: "300px", backgroundColor: "var(--brand-light-blue)" }}>
                 <Card.Header>
                     <Row justify='space-between'>
@@ -44,17 +47,18 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
                 <Card.Footer>
                     <Row justify="flex-start">
-                        <ApplyForResourceButtons state={visible} toggleState={toggleState}/>
-                        <CallResourceButtons state={visible} toggleState={toggleState}/>
+                        <ApplyForResourceButtons toggleState={toggleState}/>
+                        <CallResourceButtons toggleState={toggleState}/>
                     </Row>
                 </Card.Footer>
             </Card>
         </Link>
+        <Dialog title="New feature" message="Stay tuned... This feature is coming soon!!" visible={visible} onCloseHandler={toggleState}/>
+        </div>
     )
 }
 
 type ChildProps = {
-    state : boolean,
     toggleState : () => void;
 }
 
@@ -65,19 +69,17 @@ const ApplyForResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
                 <Image src="/laptop.svg" alt="Apply"></Image>
                 <Text className={styles.cardFooter}>Apply Online</Text>
             </Row>
-            { props.state ? <Dialog title="New feature" message="This feature is coming soon!!" onCloseHandler={props.toggleState}/> : <div></div>}
         </Link>
     )
 }
 
 const  CallResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
     return (
-        <Link href="#" onClick={() => props.toggleState()}>
+        <Link href="#" onPress={() => props.toggleState()}>
             <Row css={{ px: "0" }}>
                 <Image src="/phone.svg" alt="Call"></Image>
                 <Text className={styles.cardFooter}>By Phone</Text>
             </Row> 
-            { props.state ? <Dialog title="New feature" message="This feature is coming soon!!" onCloseHandler={props.toggleState}/> : <div></div>}
         </Link>
     )
 }

@@ -5,7 +5,7 @@ export const resourceConverter : FirestoreDataConverter<Resource> = {
     toFirestore: (data: Resource) : DocumentData => data,
     fromFirestore: (snap: QueryDocumentSnapshot) : Resource => {
       let data = snap.data() as Resource
-      data.id = snap.id
+    //   data.id = snap.id
       return data
     }
 }

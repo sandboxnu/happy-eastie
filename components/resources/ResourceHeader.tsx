@@ -18,6 +18,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (props: ResourceHea
   };
 
   const emailClicked = () => {
+    console.log(props.resource.email)
     router.push(`mailto:${props.resource.email}`);
   };
 

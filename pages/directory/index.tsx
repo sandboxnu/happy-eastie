@@ -89,8 +89,8 @@ const ResourceDirectory: NextPage = () => {
     <>
       <Header />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 4fr" }}>
-        <div style={{ backgroundColor: "red" }}>
+      <Grid.Container>
+        <Grid xs={0} sm={3} style={{ backgroundColor: "red" }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -98,38 +98,36 @@ const ResourceDirectory: NextPage = () => {
           reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
-        </div>
+        </Grid>
 
-<div>
-
-        <Grid.Container>
-          <Grid>
-            <Row align="center">
-              <Image src={"/star.svg"} alt="" width={31} height={31} />
-              <Spacer x={0.4} />
-              <Text h1>Resource Directory</Text>
-            </Row>
-          </Grid>
-        </Grid.Container>
-        <Spacer y={1.25} />
-        <ResourceSearchBar
-          placeholder={searchQuery}
-          onChange={updateSearchQuery}
-          viewingAll={viewingAll}
-          toggleViewingAll={toggleViewingAll}
-          setFilters={setFilters}
-          setSortingMethod={setSortingMethod}
-        />
-        <Spacer y={2} />
-        <ResourcesDisplay resources={displayResources} />
-        <Spacer y={1} />
-        <button className={resourceStyles.back} onClick={() => router.back()}>
-          Back
-        </button>
-        <Spacer y={2} />
-      </div>
-      </div>
-
+        <Grid xs={12} sm={9}>
+          <Grid.Container>
+            <Grid>
+              <Row align="center">
+                <Image src={"/star.svg"} alt="" width={31} height={31} />
+                <Spacer x={0.4} />
+                <Text h1>Resource Directory</Text>
+              </Row>
+            </Grid>
+          </Grid.Container>
+          <Spacer y={1.25} />
+          <ResourceSearchBar
+            placeholder={searchQuery}
+            onChange={updateSearchQuery}
+            viewingAll={viewingAll}
+            toggleViewingAll={toggleViewingAll}
+            setFilters={setFilters}
+            setSortingMethod={setSortingMethod}
+          />
+          <Spacer y={2} />
+          <ResourcesDisplay resources={displayResources} />
+          <Spacer y={1} />
+          <button className={resourceStyles.back} onClick={() => router.back()}>
+            Back
+          </button>
+          <Spacer y={2} />
+        </Grid>
+      </Grid.Container>
     </>
   );
 };

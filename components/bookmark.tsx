@@ -19,4 +19,3 @@ export default function Bookmark(props: BookmarkProps) {
     </button>
   );
 }
-

@@ -16,7 +16,6 @@ import {
   Image,
   Text,
   Grid,
-  Link,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { ResourcesResponse } from "../api/resources";
@@ -85,51 +84,56 @@ const ResourceDirectory: NextPage = () => {
     setViewingAll(!viewingAll);
   };
 
+
   return (
-    <>
+    <div className={homeStyles.container}>
       <Header />
 
-      <Grid.Container>
-        <Grid xs={0} sm={3} style={{ backgroundColor: "red" }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Grid>
-
-        <Grid xs={12} sm={9}>
-          <Grid.Container>
-            <Grid>
-              <Row align="center">
-                <Image src={"/star.svg"} alt="" width={31} height={31} />
-                <Spacer x={0.4} />
-                <Text h1>Resource Directory</Text>
-              </Row>
-            </Grid>
-          </Grid.Container>
-          <Spacer y={1.25} />
-          <ResourceSearchBar
-            placeholder={searchQuery}
-            onChange={updateSearchQuery}
-            viewingAll={viewingAll}
-            toggleViewingAll={toggleViewingAll}
-            setFilters={setFilters}
-            setSortingMethod={setSortingMethod}
-          />
-          <Spacer y={2} />
-          <ResourcesDisplay resources={displayResources} />
-          <Spacer y={1} />
-          <button className={resourceStyles.back} onClick={() => router.back()}>
-            Back
-          </button>
-          <Spacer y={2} />
+      <Grid.Container justify="center">
+        <Grid>
+          <Row align="center">
+            <Image src={"/star.svg"} alt="" width={31} height={31} />
+            <Spacer x={0.4} />
+            <Text h1>Resource Directory</Text>
+          </Row>
         </Grid>
       </Grid.Container>
-    </>
-  );
+
+      <Spacer y={1.25} />
+      <ResourceSearchBar
+        placeholder={searchQuery}
+        onChange={updateSearchQuery}
+        viewingAll={viewingAll}
+        toggleViewingAll={toggleViewingAll}
+        setFilters={setFilters}
+        setSortingMethod={setSortingMethod}
+      />
+      <Spacer y={2} />
+
+      <Grid.Container gap={10}>
+        <Row>
+          <Grid xs={0} sm={3} style={{ backgroundColor: "red" }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </Grid>
+
+          <ResourcesDisplay resources={displayResources} />
+        </Row>
+      </Grid.Container>
+
+
+      <Spacer y={1} />
+      <button className={resourceStyles.back} onClick={() => router.back()}>
+        Back
+      </button>
+      <Spacer y={2} />
+    </div>
+  )
 };
 
 export default ResourceDirectory;

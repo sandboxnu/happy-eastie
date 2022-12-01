@@ -11,7 +11,7 @@ export default function Header() {
   ];
 
   return (
-    <Navbar maxWidth={"fluid"} variant={"sticky"} disableShadow>
+    <Navbar maxWidth={"fluid"} variant={"sticky"} disableShadow style={{opacity: 1, backgroundColor: "white"}} >
       <Navbar.Brand>
         <Navbar.Toggle aria-label="toggle navigation" showIn="xs" />
         <Link href="/">

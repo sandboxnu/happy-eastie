@@ -80,12 +80,13 @@ async function getResources(
   // small bug: it seems like CBHI, which doesn't have any categories, 
 +   // doesn't get returned here?
   resources.reduce((prev: WithId<Resource>, curr: WithId<Resource>) => {
-    if (curr.category && curr.category.some((c1: ResourceCategory) => answers.category.some((c2: ResourceCategory) => c1 === c2))) {
-      requested.push(curr)
-    } else {
-      additional.push(curr);
-    }
-    return curr
+    curr.category &&
+    curr.category.some((c1: ResourceCategory) =>
+      answers.category.some((c2: ResourceCategory) => c1 === c2)
+    )
+      ? requested.push(curr)
+      : additional.push(curr);
+    return curr;
   });
   return {
     data: {

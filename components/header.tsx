@@ -38,7 +38,7 @@ export default function Header() {
           </Dropdown.Menu>
         </Dropdown>
       </Navbar.Content>
-      <Navbar.Collapse>
+      <Navbar.Collapse style={{opacity: 1, backgroundColor: "white"}} >
         {collapseItems.map((item, index) => (
           <Navbar.CollapseItem key={item.title}>
             <Link

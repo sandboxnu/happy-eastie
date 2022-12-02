@@ -35,12 +35,12 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
             width="100%"
             height="100%"
             src={`https://www.openstreetmap.org/export/embed.html?bbox=${
-              location!.longitude + mapRadius
-            }%2C${location!.latitude + mapRadius}%2C${
-              location!.longitude - mapRadius
-            }%2C${location!.latitude - mapRadius}&layer=mapnik&marker=${
-              location!.latitude
-            }%2C${location!.longitude}`}
+              location!.coordinates[1] + mapRadius
+            }%2C${location!.coordinates[0] + mapRadius}%2C${
+              location!.coordinates[1] - mapRadius
+            }%2C${location!.coordinates[0] - mapRadius}&layer=mapnik&marker=${
+              location!.coordinates[0]
+            }%2C${location!.coordinates[1]}`}
             style={{
               border: "1px solid black",
               overflow: "hidden",

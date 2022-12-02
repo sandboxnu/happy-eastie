@@ -23,3 +23,11 @@
     color: var(--secondary-text);
     margin-left: 20px;
 }
+
+.sidebarBanner {
+    font-family: 'Raleway';
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: #219EA4;
+}

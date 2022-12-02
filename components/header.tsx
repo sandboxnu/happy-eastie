@@ -11,7 +11,7 @@ export default function Header() {
   ];
 
   return (
-    <Navbar maxWidth={"fluid"} variant={"sticky"} disableShadow>
+    <Navbar maxWidth={"fluid"} variant={"sticky"} disableShadow style={{opacity: 1, backgroundColor: "white"}} >
       <Navbar.Brand>
         <Navbar.Toggle aria-label="toggle navigation" showIn="sm" />
         <Link href="/">
@@ -40,7 +40,7 @@ export default function Header() {
           </Dropdown.Menu>
         </Dropdown>
       </Navbar.Content>
-      <Navbar.Collapse>
+      <Navbar.Collapse style={{opacity: 1, backgroundColor: "white"}} >
         {collapseItems.map((item, index) => (
           <Navbar.CollapseItem key={item.title}>
             <Link

@@ -4,12 +4,13 @@ import { useResources } from "../../hooks/useResources";
 import { ResourcesDisplay } from "../../components/resources/ResourcesDisplay";
 import { useContext } from "react";
 import { AppContext } from "../../context/context";
+import Loading from "../../components/Loading";
 
 const Resources: NextPage = () => {
   const {requestedResources, additionalResources, isLoading, error} = useResources()
 
   if (error) return <div>{error.message}</div>
-  if (isLoading) return <div>loading...</div>
+  if (isLoading) return <Loading/>
   if (requestedResources == undefined) return <div>Internal server error: invalid resources loaded</div>
   if (additionalResources == undefined) return <div>Internal server error: invalid resources loaded</div>
 

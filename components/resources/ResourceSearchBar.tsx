@@ -1,5 +1,5 @@
-import { Button, FormElement, Input } from "@nextui-org/react";
-import { ChangeEvent, DetailedHTMLProps, HTMLAttributes, useState } from "react";
+import { FormElement, Grid, Input } from "@nextui-org/react";
+import { ChangeEvent, useState } from "react";
 import { ResourceCategory, ResourceSortingMethod } from "../../models/types";
 import { FilterDropdown } from "./FilterDropdown";
 import { FiltersList } from "./FiltersList";
@@ -36,6 +36,7 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
         })
 
         setFilters(resourceCategoryFilters.toString())
+     
         props.setFilters(resourceCategoryFilters.toString())
     }
 
@@ -56,30 +57,36 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
 
     return (
         <div>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                <Input
-                    width="500px"
-                    size="xl"
-                    aria-label="Search"
-                    type="search"
-                    placeholder={props.placeholder}
-                    onChange={props.onChange}
-                />
+            <Grid.Container css={{ w: "100vw" }} direction="row" gap={2} justify="center" alignItems="center">
+                <Grid md={3} sm={12}>
+                    <Input
+                        size="xl"
+                        aria-label="Search"
+                        type="search"
+                        placeholder={props.placeholder}
+                        onChange={props.onChange}
+                    />
+                </Grid>
 
-                <ViewAllButton
-                    viewingAll={props.viewingAll}
-                    onViewingAllPress={props.toggleViewingAll}
-                />
+                <Grid md={3} sm={12}>
+                    <ViewAllButton
+                        viewingAll={props.viewingAll}
+                        onViewingAllPress={props.toggleViewingAll}
+                    />
+                </Grid>
 
-                <FilterDropdown
-                    setResourceFilters={updateFilterCategories}
-                />
+                <Grid md={3} sm={12}>
+                    <FilterDropdown
+                        setResourceFilters={updateFilterCategories}
+                    />
+                </Grid>
 
-                <SortDropdown
-                    setSortingMethod={updateSortingMethod}
-                />
-            </div>
-
+                <Grid md={3} sm={12}>
+                    <SortDropdown
+                        setSortingMethod={updateSortingMethod}
+                    />
+                </Grid>
+            </Grid.Container>
             <FiltersList
                 categories={filters ? JSON.parse(filters) : []}
             />

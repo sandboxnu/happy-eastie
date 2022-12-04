@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Grid, Checkbox, Spacer } from "@nextui-org/react";
+import { Text, Grid, Spacer, Radio, Input } from "@nextui-org/react";
 import styles from "../../../styles/Directory.module.css";
 import { Family } from "../../../models/types";
 
@@ -13,14 +13,22 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
             <Spacer y={1} />
 
             <Text className={styles.sidebarSubCategory}>Family Type</Text>
-            <Checkbox.Group
+            <Radio.Group
                 color="primary"
                 className={styles.sidebarCheckboxGroup}
             >
                 {Object.values(Family).map(familyType => (
-                    <Checkbox key={familyType} value={familyType}>{familyType}</Checkbox>
+                    <Radio key={familyType} value={familyType}>{familyType}</Radio>
                 ))}
-            </Checkbox.Group>
+            </Radio.Group>
+            <Spacer y={1} />
+
+            <Text className={styles.sidebarSubCategory}>Parent Age</Text>
+            <Input clearable bordered className={styles.sidebarInputBox} />
+            <Spacer y={1} />
+
+            <Text className={styles.sidebarSubCategory}>Child Age</Text>
+            <Input clearable bordered className={styles.sidebarInputBox} />
             <Spacer y={1} />
         </Grid>
     )

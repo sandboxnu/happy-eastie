@@ -6,6 +6,7 @@ import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import { WithId } from 'mongodb';
+import router from 'next/router';
 
 interface ResourceCardDisplayProps {
     resource: WithId<Resource>;
@@ -13,7 +14,8 @@ interface ResourceCardDisplayProps {
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {
     return (
-        <Card isHoverable css={{ width: "515px", height: "300px", backgroundColor: "var(--brand-light-blue)" }}>
+        <Link href={"/resources/" + props.resource._id}>
+        <Card isHoverable css={{ width: "450px", height: "300px", backgroundColor: "var(--brand-light-blue)" }}>
             <Card.Header>
                 <Row justify='space-between'>
                     <Text b className={styles.cardHeader}>{props.resource.name}</Text>
@@ -45,6 +47,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                 </Row>
             </Card.Footer>
         </Card>
+        </Link>
     )
 }
 

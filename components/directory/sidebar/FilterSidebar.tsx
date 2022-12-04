@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Grid, Spacer } from "@nextui-org/react";
 import { SidebarCategories } from './SidebarCategories';
 import { SidebarStatus } from './SidebarStatus';

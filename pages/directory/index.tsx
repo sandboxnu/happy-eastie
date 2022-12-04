@@ -17,6 +17,8 @@ const ResourceDirectory: NextPage = () => {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
     const [viewingAll, setViewingAll] = useState<boolean>(false)
+    // filter is a string because we can't use objects as state
+    // but it's basically of type ResourceCategory[]
     const [filters, setFilters] = useState<string>("")
     const [sortingMethod, setSortingMethod] = useState<ResourceSortingMethod>(ResourceSortingMethod.Alphabetical)
     const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>([])

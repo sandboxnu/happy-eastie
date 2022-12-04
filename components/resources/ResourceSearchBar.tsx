@@ -16,7 +16,7 @@ interface ResourceSearchBarProps {
 }
 
 export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: ResourceSearchBarProps) => {
-    const [filters, setFilters] = useState<string[]>([])
+    const [filters, setFilters] = useState<string>("")
 
     // TODO: update this so it pulls from the ResourceCategory type
     const updateFilterCategories = (filters: string[]) => {
@@ -35,7 +35,8 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
             }
         })
 
-        setFilters(filters)
+        setFilters(resourceCategoryFilters.toString())
+     
         props.setFilters(resourceCategoryFilters.toString())
     }
 
@@ -86,12 +87,9 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
                     />
                 </Grid>
             </Grid.Container>
-
-            <Grid.Container>
-                <FiltersList
-                    categories={filters}
-                />
-            </Grid.Container>
+            <FiltersList
+                categories={filters ? JSON.parse(filters) : []}
+            />
         </div>
     )
 }

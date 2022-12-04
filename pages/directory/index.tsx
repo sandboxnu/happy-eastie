@@ -23,7 +23,7 @@ const ResourceDirectory: NextPage = () => {
     const { requestedResources, additionalResources, isLoading, error } = useResources()
 
     useEffect(() => {
-        setDisplayResources(requestedResources as Resource[])
+        setDisplayResources(requestedResources)
     }, [requestedResources])
 
     // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate

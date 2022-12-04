@@ -4,6 +4,9 @@ import styles from "../../../styles/Directory.module.css";
 import { Family } from "../../../models/types";
 
 interface SidebarFamilyProps {
+    setFamily(f: Family): void
+    setParentAge(n: number): void
+    setChildAge(n: number): void
 }
 
 export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamilyProps) => {
@@ -16,6 +19,7 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
             <Radio.Group
                 color="primary"
                 className={styles.sidebarCheckboxGroup}
+                onChange={e => props.setFamily(e as Family)}
             >
                 {Object.values(Family).map(familyType => (
                     <Radio key={familyType} value={familyType}>{familyType}</Radio>

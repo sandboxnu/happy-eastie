@@ -15,6 +15,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (props: SidebarStatus
             <Text className={styles.sidebarSubCategory}>Language</Text>
             <Checkbox.Group
                 color="primary"
+                className={styles.sidebarCheckboxGroup}
             >
                 {Object.values(Language).map(language => (
                     <Checkbox key={language} value={language}>{language}</Checkbox>
@@ -25,6 +26,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (props: SidebarStatus
             <Text className={styles.sidebarSubCategory}>Insurance Type</Text>
             <Checkbox.Group
                 color="primary"
+                className={styles.sidebarCheckboxGroup}
             >
                 {Object.values(Insurance).map(insuranceType => (
                     <Checkbox key={insuranceType} value={insuranceType}>{insuranceType}</Checkbox>

@@ -5,12 +5,13 @@ import resourceStyles from "../../styles/resource.module.css"
 import { Resource, ResourceCategory, ResourceSortingMethod } from '../../models/types'
 import { useResources } from '../../hooks/useResources'
 import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
-import { FormElement, Row, Spacer, Image, Text, Grid, Link } from '@nextui-org/react';
-import { useRouter } from "next/router";
+import { FormElement, Row, Spacer, Image, Text, Grid, Link } from '@nextui-org/react'
+import { useRouter } from "next/router"
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
 import { WithId } from 'mongodb';
 import Header from '../../components/header'
+import Loading from '../../components/Loading'
 
 const ResourceDirectory: NextPage = () => {
     const router = useRouter();
@@ -45,7 +46,7 @@ const ResourceDirectory: NextPage = () => {
     }
 
     if (error) return <div>{error.message}</div>
-    if (isLoading) return <div>loading...</div>
+    if (isLoading) return <Loading/>
     if (!requestedResources) return <div>Internal server error: could not load requested resources</div>
     if (!additionalResources) return <div>Internal server error: could not load additional resources</div>
 

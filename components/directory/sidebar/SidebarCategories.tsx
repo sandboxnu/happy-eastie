@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Grid, Checkbox } from "@nextui-org/react";
+import { Text, Grid, Checkbox, Spacer } from "@nextui-org/react";
 import styles from "../../../styles/Directory.module.css";
 import { ResourceCategory } from '../../../models/types';
 
@@ -10,6 +10,7 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
     return (
         <Grid>
             <Text className={styles.sidebarBanner}>Categories</Text>
+            <Spacer y={1} />
             <Checkbox.Group
                 color="primary"
             >

@@ -30,4 +30,12 @@
     font-weight: 600;
     color: #FFFFFF;
     background-color: #219EA4;
+    width: "100%";
+}
+
+.sidebarSubCategory {
+    font-family: 'Raleway';
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
 }

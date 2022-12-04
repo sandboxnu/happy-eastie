@@ -14,8 +14,9 @@ interface ResourceCardDisplayProps {
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {
     const [visible, setVisible] = useState(false);
-    const toggleState = () => {setVisible(!visible);
-        console.log("toggle state to " + visible)};
+    const toggleState = () => {
+        setVisible(!visible);
+    };
 
     return (
         <div>

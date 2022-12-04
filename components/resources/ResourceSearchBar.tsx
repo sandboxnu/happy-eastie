@@ -1,5 +1,5 @@
-import { Button, FormElement, Input } from "@nextui-org/react";
-import { ChangeEvent, DetailedHTMLProps, HTMLAttributes, useState } from "react";
+import { FormElement, Input } from "@nextui-org/react";
+import { ChangeEvent, useState } from "react";
 import { ResourceCategory, ResourceSortingMethod } from "../../models/types";
 import { FilterDropdown } from "./FilterDropdown";
 import { FiltersList } from "./FiltersList";

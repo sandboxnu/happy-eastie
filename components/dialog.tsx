@@ -27,7 +27,7 @@ export default function Dialog(props: DialogProps) {
             <Text> {props.message} </Text>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color="error" onPress={props.onCloseHandler}>
+          <Button auto flat color="error" onPress={closeHandler}>
             Got it!
           </Button>
         </Modal.Footer>

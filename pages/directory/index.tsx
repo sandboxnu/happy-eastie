@@ -9,7 +9,7 @@ import { FormElement, Row, Spacer, Image, Text, Grid, Link } from '@nextui-org/r
 import { useRouter } from "next/router";
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
-import { WithId } from 'mongodb'
+import { WithId } from 'mongodb';
 import Header from '../../components/header'
 
 const ResourceDirectory: NextPage = () => {
@@ -28,7 +28,6 @@ const ResourceDirectory: NextPage = () => {
     // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
     // the filtering and sorting to the API
     useEffect(() => {
-        console.log("second effect")
         // TODO: probably want to change this so you don't have to check if search query is the placeholder
         // TODO: Add filters and sorting method to this request
         const requestBody = (searchQuery && !viewingAll && searchQuery !== "Search resources...") ? JSON.stringify({ searchParam: searchQuery }) : null

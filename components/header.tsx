@@ -1,5 +1,5 @@
-import React from "react";
-import { Navbar, Dropdown, Image, useTheme, Link } from "@nextui-org/react";
+import { useState } from "react";
+import { Navbar, Dropdown, Image, Link } from "@nextui-org/react";
 
 export default function Header() {
   const collapseItems = [
@@ -9,6 +9,8 @@ export default function Header() {
     { title: "Resources", href: "/directory" },
     { title: "About", href: "/about"}
   ];
+
+  const [language, setLanguage] = useState("EN");
 
   return (
     <Navbar maxWidth={"fluid"} variant={"sticky"} disableShadow>
@@ -30,11 +32,17 @@ export default function Header() {
         <Dropdown>
           <Dropdown.Button light>
             <Image width={20} height={20} style={{ paddingRight: 4 }} src="/globe.svg" alt="Select language" />
-            EN
+            {language}
           </Dropdown.Button>
-          <Dropdown.Menu aria-label="Static Actions">
-            <Dropdown.Item key="fr">FR</Dropdown.Item>
-            <Dropdown.Item key="es">ES</Dropdown.Item>
+          <Dropdown.Menu aria-label="single selection actions"
+              disabledKeys={["FR", "ES"]}
+              disallowEmptySelection
+              selectedKeys={language}
+              selectionMode='single'
+              onSelectionChange={(key:any) => setLanguage(key.valueOf())}>
+            <Dropdown.Item key="EN">EN</Dropdown.Item>
+            <Dropdown.Item key="FR">FR</Dropdown.Item>
+            <Dropdown.Item key="ES">ES</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Navbar.Content>

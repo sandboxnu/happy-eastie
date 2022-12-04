@@ -15,6 +15,7 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
             <Text className={styles.sidebarSubCategory}>Family Type</Text>
             <Checkbox.Group
                 color="primary"
+                className={styles.sidebarCheckboxGroup}
             >
                 {Object.values(Family).map(familyType => (
                     <Checkbox key={familyType} value={familyType}>{familyType}</Checkbox>

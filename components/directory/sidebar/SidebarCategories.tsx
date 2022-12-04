@@ -13,6 +13,7 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
             <Spacer y={1} />
             <Checkbox.Group
                 color="primary"
+                className={styles.sidebarCheckboxGroup}
             >
                 {Object.values(ResourceCategory).map(category => (
                     <Checkbox key={category} value={category}>{category}</Checkbox>

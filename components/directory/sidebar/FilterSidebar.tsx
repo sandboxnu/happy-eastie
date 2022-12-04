@@ -9,24 +9,11 @@ interface FilterSidebarProps {
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = (props: FilterSidebarProps) => {
     return (
-        <Grid xs={0} sm={3} style={{ backgroundColor: "#DCDCDC" }}>
-            <Grid.Container>
-                <Grid>
-                    <SidebarCategories />
-                </Grid>
-
-                {/* TODO: replace spacers here with grid gaps */}
-                <Spacer y={2} />
-
-                <Grid>
-                    <SidebarStatus />
-                </Grid>
-
-                <Spacer y={2} />
-
-                <Grid>
-                    <SidebarFamily />
-                </Grid>
+        <Grid xs={0} sm={3} style={{ backgroundColor: "#DCDCDC", width: "283px" }}>
+            <Grid.Container justify="center">
+                <SidebarCategories />
+                <SidebarStatus />
+                <SidebarFamily />
             </Grid.Container>
         </Grid>
     )

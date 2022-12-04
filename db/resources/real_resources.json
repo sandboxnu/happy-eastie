@@ -1,0 +1,179 @@
+[
+  {
+  "_id": {
+    "$oid": "6389b490dd0b40726d0ca8d3"
+  },
+  "category": [
+    "Childcare"
+  ],
+  "citizenship": [
+    "Resident",
+    "Citizen",
+    "Undocumented",
+    "Non-Immigrant"
+  ],
+  "description": "At ABCD HEAD START, we prepare your child for preschool and kindergarten using activities and experiences that develop their cognitive and emotional skills. We also have programs for pregnant women and children to fit the needs of your family.\n\n\nHead Start is a family development program that offers comprehensive services for your child as well as your entire family. Part of a highly successful national program, ABCD Head Start has locations throughout Boston, Everett, Malden, and Medford. Our services concentrate on your child’s education, nutrition, and physical and mental health.",
+  "email": " headstart@bostonabcd.org",
+  "family": [
+    "Expecting",
+    "Nuclear"
+  ],
+  "headerImageUrl": "https://bostonabcd.org/wp-content/uploads/2017/07/HS-EHS-Banner1-1280x400.jpg",
+  "howToApply": "Complete the pre-registration form located [here](https://bostonabcd.org/head-start-pre-registration/).",
+  "language": [
+    "English",
+    "Spanish"
+  ],
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      42.37812,
+      -71.03695
+    ]
+  },
+  "maximumChildAge": 5,
+  "maximumIncome": 60000,
+  "maximumParentAge": 200,
+  "minimumIncome": 0,
+  "minimumParentAge": 13,
+  "name": "ABCD Head Start & Early Head Start - 80 Lexington Street",
+  "phoneNumber": "6173486388",
+  "pointOfContact": "ABCD Head Start & Children’s Services Central Office",
+  "tags": [],
+  "url": "https://bostonabcd.org/service/head-start-childrens-services/",
+  "waitlist": {
+    "description": "None"
+  }
+},{
+  "_id": {
+    "$oid": "6389c1d8dd0b40726d0ca8d5"
+  },
+  "category": [
+    "Childcare"
+  ],
+  "citizenship": [
+    "Resident",
+    "Citizen"
+  ],
+  "description": "Maybe you’re a teen parent or you’re struggling with homelessness, or your family is experiencing other difficult circumstances. Our Head Start and Early Head Start specialized services can provide superb childcare and early education while you work, look for a job, or pursue your education. \n\n\n If you are a parent experiencing homelessness, you may qualify forspecialized services. You’ll need a referral from the MassachusettsDepartment of Housing and Community Development (DHCD). If your family is Department of Children and Families (DCF)-involved, you may also qualify for a specialized DCF Supportive placement. Specialized child care openings are available at most Early Head Start and Head Start program locations.",
+  "email": "headstart@bostonabcd.org",
+  "employmentStatus": [
+    "Currently Working",
+    "Seeking Employment",
+    "Studying",
+    "Stay at Home"
+  ],
+  "family": [
+    "Nuclear",
+    "Expecting",
+    "Extended",
+    "Single-Parent",
+    "Grandparent",
+    "Foster"
+  ],
+  "headerImageUrl": "https://bostonabcd.org/wp-content/uploads/2016/11/SpecializedChildcare-Banner1.jpg",
+  "howToApply": "Call the East Boston ABCD office using the button above or manually enter 617.567.8855. Let the office know about your situation and they will be able to assist you. You can also contact the office via email using the above button or by emailing headstart@bostonabcd.org.",
+  "language": [
+    "English",
+    "Spanish"
+  ],
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      42.38275,
+      -71.03578
+    ]
+  },
+  "maximumChildAge": 18,
+  "maximumIncome": 60000,
+  "maximumParentAge": 200,
+  "minimumIncome": 0,
+  "minimumParentAge": 13,
+  "name": "ABCD Specialized Childcare - 130 Condor Street",
+  "phoneNumber": "6175678855",
+  "pointOfContact": "East Boston Head Start & Children's Services - Condor Street",
+  "tags": [],
+  "url": "https://bostonabcd.org/service/specialized-child-care-programs/",
+  "waitlist": {
+    "description": "None"
+  }
+},{
+  "_id": {
+    "$oid": "638ce1122d0bc24ed90aa5ab"
+  },
+  "accessibility": ["Speech", "Vision", "Hearing"],
+  "category": [
+    "Financial Help"
+  ],
+  "citizenship": ["Citizen","Non-Immigrant","Resident","Eligible Non-Citizen"],
+  "description": "Transitional Aid to Families with Dependent Children (TAFDC) is an economic assistance (cash benefit) program that helps pregnant individuals, families and caregivers explore opportunities, improve their finances, and reach their goals.  \n\n\n\nWhen you receive TAFDC you may be eligible for:\n\n * Two cash payments per month to meet your basic needs,\n * Enrollment into MassHealth coverage,\n * Referral to free employment and training programs,\n * Referral for free child care while you work on your education and employment goals,\n * Money for transportation to get to school, training, work, or to look for a job,\n * One-time payment of $300 for infants under 6 months, and\n * Clothing allowance: one-time payment of $400 for each eligible children in early Fall.\n",
+  "family": ["Expecting","Nuclear","Foster","Single-Parent","Grandparent","Extended"],
+  "howToApply": "There are three ways to apply: \n 1. Online using [this link](https://dtaconnect.eohhs.mass.gov/applyTafdc) \n 2. Over the phone at 6175511700 \n 3. In-person at the DTA Chelsea Center Transitional Assistance Office, located at 80 Everett Avenue, Chelsea, MA 02150. \n\n\n  If you are not sure if your family can get TAFDC benefits, apply. DTA will interview you and decide if you are eligible under the TAFDC rules.",
+  "language": ["English","Spanish", "Portuguese", "Chinese", "Vietnamese"],
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      42.39438,
+      -71.04016
+    ]
+  },
+  "maximumChildAge": 18,
+  "maximumIncome": 13000,
+  "maximumParentAge": 200,
+  "minimumIncome": 0,
+  "minimumParentAge": 0,
+  "name": "TAFDC - DTA Chelsea Center",
+  "phoneNumber": "6175511700",
+  "pointOfContact": "DTA Chelsea Center Transitional Assistance Office",
+  "tags": [],
+  "url": "https://www.mass.gov/how-to/apply-for-tafdc"
+},{
+  "accessibility": ["Mental"],
+  "category": ["Financial Help"],
+  "citizenship": ["Citizen","Eligible Non-Citizen","Resident","Non-Immigrant"],
+  "description": "Emergency Aid to the Elderly Disabled and Children (EAEDC) is a 100% state-funded program providing cash and medical assistance to certain categories of needy persons residing in Massachusetts. These categories are: Elderly, Disabled, Caring for a disabled person, caretaker family and participating in Massachusetts Rehabilitation Commission. \n Individuals in the following categories are eligible: \n * Aged 65 or older and applying for SSI \n * Persons receiving treatment from substance abuse halfway houses \n * Physically or mentally disabled \n * Caring for disabled individuals who would otherwise be institutionalized.",
+  "employmentStatus": ["Currently Working","Seeking Employment","Stay at Home","Studying"],
+  "family": ["Single-Parent", "Nuclear", "Foster", "Extended"],
+  "headerImageUrl": "",
+  "howToApply": "Apply over the phone by calling the DTA Chelsea Center at (617)-551-1700, or online at [this link](https://dtaconnect.eohhs.mass.gov/applyEaedc)",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      42.39438,
+      -71.04016
+    ]
+  },
+  "maximumIncome": 63000,
+  "maximumParentAge": 200,
+  "minimumIncome": 0,
+  "minimumParentAge": 65,
+  "name": "EAEDC - DTA Chelsea Center",
+  "phoneNumber": "6175511700",
+  "pointOfContact": "DTA Chelsea Center Transitional Assistance Office",
+  "tags": [],
+  "url": "https://www.mass.gov/service-details/check-eaedc-eligibility-and-how-to-apply"
+},{
+"accessibility": [],
+"category": [],
+"citizenship": [],
+"description": "MassHealth provides health benefits and help paying for them to qualifying children, families, seniors, and people with disabilities living in Massachusetts. We may offer benefits directly or help pay for all or part of your health insurance premiums. If you are a member, you may have access to doctor visits, dental, prescription drugs, behavioral health services, and other important health care services.",
+"email": "",
+"employmentStatus": [],
+"family": [],
+"headerImageUrl": "",
+"howToApply": "",
+"insurance": [],
+"language": [],
+"location": {"type": "Point", "coordinates": []},
+"maximumChildAge": 0,
+"maximumIncome": 0,
+"maximumParentAge": 0,
+"minimumIncome": 0,
+"minimumParentAge": 0,
+"name": "MassHealth",
+"phoneNumber": "",
+"pointOfContact": "",
+"tags": [],
+"url": "",
+"waitlist": { "description": ""}
+}]

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Spacer } from "@nextui-org/react";
 import { SidebarCategories } from "./SidebarCategories";
 import { SidebarStatus } from "./SidebarStatus";
@@ -36,7 +36,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
     accessibility: accessibility
   }
 
-  console.log("Test", filters)
+  useEffect(() => {
+    console.log("Test", filters)
+  }, [filters])
 
   return (
     <Grid xs={0} sm={3} style={{ backgroundColor: "#DCDCDC", width: "283px" }}>

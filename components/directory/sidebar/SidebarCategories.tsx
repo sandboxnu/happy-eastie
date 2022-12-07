@@ -15,7 +15,7 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
             <Checkbox.Group
                 color="primary"
                 className={styles.sidebarCheckboxGroup}
-                onChange={(e) => props.setCategories([])}
+                onChange={(e) => props.setCategories(e as ResourceCategory[])}
             >
                 {Object.values(ResourceCategory).map(category => (
                     <Checkbox key={category} value={category}>{category}</Checkbox>

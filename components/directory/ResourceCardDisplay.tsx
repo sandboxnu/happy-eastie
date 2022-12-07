@@ -5,8 +5,6 @@ import styles from '../../styles/Directory.module.css';
 import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
-import { WithId } from 'mongodb';
-import router from 'next/router';
 import Dialog from '../dialog';
 import {WithId} from 'mongodb';
 

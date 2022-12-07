@@ -35,12 +35,7 @@ const ResourceDirectory: NextPage = () => {
   const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>(
     []
   );
-  const { requestedResources, additionalResources, isLoading, error } =
-    useResources();
-
-  useEffect(() => {
-    setDisplayResources(requestedResources as WithId<Resource>[]);
-  }, [requestedResources]);
+  const { requestedResources, additionalResources, isLoading, error } = useResources();
 
   // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
   // the filtering and sorting to the API
@@ -57,6 +52,7 @@ const ResourceDirectory: NextPage = () => {
       headers: { "Content-Type": "application/json" },
     };
     makeResourcesRequest(requestSettings).then((data) => {
+      console.log("DATA FROM RESOURCES REQUEST", data);
       const resources: WithId<Resource>[] = data.requested;
       setDisplayResources(resources);
     }); //TODO: This currently returns a stray promise. We should probably add some indication of loading and blocking other search requests.

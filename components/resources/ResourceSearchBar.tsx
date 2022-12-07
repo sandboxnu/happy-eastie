@@ -11,7 +11,7 @@ interface ResourceSearchBarProps {
     onChange: (e: ChangeEvent<FormElement>) => void
     viewingAll: boolean;
     toggleViewingAll: () => void;
-    setFilters: React.Dispatch<React.SetStateAction<string>>;
+    setFilters: React.Dispatch<React.SetStateAction<ResourceCategory[]>>;
     setSortingMethod: React.Dispatch<React.SetStateAction<ResourceSortingMethod>>;
 }
 
@@ -36,7 +36,7 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
         })
 
         setFilters(resourceCategoryFilters.toString())
-     
+
         props.setFilters(resourceCategoryFilters.toString())
     }
 

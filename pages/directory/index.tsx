@@ -60,33 +60,35 @@ const ResourceDirectory: NextPage = () => {
     }
 
     return (
-        <div className={homeStyles.container}>
+        <div>
             <Header />
-            <Grid.Container justify="center">
-                <Grid>
-                    <Row align="center">
-                        <Image src={"/star.svg"} alt="" width={31} height={31} />
-                        <Spacer x={0.4} />
-                        <Text h1>Resource Directory</Text>
-                    </Row>
-                </Grid>
-            </Grid.Container>
-            <Spacer y={1.25} />
-            <ResourceSearchBar
-                placeholder={searchQuery}
-                onChange={updateSearchQuery}
-                viewingAll={viewingAll}
-                toggleViewingAll={toggleViewingAll}
-                setFilters={setFilters}
-                setSortingMethod={setSortingMethod}
-            />
-            <Spacer y={2} />
-            <ResourcesDisplay resources={displayResources} />
-            <Spacer y={1} />
-            <button className={resourceStyles.back} onClick={() => router.back()}>
-                Back
-            </button>
-            <Spacer y={2} />
+            <div className={homeStyles.container}>
+                <Grid.Container justify="center">
+                    <Grid>
+                        <Row align="center">
+                            <Image src={"/star.svg"} alt="" width={31} height={31} />
+                            <Spacer x={0.4} />
+                            <Text h1>Resource Directory</Text>
+                        </Row>
+                    </Grid>
+                </Grid.Container>
+                <Spacer y={1.25} />
+                <ResourceSearchBar
+                    placeholder={searchQuery}
+                    onChange={updateSearchQuery}
+                    viewingAll={viewingAll}
+                    toggleViewingAll={toggleViewingAll}
+                    setFilters={setFilters}
+                    setSortingMethod={setSortingMethod}
+                />
+                <Spacer y={2} />
+                <ResourcesDisplay resources={displayResources} />
+                <Spacer y={1} />
+                <button className={resourceStyles.back} onClick={() => router.back()}>
+                    Back
+                </button>
+                <Spacer y={2} />
+            </div>
             <Footer/>
         </div>
     )

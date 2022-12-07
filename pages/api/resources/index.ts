@@ -77,6 +77,8 @@ async function getResources(
       },
     };
   }
+  // small bug: it seems like CBHI, which doesn't have any categories, 
++   // doesn't get returned here?
   resources.reduce((prev: WithId<Resource>, curr: WithId<Resource>) => {
     curr.category &&
     curr.category.some((c1: ResourceCategory) =>

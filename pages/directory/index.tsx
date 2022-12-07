@@ -5,24 +5,27 @@ import resourceStyles from "../../styles/resource.module.css"
 import { Resource, ResourceCategory, ResourceSortingMethod } from '../../models/types'
 import { useResources } from '../../hooks/useResources'
 import { ResourcesDisplay } from '../../components/directory/ResourcesDisplay'
-import { FormElement, Row, Spacer, Image, Text, Grid, Link } from '@nextui-org/react';
-import { useRouter } from "next/router";
+import { FormElement, Row, Spacer, Image, Text, Grid, Link } from '@nextui-org/react'
+import { useRouter } from "next/router"
 import { ResourcesResponse } from '../api/resources'
 import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
-import { WithId } from 'mongodb'
+import { WithId } from 'mongodb';
 import Header from '../../components/header'
+import Loading from '../../components/Loading'
 
 const ResourceDirectory: NextPage = () => {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
     const [viewingAll, setViewingAll] = useState<boolean>(false)
-    const [filters, setFilters] = useState<ResourceCategory[]>([])
+    // filter is a string because we can't use objects as state
+    // but it's basically of type ResourceCategory[]
+    const [filters, setFilters] = useState<string>("")
     const [sortingMethod, setSortingMethod] = useState<ResourceSortingMethod>(ResourceSortingMethod.Alphabetical)
     const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>([])
     const { requestedResources, additionalResources, isLoading, error } = useResources()
 
     useEffect(() => {
-        setDisplayResources(requestedResources as WithId<Resource>[])
+        setDisplayResources(requestedResources)
     }, [requestedResources])
 
     // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
@@ -45,7 +48,7 @@ const ResourceDirectory: NextPage = () => {
     }
 
     if (error) return <div>{error.message}</div>
-    if (isLoading) return <div>loading...</div>
+    if (isLoading) return <Loading/>
     if (!requestedResources) return <div>Internal server error: could not load requested resources</div>
     if (!additionalResources) return <div>Internal server error: could not load additional resources</div>
 

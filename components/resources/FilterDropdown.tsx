@@ -20,11 +20,14 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = (props: FilterDropd
                 {"Filter"}
             </Dropdown.Button>
             <Dropdown.Menu
+                disabledKeys={Object.values(ResourceCategory)}
                 aria-label="Multiple selection actions"
                 color="secondary"
                 selectionMode="multiple"
                 selectedKeys={selected}
-                onSelectionChange={(keys) => setSelected}
+                onSelectionChange={(keys:any) => {
+                    setSelected(keys);
+                }}
             >
 
                 {Object.values(ResourceCategory).map(c =>

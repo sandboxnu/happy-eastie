@@ -6,7 +6,7 @@ interface SortDropdownProps {
 }
 
 export const SortDropdown: React.FC<SortDropdownProps> = (props: SortDropdownProps) => {
-    const [selected, setSelected] = useState(new Set(["alphabetical"]));
+    const [selected, setSelected] = useState(new Set([""]));
     const updateSortingMethod = props.setSortingMethod;
 
     useEffect(() => {
@@ -19,19 +19,19 @@ export const SortDropdown: React.FC<SortDropdownProps> = (props: SortDropdownPro
                 {"Sort"}
             </Dropdown.Button>
             <Dropdown.Menu
+                disabledKeys={["alphabetical"]}
                 aria-label="Single selection actions"
                 color="warning"
-                disallowEmptySelection
                 selectionMode="single"
                 selectedKeys={selected}
-                onSelectionChange={(keys) => setSelected}
+                onSelectionChange={(keys: any) => setSelected(keys)}
             >
                 {/* TODO: pull these sorting methods directly from the ResourceSortingMethod type */}
                 <Dropdown.Item key="alphabetical">Alphabetical</Dropdown.Item>
-                <Dropdown.Item key="sort2">Sort2</Dropdown.Item>
+                {/* <Dropdown.Item key="sort2">Sort2</Dropdown.Item>
                 <Dropdown.Item key="sort3">Sort3</Dropdown.Item>
                 <Dropdown.Item key="sort4">Sort4</Dropdown.Item>
-                <Dropdown.Item key="sort5">Sort5</Dropdown.Item>
+                <Dropdown.Item key="sort5">Sort5</Dropdown.Item> */}
             </Dropdown.Menu>
         </Dropdown>
     )

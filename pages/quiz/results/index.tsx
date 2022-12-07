@@ -5,12 +5,15 @@ import { QuizResultsDisplay } from '../../../components/quiz/QuizResultsDisplay'
 import Header from '../../../components/header'
 import stylesQuiz from "../../../styles/quiz.module.css";
 import { Link } from '@nextui-org/react'
+import Footer from '../../../components/footer'
+
 const QuizResults: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <div>
       <Header/>
-      <QuizResultsDisplay />
+      <QuizResultsDisplay/>
       <Link href='/quiz/3' className={stylesQuiz.back}>Back</Link>
+      <Footer/>
     </div>)
 }
 

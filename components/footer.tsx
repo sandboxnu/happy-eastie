@@ -5,37 +5,34 @@ export default function Footer() {
 
     return (
         <Grid.Container direction='row' className='footer-grid'>
-            <Grid md={3}>
-                <Image src="/HappyEastieWhite.svg" alt="HappyEastie" style={{}}/>
+            <Grid xs={3} alignItems='flex-start'>
+                <Image src="/HappyEastieWhite.svg" alt="HappyEastie" style={{marginTop: 50}}/>
             </Grid>
-            <Grid md={6}>
+            <Grid xs={6}>
                 <Grid.Container direction='row'> 
-                    <Grid md={6}>
-                        <Link className='footer-link' href="/quiz">Quiz</Link>                    
+                    <Grid xs={12} sm={6}>
+                        <Link className='footer-link' href="/quiz">Quiz</Link>                   
                     </Grid>
-                    <Grid md={6}>
-                        <Link className='footer-link' href="/resources">Resource</Link>
+                    <Grid xs={12} sm={6}>
+                        <Link className='footer-link' href="/directory">Resource</Link>
                     </Grid>
-                    <Grid md={6}>
+                    <Grid xs={12} sm={6} alignItems='flex-start'>
                         <Link className='footer-link' href="/#">Community Events</Link>
                     </Grid>
-                    <Grid md={6}>
+                    <Grid xs={12} sm={6} alignItems='flex-start'>
                         <Link className='footer-link' href="/about">About Us</Link>
                     </Grid>
                 </Grid.Container>
             </Grid>
-            <Grid md={3} justify="flex-end">
+            <Grid xs={3} justify="flex-end">
                 <Grid.Container direction='row'>
-                    <Grid md={12}>
+                    <Grid xs={12} alignItems='flex-end'>
                         <Text className='footer-link'>Made by Sandbox</Text>
                     </Grid>
-                    <Grid md={12}>
-                        <Link className='footer-link' href='https://www.sandboxnu.com'>https://www.sandboxnu.com</Link>
+                    <Grid xs={12} alignItems='flex-start'>
+                        <Link underline className='footer-link' href='https://www.sandboxnu.com'>https://www.sandboxnu.com</Link>
                     </Grid>
                 </Grid.Container>
-                
-
-                
             </Grid>
         </Grid.Container>
     )

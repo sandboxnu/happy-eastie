@@ -1,5 +1,6 @@
 import { Grid, Spacer, Text } from "@nextui-org/react"
 import { NextPage } from "next"
+import Footer from "../../components/footer"
 import Header from "../../components/header"
 import style from "../../styles/about.module.css"
 const About : NextPage = () => {
@@ -47,6 +48,7 @@ const About : NextPage = () => {
                 </li>
             </ul>
         </div>
+        <Footer/>
       </div>)
 }
 

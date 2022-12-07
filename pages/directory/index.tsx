@@ -12,6 +12,7 @@ import { ResourceSearchBar } from '../../components/resources/ResourceSearchBar'
 import { WithId } from 'mongodb'
 import Header from '../../components/header'
 import Loading from '../../components/Loading'
+import Footer from '../../components/footer'
 
 const ResourceDirectory: NextPage = () => {
     const router = useRouter();
@@ -86,6 +87,7 @@ const ResourceDirectory: NextPage = () => {
                 Back
             </button>
             <Spacer y={2} />
+            <Footer/>
         </div>
     )
 }

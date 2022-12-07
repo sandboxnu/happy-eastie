@@ -7,6 +7,7 @@ import { Image, Spacer, Text } from "@nextui-org/react";
 import styles from "../../styles/resource.module.css";
 import { ResourceDescription } from "../../components/resources/ResourceDescription";
 import Header from "../../components/header";
+import Loading from "../../components/Loading";
 
 const ResourcePage: NextPage = () => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const ResourcePage: NextPage = () => {
   const { resource, isLoading, error } = useResource(resourceId);
 
   if (error) return <div>{error.message}</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loading/>;
   if (!resource)
     return <div>Internal server error: invalid resource loaded</div>;
 
@@ -23,13 +24,9 @@ const ResourcePage: NextPage = () => {
   return (
     <>
       <Header />
-      <Image
-        src={resource.headerImageUrl}
-        width="100%"
-        height={254}
-        objectFit="cover"
-        alt="Resource header image"
-      />
+      {resource.headerImageUrl &&
+        <Image src={resource.headerImageUrl} width="100%" height={254} objectFit="cover" alt="Resource header image"/>
+      }
       <div style={{ margin: "0 40px" }}>
         <ResourceHeader resource={resource} />
         <Spacer y={2} />

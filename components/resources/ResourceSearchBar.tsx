@@ -1,5 +1,5 @@
-import { Button, FormElement, Input } from "@nextui-org/react";
-import { ChangeEvent, DetailedHTMLProps, HTMLAttributes, useState } from "react";
+import { FormElement, Grid, Input } from "@nextui-org/react";
+import { ChangeEvent, useState } from "react";
 import { ResourceCategory, ResourceSortingMethod } from "../../models/types";
 import { FilterDropdown } from "./FilterDropdown";
 import { FiltersList } from "./FiltersList";
@@ -11,12 +11,12 @@ interface ResourceSearchBarProps {
     onChange: (e: ChangeEvent<FormElement>) => void
     viewingAll: boolean;
     toggleViewingAll: () => void;
-    setFilters: React.Dispatch<React.SetStateAction<ResourceCategory[]>>;
+    setFilters: React.Dispatch<React.SetStateAction<string>>;
     setSortingMethod: React.Dispatch<React.SetStateAction<ResourceSortingMethod>>;
 }
 
 export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: ResourceSearchBarProps) => {
-    const [filters, setFilters] = useState<ResourceCategory[]>([])
+    const [filters, setFilters] = useState<string>("")
 
     // TODO: update this so it pulls from the ResourceCategory type
     const updateFilterCategories = (filters: string[]) => {
@@ -35,8 +35,9 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
             }
         })
 
-        setFilters(resourceCategoryFilters)
-        props.setFilters(resourceCategoryFilters)
+        setFilters(resourceCategoryFilters.toString())
+     
+        props.setFilters(resourceCategoryFilters.toString())
     }
 
     // TODO: write this so it pulls directly from the ResourceSortingMethod type
@@ -56,32 +57,38 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
 
     return (
         <div>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                <Input
-                    width="500px"
-                    size="xl"
-                    aria-label="Search"
-                    type="search"
-                    placeholder={props.placeholder}
-                    onChange={props.onChange}
-                />
+            <Grid.Container css={{ w: "100vw" }} direction="row" gap={2} justify="center" alignItems="center">
+                <Grid md={3} sm={12}>
+                    <Input
+                        size="xl"
+                        aria-label="Search"
+                        type="search"
+                        placeholder={props.placeholder}
+                        onChange={props.onChange}
+                    />
+                </Grid>
 
-                <ViewAllButton
-                    viewingAll={props.viewingAll}
-                    onViewingAllPress={props.toggleViewingAll}
-                />
+                <Grid md={3} sm={12}>
+                    <ViewAllButton
+                        viewingAll={props.viewingAll}
+                        onViewingAllPress={props.toggleViewingAll}
+                    />
+                </Grid>
 
-                <FilterDropdown
-                    setResourceFilters={updateFilterCategories}
-                />
+                <Grid md={3} sm={12}>
+                    <FilterDropdown
+                        setResourceFilters={updateFilterCategories}
+                    />
+                </Grid>
 
-                <SortDropdown
-                    setSortingMethod={updateSortingMethod}
-                />
-            </div>
-
+                <Grid md={3} sm={12}>
+                    <SortDropdown
+                        setSortingMethod={updateSortingMethod}
+                    />
+                </Grid>
+            </Grid.Container>
             <FiltersList
-                categories={filters}
+                categories={filters ? JSON.parse(filters) : []}
             />
         </div>
     )

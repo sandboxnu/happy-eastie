@@ -24,14 +24,12 @@
     margin-left: 20px;
 }
 
-/* TODO: need to change the dimension-setting CSS for the banners to make responsive */
 .sidebarBanner {
     font-family: 'Raleway';
     font-size: 15px;
     font-weight: 600;
     color: #FFFFFF;
     background-color: #219EA4;
-    width: 283px;
     height: 48px;
     padding-left: 16px;
     padding-top: 12px;

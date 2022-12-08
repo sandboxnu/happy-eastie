@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import homeStyles from "../../styles/Home.module.css";
 import resourceStyles from "../../styles/resource.module.css";
 import {
   Resource,
@@ -26,7 +25,7 @@ import Header from "../../components/header";
 
 const ResourceDirectory: NextPage = () => {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState<string>("Search resources...");
+  const [searchQuery, setSearchQuery] = useState<string>("Search Resources");
   const [viewingAll, setViewingAll] = useState<boolean>(false);
   const [filters, setFilters] = useState<ResourceCategory[]>([]);
   const [sortingMethod, setSortingMethod] = useState<ResourceSortingMethod>(
@@ -43,7 +42,7 @@ const ResourceDirectory: NextPage = () => {
     // TODO: probably want to change this so you don't have to check if search query is the placeholder
     // TODO: Add filters and sorting method to this request
     const requestBody =
-      searchQuery && !viewingAll && searchQuery !== "Search resources..."
+      searchQuery && !viewingAll && searchQuery !== "Search Resources"
         ? JSON.stringify({ searchParam: searchQuery })
         : null;
     const requestSettings = {
@@ -96,32 +95,28 @@ const ResourceDirectory: NextPage = () => {
         </Grid>
       </Grid.Container>
 
-      <Spacer y={1.25} />
-      <ResourceSearchBar
-        placeholder={searchQuery}
-        onChange={updateSearchQuery}
-        viewingAll={viewingAll}
-        toggleViewingAll={toggleViewingAll}
-        setFilters={setFilters}
-        setSortingMethod={setSortingMethod}
-      />
-      <Spacer y={2} />
+      <Grid.Container>
+        <Grid md={3} direction="column" justify="center" css={{ padding: "00px" }}>
+          <ResourceSearchBar
+            placeholder={searchQuery}
+            onChange={updateSearchQuery}
+          />
+          <FilterSidebar />
+        </Grid>
 
-      {/* <Grid.Container gap={10}> */}
-      <Row>
-        <FilterSidebar />
+        <Grid md={9} direction="column">
+          <Spacer y={4} />
+          <ResourcesDisplay resources={displayResources} />
+        </Grid>
 
-        <ResourcesDisplay resources={displayResources} />
-      </Row>
-      {/* </Grid.Container> */}
-
+      </Grid.Container>
 
       <Spacer y={1} />
       <button className={resourceStyles.back} onClick={() => router.back()}>
         Back
       </button>
       <Spacer y={2} />
-    </div>
+    </div >
   )
 };
 

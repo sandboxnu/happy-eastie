@@ -6,9 +6,7 @@ import {
   SurveyAnswers,
 } from "../../../models/types";
 import { AES, enc } from "crypto-js";
-import mongoDbInteractor, {
-  MongoDbInteractor,
-} from "../../../db/mongoDbInteractor";
+import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
 
 export type ResourceData = {

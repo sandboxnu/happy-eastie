@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@nextui-org/react";
 import { SidebarCategories } from "./SidebarCategories";
 import { SidebarStatus } from "./SidebarStatus";
 import { SidebarFamily } from "./SidebarFamily";
@@ -23,6 +22,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
   const [parentAge, setParentAge] = useState<number>();
   const [childAge, setChildAge] = useState<number>();
 
+  // TODO: fix the type mismatch with filters
   const filters: SurveyAnswers = {
     category: categories,
     income,
@@ -36,28 +36,27 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
     accessibility: accessibility
   }
 
+  // TODO: get rid of this useEffect once done testing
   useEffect(() => {
     console.log("Test", filters)
   }, [filters])
 
   return (
-    <Grid xs={0} sm={3} style={{ width: "283px" }}>
-      <Grid.Container justify="center">
-        <SidebarCategories setCategories={setCategories} />
-        <SidebarStatus
-          setLanguage={setLanguage}
-          setInsurance={setInsurance}
-          setIncome={setIncome}
-          setCitizenship={setCitizenship}
-          setEmployment={setEmployment}
-          setAccessibility={setAccessibility}
-        />
-        <SidebarFamily
-          setFamily={setFamily}
-          setParentAge={setParentAge}
-          setChildAge={setChildAge}
-        />
-      </Grid.Container>
-    </Grid>
+    <>
+      <SidebarCategories setCategories={setCategories} />
+      <SidebarStatus
+        setLanguage={setLanguage}
+        setInsurance={setInsurance}
+        setIncome={setIncome}
+        setCitizenship={setCitizenship}
+        setEmployment={setEmployment}
+        setAccessibility={setAccessibility}
+      />
+      <SidebarFamily
+        setFamily={setFamily}
+        setParentAge={setParentAge}
+        setChildAge={setChildAge}
+      />
+    </>
   );
 };

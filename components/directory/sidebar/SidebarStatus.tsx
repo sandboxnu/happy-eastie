@@ -30,7 +30,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       <Checkbox.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setLanguage(e as Language[])}>
         {Object.values(Language).map((language) => (
           <Checkbox key={language} value={language}>
-            {language}
+            <Text className={styles.sidebarCheckboxText}>{language}</Text>
           </Checkbox>
         ))}
       </Checkbox.Group>
@@ -40,7 +40,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setInsurance(e as Insurance)}>
         {Object.values(Insurance).map((insuranceType) => (
           <Radio key={insuranceType} value={insuranceType}>
-            {insuranceType}
+            <Text className={styles.sidebarCheckboxText}>{insuranceType}</Text>
           </Radio>
         ))}
       </Radio.Group>
@@ -59,7 +59,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setCitizenship(e as Citizenship)}>
         {Object.values(Citizenship).map((citizenshipStatus) => (
           <Radio key={citizenshipStatus} value={citizenshipStatus}>
-            {citizenshipStatus}
+            <Text className={styles.sidebarCheckboxText}>{citizenshipStatus}</Text>
           </Radio>
         ))}
       </Radio.Group>
@@ -69,7 +69,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setEmployment(e as EmploymentStatus)}>
         {Object.values(EmploymentStatus).map((employmentStatus) => (
           <Radio key={employmentStatus} value={employmentStatus}>
-            {employmentStatus}
+            <Text className={styles.sidebarCheckboxText}>{employmentStatus}</Text>
           </Radio>
         ))}
       </Radio.Group>
@@ -79,7 +79,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       <Checkbox.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setAccessibility(e as Accessibility[])}>
         {Object.values(Accessibility).map((accessibilityNeed) => (
           <Checkbox key={accessibilityNeed} value={accessibilityNeed}>
-            {accessibilityNeed}
+            <Text className={styles.sidebarCheckboxText}>{accessibilityNeed}</Text>
           </Checkbox>
         ))}
       </Checkbox.Group>

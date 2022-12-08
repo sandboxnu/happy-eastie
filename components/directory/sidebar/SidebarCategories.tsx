@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, Grid, Checkbox, Spacer } from "@nextui-org/react";
 import styles from "../../../styles/Directory.module.css";
 import { ResourceCategory } from '../../../models/types';
@@ -18,7 +18,9 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
                 onChange={(e) => props.setCategories(e as ResourceCategory[])}
             >
                 {Object.values(ResourceCategory).map(category => (
-                    <Checkbox key={category} value={category}>{category}</Checkbox>
+                    <Checkbox key={category} value={category} size={"xs"}>
+                        <Text className={styles.sidebarCheckboxText}>{category}</Text>
+                    </Checkbox>
                 ))}
             </Checkbox.Group>
         </Grid>

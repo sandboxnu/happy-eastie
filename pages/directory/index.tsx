@@ -83,7 +83,7 @@ const ResourceDirectory: NextPage = () => {
 
 
   return (
-    <div className={homeStyles.container}>
+    <div>
       <Header />
 
       <Grid.Container justify="center">
@@ -107,13 +107,13 @@ const ResourceDirectory: NextPage = () => {
       />
       <Spacer y={2} />
 
-      <Grid.Container gap={10}>
-        <Row>
-          <FilterSidebar />
+      {/* <Grid.Container gap={10}> */}
+      <Row>
+        <FilterSidebar />
 
-          <ResourcesDisplay resources={displayResources} />
-        </Row>
-      </Grid.Container>
+        <ResourcesDisplay resources={displayResources} />
+      </Row>
+      {/* </Grid.Container> */}
 
 
       <Spacer y={1} />

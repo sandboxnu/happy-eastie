@@ -22,7 +22,9 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
                 onChange={e => props.setFamily(e as Family)}
             >
                 {Object.values(Family).map(familyType => (
-                    <Radio key={familyType} value={familyType}>{familyType}</Radio>
+                    <Radio key={familyType} value={familyType}>
+                        <Text className={styles.sidebarCheckboxText}>{familyType}</Text>
+                    </Radio>
                 ))}
             </Radio.Group>
             <Spacer y={1} />
@@ -33,7 +35,7 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
                 const num = parseInt(e.target.value)
                 if (isNaN(num)) return
                 return props.setParentAge(num)
-            }}/>
+            }} />
             <Spacer y={1} />
 
             <Text className={styles.sidebarSubCategory}>Child Age</Text>
@@ -42,7 +44,7 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
                 const num = parseInt(e.target.value)
                 if (isNaN(num)) return
                 return props.setChildAge(num)
-            }}/>
+            }} />
             <Spacer y={1} />
         </Grid>
     )

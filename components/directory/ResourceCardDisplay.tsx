@@ -21,7 +21,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
     return (
         <div>
         <Link href={"/resources/" + props.resource._id}>
-            <Card isHoverable css={{ width: "515px", height: "300px", backgroundColor: "var(--brand-light-blue)" }}>
+            <Card isHoverable css={{ width: "700px", height: "243px", backgroundColor: "var(--brand-light-blue)" }}>
                 <Card.Header>
                     <Row justify='space-between'>
                         <Text b className={styles.cardHeader}>{props.resource.name}</Text>
@@ -45,13 +45,6 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                 </Card.Body>
 
                 <Card.Divider />
-
-                <Card.Footer>
-                    <Row justify="flex-start">
-                        <ApplyForResourceButtons toggleState={toggleState}/>
-                        <CallResourceButtons toggleState={toggleState}/>
-                    </Row>
-                </Card.Footer>
             </Card>
         </Link>
         <Dialog title="New feature" message="Stay tuned... This feature is coming soon!!" visible={visible} onCloseHandler={toggleState}/>

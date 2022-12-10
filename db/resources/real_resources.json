@@ -182,4 +182,30 @@
   "pointOfContact": "MassHealth Customer Service Center",
   "tags": [],
   "url": "https://www.mass.gov/childrens-behavioral-health-initiative-cbhi"
+},{
+  "category": ["Immigration Assistance", "Healthcare"],
+  "citizenship": ["Resident", "Undocumented"],
+  "description": "Good health is an important step towards successful resettlement. RHPP can help you obtain affordable health care – including health insurance – and provide you with information and referral to health services. \n Services include: \n * Healthcare education addressing: \n      * the Massachusetts medical system\n      * immunizations\n      * selecting a primary care physician\n      * current public health concerns\n      * mental health\n      * home care and safety\n * Case management services for physical and mental health: \n    * translation and interpretation services\n    * follow-up on conditions identified in the Refugee Health Assessment\n    * referral to mainstream health care services\n    * on-going support through home visits and phone call\n    * access to health insurance plans and translations\n",
+  "headerImageUrl": "",
+  "howToApply": "Contact the Office for Refugees and Immigrants (ORI) to be connected with the right services for you. You can do so by: \n * Heading to the ORI main office, located at 600 Washington Street, 4th floor, Boston, MA 02111, or \n * by calling their number at (617) 727-7888",
+  "insurance": ["Uninsured"],
+  "location": {"type": "Point", "coordinates": [42.352860, -71.062230]},
+  "name": "Refugee Health Promotion Program (RHPP) ",
+  "phoneNumber": "6177277888",
+  "pointOfContact": "Office for Refugees and Immigrants",
+  "tags": [],
+  "url": "https://www.mass.gov/service-details/refugee-health-promotion-program-rhpp"
+},{
+  "category": ["Housing"],
+  "description": "Founded in 1969, Pine Street Inn provides a comprehensive range of services to 1400 homeless men and women each day. We are the largest homeless services provider in New England, and could not do this important work without the support of our donors and local community.\n  Since that time we have been providing a comprehensive range of programs and services, including housing, emergency services, and workforce development. Our ultimate goal is to end homelessness by making permanent housing a reality for all. \n Pine Street's four shelters, totaling 410 beds, provide guests with a safe place to lay their head at night as well as nutritious meals, laundry services and showers. We also offer access to health clinics through a partnership with Boston Health Care for the Homeless. \n These shelters are: the Men's Inn, the Women's In, the Shattuck Shelter, and the Holy Family Shelter. A fifth, temporary shelter, the Charles River Inn, was opened recently to accomodate guests during the pandemic.",
+  "email": "info@pinestreetinn.org",
+  "headerImageUrl": "https://www.pinestreetinn.org/site/assets/images/banners/banner-find-help-guest.jpg",
+  "howToApply": "If you are new to emergency shelter, or are returning after some time away, you will meet with a member of Pine Street’s Triage team to assess what can be done to immediately or very quickly resolve your need for shelter. You can contact the Triage team at 617.892.9228",
+  "insurance": ["Public","Private","Uninsured"],
+  "location": {"type": "Point", "coordinates": [42.343159, -71.064560]},
+  "name": "Pine Street Inn Emergency Shelters",
+  "phoneNumber": "6178929100",
+  "pointOfContact": "Pine Street Inn - General Information (Not Triage Team)",
+  "tags": [],
+  "url": "https://www.pinestreetinn.org/find-help-guest"
 }]

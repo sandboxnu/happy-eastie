@@ -144,6 +144,12 @@ export enum Insurance {
     Public = "Public"
 }
 
+export enum IncomeRanges {
+    Range1 = "Less than $20,000",
+    Range2 = "$20,000 to $44,999",
+    
+}
+
 export enum Accessibility {
     Speech = "Speech",
     Vision = "Vision",

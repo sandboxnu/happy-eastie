@@ -1,5 +1,5 @@
-import { Button, FormElement, Input, Grid, Row, Image, Spacer, Text } from "@nextui-org/react";
-import { ChangeEvent, DetailedHTMLProps, HTMLAttributes, useState } from "react";
+import { FormElement, Grid, Input } from "@nextui-org/react";
+import { ChangeEvent, useState } from "react";
 import { ResourceCategory, ResourceSortingMethod } from "../../models/types";
 import { FilterDropdown } from "./FilterDropdown";
 import { FiltersList } from "./FiltersList";
@@ -11,12 +11,12 @@ interface ResourceSearchBarProps {
     onChange: (e: ChangeEvent<FormElement>) => void
     viewingAll: boolean;
     toggleViewingAll: () => void;
-    setFilters: React.Dispatch<React.SetStateAction<ResourceCategory[]>>;
+    setFilters: React.Dispatch<React.SetStateAction<string>>;
     setSortingMethod: React.Dispatch<React.SetStateAction<ResourceSortingMethod>>;
 }
 
 export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: ResourceSearchBarProps) => {
-    const [filters, setFilters] = useState<ResourceCategory[]>([])
+    const [filters, setFilters] = useState<string>("")
 
     // TODO: update this so it pulls from the ResourceCategory type
     const updateFilterCategories = (filters: string[]) => {
@@ -35,8 +35,9 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
             }
         })
 
-        setFilters(resourceCategoryFilters)
-        props.setFilters(resourceCategoryFilters)
+        setFilters(resourceCategoryFilters.toString())
+     
+        props.setFilters(resourceCategoryFilters.toString())
     }
 
     // TODO: write this so it pulls directly from the ResourceSortingMethod type
@@ -86,12 +87,9 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
                     />
                 </Grid>
             </Grid.Container>
-
-            <Grid.Container>
-                <FiltersList
-                    categories={filters}
-                />
-            </Grid.Container>
+            <FiltersList
+                categories={filters ? JSON.parse(filters) : []}
+            />
         </div>
     )
 }

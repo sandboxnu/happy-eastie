@@ -26,11 +26,6 @@ import Header from "../../components/header";
 const ResourceDirectory: NextPage = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState<string>("Search Resources");
-  const [viewingAll, setViewingAll] = useState<boolean>(false);
-  const [filters, setFilters] = useState<ResourceCategory[]>([]);
-  const [sortingMethod, setSortingMethod] = useState<ResourceSortingMethod>(
-    ResourceSortingMethod.Alphabetical
-  );
   const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>(
     []
   );
@@ -39,29 +34,8 @@ const ResourceDirectory: NextPage = () => {
   // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
   // the filtering and sorting to the API
   useEffect(() => {
-    // TODO: probably want to change this so you don't have to check if search query is the placeholder
-    // TODO: Add filters and sorting method to this request
-    const requestBody =
-      searchQuery && !viewingAll && searchQuery !== "Search Resources"
-        ? JSON.stringify({ searchParam: searchQuery })
-        : null;
-    const requestSettings = {
-      method: "POST",
-      body: requestBody,
-      headers: { "Content-Type": "application/json" },
-    };
-    makeResourcesRequest(requestSettings).then((data) => {
-      console.log("DATA FROM RESOURCES REQUEST", data);
-      const resources: WithId<Resource>[] = data.requested;
-      setDisplayResources(resources);
-    }); //TODO: This currently returns a stray promise. We should probably add some indication of loading and blocking other search requests.
-  }, [searchQuery, viewingAll]);
-
-  async function makeResourcesRequest(requestSettings: any) {
-    const response: Response = await fetch("/api/resources", requestSettings);
-    const responseJson: ResourcesResponse = await response.json();
-    return responseJson.data;
-  }
+    // TODO: Locally filter displayResources
+  }, [searchQuery]);
 
   if (error) return <div>{error.message}</div>;
   if (isLoading) return <div>loading...</div>;
@@ -75,11 +49,6 @@ const ResourceDirectory: NextPage = () => {
   const updateSearchQuery = (e: ChangeEvent<FormElement>) => {
     setSearchQuery(e.target.value);
   };
-
-  const toggleViewingAll = () => {
-    setViewingAll(!viewingAll);
-  };
-
 
   return (
     <div>
@@ -101,7 +70,7 @@ const ResourceDirectory: NextPage = () => {
             placeholder={searchQuery}
             onChange={updateSearchQuery}
           />
-          <FilterSidebar />
+          <FilterSidebar setResources={setDisplayResources} />
         </Grid>
 
         <Grid md={9} direction="column">

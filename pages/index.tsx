@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Header from "../components/header";
-import Footer from "../components/footer"
 import { Grid, Image, Text, Button, Spacer, Card, Row, Col } from "@nextui-org/react";
 import Tag from "../components/tag";
 import TagsMap from "../models/TagsMap";
@@ -16,7 +15,6 @@ const Home: NextPage = () => {
         <TrendingComponent />
         <DirectoryComponent />
       </div>
-      <Footer/>
     </div>
   );
 };

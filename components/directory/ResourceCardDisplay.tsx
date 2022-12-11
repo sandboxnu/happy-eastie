@@ -7,6 +7,7 @@ import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
 import {WithId} from 'mongodb';
+import ReactMarkdown from 'react-markdown';
 
 interface ResourceCardDisplayProps {
     resource: WithId<Resource>;
@@ -37,9 +38,9 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                             ))}
                         </Row>
                         <Row>
-                            <Text className={styles.cardSummary}>
-                                {props.resource.description}
-                            </Text>
+                            <ReactMarkdown className={styles.cardSummary}>
+                                {props.resource.description ?? ""}
+                            </ReactMarkdown>
                         </Row>
                     </Col>
                 </Card.Body>

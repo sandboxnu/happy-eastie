@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import resourceStyles from "../../styles/resource.module.css";
-import {
-  Resource,
-} from "../../models/types";
+import { Resource } from "../../models/types";
 import { useResources } from "../../hooks/useResources";
 import { ResourcesDisplay } from "../../components/directory/ResourcesDisplay";
 import { FilterSidebar } from "../../components/directory/sidebar/FilterSidebar";
@@ -14,6 +12,8 @@ import {
   Text,
   Grid,
   Loading,
+  Button,
+  Modal,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { WithId } from "mongodb";
@@ -24,13 +24,29 @@ const ResourceDirectory: NextPage = () => {
   const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>(
     []
   );
-  const { requestedResources, additionalResources, isLoading, error } = useResources();
+  const { requestedResources, additionalResources, isLoading, error } =
+    useResources();
 
-  // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
-  // the filtering and sorting to the API
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const bottomSheetCloseHandler = () => {
+    setBottomSheetVisible(false);
+  };
 
   if (error) return <div>{error.message}</div>;
-  if (isLoading) return <Loading size="xl" css={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>Loading Resources</Loading>;;
+  if (isLoading)
+    return (
+      <Loading
+        size="xl"
+        css={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        Loading Resources
+      </Loading>
+    );
   if (!requestedResources)
     return <div>Internal server error: could not load requested resources</div>;
   if (!additionalResources)
@@ -53,15 +69,18 @@ const ResourceDirectory: NextPage = () => {
       </Grid.Container>
 
       <Grid.Container>
-        <Grid md={3} direction="column" justify="center" css={{ padding: "00px" }}>
+        <Grid xs={0} sm={3} direction="column">
           <FilterSidebar setResources={setDisplayResources} />
         </Grid>
 
-        <Grid md={9} direction="column">
-          <Spacer y={4} />
+        <Grid xs={12} sm={9} direction="column" alignItems="center">
+          <Grid xs={5} sm={0}>
+            <Button bordered onClick={() => setBottomSheetVisible(true)}>
+              Filters
+            </Button>
+          </Grid>
           <ResourcesDisplay resources={displayResources} />
         </Grid>
-
       </Grid.Container>
 
       <Spacer y={1} />
@@ -69,8 +88,27 @@ const ResourceDirectory: NextPage = () => {
         Back
       </button>
       <Spacer y={2} />
-    </div >
-  )
+
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={bottomSheetVisible}
+        scroll
+        onClose={bottomSheetCloseHandler}
+        css={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+      >
+        <Modal.Header>
+          <Text b size={24}>
+            Filter Resources
+          </Text>
+        </Modal.Header>
+        <Modal.Body css={{ p: 0 }}>
+          <FilterSidebar setResources={setDisplayResources} />
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
+    </div>
+  );
 };
 
 export default ResourceDirectory;

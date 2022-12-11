@@ -1,31 +1,26 @@
 import type { NextPage } from "next";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import resourceStyles from "../../styles/resource.module.css";
 import {
   Resource,
-  ResourceCategory,
-  ResourceSortingMethod,
 } from "../../models/types";
 import { useResources } from "../../hooks/useResources";
 import { ResourcesDisplay } from "../../components/directory/ResourcesDisplay";
 import { FilterSidebar } from "../../components/directory/sidebar/FilterSidebar";
 import {
-  FormElement,
   Row,
   Spacer,
   Image,
   Text,
   Grid,
+  Loading,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
-import { ResourcesResponse } from "../api/resources";
-import { ResourceSearchBar } from "../../components/resources/ResourceSearchBar";
 import { WithId } from "mongodb";
 import Header from "../../components/header";
 
 const ResourceDirectory: NextPage = () => {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState<string>("Search Resources");
   const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>(
     []
   );
@@ -33,22 +28,15 @@ const ResourceDirectory: NextPage = () => {
 
   // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
   // the filtering and sorting to the API
-  useEffect(() => {
-    // TODO: Locally filter displayResources
-  }, [searchQuery]);
 
   if (error) return <div>{error.message}</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loading size="xl" css={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>Loading Resources</Loading>;;
   if (!requestedResources)
     return <div>Internal server error: could not load requested resources</div>;
   if (!additionalResources)
     return (
       <div>Internal server error: could not load additional resources</div>
     );
-
-  const updateSearchQuery = (e: ChangeEvent<FormElement>) => {
-    setSearchQuery(e.target.value);
-  };
 
   return (
     <div>
@@ -66,10 +54,6 @@ const ResourceDirectory: NextPage = () => {
 
       <Grid.Container>
         <Grid md={3} direction="column" justify="center" css={{ padding: "00px" }}>
-          <ResourceSearchBar
-            placeholder={searchQuery}
-            onChange={updateSearchQuery}
-          />
           <FilterSidebar setResources={setDisplayResources} />
         </Grid>
 

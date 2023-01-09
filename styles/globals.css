@@ -1,0 +1,15 @@
+:root {
+    --brand-primary: #219EA4;
+    --primary-text: black;
+    --secondary-text: #7E7C7C;
+    --brand-blue: #22A6DD;
+    --brand-purple: #630DF0;
+    --brand-orange: #F0880D;
+    --brand-green: #55C130;
+    --brand-light-blue: #F4F8FA;
+  }
+
+  @font-face {
+    font-family: 'Raleway';
+    src: url(../fonts/Raleway-VariableFont_wght.ttf);
+  }

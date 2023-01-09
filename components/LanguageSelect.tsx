@@ -1,4 +1,4 @@
-import { Dropdown, Navbar, Image } from "@nextui-org/react"
+import { Dropdown, Navbar } from "@nextui-org/react"
 import NextImage from "next/image"
 import { useState } from "react";
 
@@ -6,10 +6,11 @@ const LanguageSelect = () => {
 
     const [language, setLanguage] = useState("EN");
 
-    return (<Navbar.Content>
+    return (
         <Dropdown>
           <Dropdown.Button light>
-            <Image width={20} height={20} style={{ paddingRight: 4 }} src="/globe.svg" alt="Select language" containerCss={{display: "flex", alignItems: "center", justifyContent: "center"}} as={NextImage}/>
+            <NextImage width={20} height={20} src="/globe.svg" alt="Select language"/>
+            <div style={{width: 4}}></div> {/* a spacer because normal padding doesn't seem to work*/}
             {language}
           </Dropdown.Button>
           <Dropdown.Menu aria-label="single selection actions"
@@ -23,7 +24,7 @@ const LanguageSelect = () => {
             <Dropdown.Item key="ES">ES</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </Navbar.Content>)
+      )
 }
 
 export default LanguageSelect

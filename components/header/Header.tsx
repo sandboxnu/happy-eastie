@@ -4,7 +4,7 @@ import HeaderDesktopContent from "./HeaderDesktopContent"
 import HeaderCollapseMenu from "./HeaderCollapseMenu"
 import HeaderBrand from "./HeaderBrand"
 import styles from "./Header.module.css"
-import LanguageSelect from "./LanguageSelect"
+import LanguageSelect from "../LanguageSelect"
 const items: HeaderContent[] = [
     { title: "Home", href: "/" },
     { title: "Quiz", href: "/quiz" },
@@ -17,7 +17,9 @@ const Header = () => {
     return <Navbar maxWidth="fluid" variant="sticky" disableShadow className={styles.navbar}>
         <HeaderBrand/>
       <HeaderDesktopContent items={items}/>
-      <LanguageSelect/>
+      <Navbar.Content>
+        <LanguageSelect/>
+      </Navbar.Content>
       <HeaderCollapseMenu items={items}/>
     </Navbar>
 }

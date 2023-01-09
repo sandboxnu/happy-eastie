@@ -9,7 +9,70 @@
     --brand-light-blue: #F4F8FA;
   }
 
+  html,
+body {
+  padding: 0;
+  background-color: white;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
   @font-face {
     font-family: 'Raleway';
     src: url(../fonts/Raleway-VariableFont_wght.ttf);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-family: 'Raleway';
+    font-size: 35px;
+    font-weight: 600;
+    color: black;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  h3 {
+    font-size: 25px;
+    font-family: 'Raleway';
+    font-weight: 600;
+    color: var(--primary-text);
+  }
+  
+  table {
+    max-width: 800px;
+    width: 90%;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  
+  td {
+    border: 0.75px solid var(--secondary-text);
+    padding: 40px 0px;
+  }
+
+  a {
+    color: var(--brand-primary);
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+
+  p {
+    font-size: 20px;
+    font-family: 'Raleway';
+    font-weight: 400;
+    color: var(--secondary-text);
+  }
+  
+  li {
+    font-size: 20px;
+    font-family: 'Raleway';
+    font-weight: 400;
+    color: var(--secondary-text);
   }

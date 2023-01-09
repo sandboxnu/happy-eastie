@@ -1,9 +1,13 @@
-import { Text } from '@nextui-org/react'
+import DirectorySection from '../components/home/DirectorySection'
+import InfoSection from '../components/home/InfoSection'
+import TrendingSection from '../components/home/TrendingSection'
 import Layout from '../components/Layout'
 
 const HomePage = () => {
     return (<Layout>
-        <Text h1>Hello world!</Text>
+        <InfoSection/>
+        <TrendingSection/>
+        <DirectorySection/>
     </Layout>)
 }
 

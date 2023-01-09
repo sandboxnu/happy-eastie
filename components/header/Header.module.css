@@ -9,3 +9,8 @@
   .navbarContent a:hover {
     text-decoration: none;
   }
+
+.navbar {
+    opacity: 1;
+    background-color: white;
+}

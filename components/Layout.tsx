@@ -1,13 +1,13 @@
 import { ReactNode } from "react"
 import Footer from "./footer/Footer"
 import Header from "./header/Header"
-
+import styles from "./Layout.module.css"
 const Layout = ({children}: {children: ReactNode}) => {
-    return <>
+    return (<div className={styles.container}>
         <Header/>
-        <main>{children}</main>
+        <main className={styles.content}>{children}</main>
         <Footer/>
-    </>
+    </div>)
 }
 
 export default Layout

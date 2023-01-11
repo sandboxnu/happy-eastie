@@ -1,0 +1,14 @@
+.container {
+    padding: 0 2rem;
+  }
+
+.container h1, .container h2 {
+    color: var(--brand-primary)
+}
+
+.container h2 {
+    text-align: center;
+}
+.subtitle {
+    color: var(--secondary-text)
+}

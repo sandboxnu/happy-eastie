@@ -1,0 +1,44 @@
+.sidebarBanner {
+    font-family: 'Raleway';
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: #219EA4;
+    height: 48px;
+    padding-left: 16px;
+    padding-top: 12px;
+    letter-spacing: 1px;
+}
+
+.sidebarSubCategory {
+    font-family: 'Raleway';
+    font-size: 15px;
+    font-weight: 600;
+    color: #000000;
+    margin-left: 36px;
+    margin-bottom: 10px;
+    letter-spacing: 0.25px;
+}
+
+.sidebarCheckboxGroup {
+    margin-left: 60px;
+    margin-bottom: 30px;
+}
+
+.sidebarCheckboxText {
+    font-family: 'Raleway';
+    font-size: 15px;
+    font-weight: 400;
+    color: #000000;
+    letter-spacing: 0.25px;
+}
+
+.sidebarInputBox {
+    font-family: 'Raleway';
+    font-size: 15px;
+    font-weight: 400;
+    color: #000000;
+    margin-left: 60px;
+    margin-bottom: 30px;
+    width: 150px;
+}

@@ -1,6 +1,7 @@
 .card {
     background-color: var(--brand-light-blue);
-    height: 300px
+    height: 300px;
+    max-width: 515px
 }
 .cardFooter {
     font-family: 'Raleway';

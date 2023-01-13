@@ -21,8 +21,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
     return (
         <div>
-        <Link href={"/resources/" + props.resource._id}>
-            <Card isHoverable css={{ width: "515px", height: "300px", backgroundColor: "var(--brand-light-blue)" }}>
+            <Card isHoverable className={styles.card}>
                 <Card.Header>
                     <Row justify='space-between'>
                         <Text b className={styles.cardHeader}>{props.resource.name}</Text>
@@ -31,6 +30,8 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                 </Card.Header>
 
                 <Card.Body css={{ py: "$10", pb: "$15" }}>
+        <Link href={"/resources/" + props.resource._id}>
+
                     <Col>
                         <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20 }}>
                             {props.resource.category?.map((tag, index) => (
@@ -43,6 +44,8 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                             </ReactMarkdown>
                         </Row>
                     </Col>
+        </Link>
+
                 </Card.Body>
 
                 <Card.Divider />
@@ -54,7 +57,6 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                     </Row>
                 </Card.Footer>
             </Card>
-        </Link>
         <Dialog title="New feature" message="Stay tuned... This feature is coming soon!!" visible={visible} onCloseHandler={toggleState}/>
         </div>
     )

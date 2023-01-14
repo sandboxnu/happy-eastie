@@ -2,9 +2,11 @@ import React from 'react';
 import { Text, Grid, Spacer, Radio, Input } from "@nextui-org/react";
 import styles from "./FilterSidebar.module.css";
 import { Family } from "../../../models/types";
+import ClearFieldsButton from './ClearFieldsButton';
 
 interface SidebarFamilyProps {
-    setFamily(f: Family): void
+    family: Family | undefined
+    setFamily(f: Family | undefined): void
     setParentAge(n: number | undefined): void
     setChildAge(n: number | undefined): void
 }
@@ -20,6 +22,7 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
                 color="primary"
                 className={styles.sidebarCheckboxGroup}
                 onChange={e => props.setFamily(e as Family)}
+                value={props.family}
             >
                 {Object.values(Family).map(familyType => (
                     <Radio key={familyType} value={familyType} size={"xs"}>
@@ -27,6 +30,7 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
                     </Radio>
                 ))}
             </Radio.Group>
+            <ClearFieldsButton clearedValue={undefined} setField={props.setFamily}/>
             <Spacer y={1} />
 
             <Text className={styles.sidebarSubCategory}>Parent Age</Text>
@@ -45,6 +49,7 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
                 if (isNaN(num)) return
                 return props.setChildAge(num)
             }} />
+
             <Spacer y={1} />
         </Grid>
     )

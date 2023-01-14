@@ -109,16 +109,22 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
           setSearchQuery(e.target.value);
         }}
       />
-      <SidebarCategories setCategories={setCategories} />
+      <SidebarCategories setCategories={setCategories} categories={categories}/>
       <SidebarStatus
+      language={language}
         setLanguage={setLanguage}
+        insurance={insurance}
         setInsurance={setInsurance}
         setIncome={setIncome}
+        citizenship={citizenship}
         setCitizenship={setCitizenship}
+        employment={employment}
         setEmployment={setEmployment}
+        accessibility={accessibility}
         setAccessibility={setAccessibility}
       />
       <SidebarFamily
+      family={family}
         setFamily={setFamily}
         setParentAge={setParentAge}
         setChildAge={setChildAge}

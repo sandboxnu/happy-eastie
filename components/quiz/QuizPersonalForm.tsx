@@ -77,7 +77,7 @@ export const QuizPersonalForm: React.FC = () => {
         <Grid.Container gap={8} justify="center">
           <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={10} direction="column">
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Annual Income</label>
             <Spacer y={1} />
             <Field type="number" name="income" className={styles.select} />
@@ -85,7 +85,7 @@ export const QuizPersonalForm: React.FC = () => {
           </Grid>
           <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={10} direction="column">
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Language</label>
             <Spacer y={1} />
             {Object.values(Language).map((c) => (
@@ -106,7 +106,7 @@ export const QuizPersonalForm: React.FC = () => {
 
           <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={10} direction="column">
+          <Grid md={3} xs={12} direction="column">
             <Row align="center">
               <label className={styles.quizFieldText}>Citizenship</label>
               <Spacer x={0.5} />
@@ -122,7 +122,7 @@ export const QuizPersonalForm: React.FC = () => {
           </Grid>
           <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={10} direction="column">
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Employment Status</label>
             <Spacer y={1} />
             <Field
@@ -138,7 +138,7 @@ export const QuizPersonalForm: React.FC = () => {
           </Grid>
           <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={10} direction="column">
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Insurance Type</label>
             <Spacer y={1} />
             <Field as="select" name="insurance" className={styles.select}>
@@ -150,7 +150,7 @@ export const QuizPersonalForm: React.FC = () => {
           </Grid>
           <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={10} direction="column">
+          <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Accessibility Needs</label>
             <Spacer y={1} />
             {Object.values(Accessibility).map((c) => (

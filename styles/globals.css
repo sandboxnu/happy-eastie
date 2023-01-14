@@ -75,3 +75,7 @@ body {
     font-weight: 400;
     color: var(--secondary-text);
   }
+
+  html {
+    overflow-x: hidden;
+  }

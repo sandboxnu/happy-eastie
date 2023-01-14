@@ -1,7 +1,8 @@
-import { Card, Col, Grid, Row, Spacer, Text, Image } from "@nextui-org/react";
+import { Card, Col, Grid, Row, Spacer, Text, Image, Container } from "@nextui-org/react";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../bookmark";
 import Tag from "./tag";
+import styles from "./TrendingSection.module.css"
 
 const events = [
     {
@@ -33,12 +34,11 @@ type EastieEvent = {
 
 function EventCard({event}: {event: EastieEvent}) {
     return (
-        <Card isPressable css={{ width: "400px" }}>
-        <Card.Body css={{ p: 0, borderBottom: "10px solid var(--brand-primary)" }}>
+        <Card isPressable className={styles.event}>
+        <Card.Header css={{ p: 0, borderBottom: "10px solid var(--brand-primary)", height: "40%"}}>
           <Card.Image src={event.imageFilename} objectFit="cover" width="100%" />
-        </Card.Body>
-        <Card.Footer>
-          <Col>
+        </Card.Header>
+        <Card.Body css={{overflowY: "hidden"}}>
             <Row justify="space-between">
               <Text b>{event.name}</Text>
               <Bookmark enabled={false} />
@@ -46,37 +46,30 @@ function EventCard({event}: {event: EastieEvent}) {
             <Spacer y={0.5} />
             <Text>{event.summary}</Text>
             <Spacer y={1} />
+        </Card.Body>
+        <Card.Footer>
             <Row justify="flex-start" css={{ gap: 10 }}>
               {event.tags.map((tag, index) => (
                 <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
               ))}
             </Row>
-          </Col>
-        </Card.Footer>
+            </Card.Footer>
       </Card>
     )
 }
 export default function TrendingSection() {  
     return (
-      <Grid.Container justify="center" gap={8} xs={12}>
+      <Container className={styles.container} fluid>
         <Row align="baseline">
           <Image src="triangle.svg" alt="" containerCss={{ margin: 0 }} />
           <Spacer x={0.8} />
           <Text h1>Trending Near You</Text>
         </Row>
-        <div
-          style={{
-            display: "flex",
-            overflowX: "scroll",
-            width: "95vw",
-          }}
-        >
+        <Row gap={4} className={styles.events}>
           {events.map((event, index) => (
-            <Grid key={index}>
-                <EventCard event={event}/>
-            </Grid>
+            <EventCard key={index} event={event}/>
           ))}
-        </div>
-      </Grid.Container>
+        </Row>
+      </Container>
     );
   }

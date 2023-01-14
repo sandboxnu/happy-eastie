@@ -97,6 +97,12 @@
 .container {
   padding: 0 2rem;
 }
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
 /*
 max-width: min-content;
 */

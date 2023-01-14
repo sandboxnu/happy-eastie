@@ -1,4 +1,4 @@
-import { Progress, Row } from "@nextui-org/react";
+import { Link, Progress, Row } from "@nextui-org/react";
 import { useContext } from "react";
 import { AppContext } from "../../context/context";
 import { useResources } from "../../hooks/useResources";
@@ -63,7 +63,9 @@ export const QuizResultsDisplay = () => {
   return (
     <>
       <QuizResultsDisplayContent/>
-      <NextLink href='/quiz/3' className={styles.back}>Back</NextLink>
+      <NextLink href='/quiz/3'>
+        <Link className={styles.backButton}>Back</Link>
+        </NextLink>
     </>
   )
 }

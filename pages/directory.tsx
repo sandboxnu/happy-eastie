@@ -11,13 +11,13 @@ import {
   Image,
   Text,
   Grid,
-  Loading,
   Button,
   Modal,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { WithId } from "mongodb";
 import Layout from "../components/Layout";
+import Loading from "../components/Loading";
 
 const ResourceDirectoryContent: NextPage = () => {
   const router = useRouter();
@@ -35,17 +35,7 @@ const ResourceDirectoryContent: NextPage = () => {
   if (error) return <div>{error.message}</div>;
   if (isLoading)
     return (
-      <Loading
-        size="xl"
-        css={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        Loading Resources
-      </Loading>
+      <Loading/>
     );
   if (!requestedResources)
     return <div>Internal server error: could not load requested resources</div>;

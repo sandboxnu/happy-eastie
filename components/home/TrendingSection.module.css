@@ -1,6 +1,7 @@
 .container {
     padding: 0;
     margin: 0;
+    max-width: 100%;
 }
 
 .events {
@@ -15,5 +16,5 @@
     width: 350px;
     height: 350px;
     flex: 0 0 auto;
-    margin: 0 5%;
+    margin: 0 25px;
 }

@@ -23,6 +23,12 @@ const events = [
       summary: "Learn more about this celebration of East Boston!",
       tags: ["Community", "Events", "Family-Friendly"],
     },
+    {
+      name: "Pine Street Inn Emergency Shelters",
+      imageFilename: "https://www.pinestreetinn.org/site/assets/images/banners/banner-find-help-guest.jpg",
+      summary: "Clickk here if you are in need of emergency housing.",
+      tags: ["Housing"],
+    },
   ];
 
 type EastieEvent = {

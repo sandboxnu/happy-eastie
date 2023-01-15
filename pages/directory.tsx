@@ -63,7 +63,7 @@ const ResourceDirectoryContent: NextPage = () => {
 
         <Grid xs={12} sm={9} direction="column" alignItems="center">
           <Grid xs={5} sm={0}>
-            <Button bordered onClick={() => setTimeout(() => setBottomSheetVisible(true), 10)}>
+            <Button bordered onClick={() => setTimeout(() => setBottomSheetVisible(true), 10)} css={{ "& .nextui-button-text": { zIndex: "inherit" } }}>
               Filters
             </Button>
           </Grid>

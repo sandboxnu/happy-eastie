@@ -4,10 +4,9 @@ import { QuizCategoriesForm } from "../../components/quiz/QuizCategoriesForm";
 import { QuizPersonalForm } from "../../components/quiz/QuizPersonalForm";
 import { QuizFamilyForm } from "../../components/quiz/QuizFamilyForm";
 import { Grid, Progress, Text, Spacer, Row } from "@nextui-org/react";
-import styles from "../../styles/quiz.module.css";
-import Header from "../../components/header";
+import styles from "./[pageId].module.css";
 import { HelpTooltip } from "../../components/HelpTooltip";
-import Footer from "../../components/footer";
+import Layout from "../../components/Layout";
 
 const QuizPage: NextPage = () => {
   const router = useRouter();
@@ -32,8 +31,8 @@ const QuizPage: NextPage = () => {
   }
 
   return (
+    <Layout>
     <Grid.Container gap={2} alignItems="center" direction="column">
-      <Header />
       <Grid xs={4} md={4} direction="column">
         <Text id={styles.quizTitle}>Resource Quiz</Text>
         <Spacer y={1} />
@@ -47,8 +46,8 @@ const QuizPage: NextPage = () => {
       </Grid>
 
       <QuizComponent />
-      <Footer />
     </Grid.Container>
+    </Layout>
   );
 };
 

@@ -2,6 +2,7 @@ import { Grid } from "@nextui-org/react";
 import { WithId } from "mongodb";
 import { Resource } from "../../models/types";
 import { ResourceCardDisplay } from "./ResourceCardDisplay";
+import styles from "./ResourcesDisplay.module.css"
 
 interface ResourcesDisplayProps {
     resources: WithId<Resource>[];
@@ -9,9 +10,9 @@ interface ResourcesDisplayProps {
 
 export const ResourcesDisplay: React.FC<ResourcesDisplayProps> = (props: ResourcesDisplayProps) => {
     return (
-        <Grid.Container gap={4} direction="row" justify="flex-start" wrap="wrap">
+        <Grid.Container gap={4} direction="row" justify="flex-start" wrap="wrap" className={styles.contadumbiner}>
             {props.resources?.map((resourceResult: WithId<Resource>) => (
-                <Grid sm={6} xs={12} justify="center" key={resourceResult._id.toString()}>
+                <Grid md={6} xs={12} justify="center" key={resourceResult._id.toString()}>
                     <ResourceCardDisplay resource={resourceResult}></ResourceCardDisplay>
                     <br />
                 </Grid>

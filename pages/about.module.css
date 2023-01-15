@@ -1,0 +1,11 @@
+.container h2, .container p {
+    color: var(--secondary-text)
+}
+.container h1 {
+    color: var(--brand-primary);
+    margin: auto;
+    text-align: center;
+}
+.container ul {
+    list-style-type: disc;
+}

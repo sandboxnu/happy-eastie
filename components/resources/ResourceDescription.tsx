@@ -1,6 +1,6 @@
 import { Resource } from "../../models/types";
 import { Grid } from "@nextui-org/react";
-import styles from "../../styles/resource.module.css";
+import styles from "./ResourceDescription.module.css";
 import ReactMarkdown from "react-markdown";
 
 interface ResourceDescriptionProps {
@@ -15,7 +15,7 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
   console.log(location);
   return (
     <Grid.Container justify="space-between">
-      <Grid xs={12} sm={6}>
+      <Grid xs={12} sm={props.resource.location? 6 : 12}>
         <div>
           {props.resource.description && 
           <ReactMarkdown className={styles.descriptionText}>

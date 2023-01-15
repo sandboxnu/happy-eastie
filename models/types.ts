@@ -1,5 +1,5 @@
-import { Role } from "../constants/role";
-import { DocumentData, GeoPoint, Timestamp } from "firebase/firestore";
+// import { Role } from "../constants/role";
+// import { DocumentData, GeoPoint, Timestamp } from "firebase/firestore";
 import { Document, ObjectId, WithId } from "mongodb";
 
 // TODO: these types may not all be accurate - refer to quiz-real branch when finalizing
@@ -9,7 +9,7 @@ export interface GeoJsonPoint {
 }
 
 export interface User {
-    role: Role;
+    // role: Role;
     firstName: string;
     lastName: string;
     email: string;
@@ -36,19 +36,19 @@ export interface FormQuestion {
 export type UID = string;
 
 // TODO: update this type once Firestore is updated
-export interface Event extends EventInfo {
-    id: string;
-}
+// export interface Event extends EventInfo {
+//     id: string;
+// }
 
-export interface EventInfo {
-    name: string;
-    description: string;
-    summary: string;
-    location?: GeoPoint;
-    start?: Timestamp;
-    end?: Timestamp;
-    // attendees: UID[];
-}
+// export interface EventInfo {
+//     name: string;
+//     description: string;
+//     summary: string;
+//     location?: GeoPoint;
+//     start?: Timestamp;
+//     end?: Timestamp;
+//     // attendees: UID[];
+// }
 
 export interface SurveyAnswers {
     category: ResourceCategory[];
@@ -66,20 +66,20 @@ export interface SurveyAnswers {
 /**
  * @deprecated Use ResourceData instead. This should be deleted after ticket #.
  */
-export interface Service extends DocumentData {
-    name: string;
-    description: string;
-    url: string;
-    income?: Range[];
-    language?: String[];
-    citizenship?: Citizenship;
-    parentAge?: Range[];
-    childAge?: Range[];
-    family?: Family[];
-    employmentStatus?: EmploymentStatus[];
-    insurance?: Insurance[];
-    accessibility?: Accessibility[];
-}
+// export interface Service extends DocumentData {
+//     name: string;
+//     description: string;
+//     url: string;
+//     income?: Range[];
+//     language?: String[];
+//     citizenship?: Citizenship;
+//     parentAge?: Range[];
+//     childAge?: Range[];
+//     family?: Family[];
+//     employmentStatus?: EmploymentStatus[];
+//     insurance?: Insurance[];
+//     accessibility?: Accessibility[];
+// }
 export interface Resource {
     name: string;
     description?: string; // Markdown
@@ -146,12 +146,6 @@ export enum Insurance {
     Uninsured = "Uninsured",
     Private = "Private",
     Public = "Public"
-}
-
-export enum IncomeRanges {
-    Range1 = "Less than $20,000",
-    Range2 = "$20,000 to $44,999",
-    
 }
 
 export enum Accessibility {

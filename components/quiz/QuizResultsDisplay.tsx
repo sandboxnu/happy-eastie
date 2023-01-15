@@ -1,14 +1,15 @@
-import { Progress, Row } from "@nextui-org/react";
+import { Link, Progress, Row } from "@nextui-org/react";
 import { useContext } from "react";
 import { AppContext } from "../../context/context";
 import { useResources } from "../../hooks/useResources";
-import styles from "../../styles/resource.module.css";
+import styles from "./QuizResultsDisplay.module.css";
 import { ResourcesDisplay } from "../directory/ResourcesDisplay";
 import { Grid, Spacer, Text, Image } from "@nextui-org/react";
 import { HelpTooltip } from "../HelpTooltip";
 import Loading from "../Loading";
+import NextLink from "next/link";
 
-export const QuizResultsDisplay: React.FC = () => {
+const QuizResultsDisplayContent: React.FC = () => {
   const quizState = useContext(AppContext);
   const { requestedResources, additionalResources, isLoading, error } =
     useResources(quizState.encryptedQuizResponse);
@@ -35,7 +36,7 @@ export const QuizResultsDisplay: React.FC = () => {
         <Progress max={4} value={4} size={"sm"} />
         <Spacer y={0.7} />
         <Row align="center" justify="center">
-          <Text>In order of best fit for you.</Text>
+          <Text className={styles.subtitle}>In order of best fit for you.</Text>
           <Spacer x={0.5} />
           <HelpTooltip diameter={15} text="These are resources that you qualify for and that are under the categories you requested in the first page." />
         </Row>
@@ -46,7 +47,7 @@ export const QuizResultsDisplay: React.FC = () => {
           <>
             <Text h2>Additional Resources</Text>
             <Row align="center" justify="center">
-              <p>Services you also qualify for.</p>
+              <Text className={styles.subtitle}>Services you also qualify for.</Text>
               <Spacer x={0.5} />
               <HelpTooltip diameter={15} text="These are other resources you might qualify for but did not specifically request." />
             </Row>
@@ -57,3 +58,14 @@ export const QuizResultsDisplay: React.FC = () => {
     </Grid.Container>
   );
 };
+
+export const QuizResultsDisplay = () => {
+  return (
+    <>
+      <QuizResultsDisplayContent/>
+      <NextLink href='/quiz/3'>
+        <Link className={styles.backButton}>Back</Link>
+        </NextLink>
+    </>
+  )
+}

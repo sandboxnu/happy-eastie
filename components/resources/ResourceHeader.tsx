@@ -1,7 +1,7 @@
 import { Resource } from "../../models/types";
 import { Button, Grid, Image, Text } from "@nextui-org/react";
 import Tag from "../tag";
-import styles from "../../styles/resource.module.css";
+import styles from "./ResourceHeader.module.css";
 import { useRouter } from "next/router";
 import TagsMap from "../../models/TagsMap";
 

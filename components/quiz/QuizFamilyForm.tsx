@@ -7,7 +7,7 @@ import { useSWRConfig } from "swr";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
 import { Family } from "../../models/types";
-import styles from "../../styles/quiz.module.css";
+import styles from "./Quiz.module.css";
 
 export const QuizFamilyForm: React.FC = () => {
   const router = useRouter();

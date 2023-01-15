@@ -5,8 +5,8 @@ import { useContext } from "react";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
 import { ResourceCategory, SurveyAnswers } from "../../models/types";
-import { Checkbox, Grid } from "@nextui-org/react";
-import styles from "../../styles/quiz.module.css";
+import { Checkbox, Col, Container, Grid, Row } from "@nextui-org/react";
+import styles from "./Quiz.module.css";
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
@@ -43,25 +43,27 @@ export const QuizCategoriesForm: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <Form>
-        <Grid.Container gap={8} css={{ w: "100vw" }} justify="center">
-          <Grid xs={10} sm={7} md={3}>
+        <Container>
+          <Row>
+            <Col>
             <Checkbox.Group>
               {Object.values(ResourceCategory).map((c) => (
                 <label key={c} className={styles.checkboxItem}>
-                  <Field type="checkbox" name="category" value={c} id={c} className={styles.checkbox} style={{"height": "24px", "width": "24px"}}/>
+                  <Field type="checkbox" name="category" value={c} id={c} className={styles.checkbox}/>
                   <span className={styles.categoryText}>{c}</span>
                 </label>
               ))}
               <ErrorMessage name="category" render={renderError} />
             </Checkbox.Group>
-          </Grid>
+            </Col>
+          </Row>
 
-          <Grid xs={12} md={12} justify="flex-end">
-            <button id="continue" className={styles.continue} type="submit">
+          <Row justify="flex-end">
+          <button id="continue" className={styles.continue} type="submit">
               Continue
             </button>
-          </Grid>
-        </Grid.Container>
+          </Row>
+          </Container>
       </Form>
     </Formik>
   );

@@ -1,0 +1,38 @@
+.title {
+    font-size: 45px;
+    font-family: 'Raleway';
+    font-weight: 600;
+    line-height: 53px;
+    color: var(--secondary-text);
+    letter-spacing: 1px;
+  }
+  
+  .subtitle {
+    font-size: 30px;
+    font-family: 'Raleway';
+    font-weight: 400;
+    line-height: 41px;
+    color: var(--secondary-text);
+    letter-spacing: 0.5px;
+  }
+
+  .button {
+    background-color: var(--brand-primary);
+  
+    width: 307px;
+    height: 66px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  .button a {
+    font-size: 30px;
+    font-family: 'Raleway';
+    font-weight: 700;
+    color: white;
+  }
+
+  .tableContent {
+    font-family: 'Raleway';
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary-text) !important;
+  }

@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 import { ResourceHeader } from "../../components/resources/ResourceHeader";
 import ReactMarkdown from "react-markdown";
 import { Image, Spacer, Text } from "@nextui-org/react";
-import styles from "../../styles/resource.module.css";
+import styles from "./[resourceId].module.css";
 import { ResourceDescription } from "../../components/resources/ResourceDescription";
-import Header from "../../components/header";
 import Loading from "../../components/Loading";
+import Layout from "../../components/Layout";
 
-const ResourcePage: NextPage = () => {
+const ResourcePageContent: NextPage = () => {
   const router = useRouter();
   const { resourceId } = router.query;
   const { resource, isLoading, error } = useResource(resourceId);
@@ -23,7 +23,6 @@ const ResourcePage: NextPage = () => {
 
   return (
     <>
-      <Header />
       {resource.headerImageUrl &&
         <Image src={resource.headerImageUrl} width="100%" height={254} objectFit="cover" alt="Resource header image"/>
       }
@@ -47,4 +46,9 @@ const ResourcePage: NextPage = () => {
   );
 };
 
+const ResourcePage = () => {
+  return <Layout includePadding={false}>
+    <ResourcePageContent/>
+  </Layout>
+}
 export default ResourcePage;

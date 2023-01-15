@@ -1,0 +1,1 @@
+export type HeaderContent = {title: string, href?: string}

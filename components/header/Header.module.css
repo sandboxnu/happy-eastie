@@ -1,0 +1,16 @@
+.navbarContent * {
+    font-family: 'Raleway';
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--secondary-text);
+    text-decoration: none;
+  }
+  
+.navbarContent a:hover {
+    text-decoration: none;
+  }
+
+.navbar {
+    opacity: 1;
+    background-color: white;
+}

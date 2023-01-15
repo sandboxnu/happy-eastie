@@ -16,7 +16,7 @@ import {
 import { WithId } from "mongodb";
 import { AES, enc } from "crypto-js";
 import { ResourcesResponse } from "../../../pages/api/resources";
-import { ResourceSearchBar } from "../../resources/ResourceSearchBar";
+import { ResourceSearchBar } from "./ResourceSearchBar";
 import { FormElement } from "@nextui-org/react";
 
 const SEARCH_PLACEHOLDER_TEXT = "Search Resources"
@@ -46,20 +46,21 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
   // The resources after the filters have been applied (but before the search query)
   const [filteredResources, setFilteredResources] = useState<WithId<Resource>[]>([])
 
-  const filters: SurveyAnswers = {
-    category: categories,
-    income,
-    language: language.length > 0 ? language : undefined,
-    citizenship,
-    parentAge,
-    childAge,
-    family,
-    employmentStatus: employment,
-    insurance: insurance,
-    accessibility: accessibility.length > 0 ? accessibility : undefined,
-  };
-
   useEffect(() => {
+
+    const filters: SurveyAnswers = {
+      category: categories,
+      income,
+      language: language.length > 0 ? language : undefined,
+      citizenship,
+      parentAge,
+      childAge,
+      family,
+      employmentStatus: employment,
+      insurance: insurance,
+      accessibility: accessibility.length > 0 ? accessibility : undefined,
+    };
+
     const fetchFilteredResources = async () => {
       const encryptedQuizResponse = AES.encrypt(
         JSON.stringify(filters),
@@ -108,16 +109,22 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
           setSearchQuery(e.target.value);
         }}
       />
-      <SidebarCategories setCategories={setCategories} />
+      <SidebarCategories setCategories={setCategories} categories={categories}/>
       <SidebarStatus
+      language={language}
         setLanguage={setLanguage}
+        insurance={insurance}
         setInsurance={setInsurance}
         setIncome={setIncome}
+        citizenship={citizenship}
         setCitizenship={setCitizenship}
+        employment={employment}
         setEmployment={setEmployment}
+        accessibility={accessibility}
         setAccessibility={setAccessibility}
       />
       <SidebarFamily
+      family={family}
         setFamily={setFamily}
         setParentAge={setParentAge}
         setChildAge={setChildAge}

@@ -3,6 +3,10 @@ import { DocumentData, GeoPoint, Timestamp } from "firebase/firestore";
 import { Document, ObjectId, WithId } from "mongodb";
 
 // TODO: these types may not all be accurate - refer to quiz-real branch when finalizing
+export interface GeoJsonPoint {
+    type: "Point",
+    coordinates: number[]
+}
 
 export interface User {
     role: Role;
@@ -92,7 +96,7 @@ export interface Resource {
     employmentStatus?: EmploymentStatus[];
     insurance?: Insurance[];
     accessibility?: Accessibility[];
-    location?: GeoPoint;
+    location?: GeoJsonPoint;
     tags?: string[];
     url?: string;
     headerImageUrl: string;
@@ -142,6 +146,12 @@ export enum Insurance {
     Uninsured = "Uninsured",
     Private = "Private",
     Public = "Public"
+}
+
+export enum IncomeRanges {
+    Range1 = "Less than $20,000",
+    Range2 = "$20,000 to $44,999",
+    
 }
 
 export enum Accessibility {

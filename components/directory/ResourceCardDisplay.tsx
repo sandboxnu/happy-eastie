@@ -7,6 +7,7 @@ import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
 import {WithId} from 'mongodb';
+import ReactMarkdown from 'react-markdown';
 
 interface ResourceCardDisplayProps {
     resource: WithId<Resource>;
@@ -58,10 +59,10 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 }
 
 type ChildProps = {
-    toggleState : () => void;
+    toggleState: () => void;
 }
 
-const ApplyForResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
+const ApplyForResourceButtons: React.FC<ChildProps> = (props: ChildProps) => {
     return (
         <Link href="#" onPress={() => props.toggleState()}>
             <Row css={{ px: "0" }}>
@@ -72,13 +73,13 @@ const ApplyForResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
     )
 }
 
-const  CallResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
+const CallResourceButtons: React.FC<ChildProps> = (props: ChildProps) => {
     return (
         <Link href="#" onPress={() => props.toggleState()}>
             <Row css={{ px: "0" }}>
                 <Image src="/phone.svg" alt="Call"></Image>
                 <Text className={styles.cardFooter}>By Phone</Text>
-            </Row> 
+            </Row>
         </Link>
     )
 }

@@ -22,7 +22,7 @@ export const SidebarFamily: React.FC<SidebarFamilyProps> = (props: SidebarFamily
                 color="primary"
                 className={styles.sidebarCheckboxGroup}
                 onChange={e => props.setFamily(e as Family)}
-                value={props.family}
+                value={props.family ?? ""}
             >
                 {Object.values(Family).map(familyType => (
                     <Radio key={familyType} value={familyType} size={"xs"}>

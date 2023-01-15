@@ -45,7 +45,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       <Spacer y={1} />
 
       <Text className={styles.sidebarSubCategory}>Insurance Type</Text>
-      <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setInsurance(e as Insurance)} value={props.insurance}>
+      <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setInsurance(e as Insurance)} value={props.insurance ?? ""}>
         {Object.values(Insurance).map((insuranceType) => (
           <Radio key={insuranceType} value={insuranceType} size={"xs"}>
             <Text className={styles.sidebarCheckboxText}>{insuranceType}</Text>
@@ -65,7 +65,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       <Spacer y={1} />
 
       <Text className={styles.sidebarSubCategory}>Citizenship Status</Text>
-      <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setCitizenship(e as Citizenship)} value={props.citizenship}>
+      <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setCitizenship(e as Citizenship)} value={props.citizenship ?? ""}>
         {Object.values(Citizenship).map((citizenshipStatus) => (
           <Radio key={citizenshipStatus} value={citizenshipStatus} size={"xs"}>
             <Text className={styles.sidebarCheckboxText}>{citizenshipStatus}</Text>
@@ -76,7 +76,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       <Spacer y={1} />
 
       <Text className={styles.sidebarSubCategory}>Employment Status</Text>
-      <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setEmployment(e as EmploymentStatus)} value={props.employment}>
+      <Radio.Group color="primary" className={styles.sidebarCheckboxGroup} onChange={e => props.setEmployment(e as EmploymentStatus)} value={props.employment ?? ""}>
         {Object.values(EmploymentStatus).map((employmentStatus) => (
           <Radio key={employmentStatus} value={employmentStatus} size={"xs"}>
             <Text className={styles.sidebarCheckboxText}>{employmentStatus}</Text>

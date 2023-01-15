@@ -1,14 +1,20 @@
-import { Container, Grid, Text } from "@nextui-org/react"
+import { Container, Grid, Radio, Text } from "@nextui-org/react"
+import { useState } from "react"
 
-const mockItems = [0,1,2,3,4,5,6,7,8,9]
+const mockItems = ["blake", "hey", "man", "test"]
 export default function Test() {
+    const [broken, setBroken] = useState<undefined | string>(undefined)
+    console.log(broken)
     return (
-<Grid.Container gap={8}>
-        {mockItems.map(i => (
-            <Grid key={i} sm={6} xs={12}>
-                <Text>Item {i}</Text>
-            </Grid>
-        ))}
-    </Grid.Container>
+        <>
+        <Radio.Group value={broken} onChange={setBroken}>
+            {mockItems.map(s => <Radio value={s} key={s}>{s}</Radio>)}
+        </Radio.Group>
+        <button onClick={() => {
+            setBroken(null)
+            console.log(broken)
+            console.log("heehee")}}>fuck</button>
+        </>
+
         )
 }

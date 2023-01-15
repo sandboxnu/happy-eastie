@@ -7,6 +7,7 @@ import { Grid, Progress, Text, Spacer, Row } from "@nextui-org/react";
 import styles from "../../styles/quiz.module.css";
 import Header from "../../components/header";
 import { HelpTooltip } from "../../components/HelpTooltip";
+import Footer from "../../components/footer";
 
 const QuizPage: NextPage = () => {
   const router = useRouter();
@@ -46,6 +47,7 @@ const QuizPage: NextPage = () => {
       </Grid>
 
       <QuizComponent />
+      <Footer />
     </Grid.Container>
   );
 };

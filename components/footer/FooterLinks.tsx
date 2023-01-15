@@ -4,7 +4,7 @@ import NextLink from "next/link"
 const items = [
     {title: "Quiz", href: "/quiz"},
     {title: "Resource", href: "/directory"},
-    {title: "Community Events", href: "/#"},
+    {title: "Community Events", href: "/future"},
     {title: "About Us", href: "/about"}
 ]
 

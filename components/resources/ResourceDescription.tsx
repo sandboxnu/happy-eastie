@@ -15,7 +15,7 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
   console.log(location);
   return (
     <Grid.Container justify="space-between">
-      <Grid xs={12} sm={6}>
+      <Grid xs={12} sm={props.resource.location? 6 : 12}>
         <div>
           {props.resource.description && 
           <ReactMarkdown className={styles.descriptionText}>

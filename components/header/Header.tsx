@@ -8,7 +8,7 @@ import LanguageSelect from "../LanguageSelect"
 const items: HeaderContent[] = [
     { title: "Home", href: "/" },
     { title: "Quiz", href: "/quiz" },
-    { title: "Community Events" },
+    { title: "Community Events", href: "/future" },
     { title: "Resources", href: "/directory" },
     { title: "About", href: "/about" }
 ]

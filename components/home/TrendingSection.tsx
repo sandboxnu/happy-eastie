@@ -1,8 +1,9 @@
-import { Card, Col, Grid, Row, Spacer, Text, Image, Container } from "@nextui-org/react";
+import { Card, Col, Grid, Row, Spacer, Text, Image, Container, Link } from "@nextui-org/react";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../bookmark";
 import Tag from "./tag";
 import styles from "./TrendingSection.module.css"
+import NextLink from "next/link"
 
 const events = [
     {
@@ -45,6 +46,8 @@ function EventCard({event}: {event: EastieEvent}) {
           <Card.Image src={event.imageFilename} objectFit="cover" width="100%" />
         </Card.Header>
         <Card.Body css={{overflowY: "hidden"}}>
+          <NextLink href="/future">
+            <Link css={{flexDirection: "column"}}>
             <Row justify="space-between">
               <Text b>{event.name}</Text>
               <Bookmark enabled={false} />
@@ -52,6 +55,8 @@ function EventCard({event}: {event: EastieEvent}) {
             <Spacer y={0.5} />
             <Text>{event.summary}</Text>
             <Spacer y={1} />
+            </Link>
+          </NextLink>
         </Card.Body>
         <Card.Footer>
             <Row justify="flex-start" css={{ gap: 10 }}>

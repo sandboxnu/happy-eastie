@@ -8,6 +8,7 @@ import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
 import {WithId} from 'mongodb';
 import ReactMarkdown from 'react-markdown';
+import NextLink from "next/link"
 
 interface ResourceCardDisplayProps {
     resource: WithId<Resource>;
@@ -24,13 +25,16 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
             <Card isHoverable className={styles.card}>
                 <Card.Header>
                     <Row justify='space-between'>
+                    <NextLink href={"/resources/" + props.resource._id}>
                         <Text b className={styles.cardHeader}>{props.resource.name}</Text>
+                        </NextLink>
                         <Bookmark enabled={false} />
                     </Row>
                 </Card.Header>
 
                 <Card.Body css={{ py: "$10", pb: "$15" }}>
-        <Link href={"/resources/" + props.resource._id}>
+                    <NextLink href={"/resources/" + props.resource._id}>
+        <Link >
 
                     <Col>
                         <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20 }}>
@@ -45,6 +49,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                         </Row>
                     </Col>
         </Link>
+        </NextLink>
 
                 </Card.Body>
 

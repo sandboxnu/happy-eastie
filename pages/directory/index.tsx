@@ -15,50 +15,68 @@ import Loading from '../../components/Loading'
 import Footer from '../../components/footer'
 
 const ResourceDirectory: NextPage = () => {
-    const router = useRouter();
-    const [searchQuery, setSearchQuery] = useState<string>("Search resources...")
-    const [viewingAll, setViewingAll] = useState<boolean>(false)
-    const [filters, setFilters] = useState<ResourceCategory[]>([])
-    const [sortingMethod, setSortingMethod] = useState<ResourceSortingMethod>(ResourceSortingMethod.Alphabetical)
-    const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>([])
-    const { requestedResources, additionalResources, isLoading, error } = useResources()
+  const router = useRouter();
+  const [displayResources, setDisplayResources] = useState<WithId<Resource>[]>(
+    []
+  );
+  const { requestedResources, additionalResources, isLoading, error } =
+    useResources();
 
-    useEffect(() => {
-        setDisplayResources(requestedResources as WithId<Resource>[])
-    }, [requestedResources])
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const bottomSheetCloseHandler = () => {
+    setBottomSheetVisible(false);
+  };
 
-    // TODO: in this useEffect, apply the filters and sorting method selected - probably should delegate
-    // the filtering and sorting to the API
-    useEffect(() => {
-        // TODO: probably want to change this so you don't have to check if search query is the placeholder
-        // TODO: Add filters and sorting method to this request
-        const requestBody = (searchQuery && !viewingAll && searchQuery !== "Search resources...") ? JSON.stringify({ searchParam: searchQuery }) : null
-        const requestSettings = { method: 'POST', body: requestBody, headers: { 'Content-Type': 'application/json' } }
-        makeResourcesRequest(requestSettings).then((data) => {
-            const resources: WithId<Resource>[] = data.requested;
-            setDisplayResources(resources);
-        }) //TODO: This currently returns a stray promise. We should probably add some indication of loading and blocking other search requests.
-    }, [searchQuery, viewingAll])
+  if (error) return <div>{error.message}</div>;
+  if (isLoading)
+    return (
+      <Loading
+        size="xl"
+        css={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        Loading Resources
+      </Loading>
+    );
+  if (!requestedResources)
+    return <div>Internal server error: could not load requested resources</div>;
+  if (!additionalResources)
+    return (
+      <div>Internal server error: could not load additional resources</div>
+    );
 
-    async function makeResourcesRequest(requestSettings: any) {
-        const response: Response = await fetch('/api/resources', requestSettings)
-        const responseJson: ResourcesResponse = await response.json()
-        return responseJson.data;
-    }
+  return (
+    <div>
+      <Header />
 
-    if (error) return <div>{error.message}</div>
-    if (isLoading) return <Loading/>
-    if (!requestedResources) return <div>Internal server error: could not load requested resources</div>
-    if (!additionalResources) return <div>Internal server error: could not load additional resources</div>
+      <Grid.Container justify="center">
+        <Grid>
+          <Row align="center">
+            <Image src={"/star.svg"} alt="" width={31} height={31} />
+            <Spacer x={0.4} />
+            <Text h1>Resource Directory</Text>
+          </Row>
+        </Grid>
+      </Grid.Container>
 
-    const updateSearchQuery = (e: ChangeEvent<FormElement>) => {
-        setSearchQuery(e.target.value)
-    }
+      <Grid.Container>
+        <Grid xs={0} sm={3} direction="column">
+          <FilterSidebar setResources={setDisplayResources} />
+        </Grid>
 
-    const toggleViewingAll = () => {
-        setViewingAll(!viewingAll);
-    }
-
+        <Grid xs={12} sm={9} direction="column" alignItems="center">
+          <Grid xs={5} sm={0}>
+            <Button bordered onClick={() => setBottomSheetVisible(true)}>
+              Filters
+            </Button>
+          </Grid>
+          <ResourcesDisplay resources={displayResources} />
+        </Grid>
+      </Grid.Container>
     return (
         <div>
             <Header />
@@ -94,4 +112,4 @@ const ResourceDirectory: NextPage = () => {
     )
 }
 
-export default ResourceDirectory
+export default ResourceDirectory;

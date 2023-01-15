@@ -1,0 +1,28 @@
+{
+    "_id": {
+      "$oid": "6389b490dd0b40726d0ca8d3"
+    },
+  "accessibility": [],
+  "category": [],
+  "citizenship": [],
+  "description": "",
+  "email": "",
+  "employmentStatus": [],
+  "family": [],
+  "headerImageUrl": "",
+  "howToApply": "",
+  "insurance": [],
+  "language": [],
+  "location": {"type": "Point", "coordinates": []},
+  "maximumChildAge": 0,
+  "maximumIncome": 0,
+  "maximumParentAge": 0,
+  "minimumIncome": 0,
+  "minimumParentAge": 0,
+  "name": "",
+  "phoneNumber": "",
+  "pointOfContact": "",
+  "tags": [],
+  "url": "",
+  "waitlist": { "description": ""}
+  }

@@ -64,7 +64,7 @@ export interface SurveyAnswers {
 }
 
 /**
- * @deprecated Use ResourceData instead. This should be deleted after ticket #.
+ * deprecated Use ResourceData instead. This should be deleted after ticket #.
  */
 // export interface Service extends DocumentData {
 //     name: string;

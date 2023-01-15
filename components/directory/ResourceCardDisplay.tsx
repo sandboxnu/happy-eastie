@@ -6,7 +6,8 @@ import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
-import { WithId } from 'mongodb';
+import {WithId} from 'mongodb';
+import ReactMarkdown from 'react-markdown';
 
 interface ResourceCardDisplayProps {
     resource: WithId<Resource>;

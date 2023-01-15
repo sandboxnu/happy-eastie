@@ -23,7 +23,7 @@ function InfoComponent() {
   return (
     <Grid.Container gap={2} justify="center">
       <Grid xs={12} sm={5}>
-        <Image alt="Default Image" src="/homeImage.svg" objectFit="scale-down" />
+        <Image alt="Default Image" src="/homeImage2.svg" objectFit="scale-down" />
       </Grid>
       <Grid xs={12} sm={7} direction="column" alignItems="center">
         <Text className={"homepage-title"}>Here to help find the resources for you!</Text>
@@ -45,20 +45,20 @@ function TrendingComponent() {
     {
       name: "Women, Infants, & Children",
       imageFilename: "happychildliftingbarbell.png",
-      summary: "Tap to learn more about WIC, providing free services for those who qualify.",
+      summary: "Learn more about WIC, providing free services for those who qualify.",
       tags: ["Childcare", "Healthcare", "Any Income"],
     },
     {
-      name: "Women, Infants, & Children",
-      imageFilename: "happychildliftingbarbell.png",
-      summary: "Tap to learn more about WIC, providing free services for those who qualify.",
-      tags: ["Childcare", "Any Income"],
+      name: "Healthy Baby, Healthy Mama",
+      imageFilename: "healthyBabyHealthyMama.png",
+      summary: "Learn if you and your child may be eilgible for this service.",
+      tags: ["Childcare", "Healthcare", "Any Income"],
     },
     {
-      name: "Women, Infants, & Children",
-      imageFilename: "happychildliftingbarbell.png",
-      summary: "Tap to learn more about WIC, providing free services for those who qualify.",
-      tags: ["Any Income"],
+      name: "Eastie Week 2022",
+      imageFilename: "eastieWeek2022.png",
+      summary: "Learn more about this celebration of East Boston!",
+      tags: ["Community", "Events", "Family-Friendly"],
     },
   ];
 

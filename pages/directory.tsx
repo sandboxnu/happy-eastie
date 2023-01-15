@@ -125,6 +125,7 @@ const ResourceDirectoryContent: NextPage = () => {
         aria-labelledby="modal-title"
         open={bottomSheetVisible}
         scroll
+        animated={false}
         onClose={bottomSheetCloseHandler}
         css={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
       >

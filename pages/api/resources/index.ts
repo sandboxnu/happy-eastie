@@ -6,9 +6,7 @@ import {
   SurveyAnswers,
 } from "../../../models/types";
 import { AES, enc } from "crypto-js";
-import mongoDbInteractor, {
-  MongoDbInteractor,
-} from "../../../db/mongoDbInteractor";
+import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
 
 export type ResourceData = {
@@ -79,14 +77,12 @@ async function getResources(
   }
   // small bug: it seems like CBHI, which doesn't have any categories, 
 +   // doesn't get returned here?
-  resources.reduce((prev: WithId<Resource>, curr: WithId<Resource>) => {
-    curr.category &&
-    curr.category.some((c1: ResourceCategory) =>
+  resources.forEach((r: WithId<Resource>) => {
+    r.category?.some((c1: ResourceCategory) =>
       answers.category.some((c2: ResourceCategory) => c1 === c2)
     )
-      ? requested.push(curr)
-      : additional.push(curr);
-    return curr;
+      ? requested.push(r)
+      : additional.push(r);
   });
   return {
     data: {

@@ -23,26 +23,45 @@ const SEARCH_PLACEHOLDER_TEXT = "Search Resources"
 
 interface FilterSidebarProps {
   setResources(resources: WithId<Resource>[]): void;
+  filterValues: FilterValues
+  filterSetters: FilterSetters
 }
+
+interface FilterValues {
+  categories: ResourceCategory[];
+      language: Language[],
+      insurance: Insurance | undefined
+      income: number | undefined
+      citizenship: Citizenship | undefined
+      employment: EmploymentStatus | undefined
+      accessibility: Accessibility[]
+      family: Family | undefined
+      searchQuery: string
+      parentAge: number | undefined
+      childAge: number | undefined
+  
+}
+interface FilterSetters{
+  setCategories(s: ResourceCategory[]): void
+      setLanguage(s: Language[]): void
+      setIncome(s: number | undefined): void
+      setInsurance(s: Insurance | undefined): void
+      setCitizenship(s: Citizenship | undefined): void
+      setEmployment(s: EmploymentStatus | undefined): void
+      setAccessibility(s: Accessibility[]): void
+      setFamily(f: Family | undefined): void
+      setParentAge(n: number | undefined): void
+      setChildAge(n: number | undefined): void
+      setSearchQuery(s: string | undefined): void
+  }
+
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = (
   props: FilterSidebarProps
 ) => {
-  // The states of various filter options
-  const [categories, setCategories] = useState<ResourceCategory[]>([]);
-  const [language, setLanguage] = useState<Language[]>([]);
-  const [insurance, setInsurance] = useState<Insurance>();
-  const [income, setIncome] = useState<number>();
-  const [citizenship, setCitizenship] = useState<Citizenship>();
-  const [employment, setEmployment] = useState<EmploymentStatus>();
-  const [accessibility, setAccessibility] = useState<Accessibility[]>([]);
-  const [family, setFamily] = useState<Family>();
-  const [parentAge, setParentAge] = useState<number>();
-  const [childAge, setChildAge] = useState<number>();
 
-  // The query typed in the search bar
-  const [searchQuery, setSearchQuery] = useState<string>("Search Resources");
-
+  const {categories, language, insurance, citizenship, employment, accessibility, family, searchQuery, parentAge, childAge, income} = props.filterValues
+  const {setAccessibility, setCategories, setChildAge, setCitizenship, setEmployment, setFamily, setInsurance, setLanguage, setParentAge, setSearchQuery, setIncome} = props.filterSetters
   // The resources after the filters have been applied (but before the search query)
   const [filteredResources, setFilteredResources] = useState<WithId<Resource>[]>([])
 

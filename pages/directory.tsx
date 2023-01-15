@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import styles from "./directory.module.css"
-import { Resource } from "../models/types";
+import { Accessibility, Citizenship, EmploymentStatus, Family, Insurance, Language, Resource, ResourceCategory } from "../models/types";
 import { useResources } from "../hooks/useResources";
 import { ResourcesDisplay } from "../components/directory/ResourcesDisplay";
 import { FilterSidebar } from "../components/directory/sidebar/FilterSidebar";
@@ -32,6 +32,21 @@ const ResourceDirectoryContent: NextPage = () => {
     setBottomSheetVisible(false);
   };
 
+    // The states of various filter options
+    const [categories, setCategories] = useState<ResourceCategory[]>([]);
+    const [language, setLanguage] = useState<Language[]>([]);
+    const [insurance, setInsurance] = useState<Insurance>();
+    const [income, setIncome] = useState<number>();
+    const [citizenship, setCitizenship] = useState<Citizenship>();
+    const [employment, setEmployment] = useState<EmploymentStatus>();
+    const [accessibility, setAccessibility] = useState<Accessibility[]>([]);
+    const [family, setFamily] = useState<Family>();
+    const [parentAge, setParentAge] = useState<number>();
+    const [childAge, setChildAge] = useState<number>();
+  
+    // The query typed in the search bar
+    const [searchQuery, setSearchQuery] = useState<string>("Search Resources");
+
   if (error) return <div>{error.message}</div>;
   if (isLoading)
     return (
@@ -43,6 +58,34 @@ const ResourceDirectoryContent: NextPage = () => {
     return (
       <div>Internal server error: could not load additional resources</div>
     );
+
+    const filterValues = {
+      categories, 
+      language,
+      insurance,
+      income,
+      citizenship, 
+      employment,
+      accessibility,
+      family,
+      parentAge,
+      childAge,
+      searchQuery
+    }
+
+    const filterSetters: any = {
+      setCategories, 
+      setLanguage,
+      setInsurance,
+      setIncome,
+      setCitizenship, 
+      setEmployment,
+      setAccessibility,
+      setFamily,
+      setParentAge,
+      setChildAge,
+      setSearchQuery
+    }
 
   return (
     <>
@@ -58,7 +101,7 @@ const ResourceDirectoryContent: NextPage = () => {
 
       <Grid.Container>
         <Grid xs={0} sm={3} direction="column">
-          <FilterSidebar setResources={setDisplayResources} />
+          <FilterSidebar setResources={setDisplayResources} filterValues={filterValues} filterSetters={filterSetters}/>
         </Grid>
 
         <Grid xs={12} sm={9} direction="column" alignItems="center">
@@ -91,7 +134,7 @@ const ResourceDirectoryContent: NextPage = () => {
           </Text>
         </Modal.Header>
         <Modal.Body css={{ p: 0 }}>
-          <FilterSidebar setResources={setDisplayResources} />
+          <FilterSidebar setResources={setDisplayResources} filterSetters={filterSetters} filterValues={filterValues}/>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>

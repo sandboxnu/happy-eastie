@@ -55,7 +55,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
                 <Card.Divider />
 
-                <Card.Footer>
+                <Card.Footer className={styles.cardFooter}>
                     <Row justify="flex-start">
                         <ApplyForResourceButtons toggleState={toggleState}/>
                         <CallResourceButtons toggleState={toggleState}/>
@@ -76,7 +76,7 @@ const ApplyForResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
         <Link href="#" onPress={() => props.toggleState()}>
             <Row css={{ px: "0" }}>
                 <Image src="/laptop.svg" alt="Apply"></Image>
-                <Text className={styles.cardFooter}>Apply Online</Text>
+                <Text className={styles.cardFooterText}>Apply Online</Text>
             </Row>
         </Link>
     )
@@ -87,7 +87,7 @@ const  CallResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
         <Link href="#" onPress={() => props.toggleState()}>
             <Row css={{ px: "0" }}>
                 <Image src="/phone.svg" alt="Call"></Image>
-                <Text className={styles.cardFooter}>By Phone</Text>
+                <Text className={styles.cardFooterText}>By Phone</Text>
             </Row> 
         </Link>
     )

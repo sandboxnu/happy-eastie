@@ -12,7 +12,7 @@ export const HelpTooltip = (props: HelpProps) => {
     if (props.grayscale) css = {filter: "grayscale(1)"}
 
     return (
-        <Tooltip placement="top" content={<Text className={styles.tooltipText}>{props.text}</Text>} color="primary">
+        <Tooltip placement="leftStart" content={<Text className={styles.tooltipText}>{props.text}</Text>} color="primary">
             <Image src="/help.svg" width={props.diameter} height={props.diameter} alt="Help" css={css} autoResize />
         </Tooltip>
     )

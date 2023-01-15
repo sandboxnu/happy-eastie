@@ -3,7 +3,10 @@
     height: 300px;
     max-width: 515px
 }
-.cardFooter {
+.cardFooter{
+    min-height: 20%;
+}
+.cardFooterText {
     font-family: 'Raleway';
     font-size: 15px;
     font-weight: 700;

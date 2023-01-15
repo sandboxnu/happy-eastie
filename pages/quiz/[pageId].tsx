@@ -33,7 +33,7 @@ const QuizPage: NextPage = () => {
   return (
     <Layout>
     <Grid.Container gap={2} alignItems="center" direction="column">
-      <Grid xs={4} md={4} direction="column">
+      <Grid xs={8} direction="column">
         <Text id={styles.quizTitle}>Resource Quiz</Text>
         <Spacer y={1} />
         <Progress max={4} value={pageNumber} size={"sm"} />

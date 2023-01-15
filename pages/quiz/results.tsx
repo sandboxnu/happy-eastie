@@ -4,7 +4,7 @@ import { QuizResultsDisplay } from '../../components/quiz/QuizResultsDisplay'
 import Layout from '../../components/Layout';
 const QuizResults: NextPage = () => {
   return (
-    <Layout>
+    <Layout includePadding={false}>
       <QuizResultsDisplay />
     </Layout>)
 }

@@ -1,7 +1,10 @@
 import useSWRImmutable from 'swr/immutable'
-import { Event, EventInfo } from '../models/types'
+// import { Event, EventInfo } from '../models/types'
 import { EventsResponse } from '../pages/api/events'
 import { DeleteEventResponse, EventResponse } from '../pages/api/events/[eventId]'
+
+type Event = {id: string};
+type EventInfo = {}
 
 // hook for getting events from api to display in frontend
 

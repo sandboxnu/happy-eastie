@@ -7,11 +7,11 @@ export default function Test() {
     console.log(broken)
     return (
         <>
-        <Radio.Group value={broken} onChange={setBroken}>
+        <Radio.Group value={broken ?? ""} onChange={setBroken}>
             {mockItems.map(s => <Radio value={s} key={s}>{s}</Radio>)}
         </Radio.Group>
         <button onClick={() => {
-            setBroken(null)
+            setBroken(undefined)
             console.log(broken)
             console.log("heehee")}}>fuck</button>
         </>

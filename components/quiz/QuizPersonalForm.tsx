@@ -1,21 +1,16 @@
-import { Grid, Row, Spacer } from "@nextui-org/react";
+import { Grid, Row, Spacer, Radio } from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
-import {
-  Accessibility,
-  Citizenship,
-  EmploymentStatus,
-  Insurance,
-  Language,
-} from "../../models/types";
+import { SurveyAnswers } from "../../models/types2";
 import styles from "./Quiz.module.css";
 import { HelpTooltip } from "../HelpTooltip";
 
 export const QuizPersonalForm: React.FC = () => {
+  const [documentation, setDocumentation] = useState<boolean|undefined>(undefined);
   const router = useRouter();
   const quizState = useContext(AppContext);
 
@@ -25,16 +20,20 @@ export const QuizPersonalForm: React.FC = () => {
   };
 
   const validationSchema = Yup.object({
-    income: Yup.number()
+    householdIncome: Yup.number()
       .integer(errorMessages.wholeNumberError)
       .min(0, errorMessages.incomeError)
       .typeError(errorMessages.wholeNumberError)
       .nullable(),
-    language: Yup.array(),
-    citizenship: Yup.string(),
-    employmentStatus: Yup.string(),
-    insurance: Yup.string(),
-    accessibility: Yup.array(),
+    householdMembers: Yup.number()
+      .integer(errorMessages.wholeNumberError)
+      .min(1, errorMessages.incomeError)
+      .typeError(errorMessages.wholeNumberError),
+    //language: Yup.array(),
+   // citizenship: Yup.string(),
+   // employmentStatus: Yup.string(),
+    //insurance: Yup.string(),
+   //accessibility: Yup.array(),
   });
 
   if (quizState.encryptedQuizResponse === "") {
@@ -53,7 +52,12 @@ export const QuizPersonalForm: React.FC = () => {
   );
 
   const handleSubmit = (values: any) => {
+    console.log(values);
     const combinedValues = Object.assign(initialValues, values);
+    
+    combinedValues.documentation = documentation;
+    console.log(combinedValues);
+
     const encrypted = AES.encrypt(
       JSON.stringify(combinedValues),
       "Secret Passphrase"
@@ -75,20 +79,18 @@ export const QuizPersonalForm: React.FC = () => {
     >
       <Form>
         <Grid.Container gap={8} justify="center">
-          <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={12} direction="column">
-            <label className={styles.quizFieldText}>Annual Income</label>
+          <Grid md={4} sm={6} xs={12} direction="column">
+            <label className={styles.quizFieldText}>Household Income</label>
             <Spacer y={1} />
-            <Field type="number" name="income" className={styles.select} />
-            <ErrorMessage name="income" render={renderError} />
+            <Field type="number" name="householdIncome" className={styles.select} />
+            <ErrorMessage name="householdIncome" render={renderError} />
           </Grid>
-          <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={12} direction="column">
+          {/* <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Language</label>
             <Spacer y={1} />
-            {Object.values(Language).map((c) => (
+            {{Object.values(Language).map((c) => (
               <label key={c} className={styles.checkboxItem}>
                 <Field
                   type="checkbox"
@@ -102,11 +104,10 @@ export const QuizPersonalForm: React.FC = () => {
               </label>
             ))}
           </Grid>
-          <Grid md={2} xs={0} />
+          <Grid md={2} xs={0} /> */}
 
-          <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={12} direction="column">
+          {/* <Grid md={3} xs={12} direction="column">
             <Row align="center">
               <label className={styles.quizFieldText}>Citizenship</label>
               <Spacer x={0.5} />
@@ -120,40 +121,52 @@ export const QuizPersonalForm: React.FC = () => {
               </optgroup>
             </Field>
           </Grid>
-          <Grid md={2} xs={0} />
+          <Grid md={2} xs={0} /> */}
 
-          <Grid md={3} xs={12} direction="column">
-            <label className={styles.quizFieldText}>Employment Status</label>
+          <Grid md={4} sm={6} xs={12} direction="column">
+            <label className={styles.quizFieldText}>Household Members</label>
             <Spacer y={1} />
-            <Field
-              as="select"
-              name="employmentStatus"
-              className={styles.select}
-            >
-              <optgroup label="Employment Status">
-                <option></option>
-                {Object.values(EmploymentStatus).map((element) => <option key={element}>{element}</option>)}
-              </optgroup>
-            </Field>
+            <Field type="number" name="householdMembers" className={styles.select} />
+            <ErrorMessage name="householdMembers" render={renderError} />
+          </Grid>
+
+          <Grid md={4} sm={6} xs={12} direction="column">
+            <label className={styles.quizFieldText}>Do you have some form of photo ID?</label>
+            <Spacer y={1} />
+            <Radio.Group name="documentation" defaultValue="Unknown" onChange={(v) => {
+              if (v === "Unknown") {
+                setDocumentation(undefined);
+              }
+              else if (v === "Yes") {
+                setDocumentation(true);
+              }
+              else {
+                setDocumentation(false);
+              }
+            }}>
+                  <Radio value="Yes">Yes</Radio>
+                  <Radio value="No">No</Radio>
+                  <Radio value="Unknown">Prefer not to say</Radio>
+                </Radio.Group>
           </Grid>
           <Grid md={2} xs={0} />
 
           <Grid md={3} xs={12} direction="column">
-            <label className={styles.quizFieldText}>Insurance Type</label>
+            {/* <label className={styles.quizFieldText}>Insurance Type</label>
             <Spacer y={1} />
             <Field as="select" name="insurance" className={styles.select}>
               <optgroup label="Insurance status">
                 <option></option>
                 {Object.values(Insurance).map((element) => <option key={element}>{element}</option>)}
               </optgroup>
-            </Field>
+            </Field> */}
           </Grid>
           <Grid md={2} xs={0} />
 
-          <Grid md={3} xs={12} direction="column">
+          {/* <Grid md={3} xs={12} direction="column">
             <label className={styles.quizFieldText}>Accessibility Needs</label>
             <Spacer y={1} />
-            {Object.values(Accessibility).map((c) => (
+            { {Object.values(Accessibility).map((c) => (
               <label key={c} className={styles.checkboxItem}>
                 <Field
                   type="checkbox"
@@ -165,8 +178,8 @@ export const QuizPersonalForm: React.FC = () => {
                 <span className={styles.categoryText}>{` ${c}`}</span>
                 <br />
               </label>
-            ))}
-          </Grid>
+            ))}}
+          </Grid> */}
 
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="submit" id="back">

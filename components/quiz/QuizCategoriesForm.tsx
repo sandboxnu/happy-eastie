@@ -16,8 +16,9 @@ export const QuizCategoriesForm: React.FC = () => {
     categories: [],
     householdMembers: 1,
     householdIncome: 0,
+    documentation: undefined,
     languages: [],
-    accessibilty: [],
+    accessibility: [],
   };
 
   if (quizState.encryptedQuizResponse != "") {

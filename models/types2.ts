@@ -35,7 +35,7 @@ export interface SurveyAnswers {
     accessibilty: string[];
 }
 
-type IncomeRange = {
+export type IncomeRange = {
     minimum: number;
     maximum: number;
 }
@@ -109,5 +109,4 @@ export interface Resource {
      * put documentation requirements here
      */
     eligibilityInfo?: string;
-
 }

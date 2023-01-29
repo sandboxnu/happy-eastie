@@ -51,16 +51,19 @@ export type UID = string;
 // }
 
 export interface SurveyAnswers {
-    category: ResourceCategory[];
-    income?: number;
-    language?: Language[];
-    citizenship?: Citizenship;
-    parentAge?: number;
-    childAge?: number;
-    family?: Family;
-    employmentStatus?: EmploymentStatus;
-    insurance?: Insurance;
-    accessibility?: Accessibility[]; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
+    category: ResourceCategory[];  // changed to string[]
+    income?: number;  // changed to householdIncome
+    language?: Language[];  // changed to string[]
+    citizenship?: Citizenship;  // deleted
+    parentAge?: number;  // deleted
+    childAge?: number;  // deleted
+    family?: Family;  // deleted
+    employmentStatus?: EmploymentStatus;  // deleted
+    insurance?: Insurance;  // deleted
+    //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
+    accessibility?: Accessibility[];  // changed to string[]
+    
+    // added householdMembers, documentations
 }
 
 /**

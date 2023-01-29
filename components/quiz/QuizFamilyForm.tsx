@@ -1,4 +1,4 @@
-import { Grid, Spacer } from "@nextui-org/react";
+import { Checkbox, Grid, Spacer } from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -14,23 +14,19 @@ export const QuizFamilyForm: React.FC = () => {
   const quizState = useContext(AppContext);
   const { cache } = useSWRConfig();
 
+  // TODO: Eventually replace this with an endpoint call of some kind.
+  function getLanguages(): string[] {
+    return ["en", "es", "fr", "zh", "de"];
+  }
+
+  // TODO: Eventually replace this with an endpoint call of some kind.
+  function getAccessibility(): string[] {
+    return ["blind", "deaf", "wheelchair", "literacy"];
+  }
+
   const errorMessages = {
     ageError: "Please enter a valid age",
   };
-
-  const validationSchema = Yup.object({
-    parentAge: Yup.number()
-      .positive(errorMessages.ageError)
-      .integer(errorMessages.ageError)
-      .typeError(errorMessages.ageError)
-      .nullable(),
-    childAge: Yup.number()
-      .positive(errorMessages.ageError)
-      .integer(errorMessages.ageError)
-      .typeError(errorMessages.ageError)
-      .nullable(),
-    family: Yup.string(),
-  });
 
   if (quizState.encryptedQuizResponse === "") {
     router.push("/quiz/1");
@@ -38,14 +34,18 @@ export const QuizFamilyForm: React.FC = () => {
   }
 
   let initialValues = JSON.parse(
-    AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(enc.Utf8)
+    AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(
+      enc.Utf8
+    )
   );
-
-  const renderError = (message: string) => <p className={styles.errorMessage}>{message}</p>;
 
   const handleSubmit = (values: any) => {
     const combinedValues = Object.assign(initialValues, values);
-    const encrypted = AES.encrypt(JSON.stringify(combinedValues), "Secret Passphrase");
+    console.log(combinedValues);
+    const encrypted = AES.encrypt(
+      JSON.stringify(combinedValues),
+      "Secret Passphrase"
+    );
     // clear old resources list from cache so cache never gets populated with too many lists
     cache.delete("/api/resources");
     quizState.changeEncryptedQuizResponse(encrypted.toString());
@@ -57,37 +57,45 @@ export const QuizFamilyForm: React.FC = () => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
         <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
-          <Grid md={5} xs={0} />
-
           <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>Family Type</label>
+            <label className={styles.quizFieldText}>Languages</label>
             <Spacer y={1} />
-            <Field className={styles.familySelect} as="select" name="family">
-              <option></option>
-              {Object.values(Family).map((element) => <option key={element}>{element}</option>)}
-            </Field>
+            <Checkbox.Group>
+              {getLanguages().map((c) => (
+                <label key={c} className={styles.checkboxItem}>
+                  <Field
+                    type="checkbox"
+                    name="languages"
+                    value={c}
+                    id={c}
+                    className={styles.checkbox}
+                  />
+                  <span className={styles.categoryText}>{c}</span>
+                </label>
+              ))}
+            </Checkbox.Group>
           </Grid>
 
-          <Grid md={5} xs={0} />
-
           <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>Parent Age</label>
-            <Spacer y={1} />
-            <Field className={styles.ageInput} type="number" name="parentAge" />
-            <ErrorMessage name="parentAge" render={renderError} />
-          </Grid>
-          <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>Child Age</label>
-            <Spacer y={1} />
-            <Field className={styles.ageInput} type="number" name="childAge" />
-            <ErrorMessage name="childAge" render={renderError} />
+            <Checkbox.Group>
+              <label className={styles.quizFieldText}>Accessibility</label>
+              <Spacer y={1} />
+              {getAccessibility().map((c) => (
+                <label key={c} className={styles.checkboxItem}>
+                  <Field
+                    type="checkbox"
+                    name="accessibility"
+                    value={c}
+                    id={c}
+                    className={styles.checkbox}
+                  />
+                  <span className={styles.categoryText}>{c}</span>
+                </label>
+              ))}
+            </Checkbox.Group>
           </Grid>
 
           <Grid xs={12} justify="space-between">

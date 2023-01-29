@@ -10,7 +10,7 @@ import styles from "./Quiz.module.css";
 import { HelpTooltip } from "../HelpTooltip";
 
 export const QuizPersonalForm: React.FC = () => {
-  const [documentation, setDocumentation] = useState<boolean|undefined>(undefined);
+  const [documentation, setDocumentation] = useState<boolean|null>(null);
   const router = useRouter();
   const quizState = useContext(AppContext);
 
@@ -135,7 +135,7 @@ export const QuizPersonalForm: React.FC = () => {
             <Spacer y={1} />
             <Radio.Group name="documentation" defaultValue="Unknown" onChange={(v) => {
               if (v === "Unknown") {
-                setDocumentation(undefined);
+                setDocumentation(null);
               }
               else if (v === "Yes") {
                 setDocumentation(true);

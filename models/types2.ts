@@ -8,6 +8,9 @@ export interface SurveyAnswers {
      * Your matches: Most relevant based on what you answered
      * Additional matches: Things you might qualify for but did not ask for
      */
+        /**
+     * Variable name, not what will be shown on site
+     */
     categories: string[];
     householdMembers: number;
     householdIncome: number;
@@ -19,9 +22,15 @@ export interface SurveyAnswers {
      * OR relationship
      * Use this just for ordering right now
      */
+        /**
+     * Variable name, not what will be shown on site
+     */
     languages: string[];
     /**
      * same as languages, just for ordering
+     */
+        /**
+     * Variable name, not what will be shown on site
      */
     accessibilty: string[];
 }
@@ -48,6 +57,9 @@ export interface Resource {
      * One sentence used in card description
      */
     summary: string;
+    /**
+     * Variable name, not what will be shown on site
+     */
     category: string[];
     keywords?: string[];
     /**
@@ -79,9 +91,15 @@ export interface Resource {
      * Similar to location, except it's a string address just used for describing things.
      */
     address?: string;
+        /**
+     * Variable name, not what will be shown on site
+     */
     availableLanguages: string[];
     /**
      * this resource fulfills these accessibility options
+     */
+        /**
+     * Variable name, not what will be shown on site
      */
     accessibilityOptions?: string[];
     /**

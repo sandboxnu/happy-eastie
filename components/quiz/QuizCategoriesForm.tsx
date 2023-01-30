@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/context";
 import { SurveyAnswers } from "../../models/types2";
-import { Checkbox, Col, Container, Row } from "@nextui-org/react";
+import { Checkbox, Col, Grid, Row } from "@nextui-org/react";
 import styles from "./Quiz.module.css";
+import { CategoryCard } from "./CategoryCard";
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
@@ -70,32 +71,31 @@ export const QuizCategoriesForm: React.FC = () => {
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
-        <Container>
-          <Row>
-            <Col>
-              <Checkbox.Group>
+        <Grid.Container gap={2}>
+
                 {categories.map((c) => (
-                  <label key={c} className={styles.checkboxItem}>
-                    <Field
-                      type="checkbox"
-                      name="categories"
-                      value={c}
-                      id={c}
-                      className={styles.checkbox}
-                    />
-                    <span className={styles.categoryText}>{c}</span>
-                  </label>
+                  // <label key={c} className={styles.checkboxItem}>
+                  //   <Field
+                  //     type="checkbox"
+                  //     name="categories"
+                  //     value={c}
+                  //     id={c}
+                  //     className={styles.checkbox}
+                  //   />
+                  //   <span className={styles.categoryText}>{c}</span>
+                  // </label>
+                  <Grid xs={4}>
+                                      <CategoryCard title={c} />
+                  </Grid>
                 ))}
-              </Checkbox.Group>
-            </Col>
-          </Row>
+
 
           <Row justify="flex-end">
             <button id="continue" className={styles.continue} type="submit">
               Continue
             </button>
           </Row>
-        </Container>
+        </Grid.Container>
       </Form>
     </Formik>
   );

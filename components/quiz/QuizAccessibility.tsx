@@ -2,7 +2,7 @@ import { Checkbox, Grid, Spacer } from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
@@ -12,15 +12,26 @@ import styles from "./Quiz.module.css";
 export const QuizAccessibility: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
-  const { cache } = useSWRConfig();
+  const { cache } = useSWRConfig()
+  const [languages, setLanguages] = useState<string[]>([])
+  const [accessibilities, setAccessibilities] = useState<string[]>([])
+
+
+  useEffect(() => {
+    getLanguages()
+    .then(ls => setLanguages(ls))
+
+    getAccessibility()
+    .then(as => setAccessibilities(as))
+  })
 
   // TODO: Eventually replace this with an endpoint call of some kind.
-  function getLanguages(): string[] {
+  async function getLanguages(): Promise<string[]> {
     return ["en", "es", "fr", "zh", "de"];
   }
 
   // TODO: Eventually replace this with an endpoint call of some kind.
-  function getAccessibility(): string[] {
+  async function getAccessibility(): Promise<string[]> {
     return ["blind", "deaf", "wheelchair", "literacy"];
   }
 
@@ -64,7 +75,7 @@ export const QuizAccessibility: React.FC = () => {
             <label className={styles.quizFieldText}>Languages</label>
             <Spacer y={1} />
             <Checkbox.Group>
-              {getLanguages().map((c) => (
+              {languages.map((c) => (
                 <label key={c} className={styles.checkboxItem}>
                   <Field
                     type="checkbox"
@@ -83,7 +94,7 @@ export const QuizAccessibility: React.FC = () => {
             <Checkbox.Group>
               <label className={styles.quizFieldText}>Accessibility</label>
               <Spacer y={1} />
-              {getAccessibility().map((c) => (
+              {accessibilities.map((c) => (
                 <label key={c} className={styles.checkboxItem}>
                   <Field
                     type="checkbox"

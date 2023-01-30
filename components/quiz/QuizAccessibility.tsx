@@ -1,29 +1,24 @@
 import { Checkbox, Grid, Spacer } from "@nextui-org/react";
 import { AES, enc } from "crypto-js";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
-import * as Yup from "yup";
 import { AppContext } from "../../context/context";
-import { Family } from "../../models/types";
 import styles from "./Quiz.module.css";
 
 export const QuizAccessibility: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
-  const { cache } = useSWRConfig()
-  const [languages, setLanguages] = useState<string[]>([])
-  const [accessibilities, setAccessibilities] = useState<string[]>([])
-
+  const { cache } = useSWRConfig();
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [accessibilities, setAccessibilities] = useState<string[]>([]);
 
   useEffect(() => {
-    getLanguages()
-    .then(ls => setLanguages(ls))
+    getLanguages().then((ls) => setLanguages(ls));
 
-    getAccessibility()
-    .then(as => setAccessibilities(as))
-  })
+    getAccessibility().then((as) => setAccessibilities(as));
+  }, []);
 
   // TODO: Eventually replace this with an endpoint call of some kind.
   async function getLanguages(): Promise<string[]> {
@@ -123,9 +118,3 @@ export const QuizAccessibility: React.FC = () => {
     </Formik>
   );
 };
-
-function enumValues<E>(value: any): any {
-  return Object.keys(value)
-    .filter((elt: any) => !isNaN(Number(value[elt])))
-    .map((element) => <option key={element}>{element}</option>);
-}

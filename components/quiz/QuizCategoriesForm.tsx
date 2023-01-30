@@ -1,16 +1,20 @@
 import { AES, enc } from "crypto-js";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { useContext } from "react";
-import * as Yup from "yup";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/context";
 import { SurveyAnswers } from "../../models/types2";
-import { Checkbox, Col, Container, Grid, Row } from "@nextui-org/react";
+import { Checkbox, Col, Container, Row } from "@nextui-org/react";
 import styles from "./Quiz.module.css";
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    getCategories().then((cs) => setCategories(cs));
+  }, []);
 
   let initialValues: SurveyAnswers = {
     categories: [],
@@ -31,7 +35,7 @@ export const QuizCategoriesForm: React.FC = () => {
   }
 
   // TODO: Eventually replace this with an endpoint call of some kind.
-  function getCategories(): string[] {
+  async function getCategories(): Promise<string[]> {
     return [
       "food",
       "healthcare",
@@ -51,7 +55,7 @@ export const QuizCategoriesForm: React.FC = () => {
   const handleSubmit = (values: any) => {
     console.log(values);
     if (values.categories?.length === 0) {
-      values.categories = getCategories();
+      values.categories = categories;
     }
     const combinedValues = Object.assign(initialValues, values);
     const encrypted = AES.encrypt(
@@ -70,7 +74,7 @@ export const QuizCategoriesForm: React.FC = () => {
           <Row>
             <Col>
               <Checkbox.Group>
-                {getCategories().map((c) => (
+                {categories.map((c) => (
                   <label key={c} className={styles.checkboxItem}>
                     <Field
                       type="checkbox"

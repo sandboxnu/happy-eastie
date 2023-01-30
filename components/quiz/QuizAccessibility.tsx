@@ -9,7 +9,7 @@ import { AppContext } from "../../context/context";
 import { Family } from "../../models/types";
 import styles from "./Quiz.module.css";
 
-export const QuizFamilyForm: React.FC = () => {
+export const QuizAccessibility: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
   const { cache } = useSWRConfig();

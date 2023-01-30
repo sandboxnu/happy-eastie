@@ -9,7 +9,7 @@ import { SurveyAnswers } from "../../models/types2";
 import styles from "./Quiz.module.css";
 import { HelpTooltip } from "../HelpTooltip";
 
-export const QuizPersonalForm: React.FC = () => {
+export const QuizInformation: React.FC = () => {
   const [documentation, setDocumentation] = useState<boolean|null>(null);
   const router = useRouter();
   const quizState = useContext(AppContext);

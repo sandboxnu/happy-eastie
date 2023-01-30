@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { QuizCategoriesForm } from "../../components/quiz/QuizCategoriesForm";
-import { QuizPersonalForm } from "../../components/quiz/QuizPersonalForm";
-import { QuizFamilyForm } from "../../components/quiz/QuizFamilyForm";
+import { QuizInformation } from "../../components/quiz/QuizInformation";
+import { QuizAccessibility } from "../../components/quiz/QuizAccessibility";
 import { Grid, Progress, Text, Spacer, Row } from "@nextui-org/react";
 import styles from "./[pageId].module.css";
 import { HelpTooltip } from "../../components/HelpTooltip";
@@ -20,10 +20,10 @@ const QuizPage: NextPage = () => {
       QuizComponent = QuizCategoriesForm;
       break;
     case 2:
-      QuizComponent = QuizPersonalForm;
+      QuizComponent = QuizInformation;
       break;
     case 3:
-      QuizComponent = QuizFamilyForm;
+      QuizComponent = QuizAccessibility;
       break;
     default:
       QuizComponent = QuizCategoriesForm;

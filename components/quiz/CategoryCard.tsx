@@ -14,7 +14,6 @@ export function CategoryCard(props: CardProps) {
       isPressable
       isHoverable
       variant="bordered"
-      css={{ mw: "400px" }}
       onPress={() => {
         setSelected(!selected)
         props.setSelected(props.title)

@@ -47,7 +47,6 @@ export const QuizAccessibility: React.FC = () => {
 
   const handleSubmit = (values: any) => {
     const combinedValues = Object.assign(initialValues, values);
-    console.log(combinedValues);
     const encrypted = AES.encrypt(
       JSON.stringify(combinedValues),
       "Secret Passphrase"

@@ -11,10 +11,21 @@ import { CategoryCard } from "./CategoryCard";
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [allCategories, setAllCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  function cardSelected(cardTitle: string) {
+    let newSelected = [...selectedCategories];
+    if (selectedCategories.includes(cardTitle)) {
+      newSelected = newSelected.filter((str) => str !== cardTitle);
+    } else {
+      newSelected.push(cardTitle);
+    }
+    setSelectedCategories(newSelected);
+  }
 
   useEffect(() => {
-    getCategories().then((cs) => setCategories(cs));
+    getCategories().then((cs) => setAllCategories(cs));
   }, []);
 
   let initialValues: SurveyAnswers = {
@@ -53,14 +64,15 @@ export const QuizCategoriesForm: React.FC = () => {
     ];
   }
 
-  const handleSubmit = (values: any) => {
-    console.log(values);
-    if (values.categories?.length === 0) {
-      values.categories = categories;
+  const handleSubmit = () => {
+    // If they select nothing, allow all categories
+    if (selectedCategories.length === 0) {
+      initialValues.categories = allCategories;
+    } else {
+      initialValues.categories = selectedCategories;
     }
-    const combinedValues = Object.assign(initialValues, values);
     const encrypted = AES.encrypt(
-      JSON.stringify(combinedValues),
+      JSON.stringify(initialValues),
       "Secret Passphrase"
     );
     // clear old resources list from cache so cache never gets populated with too many lists
@@ -72,23 +84,11 @@ export const QuizCategoriesForm: React.FC = () => {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
         <Grid.Container gap={2}>
-
-                {categories.map((c) => (
-                  // <label key={c} className={styles.checkboxItem}>
-                  //   <Field
-                  //     type="checkbox"
-                  //     name="categories"
-                  //     value={c}
-                  //     id={c}
-                  //     className={styles.checkbox}
-                  //   />
-                  //   <span className={styles.categoryText}>{c}</span>
-                  // </label>
-                  <Grid xs={4}>
-                                      <CategoryCard title={c} />
-                  </Grid>
-                ))}
-
+          {allCategories.map((c) => (
+            <Grid xs={4} key={c}>
+              <CategoryCard title={c} setSelected={cardSelected} />
+            </Grid>
+          ))}
 
           <Row justify="flex-end">
             <button id="continue" className={styles.continue} type="submit">

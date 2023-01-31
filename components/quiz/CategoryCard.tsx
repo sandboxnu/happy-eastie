@@ -1,8 +1,9 @@
 import { Button, Card, Checkbox, Col, Row, Text } from "@nextui-org/react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type CardProps = {
   title: string;
+  setSelected(s: string): void
 };
 
 export function CategoryCard(props: CardProps) {
@@ -14,7 +15,10 @@ export function CategoryCard(props: CardProps) {
       isHoverable
       variant="bordered"
       css={{ mw: "400px" }}
-      onPress={() => setSelected(!selected)}
+      onPress={() => {
+        setSelected(!selected)
+        props.setSelected(props.title)
+      }}
     >
       <Card.Body>
         <Row align="center">

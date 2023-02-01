@@ -32,7 +32,7 @@ export interface SurveyAnswers {
         /**
      * Variable name, not what will be shown on site
      */
-    accessibilty: string[];
+    accessibility: string[];
 }
 
 type IncomeRange = {

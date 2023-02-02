@@ -138,10 +138,9 @@ async function getResources(
 
 function convertToFilter(answers: SurveyAnswers): Filter<Resource> {
   let filter: Filter<Resource>[] = [];
-  if (answers.householdIncome) {  // TODO: shouldn't have to check for required fields
-    let incomeFilter: string = `incomeByHouseholdMembers.${answers.householdMembers}`
 
-    // Household Members/Household Income
+  // Household Income/Household Members
+  if (answers.householdIncome && answers.householdMembers) {
     filter.push({
       input: "$resources",
       as: "resource",
@@ -151,12 +150,24 @@ function convertToFilter(answers: SurveyAnswers): Filter<Resource> {
           { incomeByHouseholdMembers: { $size: 0 } },
           { $and: [
               { incomeByHouseholdMembers: { $size: { $gte: answers.householdMembers } } }, // number of household members exists in resource's array
-              { incomeFilter: { 
-                $and: [
-                  minimum: { $lte: answers.householdIncome }
-                ]
-                }
-              }
+              { [`incomeByHouseholdMembers.${answers.householdMembers - 1}.minimum`]:
+                { $lte: answers.householdIncome }
+              },
+              {
+                [`incomeByHouseholdMembers.${answers.householdMembers - 1}.maximum`]:
+                { $gte: answers.householdIncome }
+              },
+            ]
+          },
+          { $and: [
+              { incomeByHouseholdMembers: { $size: { $lt: answers.householdMembers } } }, // check the last income range in the resource's array
+              { ["incomeByHouseholdMembers.-1.minimum"]:
+                { $lte: answers.householdIncome }
+              },
+              {
+                ["incomeByHouseholdMembers.-1.maximum"]:
+                { $gte: answers.householdIncome }
+              },
             ]
           },
         ]
@@ -171,96 +182,10 @@ function convertToFilter(answers: SurveyAnswers): Filter<Resource> {
     })
   }
 
-  // if (answers.income) {
-  //   filter.push({
-  //     $or: [
-  //       { minimumIncome: { $exists: false } },
-  //       { minimumIncome: { $lte: answers.income } },
-  //     ],
-  //   });
-  //   filter.push({
-  //     $or: [
-  //       { maximumIncome: { $exists: false } },
-  //       { maximumIncome: { $gte: answers.income } },
-  //     ],
-  //   });
-  // }
-  // if (answers.language) {
-  //   filter.push({
-  //     $or: [
-  //       { language: { $exists: false } },
-  //       { language: { $in: answers.language } },
-  //     ],
-  //   });
-  // }
-  // if (answers.citizenship) {
-  //   filter.push({
-  //     $or: [
-  //       { citizenship: { $exists: false } },
-  //       { citizenship: answers.citizenship },
-  //     ],
-  //   });
-  // }
-  // if (answers.parentAge) {
-  //   filter.push({
-  //     $or: [
-  //       { minimumParentAge: { $exists: false } },
-  //       { minimumParentAge: { $lte: answers.parentAge } },
-  //     ],
-  //   });
-  //   filter.push({
-  //     $or: [
-  //       { maximumParentAge: { $exists: false } },
-  //       { maximumParentAge: { $gte: answers.parentAge } },
-  //     ],
-  //   });
-  // }
-  // if (answers.childAge) {
-  //   filter.push({
-  //     $or: [
-  //       { minimumChildAge: { $exists: false } },
-  //       { minimumChildAge: { $lte: answers.childAge } },
-  //     ],
-  //   });
-  //   filter.push({
-  //     $or: [
-  //       { maximumChildAge: { $exists: false } },
-  //       { maximumChildAge: { $gte: answers.childAge } },
-  //     ],
-  //   });
-  // }
-  // if (answers.family) {
-  //   filter.push({
-  //     $or: [{ family: { $exists: false } }, { family: answers.family }],
-  //   });
-  // }
-  // if (answers.employmentStatus) {
-  //   filter.push({
-  //     $or: [
-  //       { employmentStatus: { $exists: false } },
-  //       { employmentStatus: answers.employmentStatus },
-  //     ],
-  //   });
-  // }
-  // if (answers.insurance) {
-  //   filter.push({
-  //     $or: [
-  //       { insurance: { $exists: false } },
-  //       { insurance: answers.insurance },
-  //     ],
-  //   });
-  // }
-  // if (answers.accessibility) {
-  //   filter.push({
-  //     $or: [
-  //       { accessibility: { $exists: false } },
-  //       { accessibility: { $in: answers.accessibility } },
-  //     ],
-  //   });
-  // }
   if (filter.length == 0) {
     return {};
   }
+
   return { $and: filter };
 }
 
@@ -289,7 +214,3 @@ async function getResourcesDirectory(
     },
   };
 }
-
-function matchesFilters(filters: ResourceCategory[], r: Resource) {}
-
-function sort(resources: Resource[], sortingMethod: ResourceSortingMethod) {}

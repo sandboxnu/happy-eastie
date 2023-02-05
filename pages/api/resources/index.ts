@@ -21,12 +21,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResourcesResponse | Array<Resource>>
 ) {
-  console.log("REQUEST BODY:")
-  console.log(req.body)
-
   if (req.body["data"]) {
     // TODO: error handling for invalid bodies sent
-    console.log("Running survey answers endpoint")
     const encryptedFormData = req.body["data"];
     const formData: SurveyAnswers = JSON.parse(
       AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8)
@@ -34,12 +30,10 @@ export default async function handler(
     const resourceData = await getResources(formData);
     res.status(200).json(resourceData);
   } else if (req.body["searchParam"]) {
-    console.log("Running resource search param endpoint")
     const searchQuery = req.body["searchParam"];
     const resourceData = await getResourcesDirectory(searchQuery);
     res.status(200).json(resourceData);
   } else {
-    console.log("Running get all resources endpoint")
     const resourceData = await getAllResources();
     res.status(200).json(resourceData);
   }
@@ -67,7 +61,6 @@ function intersection(arr1: any[] | undefined, arr2: any[] | undefined): boolean
 }
 
 function languageAndAccessibilitySorting(r1: Resource, r2: Resource, answers: SurveyAnswers): number {
-  console.log("Sorting function")
   let r1LanguageMatch = false;
   let r1AccessibilityMatch = false;
   let r2LanguageMatch = false;
@@ -85,32 +78,21 @@ function languageAndAccessibilitySorting(r1: Resource, r2: Resource, answers: Su
     r2LanguageMatch = true;
   }
 
-  console.log("answers:", answers.accessibility)
-  console.log("r1:", r1.accessibilityOptions)
-  console.log("r2:", r2.accessibilityOptions)
   if (intersection(answers.accessibility, r2.accessibilityOptions)) {
     r2AccessibilityMatch = true;
   }
 
   if (r1LanguageMatch && !r2LanguageMatch) {
-    console.log("r1 language match and no r2 language match")
-    console.log(r1.name)
-    console.log(r2.name)
     return -1;
   } else if (r2LanguageMatch && !r1LanguageMatch) {
     return 1;
   }
 
   if (r1AccessibilityMatch && !r2AccessibilityMatch) {
-    console.log("r1 access match, no r2 access match")
     return -1;
   } else if (r2AccessibilityMatch && !r1AccessibilityMatch) {
-    console.log("r2 access match, no r1 access match")
     return 1;
   } else {
-    console.log("r1 r2 same")
-    console.log(r1AccessibilityMatch)
-    console.log(r2AccessibilityMatch)
     return 0;
   }
 }
@@ -123,7 +105,6 @@ async function getResources(
     "resources2",  // TODO: Change this to "resources" when we update the mongo collection
     filter
   );
-  console.log("Resources returned by Mongo:", resources)
   const requested: WithId<Resource>[] = [];
   const additional: WithId<Resource>[] = [];
   if (resources.length == 0) {

@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   const languages = await mongoDbInteractor.getDistinctValues<string>(
     "resources2",
-    "availableLanguages"
+    "category"
   );
 
   return res.status(200).json(languages);

@@ -20,7 +20,7 @@ export class MongoDbInteractor {
         } 
     }
 
-    async getDistinctValues<T extends Document, U>(collectionName : string, fieldName: string) : Promise<Array<U>> {
+    async getDistinctValues<U>(collectionName : string, fieldName: string) : Promise<Array<U>> {
         const tempClient : MongoClient = new MongoClient(uri)
         await tempClient.connect();
         const database = tempClient.db('happy-eastie');

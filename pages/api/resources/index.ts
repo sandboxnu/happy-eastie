@@ -27,13 +27,11 @@ export default async function handler(
   if (req.body["data"]) {
     // TODO: error handling for invalid bodies sent
     console.log("Running survey answers endpoint")
-    // TODO: uncomment this before committing
-    // const encryptedFormData = req.body["data"];
-    // const formData: SurveyAnswers = JSON.parse(
-    //   AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8)
-    // );
-    // const resourceData = await getResources(formData);
-    const resourceData = await getResources(req.body["data"])
+    const encryptedFormData = req.body["data"];
+    const formData: SurveyAnswers = JSON.parse(
+      AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8)
+    );
+    const resourceData = await getResources(formData);
     res.status(200).json(resourceData);
   } else if (req.body["searchParam"]) {
     console.log("Running resource search param endpoint")
@@ -69,6 +67,7 @@ function intersection(arr1: any[] | undefined, arr2: any[] | undefined): boolean
 }
 
 function languageAndAccessibilitySorting(r1: Resource, r2: Resource, answers: SurveyAnswers): number {
+  console.log("Sorting function")
   let r1LanguageMatch = false;
   let r1AccessibilityMatch = false;
   let r2LanguageMatch = false;
@@ -78,7 +77,7 @@ function languageAndAccessibilitySorting(r1: Resource, r2: Resource, answers: Su
     r1LanguageMatch = true;
   }
 
-  if (intersection(answers.accessibilty, r1.accessibilityOptions)) {
+  if (intersection(answers.accessibility, r1.accessibilityOptions)) {
     r1AccessibilityMatch = true;
   }
 
@@ -86,21 +85,32 @@ function languageAndAccessibilitySorting(r1: Resource, r2: Resource, answers: Su
     r2LanguageMatch = true;
   }
 
-  if (intersection(answers.accessibilty, r2.accessibilityOptions)) {
+  console.log("answers:", answers.accessibility)
+  console.log("r1:", r1.accessibilityOptions)
+  console.log("r2:", r2.accessibilityOptions)
+  if (intersection(answers.accessibility, r2.accessibilityOptions)) {
     r2AccessibilityMatch = true;
   }
 
   if (r1LanguageMatch && !r2LanguageMatch) {
-    return 1;
-  } else if (r2LanguageMatch && !r1LanguageMatch) {
+    console.log("r1 language match and no r2 language match")
+    console.log(r1.name)
+    console.log(r2.name)
     return -1;
+  } else if (r2LanguageMatch && !r1LanguageMatch) {
+    return 1;
   }
 
   if (r1AccessibilityMatch && !r2AccessibilityMatch) {
-    return 1;
-  } else if (r2AccessibilityMatch && !r1AccessibilityMatch) {
+    console.log("r1 access match, no r2 access match")
     return -1;
+  } else if (r2AccessibilityMatch && !r1AccessibilityMatch) {
+    console.log("r2 access match, no r1 access match")
+    return 1;
   } else {
+    console.log("r1 r2 same")
+    console.log(r1AccessibilityMatch)
+    console.log(r2AccessibilityMatch)
     return 0;
   }
 }
@@ -225,7 +235,7 @@ async function getResourcesDirectory(
     filter
   );
   // TODO: eventually implement the filtering and sorting either by doing it using Mongo (if we
-  // switch over, or implemenet the two functions below)
+  // switch over, or implement the two functions below)
   // let requestedFiltered = requestedSearchResults.filter((r: Resource) => matchesFilters(filters, r))
   // let requestedSorted = sort(requestedFiltered, sortingMethod)
   return {

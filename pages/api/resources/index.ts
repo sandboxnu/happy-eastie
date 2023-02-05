@@ -212,7 +212,7 @@ async function getResourcesDirectory(
   };
 
   let resources = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    "resources2",
     filter
   );
   // TODO: eventually implement the filtering and sorting either by doing it using Mongo (if we

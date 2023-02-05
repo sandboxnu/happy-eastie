@@ -73,7 +73,7 @@ export const QuizCategoriesForm: React.FC = () => {
       <Form>
         <Grid.Container gap={2}>
           {allCategories.map((c) => (
-            <Grid xs={6} sm={6} md={6} key={c}>
+            <Grid xs={6} key={c}>
               <CategoryCard title={c} setSelected={cardSelected} />
             </Grid>
           ))}

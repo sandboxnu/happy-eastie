@@ -9,8 +9,6 @@ type CardProps = {
 export function CategoryCard(props: CardProps) {
   const [selected, setSelected] = useState<boolean>(false);
 
-  console.log(props.title);
-
   return (
     <Card
       isPressable

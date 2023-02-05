@@ -45,11 +45,9 @@ export const QuizInformation: React.FC = () => {
   );
 
   const handleSubmit = (values: any) => {
-    console.log(values);
     const combinedValues = Object.assign(initialValues, values);
 
     combinedValues.documentation = documentation;
-    console.log(combinedValues);
 
     const encrypted = AES.encrypt(
       JSON.stringify(combinedValues),

@@ -21,22 +21,14 @@ export const QuizAccessibility: React.FC = () => {
   }, []);
 
   async function getLanguages(): Promise<string[]> {
-    const response =
-    await fetch('/api/resources/languages');
-
-    const languages =
-    await response.json();
-
+    const response = await fetch("/api/resources/languages");
+    const languages = await response.json();
     return languages;
   }
 
   async function getAccessibility(): Promise<string[]> {
-    const response =
-    await fetch('/api/resources/accessibility');
-
-    const accessibility =
-    await response.json();
-
+    const response = await fetch("/api/resources/accessibility");
+    const accessibility = await response.json();
     return accessibility;
   }
 
@@ -94,9 +86,8 @@ export const QuizAccessibility: React.FC = () => {
             </Checkbox.Group>
           </Grid>
 
-          <Grid md={2} xs={0}>
-          </Grid>
-          
+          <Grid md={2} xs={0} />
+
           <Grid md={2} xs={8} direction="column">
             <Checkbox.Group>
               <label className={styles.quizFieldText}>Accessibility</label>

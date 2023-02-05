@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Resource, SurveyAnswers, IncomeRange } from "../../../models/types2"
+import { Resource, SurveyAnswers } from "../../../models/types2"
 import { AES, enc } from "crypto-js";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
@@ -21,19 +21,27 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResourcesResponse | Array<Resource>>
 ) {
+  console.log("REQUEST BODY:")
+  console.log(req.body)
+
   if (req.body["data"]) {
     // TODO: error handling for invalid bodies sent
-    const encryptedFormData = req.body["data"];
-    const formData: SurveyAnswers = JSON.parse(
-      AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8)
-    );
-    const resourceData = await getResources(formData);
+    console.log("Running survey answers endpoint")
+    // TODO: uncomment this before committing
+    // const encryptedFormData = req.body["data"];
+    // const formData: SurveyAnswers = JSON.parse(
+    //   AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8)
+    // );
+    // const resourceData = await getResources(formData);
+    const resourceData = await getResources(req.body["data"])
     res.status(200).json(resourceData);
   } else if (req.body["searchParam"]) {
+    console.log("Running resource search param endpoint")
     const searchQuery = req.body["searchParam"];
     const resourceData = await getResourcesDirectory(searchQuery);
     res.status(200).json(resourceData);
   } else {
+    console.log("Running get all resources endpoint")
     const resourceData = await getAllResources();
     res.status(200).json(resourceData);
   }
@@ -41,7 +49,7 @@ export default async function handler(
 
 async function getAllResources(): Promise<ResourcesResponse> {
   const requested = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    "resources2",  // TODO: Change this to "resources" when we update the mongo collection
     {}
   );
   return {
@@ -52,8 +60,8 @@ async function getAllResources(): Promise<ResourcesResponse> {
   };
 }
 
-function intersection(arr1: any[], arr2: any[] | undefined): boolean {
-  if (arr2 === undefined) {
+function intersection(arr1: any[] | undefined, arr2: any[] | undefined): boolean {
+  if (arr1 == undefined || arr2 === undefined) {
     return false;
   }
   const filteredArray: any[] = arr1.filter(value => arr2.includes(value));
@@ -100,11 +108,12 @@ function languageAndAccessibilitySorting(r1: Resource, r2: Resource, answers: Su
 async function getResources(
   answers: SurveyAnswers
 ): Promise<ResourcesResponse> {
-  const filter: Filter<Resource> = convertToFilter(answers);  // TODO: update filter generation
+  const filter: Filter<Resource> = convertToFilter(answers);
   let resources = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    "resources2",  // TODO: Change this to "resources" when we update the mongo collection
     filter
   );
+  console.log("Resources returned by Mongo:", resources)
   const requested: WithId<Resource>[] = [];
   const additional: WithId<Resource>[] = [];
   if (resources.length == 0) {
@@ -142,14 +151,11 @@ function convertToFilter(answers: SurveyAnswers): Filter<Resource> {
   // Household Income/Household Members
   if (answers.householdIncome && answers.householdMembers) {
     filter.push({
-      input: "$resources",
-      as: "resource",
-      cond: {
         $or: [
           { incomeByHouseholdMembers: { $exists: false } },
           { incomeByHouseholdMembers: { $size: 0 } },
           { $and: [
-              { incomeByHouseholdMembers: { $size: { $gte: answers.householdMembers } } }, // number of household members exists in resource's array
+              { [`incomeByHouseholdMembers.${answers.householdMembers - 1}`]: { $exists: true } },  // number of household members exists in resource's array
               { [`incomeByHouseholdMembers.${answers.householdMembers - 1}.minimum`]:
                 { $lte: answers.householdIncome }
               },
@@ -160,25 +166,40 @@ function convertToFilter(answers: SurveyAnswers): Filter<Resource> {
             ]
           },
           { $and: [
-              { incomeByHouseholdMembers: { $size: { $lt: answers.householdMembers } } }, // check the last income range in the resource's array
-              { ["incomeByHouseholdMembers.-1.minimum"]:
-                { $lte: answers.householdIncome }
+              { [`incomeByHouseholdMembers.${answers.householdMembers - 1}`]: { $exists: false } },  // check the last income range in the resource's array
+              { $expr: 
+                { $lte: [
+                    { $getField: {
+                        field: "minimum",
+                        input: { $arrayElemAt: ["$incomeByHouseholdMembers", -1] }
+                      } 
+                    },
+                    answers.householdIncome
+                  ] 
+                } 
               },
-              {
-                ["incomeByHouseholdMembers.-1.maximum"]:
-                { $gte: answers.householdIncome }
-              },
+              { $expr: 
+                { $gte: [
+                    { $getField: {
+                        field: "maximum",
+                        input: { $arrayElemAt: ["$incomeByHouseholdMembers", -1] }
+                      } 
+                    },
+                    answers.householdIncome
+                  ] 
+                } 
+              }
             ]
           },
         ]
       }
-    })
+    )
   }
 
   // Documentation
   if (answers.documentation !== undefined && !answers.documentation) {
     filter.push({
-      $or: [{ documentationRequired: { $equal: false } }],
+      $or: [{ documentationRequired: { $eq: false } }],
     })
   }
 

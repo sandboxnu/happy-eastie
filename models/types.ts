@@ -60,7 +60,7 @@ export interface SurveyAnswers {
     family?: Family;
     employmentStatus?: EmploymentStatus;
     insurance?: Insurance;
-    accessibility?: Accessibility[];
+    accessibility?: Accessibility[]; //TODO: Might need to change to multi-select, since people can have multiple accessibility needs
 }
 
 /**

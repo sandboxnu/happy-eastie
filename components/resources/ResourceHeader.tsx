@@ -1,4 +1,4 @@
-import { Resource } from "../../models/types";
+import { Resource } from "../../models/types2";
 import { Button, Grid, Image, Text } from "@nextui-org/react";
 import Tag from "../tag";
 import styles from "./ResourceHeader.module.css";
@@ -15,7 +15,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (
   const router = useRouter();
 
   const phoneNumberClicked = () => {
-    router.push(`tel:${props.resource.phoneNumber}`);
+    router.push(`tel:${props.resource.phone}`);
   };
 
   const emailClicked = () => {
@@ -23,7 +23,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (
   };
 
   const shareClicked = () => {
-    const url = props.resource.url;
+    const url = props.resource.website;
     if (url) {
       router.push(url);
     }

@@ -19,7 +19,6 @@ const ResourcePageContent: NextPage = () => {
   if (!resource)
     return <div>Internal server error: invalid resource loaded</div>;
 
-  const howToApply = resource.howToApply?.replaceAll("\\n", "\n");
 
   return (
     <>
@@ -35,7 +34,7 @@ const ResourcePageContent: NextPage = () => {
           <Text h3 css={{ textAlign: "center" }}>
             How to Apply
           </Text>
-          {howToApply && <ReactMarkdown>{howToApply}</ReactMarkdown>}
+          {resource.eligibilityInfo && <ReactMarkdown>{resource.eligibilityInfo}</ReactMarkdown>}
         </div>
       </div>
 

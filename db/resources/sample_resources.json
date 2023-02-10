@@ -1,0 +1,39 @@
+[
+    {
+        "name": "ABCD",
+        "description": "At ABCD HEAD START, we prepare your child for preschool and kindergarten using activities and experiences that develop their cognitive and emotional skills. We also have programs for pregnant women and children to fit the needs of your family.\n\n\nHead Start is a family development program that offers comprehensive services for your child as well as your entire family. Part of a highly successful national program, ABCD Head Start has locations throughout Boston, Everett, Malden, and Medford. Our services concentrate on your child’s education, nutrition, and physical and mental health.",
+        "summary": "summaryABCD",
+        "category": ["Childcare"],
+        "keywords": [],
+        "incomeByHouseholdMembers": [{"minimum": 0, "maximum": 60000}],
+        "documentationRequired": false,
+        "headerImageUrl": "",
+        "website": "",
+        "phone": "123456",
+        "email": "headstart@bostonabcd.org",
+        "address": "",
+        "location": {"type": "Point", "coordinates": []}, 
+        "availableLanguages": ["English", "Spanish"],
+        "accessibilityOptions": [],
+        "eligibilityInfo": "info"
+    },
+    {
+        "name": "TAFDC - DTA Chelsea Center",
+        "description": "",
+        "summary": "",
+        "category": ["Financial Help"],
+        "keywords": [],
+        "incomeByHouseholdMembers": [{"minimum": 20000, "maximum": 60000}, {"minimum": 61000, "maximum": 80000}],
+        "documentationRequired": true,
+        "headerImageUrl": "",
+        "website": "",
+        "phone": "",
+        "email": "",
+        "address": "",
+        "location": {"type": "Point", "coordinates": []}, 
+        "availableLanguages": ["English","Spanish", "Portuguese", "Chinese", "Vietnamese"],
+        "accessibilityOptions": [],
+        "eligibilityInfo": ""
+      }
+
+]

@@ -8,6 +8,7 @@ import {
 import { AES, enc } from "crypto-js";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
+import { RESOURCE_COLLECTION } from "../../../models/constants";
 
 export type ResourceData = {
   requested: WithId<Resource>[];
@@ -46,7 +47,7 @@ export default async function handler(
 
 async function getAllResources(): Promise<ResourcesResponse> {
   const requested = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    RESOURCE_COLLECTION,
     {}
   );
   return {
@@ -62,7 +63,7 @@ async function getResources(
 ): Promise<ResourcesResponse> {
   const filter: Filter<Resource> = convertToFilter(answers);
   let resources = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    RESOURCE_COLLECTION,
     filter
   );
   const requested: WithId<Resource>[] = [];
@@ -75,15 +76,17 @@ async function getResources(
       },
     };
   }
-  // small bug: it seems like CBHI, which doesn't have any categories, 
-+   // doesn't get returned here?
-  resources.forEach((r: WithId<Resource>) => {
-    r.category?.some((c1: ResourceCategory) =>
-      answers.category.some((c2: ResourceCategory) => c1 === c2)
-    )
-      ? requested.push(r)
-      : additional.push(r);
-  });
+  // small bug: it seems like CBHI, which doesn't have any categories,
+  +(
+    // doesn't get returned here?
+    resources.forEach((r: WithId<Resource>) => {
+      r.category?.some((c1: ResourceCategory) =>
+        answers.category.some((c2: ResourceCategory) => c1 === c2)
+      )
+        ? requested.push(r)
+        : additional.push(r);
+    })
+  );
   return {
     data: {
       requested,
@@ -198,7 +201,7 @@ async function getResourcesDirectory(
   };
 
   let resources = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    RESOURCE_COLLECTION,
     filter
   );
   // TODO: eventually implement the filtering and sorting either by doing it using Mongo (if we

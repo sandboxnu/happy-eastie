@@ -1,0 +1,1 @@
+export const RESOURCE_COLLECTION = "resources2"

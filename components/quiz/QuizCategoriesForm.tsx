@@ -7,12 +7,14 @@ import { SurveyAnswers } from "../../models/types2";
 import { Checkbox, Col, Grid, Row } from "@nextui-org/react";
 import styles from "./Quiz.module.css";
 import { CategoryCard } from "./CategoryCard";
+import { useTranslation } from "next-i18next";
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const { t } = useTranslation('quiz')
 
   function cardSelected(cardTitle: string) {
     let newSelected = [...selectedCategories];
@@ -86,7 +88,7 @@ export const QuizCategoriesForm: React.FC = () => {
         <Grid.Container gap={2}>
           {allCategories.map((c) => (
             <Grid xs={6} sm={4} md={3} key={c}>
-              <CategoryCard title={c} setSelected={cardSelected} />
+              <CategoryCard title={t(`${c}`)} setSelected={cardSelected} />
             </Grid>
           ))}
 

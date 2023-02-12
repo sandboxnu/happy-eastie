@@ -7,6 +7,7 @@ import { Grid, Progress, Text, Spacer, Row } from "@nextui-org/react";
 import styles from "./[pageId].module.css";
 import { HelpTooltip } from "../../components/HelpTooltip";
 import Layout from "../../components/Layout";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const QuizPage: NextPage = () => {
   const router = useRouter();
@@ -50,5 +51,13 @@ const QuizPage: NextPage = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["quiz"])),
+    },
+  };
+}
 
 export default QuizPage;

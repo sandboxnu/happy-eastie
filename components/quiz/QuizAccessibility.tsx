@@ -20,14 +20,16 @@ export const QuizAccessibility: React.FC = () => {
     getAccessibility().then((as) => setAccessibilities(as));
   }, []);
 
-  // TODO: Eventually replace this with an endpoint call of some kind.
   async function getLanguages(): Promise<string[]> {
-    return ["en", "es", "fr", "zh", "de"];
+    const response = await fetch("/api/resources/languages");
+    const languages = await response.json();
+    return languages;
   }
 
-  // TODO: Eventually replace this with an endpoint call of some kind.
   async function getAccessibility(): Promise<string[]> {
-    return ["blind", "deaf", "wheelchair", "literacy"];
+    const response = await fetch("/api/resources/accessibility");
+    const accessibility = await response.json();
+    return accessibility;
   }
 
   const errorMessages = {
@@ -83,6 +85,8 @@ export const QuizAccessibility: React.FC = () => {
               ))}
             </Checkbox.Group>
           </Grid>
+
+          <Grid md={2} xs={0} />
 
           <Grid md={2} xs={8} direction="column">
             <Checkbox.Group>

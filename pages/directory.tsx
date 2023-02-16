@@ -32,18 +32,6 @@ const ResourceDirectoryContent: NextPage = () => {
     setBottomSheetVisible(false);
   };
 
-    // The states of various filter options
-    const [categories, setCategories] = useState<ResourceCategory[]>([]);
-    const [language, setLanguage] = useState<Language[]>([]);
-    const [insurance, setInsurance] = useState<Insurance>();
-    const [income, setIncome] = useState<number>();
-    const [citizenship, setCitizenship] = useState<Citizenship>();
-    const [employment, setEmployment] = useState<EmploymentStatus>();
-    const [accessibility, setAccessibility] = useState<Accessibility[]>([]);
-    const [family, setFamily] = useState<Family>();
-    const [parentAge, setParentAge] = useState<number>();
-    const [childAge, setChildAge] = useState<number>();
-  
     // The query typed in the search bar
     const [searchQuery, setSearchQuery] = useState<string>("Search Resources");
 
@@ -59,34 +47,6 @@ const ResourceDirectoryContent: NextPage = () => {
       <div>Internal server error: could not load additional resources</div>
     );
 
-    const filterValues = {
-      categories, 
-      language,
-      insurance,
-      income,
-      citizenship, 
-      employment,
-      accessibility,
-      family,
-      parentAge,
-      childAge,
-      searchQuery
-    }
-
-    const filterSetters: any = {
-      setCategories, 
-      setLanguage,
-      setInsurance,
-      setIncome,
-      setCitizenship, 
-      setEmployment,
-      setAccessibility,
-      setFamily,
-      setParentAge,
-      setChildAge,
-      setSearchQuery
-    }
-
   return (
     <>
       <Grid.Container justify="center">
@@ -101,7 +61,7 @@ const ResourceDirectoryContent: NextPage = () => {
 
       <Grid.Container>
         <Grid xs={0} sm={3} direction="column">
-          <FilterSidebar setResources={setDisplayResources} filterValues={filterValues} filterSetters={filterSetters}/>
+          <FilterSidebar setDisplayResources={setDisplayResources}/>
         </Grid>
 
         <Grid xs={12} sm={9} direction="column" alignItems="center">
@@ -135,7 +95,7 @@ const ResourceDirectoryContent: NextPage = () => {
           </Text>
         </Modal.Header>
         <Modal.Body css={{ p: 0 }}>
-          <FilterSidebar setResources={setDisplayResources} filterSetters={filterSetters} filterValues={filterValues}/>
+          <FilterSidebar setDisplayResources={setDisplayResources}/>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>

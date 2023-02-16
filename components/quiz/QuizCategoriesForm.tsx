@@ -14,7 +14,7 @@ export const QuizCategoriesForm: React.FC = () => {
   const quizState = useContext(AppContext);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const { t } = useTranslation('quiz')
+  const { t } = useTranslation(['quiz', 'common'])
 
   function cardSelected(cardTitle: string) {
     let newSelected = [...selectedCategories];
@@ -94,7 +94,7 @@ export const QuizCategoriesForm: React.FC = () => {
 
           <Row justify="flex-end">
             <button id="continue" className={styles.continue} type="submit">
-              Continue
+              {t('Continue')}
             </button>
           </Row>
         </Grid.Container>

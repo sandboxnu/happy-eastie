@@ -1,14 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import { Text, Grid, Checkbox, Spacer, Radio, Input } from "@nextui-org/react";
 import styles from "./FilterSidebar.module.css";
 import ClearFieldsButton from "./ClearFieldsButton";
 
 interface SidebarStatusProps {
-  selectedLanguages: string[];
-  languageOptions: string[];
-  setSelectedLanguages(s: string[]): void;
-  setIncome(n: number | undefined): void;
   setHouseholdMembers(n: number | undefined): void;
+  setHouseholdIncome(n: number | undefined): void;
+  setDocumentationNotRequired(n: boolean): void;
+
+  languageOptions: string[];
+  selectedLanguages: string[];
+  setSelectedLanguages(s: string[]): void;
+  
   accessibilityOptions: string[];
   selectedAccessibility: string[];
   setSelectedAccessibility(s: string[]): void;
@@ -60,13 +63,28 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
         bordered
         className={styles.sidebarInputBox}
         onChange={(e) => {
-          if (!e.target.value) return props.setIncome(undefined);
+          if (!e.target.value) return props.setHouseholdIncome(undefined);
           const num = parseInt(e.target.value);
           if (isNaN(num)) return;
-          return props.setIncome(num);
+          return props.setHouseholdIncome(num);
         }}
       />
       <Spacer y={1} />
+
+      <Text className={styles.sidebarSubCategory}>Documentation Not Required</Text>
+      <Checkbox.Group
+        color="primary"
+        className={styles.sidebarCheckboxGroup}  
+      >
+          <Checkbox
+            onChange={props.setDocumentationNotRequired}
+            size={"xs"}
+          >
+            <Text className={styles.sidebarCheckboxText}>
+              View resources that does not require documentations
+            </Text>
+          </Checkbox>
+      </Checkbox.Group>
 
       <Text className={styles.sidebarSubCategory}>Accessibility Needs</Text>
       <Checkbox.Group

@@ -5,8 +5,9 @@ import { ResourceCategory } from '../../../models/types';
 import ClearFieldsButton from './ClearFieldsButton';
 
 interface SidebarCategoriesProps {
-    setCategories(s: ResourceCategory[]): void
-    categories: ResourceCategory[];
+    categories: string[];
+    setSelectedCategories(s: string[]): void
+    selectedCategories: string[];
 }
 
 export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: SidebarCategoriesProps) => {
@@ -17,16 +18,16 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
             <Checkbox.Group
                 color="primary"
                 className={styles.sidebarCheckboxGroup}
-                value={props.categories}
-                onChange={(e) => props.setCategories(e as ResourceCategory[])}
+                value={props.selectedCategories}
+                onChange={(e) => props.setSelectedCategories(e as ResourceCategory[])}
             >
-                {Object.values(ResourceCategory).map(category => (
+                {props.categories.map(category => (
                     <Checkbox key={category} value={category} size={"xs"}>
                         <Text className={styles.sidebarCheckboxText}>{category}</Text>
                     </Checkbox>
                 ))}
             </Checkbox.Group>
-            <ClearFieldsButton setField={props.setCategories} clearedValue={[]}/>
+            <ClearFieldsButton setField={props.setSelectedCategories} clearedValue={[]}/>
         </Grid>
     )
 }

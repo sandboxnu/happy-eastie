@@ -38,7 +38,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
   const [accessibilityOptions, setAccessibilityOptions] = useState<string[]>([]);
   const [selectedAccessibility, setSelectedAccessibility] = useState<string[]>([]);
 
-  const getLanguagesAndAccessibility = async () => {
+  const getCategoriesLanguagesAndAccessibility = async () => {
     const allCategories = await fetch("/api/resources/categories");
     const categoriesResult = await allCategories.json()
     setCategories(categoriesResult)
@@ -53,7 +53,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
   } 
 
   useEffect(() => {
-    getLanguagesAndAccessibility()
+    getCategoriesLanguagesAndAccessibility()
   }, [])
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
       categories: selectedCategories.length == 0 ? categories : selectedCategories,
       householdIncome: householdIncome ? householdIncome : 0,
       householdMembers: householdMembers ? householdMembers : 20,
-      documentation: documentationNotRequired,
+      documentation: !documentationNotRequired,
       languages: selectedLanguages.length == 0 ? languageOptions : selectedLanguages ,
       accessibility: selectedAccessibility.length == 0 ? accessibilityOptions : selectedAccessibility,
     };

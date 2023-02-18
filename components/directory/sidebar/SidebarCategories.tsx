@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, Grid, Checkbox, Spacer } from "@nextui-org/react";
 import styles from "./FilterSidebar.module.css";
-import { ResourceCategory } from '../../../models/types';
 import ClearFieldsButton from './ClearFieldsButton';
 
 interface SidebarCategoriesProps {
@@ -19,7 +18,7 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
                 color="primary"
                 className={styles.sidebarCheckboxGroup}
                 value={props.selectedCategories}
-                onChange={(e) => props.setSelectedCategories(e as ResourceCategory[])}
+                onChange={(e) => props.setSelectedCategories(e)}
             >
                 {props.categories.map(category => (
                     <Checkbox key={category} value={category} size={"xs"}>

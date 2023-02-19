@@ -107,11 +107,11 @@ export const QuizAccessibility: React.FC = () => {
 
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="submit" id="back">
-              Back
+              {t('Back')}
             </button>
 
             <button className={styles.submit} type="submit" id="submit">
-              Submit
+              {t('Submit')}
             </button>
           </Grid>
         </Grid.Container>

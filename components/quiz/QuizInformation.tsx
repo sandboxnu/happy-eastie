@@ -123,11 +123,11 @@ export const QuizInformation: React.FC = () => {
 
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="submit" id="back">
-              Back
+              {t('Back')}
             </button>
 
             <button className={styles.continue} type="submit" id="continue">
-              Continue
+              {t('Continue')}
             </button>
           </Grid>
         </Grid.Container>

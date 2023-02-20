@@ -11,7 +11,7 @@ import {
 } from "mongodb";
 
 const uri = `mongodb+srv://happy-eastie:${process.env.PASSWORD}@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority`;
-let client: MongoClient;
+
 export class MongoDbInteractor {
   async getDocument<T extends Document>(
     collectionName: string,

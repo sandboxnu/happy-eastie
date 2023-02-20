@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { Text, Grid, Checkbox, Spacer, Radio, Input } from "@nextui-org/react";
+import React from "react";
+import { Text, Grid, Checkbox, Spacer, Input } from "@nextui-org/react";
 import styles from "./FilterSidebar.module.css";
 import ClearFieldsButton from "./ClearFieldsButton";
 
@@ -11,7 +11,7 @@ interface SidebarStatusProps {
   languageOptions: string[];
   selectedLanguages: string[];
   setSelectedLanguages(s: string[]): void;
-  
+
   accessibilityOptions: string[];
   selectedAccessibility: string[];
   setSelectedAccessibility(s: string[]): void;
@@ -44,7 +44,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       />
       <Spacer y={1} />
 
-      <Text className={styles.sidebarSubCategory}>Total Household Member</Text>
+      <Text className={styles.sidebarSubCategory}>Total Household Members</Text>
       <Input
         clearable
         bordered
@@ -57,7 +57,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
         }}
       />
       <Spacer y={1} />
-      <Text className={styles.sidebarSubCategory}>Total Annual Income</Text>
+      <Text className={styles.sidebarSubCategory}>Total Annual Household Income</Text>
       <Input
         clearable
         bordered
@@ -71,19 +71,19 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
       />
       <Spacer y={1} />
 
-      <Text className={styles.sidebarSubCategory}>Documentation Not Required</Text>
+      <Text className={styles.sidebarSubCategory}>Documentation Requirements</Text>
       <Checkbox.Group
         color="primary"
-        className={styles.sidebarCheckboxGroup}  
+        className={styles.sidebarCheckboxGroup}
       >
-          <Checkbox
-            onChange={props.setDocumentationNotRequired}
-            size={"xs"}
-          >
-            <Text className={styles.sidebarCheckboxText}>
-              View resources that does not require documentations
-            </Text>
-          </Checkbox>
+        <Checkbox
+          onChange={props.setDocumentationNotRequired}
+          size={"xs"}
+        >
+          <Text className={styles.sidebarCheckboxText}>
+            View only resources that do not require documentation
+          </Text>
+        </Checkbox>
       </Checkbox.Group>
 
       <Text className={styles.sidebarSubCategory}>Accessibility Needs</Text>
@@ -106,7 +106,7 @@ export const SidebarStatus: React.FC<SidebarStatusProps> = (
         ))}
       </Checkbox.Group>
       <ClearFieldsButton setField={props.setSelectedAccessibility} clearedValue={[]} />
-        <Spacer y={1} />
+      <Spacer y={1} />
     </Grid>
   );
 };

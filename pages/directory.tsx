@@ -32,13 +32,10 @@ const ResourceDirectoryContent: NextPage = () => {
     setBottomSheetVisible(false);
   };
 
-    // The query typed in the search bar
-    const [searchQuery, setSearchQuery] = useState<string>("Search Resources");
-
   if (error) return <div>{error.message}</div>;
   if (isLoading)
     return (
-      <Loading/>
+      <Loading />
     );
   if (!requestedResources)
     return <div>Internal server error: could not load requested resources</div>;
@@ -61,7 +58,7 @@ const ResourceDirectoryContent: NextPage = () => {
 
       <Grid.Container>
         <Grid xs={0} sm={3} direction="column">
-          <FilterSidebar setDisplayResources={setDisplayResources}/>
+          <FilterSidebar setDisplayResources={setDisplayResources} />
         </Grid>
 
         <Grid xs={12} sm={9} direction="column" alignItems="center">
@@ -95,7 +92,7 @@ const ResourceDirectoryContent: NextPage = () => {
           </Text>
         </Modal.Header>
         <Modal.Body css={{ p: 0 }}>
-          <FilterSidebar setDisplayResources={setDisplayResources}/>
+          <FilterSidebar setDisplayResources={setDisplayResources} />
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
@@ -105,7 +102,7 @@ const ResourceDirectoryContent: NextPage = () => {
 
 const ResourceDirectory = () => {
   return <Layout includePadding={false}>
-    <ResourceDirectoryContent/>
+    <ResourceDirectoryContent />
   </Layout>
 }
 export default ResourceDirectory;

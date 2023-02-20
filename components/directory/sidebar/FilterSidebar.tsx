@@ -38,7 +38,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
   const [accessibilityOptions, setAccessibilityOptions] = useState<string[]>([]);
   const [selectedAccessibility, setSelectedAccessibility] = useState<string[]>([]);
 
-  const getCategoriesLanguagesAndAccessibility = async () => {
+  const getCategoriesLanguagesAccessibility = async () => {
     const allCategories = await fetch("/api/resources/categories");
     const categoriesResult = await allCategories.json()
     setCategories(categoriesResult)
@@ -50,10 +50,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
     const allAccessibility = await fetch("/api/resources/accessibility")
     const accessibilityResult = await allAccessibility.json()
     setAccessibilityOptions(accessibilityResult)
-  } 
+  }
 
   useEffect(() => {
-    getCategoriesLanguagesAndAccessibility()
+    getCategoriesLanguagesAccessibility()
   }, [])
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
       householdIncome: householdIncome ? householdIncome : 0,
       householdMembers: householdMembers ? householdMembers : 20,
       documentation: !documentationNotRequired,
-      languages: selectedLanguages.length == 0 ? languageOptions : selectedLanguages ,
+      languages: selectedLanguages.length == 0 ? languageOptions : selectedLanguages,
       accessibility: selectedAccessibility.length == 0 ? accessibilityOptions : selectedAccessibility,
     };
 
@@ -117,14 +117,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
         setHouseholdMembers={setHouseholdMembers}
         setHouseholdIncome={setHouseholdIncome}
         setDocumentationNotRequired={setDocumentationNotRequired}
-        
+
         languageOptions={languageOptions}
         selectedLanguages={selectedLanguages}
         setSelectedLanguages={setSelectedLanguages}
-        
+
         accessibilityOptions={accessibilityOptions}
-        setSelectedAccessibility={setSelectedAccessibility} 
-        selectedAccessibility={selectedAccessibility}      />
+        setSelectedAccessibility={setSelectedAccessibility}
+        selectedAccessibility={selectedAccessibility} />
     </>
   );
 };

@@ -37,9 +37,6 @@ export class MongoDbInteractor {
             const resources = database.collection<T>(collectionName).find(filter);
             const resourceList = await resources.toArray();
             await tempClient.close()
-
-            console.log("all resources ", resourceList.length);
-
             return resourceList;
         } catch (e) {
             await tempClient.close()

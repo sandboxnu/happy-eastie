@@ -46,22 +46,10 @@ export const QuizCategoriesForm: React.FC = () => {
     );
   }
 
-  // TODO: Eventually replace this with an endpoint call of some kind.
   async function getCategories(): Promise<string[]> {
-    return [
-      "food",
-      "healthcare",
-      "lgbtqa",
-      "housing",
-      "disability",
-      "military",
-      "transportation",
-      "utilities",
-      "employment",
-      "childcare",
-      "senior",
-      "immigration",
-    ];
+    const response = await fetch("/api/resources/categories");
+    const categories = await response.json();
+    return categories;
   }
 
   const handleSubmit = () => {
@@ -85,7 +73,7 @@ export const QuizCategoriesForm: React.FC = () => {
       <Form>
         <Grid.Container gap={2}>
           {allCategories.map((c) => (
-            <Grid xs={6} sm={4} md={3} key={c}>
+            <Grid xs={6} key={c}>
               <CategoryCard title={c} setSelected={cardSelected} />
             </Grid>
           ))}

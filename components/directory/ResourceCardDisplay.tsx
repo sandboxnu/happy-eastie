@@ -44,7 +44,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                         </Row>
                         <Row>
                             <ReactMarkdown className={styles.cardSummary}>
-                                {props.resource.description ?? ""}
+                                {props.resource.summary ?? ""}
                             </ReactMarkdown>
                         </Row>
                     </Col>

@@ -3,6 +3,7 @@ import { Resource, SurveyAnswers } from "../../../models/types2"
 import { AES, enc } from "crypto-js";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
+import { RESOURCE_COLLECTION } from "../../../models/constants";
 
 export type ResourceData = {
   requested: WithId<Resource>[];
@@ -41,7 +42,7 @@ export default async function handler(
 
 async function getAllResources(): Promise<ResourcesResponse> {
   const requested = await mongoDbInteractor.getDocuments<Resource>(
-    "resources2",  // TODO: Change this to "resources" when we update the mongo collection
+    RESOURCE_COLLECTION,
     {}
   );
   return {
@@ -102,7 +103,7 @@ async function getResources(
 ): Promise<ResourcesResponse> {
   const filter: Filter<Resource> = convertToFilter(answers);
   let resources = await mongoDbInteractor.getDocuments<Resource>(
-    "resources2",  // TODO: Change this to "resources" when we update the mongo collection
+    RESOURCE_COLLECTION,
     filter
   );
   const requested: WithId<Resource>[] = [];
@@ -212,7 +213,7 @@ async function getResourcesDirectory(
   };
 
   let resources = await mongoDbInteractor.getDocuments<Resource>(
-    "resources2",  // TODO: Change this to "resources" when we update the mongo collection
+    RESOURCE_COLLECTION,
     filter
   );
   // TODO: eventually implement the filtering and sorting either by doing it using Mongo (if we

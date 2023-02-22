@@ -21,7 +21,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
     };
 
     return (
-        <div>
+        <>
             <Card isHoverable className={styles.card}>
                 <Card.Header>
                     <Row justify='space-between'>
@@ -63,7 +63,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                 </Card.Footer>
             </Card>
         <Dialog title="New feature" message="Stay tuned... This feature is coming soon!!" visible={visible} onCloseHandler={toggleState}/>
-        </div>
+        </>
     )
 }
 

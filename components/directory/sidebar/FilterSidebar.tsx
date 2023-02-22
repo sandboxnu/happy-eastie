@@ -1,83 +1,69 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { SidebarCategories } from "./SidebarCategories";
 import { SidebarStatus } from "./SidebarStatus";
-import { SidebarFamily } from "./SidebarFamily";
-import {
-  Accessibility,
-  Citizenship,
-  EmploymentStatus,
-  Family,
-  Insurance,
-  Language,
-  Resource,
-  ResourceCategory,
-  SurveyAnswers,
-} from "../../../models/types";
+import { Resource, SurveyAnswers } from "../../../models/types2";
 import { WithId } from "mongodb";
 import { AES, enc } from "crypto-js";
 import { ResourcesResponse } from "../../../pages/api/resources";
 import { ResourceSearchBar } from "./ResourceSearchBar";
 import { FormElement } from "@nextui-org/react";
 
-const SEARCH_PLACEHOLDER_TEXT = "Search Resources"
+const SEARCH_PLACEHOLDER_TEXT = "Search Resources";
 
 interface FilterSidebarProps {
-  setResources(resources: WithId<Resource>[]): void;
-  filterValues: FilterValues
-  filterSetters: FilterSetters
+  setDisplayResources(resources: WithId<Resource>[]): void;
 }
-
-interface FilterValues {
-  categories: ResourceCategory[];
-      language: Language[],
-      insurance: Insurance | undefined
-      income: number | undefined
-      citizenship: Citizenship | undefined
-      employment: EmploymentStatus | undefined
-      accessibility: Accessibility[]
-      family: Family | undefined
-      searchQuery: string
-      parentAge: number | undefined
-      childAge: number | undefined
-  
-}
-interface FilterSetters{
-  setCategories(s: ResourceCategory[]): void
-      setLanguage(s: Language[]): void
-      setIncome(s: number | undefined): void
-      setInsurance(s: Insurance | undefined): void
-      setCitizenship(s: Citizenship | undefined): void
-      setEmployment(s: EmploymentStatus | undefined): void
-      setAccessibility(s: Accessibility[]): void
-      setFamily(f: Family | undefined): void
-      setParentAge(n: number | undefined): void
-      setChildAge(n: number | undefined): void
-      setSearchQuery(s: string | undefined): void
-  }
-
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = (
   props: FilterSidebarProps
 ) => {
-
-  const {categories, language, insurance, citizenship, employment, accessibility, family, searchQuery, parentAge, childAge, income} = props.filterValues
-  const {setAccessibility, setCategories, setChildAge, setCitizenship, setEmployment, setFamily, setInsurance, setLanguage, setParentAge, setSearchQuery, setIncome} = props.filterSetters
   // The resources after the filters have been applied (but before the search query)
-  const [filteredResources, setFilteredResources] = useState<WithId<Resource>[]>([])
+  const [filteredResources, setFilteredResources] = useState<
+    WithId<Resource>[]
+  >([]);
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  const [householdMembers, setHouseholdMembers] = useState<number>();
+  const [householdIncome, setHouseholdIncome] = useState<number>();
+
+  const [documentationNotRequired, setDocumentationNotRequired] = useState<boolean>(false);
+
+  const [languageOptions, setLanguageOptions] = useState<string[]>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+
+  const [accessibilityOptions, setAccessibilityOptions] = useState<string[]>([]);
+  const [selectedAccessibility, setSelectedAccessibility] = useState<string[]>([]);
+
+  const getCategoriesLanguagesAccessibility = async () => {
+    const allCategories = await fetch("/api/resources/categories");
+    const categoriesResult = await allCategories.json()
+    setCategories(categoriesResult)
+
+    const allLanguages = await fetch("/api/resources/languages");
+    const languagesResult = await allLanguages.json()
+    setLanguageOptions(languagesResult)
+
+    const allAccessibility = await fetch("/api/resources/accessibility")
+    const accessibilityResult = await allAccessibility.json()
+    setAccessibilityOptions(accessibilityResult)
+  }
 
   useEffect(() => {
+    getCategoriesLanguagesAccessibility()
+  }, [])
 
+  useEffect(() => {
     const filters: SurveyAnswers = {
-      category: categories,
-      income,
-      language: language.length > 0 ? language : undefined,
-      citizenship,
-      parentAge,
-      childAge,
-      family,
-      employmentStatus: employment,
-      insurance: insurance,
-      accessibility: accessibility.length > 0 ? accessibility : undefined,
+      categories: selectedCategories.length == 0 ? categories : selectedCategories,
+      householdIncome: householdIncome ? householdIncome : 0,
+      householdMembers: householdMembers ? householdMembers : 20,
+      documentation: !documentationNotRequired,
+      languages: selectedLanguages.length == 0 ? languageOptions : selectedLanguages,
+      accessibility: selectedAccessibility.length == 0 ? accessibilityOptions : selectedAccessibility,
     };
 
     const fetchFilteredResources = async () => {
@@ -101,24 +87,18 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
     };
 
     fetchFilteredResources().catch(console.error);
-  }, [
-    categories,
-    language,
-    insurance,
-    income,
-    citizenship,
-    employment,
-    accessibility,
-    family,
-    parentAge,
-    childAge,
-  ]);
+  }, [selectedCategories, householdMembers, householdIncome, documentationNotRequired, selectedLanguages, selectedAccessibility, categories, languageOptions, accessibilityOptions]);
 
   useEffect(() => {
-    if (searchQuery === SEARCH_PLACEHOLDER_TEXT) return props.setResources(filteredResources)
-    const searchQueryAppliedResources = filteredResources.filter(r => r.name.toLowerCase().includes(searchQuery.toLowerCase()) || r.description?.toLowerCase().includes(searchQuery.toLowerCase()))
-    props.setResources(searchQueryAppliedResources)
-  }, [filteredResources, searchQuery])
+    if (searchQuery === SEARCH_PLACEHOLDER_TEXT)
+      return props.setDisplayResources(filteredResources);
+    const searchQueryAppliedResources = filteredResources.filter(
+      (r) =>
+        r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    props.setDisplayResources(searchQueryAppliedResources);
+  }, [filteredResources, searchQuery]);
 
   return (
     <>
@@ -128,26 +108,23 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
           setSearchQuery(e.target.value);
         }}
       />
-      <SidebarCategories setCategories={setCategories} categories={categories}/>
+      <SidebarCategories
+        categories={categories}
+        setSelectedCategories={setSelectedCategories}
+        selectedCategories={selectedCategories}
+      />
       <SidebarStatus
-      language={language}
-        setLanguage={setLanguage}
-        insurance={insurance}
-        setInsurance={setInsurance}
-        setIncome={setIncome}
-        citizenship={citizenship}
-        setCitizenship={setCitizenship}
-        employment={employment}
-        setEmployment={setEmployment}
-        accessibility={accessibility}
-        setAccessibility={setAccessibility}
-      />
-      <SidebarFamily
-      family={family}
-        setFamily={setFamily}
-        setParentAge={setParentAge}
-        setChildAge={setChildAge}
-      />
+        setHouseholdMembers={setHouseholdMembers}
+        setHouseholdIncome={setHouseholdIncome}
+        setDocumentationNotRequired={setDocumentationNotRequired}
+
+        languageOptions={languageOptions}
+        selectedLanguages={selectedLanguages}
+        setSelectedLanguages={setSelectedLanguages}
+
+        accessibilityOptions={accessibilityOptions}
+        setSelectedAccessibility={setSelectedAccessibility}
+        selectedAccessibility={selectedAccessibility} />
     </>
   );
 };

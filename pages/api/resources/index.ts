@@ -1,13 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import {
-  Resource,
-  ResourceCategory,
-  ResourceSortingMethod,
-  SurveyAnswers,
-} from "../../../models/types";
+import { Resource, SurveyAnswers } from "../../../models/types2"
 import { AES, enc } from "crypto-js";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
+import { RESOURCE_COLLECTION } from "../../../models/constants";
 
 export type ResourceData = {
   requested: WithId<Resource>[];
@@ -46,7 +42,7 @@ export default async function handler(
 
 async function getAllResources(): Promise<ResourcesResponse> {
   const requested = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    RESOURCE_COLLECTION,
     {}
   );
   return {
@@ -57,12 +53,57 @@ async function getAllResources(): Promise<ResourcesResponse> {
   };
 }
 
+function intersection(arr1: any[] | undefined, arr2: any[] | undefined): boolean {
+  if (arr1 == undefined || arr2 === undefined) {
+    return false;
+  }
+  const filteredArray: any[] = arr1.filter(value => arr2.includes(value));
+  return filteredArray.length > 0;
+}
+
+function languageAndAccessibilitySorting(r1: Resource, r2: Resource, answers: SurveyAnswers): number {
+  let r1LanguageMatch = false;
+  let r1AccessibilityMatch = false;
+  let r2LanguageMatch = false;
+  let r2AccessibilityMatch = false;
+
+  if (intersection(answers.languages, r1.availableLanguages)) {
+    r1LanguageMatch = true;
+  }
+
+  if (intersection(answers.accessibility, r1.accessibilityOptions)) {
+    r1AccessibilityMatch = true;
+  }
+
+  if (intersection(answers.languages, r2.availableLanguages)) {
+    r2LanguageMatch = true;
+  }
+
+  if (intersection(answers.accessibility, r2.accessibilityOptions)) {
+    r2AccessibilityMatch = true;
+  }
+
+  if (r1LanguageMatch && !r2LanguageMatch) {
+    return -1;
+  } else if (r2LanguageMatch && !r1LanguageMatch) {
+    return 1;
+  }
+
+  if (r1AccessibilityMatch && !r2AccessibilityMatch) {
+    return -1;
+  } else if (r2AccessibilityMatch && !r1AccessibilityMatch) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 async function getResources(
   answers: SurveyAnswers
 ): Promise<ResourcesResponse> {
   const filter: Filter<Resource> = convertToFilter(answers);
   let resources = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    RESOURCE_COLLECTION,
     filter
   );
   const requested: WithId<Resource>[] = [];
@@ -78,12 +119,16 @@ async function getResources(
   // small bug: it seems like CBHI, which doesn't have any categories, 
 +   // doesn't get returned here?
   resources.forEach((r: WithId<Resource>) => {
-    r.category?.some((c1: ResourceCategory) =>
-      answers.category.some((c2: ResourceCategory) => c1 === c2)
+    r.category?.some((c1: string) =>
+      answers.categories.some((c2: string) => c1 === c2)
     )
       ? requested.push(r)
       : additional.push(r);
   });
+
+  requested.sort((r1, r2) => languageAndAccessibilitySorting(r1, r2, answers));
+  additional.sort((r1, r2) => languageAndAccessibilitySorting(r1, r2, answers));
+
   return {
     data: {
       requested,
@@ -94,96 +139,66 @@ async function getResources(
 
 function convertToFilter(answers: SurveyAnswers): Filter<Resource> {
   let filter: Filter<Resource>[] = [];
-  if (answers.income) {
+
+  // Household Income/Household Members
+  if (answers.householdIncome && answers.householdMembers) {
     filter.push({
-      $or: [
-        { minimumIncome: { $exists: false } },
-        { minimumIncome: { $lte: answers.income } },
-      ],
-    });
-    filter.push({
-      $or: [
-        { maximumIncome: { $exists: false } },
-        { maximumIncome: { $gte: answers.income } },
-      ],
-    });
+        $or: [
+          { incomeByHouseholdMembers: { $exists: false } },
+          { incomeByHouseholdMembers: { $size: 0 } },
+          { $and: [
+              { [`incomeByHouseholdMembers.${answers.householdMembers - 1}`]: { $exists: true } },  // number of household members exists in resource's array
+              { [`incomeByHouseholdMembers.${answers.householdMembers - 1}.minimum`]:
+                { $lte: answers.householdIncome }
+              },
+              {
+                [`incomeByHouseholdMembers.${answers.householdMembers - 1}.maximum`]:
+                { $gte: answers.householdIncome }
+              },
+            ]
+          },
+          { $and: [
+              { [`incomeByHouseholdMembers.${answers.householdMembers - 1}`]: { $exists: false } },  // check the last income range in the resource's array
+              { $expr: 
+                { $lte: [
+                    { $getField: {
+                        field: "minimum",
+                        input: { $arrayElemAt: ["$incomeByHouseholdMembers", -1] }
+                      } 
+                    },
+                    answers.householdIncome
+                  ] 
+                } 
+              },
+              { $expr: 
+                { $gte: [
+                    { $getField: {
+                        field: "maximum",
+                        input: { $arrayElemAt: ["$incomeByHouseholdMembers", -1] }
+                      } 
+                    },
+                    answers.householdIncome
+                  ] 
+                } 
+              }
+            ]
+          },
+        ]
+      }
+    )
   }
-  if (answers.language) {
+
+  // Documentation
+  if (answers.documentation !== undefined && !answers.documentation) {
     filter.push({
-      $or: [
-        { language: { $exists: false } },
-        { language: { $in: answers.language } },
-      ],
-    });
+      $or: [{ documentationRequired: { $eq: false } }],
+    })
   }
-  if (answers.citizenship) {
-    filter.push({
-      $or: [
-        { citizenship: { $exists: false } },
-        { citizenship: answers.citizenship },
-      ],
-    });
-  }
-  if (answers.parentAge) {
-    filter.push({
-      $or: [
-        { minimumParentAge: { $exists: false } },
-        { minimumParentAge: { $lte: answers.parentAge } },
-      ],
-    });
-    filter.push({
-      $or: [
-        { maximumParentAge: { $exists: false } },
-        { maximumParentAge: { $gte: answers.parentAge } },
-      ],
-    });
-  }
-  if (answers.childAge) {
-    filter.push({
-      $or: [
-        { minimumChildAge: { $exists: false } },
-        { minimumChildAge: { $lte: answers.childAge } },
-      ],
-    });
-    filter.push({
-      $or: [
-        { maximumChildAge: { $exists: false } },
-        { maximumChildAge: { $gte: answers.childAge } },
-      ],
-    });
-  }
-  if (answers.family) {
-    filter.push({
-      $or: [{ family: { $exists: false } }, { family: answers.family }],
-    });
-  }
-  if (answers.employmentStatus) {
-    filter.push({
-      $or: [
-        { employmentStatus: { $exists: false } },
-        { employmentStatus: answers.employmentStatus },
-      ],
-    });
-  }
-  if (answers.insurance) {
-    filter.push({
-      $or: [
-        { insurance: { $exists: false } },
-        { insurance: answers.insurance },
-      ],
-    });
-  }
-  if (answers.accessibility) {
-    filter.push({
-      $or: [
-        { accessibility: { $exists: false } },
-        { accessibility: { $in: answers.accessibility } },
-      ],
-    });
-  }
+
   if (filter.length == 0) {
     return {};
   }
+
   return { $and: filter };
 }
 
@@ -198,11 +213,11 @@ async function getResourcesDirectory(
   };
 
   let resources = await mongoDbInteractor.getDocuments<Resource>(
-    "resources",
+    RESOURCE_COLLECTION,
     filter
   );
   // TODO: eventually implement the filtering and sorting either by doing it using Mongo (if we
-  // switch over, or implemenet the two functions below)
+  // switch over, or implement the two functions below)
   // let requestedFiltered = requestedSearchResults.filter((r: Resource) => matchesFilters(filters, r))
   // let requestedSorted = sort(requestedFiltered, sortingMethod)
   return {
@@ -212,7 +227,3 @@ async function getResourcesDirectory(
     },
   };
 }
-
-function matchesFilters(filters: ResourceCategory[], r: Resource) {}
-
-function sort(resources: Resource[], sortingMethod: ResourceSortingMethod) {}

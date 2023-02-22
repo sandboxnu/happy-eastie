@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 type CardProps = {
   title: string;
-  setSelected(s: string): void
+  setSelected(s: string): void;
 };
 
 export function CategoryCard(props: CardProps) {
@@ -15,24 +15,14 @@ export function CategoryCard(props: CardProps) {
       isHoverable
       variant="bordered"
       onPress={() => {
-        setSelected(!selected)
-        props.setSelected(props.title)
+        setSelected(!selected);
+        props.setSelected(props.title);
       }}
     >
       <Card.Body>
-        <Row align="center">
-          <Col>
-            <Row>
-              <Col>
-                <Text>{props.title}</Text>
-              </Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row justify="flex-end">
-              <Checkbox isRounded size="xl" isSelected={selected}></Checkbox>
-            </Row>
-          </Col>
+        <Row justify="space-between" align="center">
+          <Text>{props.title}</Text>
+          <Checkbox isRounded size="xl" isSelected={selected}></Checkbox>
         </Row>
       </Card.Body>
     </Card>

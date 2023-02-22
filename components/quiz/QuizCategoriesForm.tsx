@@ -7,12 +7,14 @@ import { SurveyAnswers } from "../../models/types2";
 import { Checkbox, Col, Grid, Row } from "@nextui-org/react";
 import styles from "./Quiz.module.css";
 import { CategoryCard } from "./CategoryCard";
+import { useTranslation } from "next-i18next";
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const { t } = useTranslation(['quiz', 'common'])
 
   function cardSelected(cardTitle: string) {
     let newSelected = [...selectedCategories];
@@ -46,22 +48,10 @@ export const QuizCategoriesForm: React.FC = () => {
     );
   }
 
-  // TODO: Eventually replace this with an endpoint call of some kind.
   async function getCategories(): Promise<string[]> {
-    return [
-      "food",
-      "healthcare",
-      "lgbtqa",
-      "housing",
-      "disability",
-      "military",
-      "transportation",
-      "utilities",
-      "employment",
-      "childcare",
-      "senior",
-      "immigration",
-    ];
+    const response = await fetch("/api/resources/categories");
+    const categories = await response.json();
+    return categories;
   }
 
   const handleSubmit = () => {
@@ -86,13 +76,13 @@ export const QuizCategoriesForm: React.FC = () => {
         <Grid.Container gap={2}>
           {allCategories.map((c) => (
             <Grid xs={6} sm={4} md={3} key={c}>
-              <CategoryCard title={c} setSelected={cardSelected} />
+              <CategoryCard title={t(`${c}`)} setSelected={cardSelected} />
             </Grid>
           ))}
 
           <Row justify="flex-end">
             <button id="continue" className={styles.continue} type="submit">
-              Continue
+              {t('Continue')}
             </button>
           </Row>
         </Grid.Container>

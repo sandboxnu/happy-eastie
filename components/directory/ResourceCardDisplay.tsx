@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
-import { Resource } from '../../models/types';
+import { Resource } from '../../models/types2';
 import styles from './ResourceCardDisplay.module.css';
 import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
@@ -21,7 +21,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
     };
 
     return (
-        <div>
+        <>
             <Card isHoverable className={styles.card}>
                 <Card.Header>
                     <Row justify='space-between'>
@@ -44,7 +44,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                         </Row>
                         <Row>
                             <ReactMarkdown className={styles.cardSummary}>
-                                {props.resource.description ?? ""}
+                                {props.resource.summary ?? ""}
                             </ReactMarkdown>
                         </Row>
                     </Col>
@@ -63,7 +63,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                 </Card.Footer>
             </Card>
         <Dialog title="New feature" message="Stay tuned... This feature is coming soon!!" visible={visible} onCloseHandler={toggleState}/>
-        </div>
+        </>
     )
 }
 

@@ -2,7 +2,7 @@ import { WithId } from 'mongodb'
 import { useContext } from 'react'
 import useSWRImmutable from 'swr/immutable'
 import { AppContext } from '../context/context'
-import { Resource } from '../models/types'
+import { Resource } from '../models/types2'
 import { ResourceData, ResourcesResponse } from '../pages/api/resources'
 import { ResourceResponse } from '../pages/api/resources/[resourceId]'
 

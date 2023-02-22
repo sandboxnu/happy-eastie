@@ -1,6 +1,6 @@
 import { Grid } from "@nextui-org/react";
 import { WithId } from "mongodb";
-import { Resource } from "../../models/types";
+import { Resource } from "../../models/types2";
 import { ResourceCardDisplay } from "./ResourceCardDisplay";
 import styles from "./ResourcesDisplay.module.css"
 

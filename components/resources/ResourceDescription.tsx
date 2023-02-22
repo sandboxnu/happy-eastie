@@ -1,4 +1,4 @@
-import { Resource } from "../../models/types";
+import { Resource } from "../../models/types2";
 import { Grid } from "@nextui-org/react";
 import styles from "./ResourceDescription.module.css";
 import ReactMarkdown from "react-markdown";
@@ -20,15 +20,6 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
           {props.resource.description && 
           <ReactMarkdown className={styles.descriptionText}>
             {props.resource.description}
-          </ReactMarkdown>}
-          <br />
-          {props.resource.pointOfContact && 
-          <ReactMarkdown className={styles.descriptionText}>
-            {`**Point of Contact:** ${props.resource.pointOfContact}`}
-          </ReactMarkdown>}
-          {props.resource.waitlist?.description && 
-          <ReactMarkdown className={styles.descriptionText}>
-            {`**Waitlist:** ${props.resource.waitlist?.description}`}
           </ReactMarkdown>}
         </div>
       </Grid>

@@ -3,6 +3,7 @@ import { AES, enc } from "crypto-js";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSWRConfig } from "swr";
 import { AppContext } from "../../context/context";
 import styles from "./Quiz.module.css";
@@ -13,6 +14,7 @@ export const QuizAccessibility: React.FC = () => {
   const { cache } = useSWRConfig();
   const [languages, setLanguages] = useState<string[]>([]);
   const [accessibilities, setAccessibilities] = useState<string[]>([]);
+  const { t } = useTranslation(["quiz"]);
 
   useEffect(() => {
     getLanguages().then((ls) => setLanguages(ls));
@@ -68,7 +70,7 @@ export const QuizAccessibility: React.FC = () => {
       <Form>
         <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
           <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>Languages</label>
+            <label className={styles.quizFieldText}>{t("Languages")}</label>
             <Spacer y={1} />
             <Checkbox.Group>
               {languages.map((c) => (
@@ -76,7 +78,7 @@ export const QuizAccessibility: React.FC = () => {
                   <Field
                     type="checkbox"
                     name="languages"
-                    value={c}
+                    value={t(c)}
                     id={c}
                     className={styles.checkbox}
                   />
@@ -90,14 +92,14 @@ export const QuizAccessibility: React.FC = () => {
 
           <Grid md={2} xs={8} direction="column">
             <Checkbox.Group>
-              <label className={styles.quizFieldText}>Accessibility</label>
+              <label className={styles.quizFieldText}>{t("Accessibility")}</label>
               <Spacer y={1} />
               {accessibilities.map((c) => (
                 <label key={c} className={styles.checkboxItem}>
                   <Field
                     type="checkbox"
                     name="accessibility"
-                    value={c}
+                    value={t(c)}
                     id={c}
                     className={styles.checkbox}
                   />
@@ -109,11 +111,11 @@ export const QuizAccessibility: React.FC = () => {
 
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="submit" id="back">
-              Back
+              {t('Back')}
             </button>
 
             <button className={styles.submit} type="submit" id="submit">
-              Submit
+              {t('Submit')}
             </button>
           </Grid>
         </Grid.Container>

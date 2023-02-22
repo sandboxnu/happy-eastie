@@ -1,10 +1,19 @@
 import { Dropdown, Navbar } from "@nextui-org/react"
 import NextImage from "next/image"
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const LanguageSelect = () => {
+  const router = useRouter()
+  const { pathname, asPath, query } = router 
 
-    const [language, setLanguage] = useState("EN");
+  const changeLanguage = (key: string) => {
+    console.log(key)
+    setLanguage(key)
+    router.push({ pathname, query }, asPath, { locale: key.toLowerCase() })
+  }
+
+    const [language, setLanguage] = useState(router.locale?.toUpperCase());
 
     return (
         <Dropdown>
@@ -14,11 +23,12 @@ const LanguageSelect = () => {
             {language}
           </Dropdown.Button>
           <Dropdown.Menu aria-label="single selection actions"
-              disabledKeys={["FR", "ES"]}
               disallowEmptySelection
               selectedKeys={language}
               selectionMode='single'
-              onSelectionChange={(key:any) => setLanguage(key.valueOf())}>
+              onAction={(key) => {
+                changeLanguage(key.toString())
+              }}>
             <Dropdown.Item key="EN">EN</Dropdown.Item>
             <Dropdown.Item key="FR">FR</Dropdown.Item>
             <Dropdown.Item key="ES">ES</Dropdown.Item>

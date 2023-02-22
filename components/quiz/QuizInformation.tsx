@@ -3,6 +3,7 @@ import { AES, enc } from "crypto-js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
 import styles from "./Quiz.module.css";
@@ -11,6 +12,7 @@ export const QuizInformation: React.FC = () => {
   const [documentation, setDocumentation] = useState<boolean | null>(null);
   const router = useRouter();
   const quizState = useContext(AppContext);
+  const {t} = useTranslation(["quiz"]);
 
   const errorMessages = {
     negativeError: "Please enter a positive number.",
@@ -72,7 +74,7 @@ export const QuizInformation: React.FC = () => {
       <Form>
         <Grid.Container gap={8} justify="center">
           <Grid md={4} sm={6} xs={12} direction="column">
-            <label className={styles.quizFieldText}>Household Income</label>
+            <label className={styles.quizFieldText}>{t("Household Income")}</label>
             <Spacer y={1} />
             <Field
               type="number"
@@ -83,7 +85,7 @@ export const QuizInformation: React.FC = () => {
           </Grid>
 
           <Grid md={4} sm={6} xs={12} direction="column">
-            <label className={styles.quizFieldText}>Household Members</label>
+            <label className={styles.quizFieldText}>{t("Household Members")}</label>
             <Spacer y={1} />
             <Field
               type="number"
@@ -95,7 +97,7 @@ export const QuizInformation: React.FC = () => {
 
           <Grid md={4} sm={6} xs={12} direction="column">
             <label className={styles.quizFieldText}>
-              Do you have some form of photo ID?
+              {t("Do you have some form of photo ID?")}
             </label>
             <Spacer y={1} />
             <Radio.Group
@@ -111,19 +113,19 @@ export const QuizInformation: React.FC = () => {
                 }
               }}
             >
-              <Radio value="Yes">Yes</Radio>
-              <Radio value="No">No</Radio>
-              <Radio value="Unknown">Prefer not to say</Radio>
+              <Radio value="Yes">{t("Yes")}</Radio>
+              <Radio value="No">{t("No")}</Radio>
+              <Radio value="Unknown">{t("Prefer not to say")}</Radio>
             </Radio.Group>
           </Grid>
 
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="submit" id="back">
-              Back
+              {t('Back')}
             </button>
 
             <button className={styles.continue} type="submit" id="continue">
-              Continue
+              {t('Continue')}
             </button>
           </Grid>
         </Grid.Container>

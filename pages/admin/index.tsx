@@ -1,11 +1,31 @@
+import { WithId } from "mongodb";
 import { NextPage } from "next";
 import { ResourceRow } from "../../components/admin/dashboard/resourceRow";
+import { Resource } from "../../models/types2";
 
-const AdminDashboard: NextPage = () => {
-    return (<div>
-    
-    <ResourceRow name={"Resource 1"} summary={"This is a description of resource 1 bla bla bla."} categories={["Childcare", "Healthcare", "Financial Assistant"]} resourceId={"1"} />
-    <ResourceRow name={"Resource 2"} summary={"This is a description of resource 2 bla bla bla."} categories={["Healthcare", "Financial Help"]} resourceId={"2"}/></div>)
+type AdminDashboardProps = {
+    resources: WithId<Resource>[]
 }
 
-export default AdminDashboard
+export async function getStaticProps() {
+    const res = await fetch("http://localhost:3000/api/admin")
+    const resources : WithId<Resource>[] = await res.json()
+    return {
+        props: {
+            resources
+        }
+    }
+}
+
+function AdminDashboard({resources} : AdminDashboardProps) {
+  
+  return (
+    <div>
+      {resources.map((r) => (
+        <ResourceRow key={r.name} resourceData={r} />
+      ))}
+    </div>
+  );
+};
+
+export default AdminDashboard;

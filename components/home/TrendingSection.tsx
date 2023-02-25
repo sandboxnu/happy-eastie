@@ -4,6 +4,7 @@ import Bookmark from "../bookmark";
 import Tag from "./tag";
 import styles from "./TrendingSection.module.css"
 import NextLink from "next/link"
+import HomeStyles from "./Home.module.css"
 
 const events = [
     {
@@ -41,19 +42,19 @@ type EastieEvent = {
 
 function EventCard({event}: {event: EastieEvent}) {
     return (
-        <Card isPressable className={styles.event}>
-        <Card.Header css={{ p: 0, borderBottom: "10px solid var(--brand-primary)", height: "40%"}}>
-          <Card.Image src={event.imageFilename} objectFit="cover" width="100%" />
+        <Card isPressable className={styles.eventCard}>
+        <Card.Header className={styles.eventCardImageHeader}>
+          <Card.Image css={{borderBottom: "10px solid var(--brand-primary)"}} src={event.imageFilename} objectFit="fill" width="100%" />
         </Card.Header>
-        <Card.Body css={{overflowY: "hidden"}}>
+        <Card.Body css={{paddingTop:"0px", paddingLeft:"21px", paddingRight:"21px", overflowY: "hidden"}}>
           <NextLink href="/future">
             <Link css={{flexDirection: "column"}}>
-            <Row justify="space-between">
-              <Text b>{event.name}</Text>
+            <Row css={{display:"flex", alignItems:"center"}} justify="space-between">
+              <Text b className={styles.eventCardHeaderText}>{event.name}</Text>
               <Bookmark enabled={false} />
             </Row>
             <Spacer y={0.5} />
-            <Text>{event.summary}</Text>
+            <Text className={styles.eventCardBodyText}>{event.summary}</Text>
             <Spacer y={1} />
             </Link>
           </NextLink>
@@ -74,9 +75,9 @@ export default function TrendingSection() {
         <Row align="baseline">
           <Image src="triangle.svg" alt="" containerCss={{ margin: 0 }} />
           <Spacer x={0.8} />
-          <Text h1>Trending Near You</Text>
+          <Text h1 className={HomeStyles.sectionHeader}>Trending Near You</Text>
         </Row>
-        <Row gap={4} className={styles.events}>
+        <Row gap={4} className={styles.eventCardsRow}>
           {events.map((event, index) => (
             <EventCard key={index} event={event}/>
           ))}

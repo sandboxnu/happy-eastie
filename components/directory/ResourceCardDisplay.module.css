@@ -30,4 +30,5 @@
     font-weight: 600;
     color: var(--secondary-text);
     margin-left: 20px;
+    text-overflow: "ellipsis";
 }

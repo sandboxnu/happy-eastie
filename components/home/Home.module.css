@@ -36,3 +36,7 @@
     font-weight: 600;
     color: var(--primary-text) !important;
   }
+
+  .sectionHeader {
+    letter-spacing: 0.5px;
+  }

@@ -4,7 +4,7 @@
     max-width: 100%;
 }
 
-.events {
+.eventCardsRow {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: scroll;
@@ -12,9 +12,30 @@
     margin: 0
 }
 
-.event {
+.eventCard {
     width: 350px;
     height: 350px;
     flex: 0 0 auto;
     margin: 0 25px;
+}
+
+.eventCardImageHeader {
+    height: "40%";
+}
+
+.eventCardHeaderText {
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 0px;
+    font-size: 23px;
+    margin-right: 30px;
+}
+
+.eventCardBodyText {
+    letter-spacing: 0.3px;
+    font-size: 16px;
+    line-height: 19px;
+    color: #7e7c7c;
 }

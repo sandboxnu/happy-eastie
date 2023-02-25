@@ -32,12 +32,12 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                     </Row>
                 </Card.Header>
 
-                <Card.Body css={{ py: "$10", pb: "$15" }}>
+                <Card.Body css={{ py: "$10", pb: "$15", overflowY: 'hidden' }}>
                     <NextLink href={"/resources/" + props.resource._id}>
         <Link >
 
                     <Col>
-                        <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20 }}>
+                        <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20, flexWrap: "wrap" }}>
                             {props.resource.category?.map((tag, index) => (
                                 <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
                             ))}

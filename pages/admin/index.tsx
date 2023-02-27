@@ -1,6 +1,6 @@
-import { Button, Grid, Link, Row, Spacer } from "@nextui-org/react";
+import { Button, FormElement, Grid, Link, Row, Spacer } from "@nextui-org/react";
 import { WithId } from "mongodb";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AdminDashboardHeader } from "../../components/admin/dashboard/adminDashboardHeader";
 import { AdminDashboardSearch } from "../../components/admin/dashboard/adminDashboardSearch";
 import { ResourceRow } from "../../components/admin/dashboard/resourceRow";
@@ -26,15 +26,28 @@ export async function getStaticProps() {
 
 function AdminDashboard({ resources }: AdminDashboardProps) {
   const [resourcesDisplayed, setResourcesDisplayed] = useState<WithId<Resource>[]>(resources)
+  const [searchQuery, setSearchQuery] = useState<string>("")
+  // list layout == true, grid layout == false
+  const [listLayout, setListLayout] = useState<Boolean>(true)
 
-
+  useEffect(() => {
+    if (searchQuery === "")
+      return setResourcesDisplayed(resources);
+    const searchQueryAppliedResources = resources.filter(
+      (r) =>
+        r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.summary.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+     setResourcesDisplayed(searchQueryAppliedResources);
+  }, [searchQuery, resources]);
 
   return (
     <div>
       <AdminDashboardHeader />
       <div style={{ margin: 74 }}>
         <Row css={{ gap: 22, maxWidth: "70%" }}>
-          <AdminDashboardSearch setResourcesDisplayed={setResourcesDisplayed} />
+          <AdminDashboardSearch onChange={(e: ChangeEvent<FormElement>) => setSearchQuery(e.target.value)} />
         </Row>
         <Spacer y={2} />
         <Row justify="flex-start" css={{ gap: 10 }}>
@@ -45,18 +58,20 @@ function AdminDashboard({ resources }: AdminDashboardProps) {
             css={{ p: 7 }}
             auto
             icon={<img src="/gridLayout.svg"></img>}
+            onPress={() => setListLayout(false)}
           ></Button>
           <Button
             css={{ p: 7 }}
             auto
             icon={<img src="/listLayout.svg"></img>}
+            onPress={() => setListLayout(true)}
           ></Button>
         </Row>
 
         <Spacer y={1} />
         <Grid.Container>
           {resourcesDisplayed.map((r) => (
-            <ResourceRow key={r.name} resourceData={r} />
+            listLayout ? <ResourceRow key={r.name} resourceData={r} /> : <></>
           ))}
         </Grid.Container>
       </div>

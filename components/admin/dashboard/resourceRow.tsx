@@ -14,6 +14,7 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import TagsMap from "../../../models/TagsMap";
 import { Resource } from "../../../models/types2";
 import { ResourceData, ResourcesResponse } from "../../../pages/api/resources";
+import Dialog from "../../dialog";
 import Tag from "../../home/tag";
 
 type ResourceRowProps = {
@@ -87,6 +88,21 @@ export const ResourceRow = (props: ResourceRowProps) => {
     }
   };
 
+  const deleteResource = async () => {
+      const requestBody = {
+        _id: props.resourceData._id,
+      };
+    
+      const requestSettings: RequestInit = {
+        method: "DELETE",
+        body: JSON.stringify(requestBody),
+        headers: { "Content-Type": "application/json" },
+      };
+      const response: Response = await fetch("/api/admin", requestSettings);
+      const result = await response.json();
+      console.log(result)
+  }
+
   return (
     <Card
       onPress={onPress}
@@ -147,7 +163,11 @@ export const ResourceRow = (props: ResourceRowProps) => {
             </Text>
           </Col>
           <Col span={1}>
-            <Button light auto icon={<img src="/delete.svg"></img>}></Button>
+            <Button light auto icon={<img src="/delete.svg"></img>} onPress={deleteResource}></Button>
+            {/* <Dialog title="Warning" 
+              message="This feature is coming soon!!" 
+              visible={state} 
+              onCloseHandler={() => {setState(false)}}/> */}
           </Col>
         </Row>
       </Card.Body>

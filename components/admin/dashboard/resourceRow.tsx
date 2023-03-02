@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Card,
   Text,
@@ -116,7 +117,7 @@ export const ResourceRow = (props: ResourceRowProps) => {
       css={{ borderRadius: 0}}
       className={props.listLayout ? styles.listLayout : styles.gridLayout}
     >
-      <Card.Divider />
+      {props.listLayout ? <Card.Divider /> : <></>}
       <Card.Header id="name" css={{ pb: "$0" }}>
         <Row align="center">
           {editing == EditState.VIEWING ? (
@@ -175,8 +176,8 @@ export const ResourceRow = (props: ResourceRowProps) => {
               onClose={()=>{setDeletePopup(false)}}
             >
               <Modal.Header>
-                <Text id="modal-title" size={18}>
-                  Warning
+                <Text color="warning" b id="modal-title" size={20}>
+                  Warning!
                 </Text>
               </Modal.Header>
               <Modal.Body>

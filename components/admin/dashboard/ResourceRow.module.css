@@ -3,15 +3,14 @@
 }
 
 .gridLayout {
-    max-width: 31%;
-    max-height: 30%;
-    margin-right: 2vw;
-    margin-bottom: 5vh;
-    
-    
+    height: 230px;
+    width: 30%;
+    margin-right: 2%;
+    margin-bottom: 2%;
 }
 
-.gridLayout:hover {
+/* .gridLayout:hover {
+    position: absolute;
+    z-index: 10;
     max-width: fit-content;
-    position: relative;
-}
+} */

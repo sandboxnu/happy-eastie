@@ -1,5 +1,6 @@
 import { Button, FormElement, Grid, Link, Row, Spacer } from "@nextui-org/react";
 import { WithId } from "mongodb";
+import { relative } from "path";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AdminDashboardHeader } from "../../components/admin/dashboard/adminDashboardHeader";
 import { AdminDashboardSearch } from "../../components/admin/dashboard/adminDashboardSearch";
@@ -15,6 +16,7 @@ export async function getStaticProps() {
     `${process.env.VERCEL_URL || "http://localhost:3000"}/api/admin`
   );
   const resources: WithId<Resource>[] = await res.json();
+  resources.sort((r1, r2) => r1.name.localeCompare(r2.name))
   return {
     props: {
       resources,
@@ -43,7 +45,7 @@ function AdminDashboard({ resources }: AdminDashboardProps) {
   return (
     <div>
       <AdminDashboardHeader />
-      <div style={{ margin: 74 }}>
+      <div style={{ margin: 74}}>
         <Row css={{ gap: 22, maxWidth: "70%" }}>
           <AdminDashboardSearch onChange={(e: ChangeEvent<FormElement>) => setSearchQuery(e.target.value)} />
         </Row>
@@ -67,7 +69,7 @@ function AdminDashboard({ resources }: AdminDashboardProps) {
         </Row>
 
         <Spacer y={1} />
-        <Grid.Container>
+        <Grid.Container justify="flex-start" css={{position: "relative"}}>
           {resourcesDisplayed.map((r) => (
             <ResourceRow key={r.name} resourceData={r} listLayout={listLayout} />
           ))}

@@ -1,0 +1,17 @@
+.listLayout {
+    background-color: white;
+}
+
+.gridLayout {
+    max-width: 31%;
+    max-height: 30%;
+    margin-right: 2vw;
+    margin-bottom: 5vh;
+    
+    
+}
+
+.gridLayout:hover {
+    max-width: fit-content;
+    position: relative;
+}

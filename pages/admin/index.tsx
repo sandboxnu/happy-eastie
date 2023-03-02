@@ -22,8 +22,6 @@ export async function getStaticProps() {
   };
 }
 
-
-
 function AdminDashboard({ resources }: AdminDashboardProps) {
   const [resourcesDisplayed, setResourcesDisplayed] = useState<WithId<Resource>[]>(resources)
   const [searchQuery, setSearchQuery] = useState<string>("")
@@ -71,7 +69,7 @@ function AdminDashboard({ resources }: AdminDashboardProps) {
         <Spacer y={1} />
         <Grid.Container>
           {resourcesDisplayed.map((r) => (
-            listLayout ? <ResourceRow key={r.name} resourceData={r} /> : <></>
+            <ResourceRow key={r.name} resourceData={r} listLayout={listLayout} />
           ))}
         </Grid.Container>
       </div>

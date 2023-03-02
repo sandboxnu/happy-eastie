@@ -16,9 +16,11 @@ import { Resource } from "../../../models/types2";
 import { ResourceData, ResourcesResponse } from "../../../pages/api/resources";
 import Dialog from "../../dialog";
 import Tag from "../../home/tag";
+import styles from './ResourceRow.module.css';
 
 type ResourceRowProps = {
   resourceData: WithId<Resource>;
+  listLayout: Boolean;
 };
 
 enum EditState {
@@ -109,8 +111,8 @@ export const ResourceRow = (props: ResourceRowProps) => {
       isPressable={editing == EditState.VIEWING}
       isHoverable
       variant="flat"
-      css={{ borderRadius: 0, backgroundColor: "White"}}
-
+      css={{ borderRadius: 0}}
+      className={props.listLayout ? styles.listLayout : styles.gridLayout}
     >
       <Card.Divider />
       <Card.Header id="name" css={{ pb: "$0" }}>
@@ -121,7 +123,7 @@ export const ResourceRow = (props: ResourceRowProps) => {
             </Text>
           ) : (
             <Input
-              fullWidth
+              width="40%"
               value={editName}
               autoFocus
               css={{ zIndex: 100 }}
@@ -179,5 +181,5 @@ export const ResourceRow = (props: ResourceRowProps) => {
         </Row>
       </Card.Footer>
     </Card>
-  );
+  )
 };

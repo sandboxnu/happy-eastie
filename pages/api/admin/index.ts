@@ -22,8 +22,9 @@ export default async function handler(
                 const resource = await mongoDbInteractor.getDocument<Resource>(RESOURCE_COLLECTION, req.body['_id']);
                 if (!resource) {
                     res.status(400).json({message: "Document with the given ID not found"})
+                } else {
+                    res.status(200).json(resource)
                 }
-                res.status(200).json(resource)
 
             } catch (error : any) {
                 console.log(error)
@@ -60,10 +61,11 @@ export default async function handler(
         try {
             const filter = {_id: new ObjectId(req.body["_id"])}
             const result = await mongoDbInteractor.deleteDocument(RESOURCE_COLLECTION, filter)
-            if (!result.acknowledged || result.deletedCount != 1) {
+            if (result.deletedCount != 1) {
                 res.status(400).json({message: "Failed to delete a document"})
-            } 
-            res.status(200).json({message: "Successfully delete the resource"})
+            } else {
+                res.status(200).json({message: "Successfully delete the resource"})
+            }
         } catch (error) {
             console.log(error)
             res.status(400).json({message: "Error in MongoDb interactor when deleting the document"})

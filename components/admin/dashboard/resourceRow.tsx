@@ -7,6 +7,7 @@ import {
   Input,
   FormElement,
   Loading,
+  Modal,
 } from "@nextui-org/react";
 import { WithId } from "mongodb";
 import { useRouter } from "next/router";
@@ -73,6 +74,7 @@ export const ResourceRow = (props: ResourceRowProps) => {
   const [editing, setEditing] = useState<EditState>(EditState.VIEWING);
   const [editName, setEditName] = useState<string>(props.resourceData.name);
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [deletePopup, setDeletePopup] = useState<boolean>(false)
 
   const toggleEditing = async () => {
     if (editing == EditState.EDITING) {
@@ -96,13 +98,13 @@ export const ResourceRow = (props: ResourceRowProps) => {
       };
     
       const requestSettings: RequestInit = {
+        headers: { "Content-Type": "application/json" },
         method: "DELETE",
         body: JSON.stringify(requestBody),
-        headers: { "Content-Type": "application/json" },
       };
       const response: Response = await fetch("/api/admin", requestSettings);
       const result = await response.json();
-      console.log(result)
+      setDeletePopup(false)
   }
 
   return (
@@ -165,11 +167,31 @@ export const ResourceRow = (props: ResourceRowProps) => {
             </Text>
           </Col>
           <Col span={1}>
-            <Button light auto icon={<img src="/delete.svg"></img>} onPress={deleteResource}></Button>
-            {/* <Dialog title="Warning" 
-              message="This feature is coming soon!!" 
-              visible={state} 
-              onCloseHandler={() => {setState(false)}}/> */}
+            <Button light auto icon={<img src="/delete.svg"></img>} onPress={() => setDeletePopup(true)}></Button>
+            <Modal
+              closeButton
+              aria-labelledby="modal-title"
+              open={deletePopup}
+              onClose={()=>{setDeletePopup(false)}}
+            >
+              <Modal.Header>
+                <Text id="modal-title" size={18}>
+                  Warning
+                </Text>
+              </Modal.Header>
+              <Modal.Body>
+                <Text> Are you sure to delete this resource? </Text>
+              </Modal.Body>
+            <Modal.Footer>
+          <Button auto flat  onPress={()=>{setDeletePopup(false)}}>
+            Cancel
+          </Button>
+          <Button auto color="error" onPress={deleteResource}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+ 
           </Col>
         </Row>
       </Card.Body>

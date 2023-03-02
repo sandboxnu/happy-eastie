@@ -22,9 +22,9 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
     return (
         <>
-            <Card isHoverable className={styles.card}>
-                <Card.Header>
-                    <Row justify='space-between'>
+            <Card isHoverable variant="flat" className={styles.card}>
+                <Card.Header css={{marginBottom: "0px"}}>
+                    <Row css={{display: "flex", alignItems: "center", marginTop: "25px", paddingRight: "20px"}} justify='space-between'>
                     <NextLink href={"/resources/" + props.resource._id}>
                         <Text b className={styles.cardHeader}>{props.resource.name}</Text>
                         </NextLink>
@@ -32,7 +32,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                     </Row>
                 </Card.Header>
 
-                <Card.Body css={{ py: "$10", pb: "$15" }}>
+                <Card.Body css={{ marginTop: "0px", paddingTop: "0px"}}>
                     <NextLink href={"/resources/" + props.resource._id}>
         <Link >
 
@@ -43,9 +43,9 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                             ))}
                         </Row>
                         <Row>
-                            <ReactMarkdown className={styles.cardSummary}>
+                            <Text className={styles.cardSummary}>
                                 {props.resource.summary ?? ""}
-                            </ReactMarkdown>
+                            </Text>
                         </Row>
                     </Col>
         </Link>
@@ -74,7 +74,7 @@ type ChildProps = {
 const ApplyForResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
     return (
         <Link href="#" onPress={() => props.toggleState()}>
-            <Row css={{ px: "0" }}>
+            <Row css={{ px: "0", display: "flex", alignItems: "center" }}>
                 <Image src="/laptop.svg" alt="Apply"></Image>
                 <Text className={styles.cardFooterText}>Apply Online</Text>
             </Row>
@@ -85,7 +85,7 @@ const ApplyForResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
 const  CallResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
     return (
         <Link href="#" onPress={() => props.toggleState()}>
-            <Row css={{ px: "0" }}>
+            <Row css={{ px: "0", display: "flex", alignItems: "center" }}>
                 <Image src="/phone.svg" alt="Call"></Image>
                 <Text className={styles.cardFooterText}>By Phone</Text>
             </Row> 

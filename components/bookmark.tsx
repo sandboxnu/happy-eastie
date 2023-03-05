@@ -18,12 +18,14 @@ export default function Bookmark(props: BookmarkProps) {
   return (
     <div>
       <button style={{ all: "unset", padding: 0, margin: 0 }} onClick={onClick}>
-        <Image src={`${state ? "/filledbookmark.svg" : "/bookmark.svg"}`} alt="Bookmark" />
-      </button>        
-      <Dialog title="New feature" 
-              message="This feature is coming soon!!" 
-              visible={state} 
-              onCloseHandler={() => {setState(false)}}/>
+        <Image src={`${state ? "/filledbookmark.svg" : "/bookmark.svg"}`} css={{ minHeight: "27px", minWidth: "20px" }} alt="Bookmark" />
+      </button>
+      <Dialog
+        title="New feature"
+        message="This feature is coming soon!!"
+        visible={state}
+        onCloseHandler={() => { setState(false) }}
+      />
     </div>
   );
 }

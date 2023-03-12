@@ -9,6 +9,7 @@ import {
   Image
 } from "@nextui-org/react";
 import { WithId } from "mongodb";
+import { NextPageContext } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AdminDashboardHeader } from "../../components/admin/dashboard/adminDashboardHeader";
 import { AdminDashboardSearch } from "../../components/admin/dashboard/adminDashboardSearch";
@@ -19,10 +20,8 @@ type AdminDashboardProps = {
   resources: WithId<Resource>[];
 };
 
-export async function getStaticProps() {
-  const res = await fetch(
-    `${process.env.VERCEL_URL}/api/admin`
-  );
+export async function getServerSideProps(ctx: NextPageContext) {
+  const res = await fetch(`http://${ctx.req?.headers.host}/api/admin`);
   const resources: WithId<Resource>[] = await res.json();
   resources.sort((r1, r2) => r1.name.localeCompare(r2.name));
   return {

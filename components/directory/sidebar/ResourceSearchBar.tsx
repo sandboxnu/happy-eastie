@@ -16,8 +16,7 @@ export const ResourceSearchBar: React.FC<ResourceSearchBarProps> = (props: Resou
             color="primary"
             placeholder={props.placeholder}
             onChange={props.onChange}
-            css={{ margin: "25px", outline: "1px solid" }}
-            animated={false}
+            css={{ margin: "25px" }}
             rounded
             contentLeft={<Image alt="Search Resources" src="magnifierflat.svg"></Image>}
         />

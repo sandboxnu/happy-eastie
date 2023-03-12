@@ -1,16 +1,29 @@
-import { Button, Input } from "@nextui-org/react"
-import { WithId } from "mongodb"
-import { ChangeEvent, useEffect } from "react"
-import { Resource } from "../../../models/types2"
+import { Button, Input, Row, Image } from "@nextui-org/react";
+import { ChangeEvent } from "react";
 import { FormElement } from "@nextui-org/react";
 
 type SearchProps = {
-    onChange(e: ChangeEvent<FormElement>): void
-}
+  onChange(e: ChangeEvent<FormElement>): void;
+};
 
 export const AdminDashboardSearch = (props: SearchProps) => {
-    return <> 
-        <Input fullWidth bordered placeholder="Search" onChange={props.onChange} labelRight={<img src="/magnifierflat.svg"></img>}></Input>
-        <Button auto iconRight={<img src="/filter.svg"></img>}>Filters</Button>
-    </>
-}
+  return (
+    <Row align="center" css={{ gap: 20 }}>
+      <Input
+        size="lg"
+        fullWidth
+        bordered
+        placeholder="Search"
+        onChange={props.onChange}
+        labelRight={<Image src="/magnifierflat.svg" />}
+      />
+      <Button
+        auto
+        size="lg"
+        iconRight={<Image alt="Filter" src="/filter.svg" width={23} />}
+      >
+        Filters
+      </Button>
+    </Row>
+  );
+};

@@ -1,6 +1,14 @@
-import { Button, FormElement, Grid, Link, Row, Spacer } from "@nextui-org/react";
+import {
+  Button,
+  Container,
+  FormElement,
+  Grid,
+  Link,
+  Row,
+  Spacer,
+  Image
+} from "@nextui-org/react";
 import { WithId } from "mongodb";
-import { relative } from "path";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AdminDashboardHeader } from "../../components/admin/dashboard/adminDashboardHeader";
 import { AdminDashboardSearch } from "../../components/admin/dashboard/adminDashboardSearch";
@@ -16,7 +24,7 @@ export async function getStaticProps() {
     `${process.env.VERCEL_URL || "http://localhost:3000"}/api/admin`
   );
   const resources: WithId<Resource>[] = await res.json();
-  resources.sort((r1, r2) => r1.name.localeCompare(r2.name))
+  resources.sort((r1, r2) => r1.name.localeCompare(r2.name));
   return {
     props: {
       resources,
@@ -25,56 +33,79 @@ export async function getStaticProps() {
 }
 
 function AdminDashboard({ resources }: AdminDashboardProps) {
-  const [resourcesDisplayed, setResourcesDisplayed] = useState<WithId<Resource>[]>(resources)
-  const [searchQuery, setSearchQuery] = useState<string>("")
+  const [resourcesDisplayed, setResourcesDisplayed] =
+    useState<WithId<Resource>[]>(resources);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   // list layout == true, grid layout == false
-  const [listLayout, setListLayout] = useState<Boolean>(true)
+  const [listLayout, setListLayout] = useState<Boolean>(true);
 
   useEffect(() => {
-    if (searchQuery === "")
-      return setResourcesDisplayed(resources);
+    if (searchQuery === "") return setResourcesDisplayed(resources);
     const searchQueryAppliedResources = resources.filter(
       (r) =>
         r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.summary.toLowerCase().includes(searchQuery.toLowerCase())
     );
-     setResourcesDisplayed(searchQueryAppliedResources);
+    setResourcesDisplayed(searchQueryAppliedResources);
   }, [searchQuery, resources]);
 
   return (
     <div>
       <AdminDashboardHeader />
-      <div style={{ margin: 74}}>
-        <Row css={{ gap: 22, maxWidth: "70%" }}>
-          <AdminDashboardSearch onChange={(e: ChangeEvent<FormElement>) => setSearchQuery(e.target.value)} />
+      <Container fluid>
+        <Row css={{ gap: 22, maxWidth: "70vw", mt: 63 }}>
+          <AdminDashboardSearch
+            onChange={(e: ChangeEvent<FormElement>) =>
+              setSearchQuery(e.target.value)
+            }
+          />
         </Row>
         <Spacer y={2} />
-        <Row justify="flex-start" css={{ gap: 10 }}>
-          <Button as={Link} href="/admin/addNew" css={{ px: 20 }} auto>
-            + Add New
+        <Row css={{ gap: 10 }}>
+          <Button
+            as={Link}
+            href="/admin/addNew"
+            css={{ px: 20 }}
+            size="lg"
+            auto
+            icon={<Image src="/plus.svg" />}
+          >
+            Add New
           </Button>
+
           <Button
-            css={{ p: 7 }}
+            aria-label="Grid Layout"
+            css={{ p: 10, bgColor: listLayout ? "$gray600" : "primary" }}
             auto
-            icon={<img src="/gridLayout.svg"></img>}
+            size="lg"
             onPress={() => setListLayout(false)}
-          ></Button>
+          >
+            <Image src="/gridLayout.svg" width={26} />
+          </Button>
+
           <Button
-            css={{ p: 7 }}
+            aria-label="List Layout"
+            css={{ p: 10, bgColor: listLayout ? "primary" : "$gray600" }}
             auto
-            icon={<img src="/listLayout.svg"></img>}
+            size="lg"
             onPress={() => setListLayout(true)}
-          ></Button>
+          >
+            <Image src="/listLayout.svg" width={26} />
+          </Button>
         </Row>
 
         <Spacer y={1} />
-        <Grid.Container justify="flex-start" css={{position: "relative"}}>
+        <Grid.Container gap={listLayout ? 0 : 2} css={{ px: 0 }}>
           {resourcesDisplayed.map((r) => (
-            <ResourceRow key={r.name} resourceData={r} listLayout={listLayout} />
+            <ResourceRow
+              key={`${r._id}`}
+              resourceData={r}
+              listLayout={listLayout}
+            />
           ))}
         </Grid.Container>
-      </div>
+      </Container>
     </div>
   );
 }

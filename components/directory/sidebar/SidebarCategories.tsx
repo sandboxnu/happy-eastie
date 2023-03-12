@@ -21,7 +21,7 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
                 onChange={(e) => props.setSelectedCategories(e)}
             >
                 {props.categories.map(category => (
-                    <Checkbox css={{marginLeft: "10px", border: "3px solid var(--brand-primary)", borderRadius: "6px", width: "17px", height: "17px"}} key={category} value={category} size={"xs"}>
+                    <Checkbox key={category} value={category} size={"xs"}>
                         <Text className={styles.sidebarCheckboxText}>{category}</Text>
                     </Checkbox>
                 ))}

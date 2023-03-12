@@ -6,8 +6,7 @@ import Tag from "../../components/tag";
 import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
-import {WithId} from 'mongodb';
-import ReactMarkdown from 'react-markdown';
+import { WithId } from 'mongodb';
 import NextLink from "next/link"
 
 interface ResourceCardDisplayProps {
@@ -23,33 +22,33 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
     return (
         <>
             <Card isHoverable variant="flat" className={styles.card}>
-                <Card.Header css={{marginBottom: "0px"}}>
-                    <Row css={{display: "flex", alignItems: "center", marginTop: "25px", paddingRight: "20px"}} justify='space-between'>
-                    <NextLink href={"/resources/" + props.resource._id}>
-                        <Text b className={styles.cardHeader}>{props.resource.name}</Text>
+                <Card.Header css={{ marginBottom: "0px" }}>
+                    <Row css={{ display: "flex", alignItems: "center", marginTop: "25px", paddingRight: "20px" }} justify='space-between'>
+                        <NextLink href={"/resources/" + props.resource._id}>
+                            <Text b className={styles.cardHeader}>{props.resource.name}</Text>
                         </NextLink>
                         <Bookmark enabled={false} />
                     </Row>
                 </Card.Header>
 
-                <Card.Body css={{ marginTop: "0px", paddingTop: "0px"}}>
+                <Card.Body css={{ marginTop: "0px", paddingTop: "0px" }}>
                     <NextLink href={"/resources/" + props.resource._id}>
-        <Link >
+                        <Link >
 
-                    <Col>
-                        <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20 }}>
-                            {props.resource.category?.map((tag, index) => (
-                                <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
-                            ))}
-                        </Row>
-                        <Row>
-                            <Text className={styles.cardSummary}>
-                                {props.resource.summary ?? ""}
-                            </Text>
-                        </Row>
-                    </Col>
-        </Link>
-        </NextLink>
+                            <Col>
+                                <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20 }}>
+                                    {props.resource.category?.map((tag, index) => (
+                                        <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
+                                    ))}
+                                </Row>
+                                <Row>
+                                    <Text className={styles.cardSummary}>
+                                        {props.resource.summary ?? ""}
+                                    </Text>
+                                </Row>
+                            </Col>
+                        </Link>
+                    </NextLink>
 
                 </Card.Body>
 
@@ -57,21 +56,21 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
                 <Card.Footer className={styles.cardFooter}>
                     <Row justify="flex-start">
-                        <ApplyForResourceButtons toggleState={toggleState}/>
-                        <CallResourceButtons toggleState={toggleState}/>
+                        <ApplyForResourceButtons toggleState={toggleState} />
+                        <CallResourceButtons toggleState={toggleState} />
                     </Row>
                 </Card.Footer>
             </Card>
-        <Dialog title="New feature" message="Stay tuned... This feature is coming soon!!" visible={visible} onCloseHandler={toggleState}/>
+            <Dialog title="New feature" message="Stay tuned... This feature is coming soon!!" visible={visible} onCloseHandler={toggleState} />
         </>
     )
 }
 
 type ChildProps = {
-    toggleState : () => void;
+    toggleState: () => void;
 }
 
-const ApplyForResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
+const ApplyForResourceButtons: React.FC<ChildProps> = (props: ChildProps) => {
     return (
         <Link href="#" onPress={() => props.toggleState()}>
             <Row css={{ px: "0", display: "flex", alignItems: "center" }}>
@@ -82,13 +81,13 @@ const ApplyForResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
     )
 }
 
-const  CallResourceButtons : React.FC<ChildProps> = (props: ChildProps) => {
+const CallResourceButtons: React.FC<ChildProps> = (props: ChildProps) => {
     return (
         <Link href="#" onPress={() => props.toggleState()}>
             <Row css={{ px: "0", display: "flex", alignItems: "center" }}>
                 <Image src="/phone.svg" alt="Call"></Image>
                 <Text className={styles.cardFooterText}>By Phone</Text>
-            </Row> 
+            </Row>
         </Link>
     )
 }

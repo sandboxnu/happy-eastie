@@ -15,7 +15,7 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
             <Text className={styles.sidebarBanner}>Categories</Text>
             <Spacer y={1} />
             <Checkbox.Group
-                color="primary" 
+                color="primary"
                 className={styles.sidebarCheckboxGroup}
                 value={props.selectedCategories}
                 onChange={(e) => props.setSelectedCategories(e)}
@@ -26,7 +26,7 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
                     </Checkbox>
                 ))}
             </Checkbox.Group>
-            <ClearFieldsButton setField={props.setSelectedCategories} clearedValue={[]}/>
+            <ClearFieldsButton setField={props.setSelectedCategories} clearedValue={[]} />
         </Grid>
     )
 }

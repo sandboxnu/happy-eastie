@@ -21,7 +21,7 @@ type AdminDashboardProps = {
 
 export async function getStaticProps() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/admin`
+    `${process.env.VERCEL_URL}/api/admin`
   );
   const resources: WithId<Resource>[] = await res.json();
   resources.sort((r1, r2) => r1.name.localeCompare(r2.name));

@@ -30,7 +30,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                         <Bookmark enabled={false} />
                     </Row>
                 </Card.Header>
-                <Card.Body className={styles.cardBody}>
+                <Card.Body css={{ marginTop: "0px", paddingTop: "0px" }}>
                     <NextLink href={"/resources/" + props.resource._id}>
                         <Link>
                             <Col>

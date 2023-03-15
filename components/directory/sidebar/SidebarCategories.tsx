@@ -21,12 +21,12 @@ export const SidebarCategories: React.FC<SidebarCategoriesProps> = (props: Sideb
                 onChange={(e) => props.setSelectedCategories(e)}
             >
                 {props.categories.map(category => (
-                    <Checkbox key={category} value={category} size={"xs"}>
+                    <Checkbox css={{padding: "8px"}} key={category} value={category} size={"sm"}>
                         <Text className={styles.sidebarCheckboxText}>{category}</Text>
                     </Checkbox>
                 ))}
             </Checkbox.Group>
-            <ClearFieldsButton setField={props.setSelectedCategories} clearedValue={[]}/>
+            <ClearFieldsButton setField={props.setSelectedCategories} clearedValue={[]} />
         </Grid>
     )
 }

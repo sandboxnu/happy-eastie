@@ -2,6 +2,21 @@
     background-color: var(--brand-light-blue);
     height: 300px;
     width: min(515px, 100%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+    border-radius: 0;
+}
+
+.cardFooter{
+    min-height: 20%;
+    margin-left: 20px;
+}
+.cardFooterText {
+    font-family: 'Raleway';
+    font-size: 15px;
+    font-weight: 700;
+    color: #191E3E;
+    margin-right: 20px;
+    margin-left: 10px;
 }
 
 .cardHeader {
@@ -23,25 +38,13 @@
 
 .cardSummary {
     font-family: 'Raleway';
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 20px;
     color: var(--secondary-text);
     margin-left: 20px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-}
-
-.cardFooter {
-    min-height: 20%;
-}
-.cardFooterText {
-    font-family: 'Raleway';
-    font-size: 15px;
-    font-weight: 700;
-    color: #191E3E;
-    margin-right: 20px;
-    margin-left: 10px;
+    letter-spacing: 0.5px;
+    line-height: 19px;
+    padding-right: 12px;
+    overflow: hidden
 }

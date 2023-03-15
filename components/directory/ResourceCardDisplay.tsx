@@ -21,17 +21,16 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
 
     return (
         <>
-            <Card isHoverable className={styles.card}>
-                <Card.Header className={styles.cardHeader}>
-                    <Row justify='space-between' css={{ marginRight: "20px" }}>
+            <Card isHoverable variant="flat" className={styles.card}>
+                <Card.Header css={{ marginBottom: "0px" }}>
+                    <Row css={{ display: "flex", alignItems: "center", marginTop: "25px", paddingRight: "20px" }} justify='space-between'>
                         <NextLink href={"/resources/" + props.resource._id}>
                             <Text b className={styles.cardHeaderText}>{props.resource.name}</Text>
                         </NextLink>
                         <Bookmark enabled={false} />
                     </Row>
                 </Card.Header>
-
-                <Card.Body className={styles.cardBody}>
+                <Card.Body css={{ marginTop: "0px", paddingTop: "0px" }}>
                     <NextLink href={"/resources/" + props.resource._id}>
                         <Link>
                             <Col>
@@ -53,9 +52,8 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                 <Card.Divider />
 
                 <Card.Footer className={styles.cardFooter}>
-                    <Row css={{ display: "flex", marginLeft: "20px", justifyContent: "flex-start", alignItems: "center" }}>
+                    <Row justify="flex-start">
                         <ApplyForResourceButtons toggleState={toggleState} />
-                        <Spacer x={1} />
                         <CallResourceButtons toggleState={toggleState} />
                     </Row>
                 </Card.Footer>

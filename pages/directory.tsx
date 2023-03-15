@@ -72,10 +72,6 @@ const ResourceDirectoryContent: NextPage = () => {
       </Grid.Container>
 
       <Spacer y={1} />
-      <button className={styles.back} onClick={() => router.back()}>
-        Back
-      </button>
-      <Spacer y={2} />
 
       <Modal
         closeButton

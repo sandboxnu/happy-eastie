@@ -25,7 +25,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                 <Card.Header css={{ marginBottom: "0px" }}>
                     <Row css={{ display: "flex", alignItems: "center", marginTop: "25px", paddingRight: "20px" }} justify='space-between'>
                         <NextLink href={"/resources/" + props.resource._id}>
-                            <Text b className={styles.cardHeader}>{props.resource.name}</Text>
+                            <Text b className={styles.cardHeaderText}>{props.resource.name}</Text>
                         </NextLink>
                         <Bookmark enabled={false} />
                     </Row>

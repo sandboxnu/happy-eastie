@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
+import { Card, Row, Text, Col, Link, Image, Spacer } from '@nextui-org/react';
 import { Resource } from '../../models/types2';
 import styles from './ResourceCardDisplay.module.css';
 import Tag from "../../components/tag";
@@ -30,13 +30,11 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                         <Bookmark enabled={false} />
                     </Row>
                 </Card.Header>
-
-                <Card.Body css={{ marginTop: "0px", paddingTop: "0px" }}>
+                <Card.Body className={styles.cardBody}>
                     <NextLink href={"/resources/" + props.resource._id}>
-                        <Link >
-
+                        <Link>
                             <Col>
-                                <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20 }}>
+                                <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20, flexWrap: "wrap" }}>
                                     {props.resource.category?.map((tag, index) => (
                                         <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
                                     ))}
@@ -49,7 +47,6 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                             </Col>
                         </Link>
                     </NextLink>
-
                 </Card.Body>
 
                 <Card.Divider />

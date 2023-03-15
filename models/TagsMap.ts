@@ -6,6 +6,7 @@ const TagsMap = () => {
   m.set("Community", "#D00DF0")
   m.set("Events", "var(--brand-orange)")
   m.set("Family-Friendly", "var(--brand-primary)")
+  m.set("Food", "var(--brand-orange)")
   return m
 }
 

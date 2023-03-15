@@ -2,7 +2,7 @@
     {
         "name": "ABCD",
         "description": "At ABCD HEAD START, we prepare your child for preschool and kindergarten using activities and experiences that develop their cognitive and emotional skills. We also have programs for pregnant women and children to fit the needs of your family.\n\n\nHead Start is a family development program that offers comprehensive services for your child as well as your entire family. Part of a highly successful national program, ABCD Head Start has locations throughout Boston, Everett, Malden, and Medford. Our services concentrate on your child’s education, nutrition, and physical and mental health.",
-        "summary": "summaryABCD",
+        "summary": "Provides support for preschool and kindergatern.",
         "category": ["Childcare"],
         "keywords": [],
         "incomeByHouseholdMembers": [{"minimum": 0, "maximum": 60000}],
@@ -19,11 +19,11 @@
     },
     {
         "name": "TAFDC - DTA Chelsea Center",
-        "description": "",
-        "summary": "",
+        "description": "TAFDC is administered through the Department of Transitional Assistance (DTA).\nWhen you receive TAFDC you may be eligible for:\nTwo cash payments per month to meet your basic needs,\nEnrollment into MassHealth coverage,\nReferral to free employment and training programs,\nReferral for free child care while you work on your education and employment goals,\nMoney for transportation to get to school, training, work, or to look for a job,\nOne-time payment of $300 for infants under 6 months, and\nClothing allowance: one-time payment of $400 for each eligible children in early Fall.",
+        "summary": "Transitional Aid to Families with Dependent Children (TAFDC) is an economic assistance (cash benefit) program that helps pregnant individuals, families and caregivers explore opportunities, improve their finances, and reach their goals.",
         "category": ["Financial Help"],
-        "keywords": [],
-        "incomeByHouseholdMembers": [{"minimum": 20000, "maximum": 60000}, {"minimum": 61000, "maximum": 80000}],
+        "keywords": ["Cash", "Referral", "Clothing"],
+        "incomeByHouseholdMembers": [{"minimum": 0, "maximum": 2430}, {"minimum": 0, "maximum": 3287}, {"minimum": 0, "maximum": 4143}, {"minimum": 0, "maximum": 5000}, {"minimum": 0, "maximum": 5857}, {"minimum": 0, "maximum": 6713}, {"minimum": 0, "maximum": 7570}, {"minimum": 0, "maximum": 8427}],
         "documentationRequired": true,
         "headerImageUrl": "",
         "website": "",
@@ -33,7 +33,7 @@
         "location": {"type": "Point", "coordinates": []}, 
         "availableLanguages": ["English","Spanish", "Portuguese", "Chinese", "Vietnamese"],
         "accessibilityOptions": [],
-        "eligibilityInfo": ""
+        "eligibilityInfo": "You may be eligible if you:\nHave children 18 or younger,\nAre pregnant and are due in less than 4 months; if you are under age 20 you may be eligible at any stage of pregnancy, and/or\nAre a caregiver for a child you are related to but who is not your biological or adopted child\nAs a caregiver, you can apply for TAFDC for yourself and the child(ren) or only the child(ren) in your care. If you apply only for the child(ren) DTA will not look at your income when you apply, even though the application is in your name. If the child in your case has income, that may affect eligibility.\nand:\nYou live in Massachusetts,\nYou or someone in your family are a U.S. citizen or an eligible immigrant, and\nYour income is below the TAFDC limits."
       }
 
 ]

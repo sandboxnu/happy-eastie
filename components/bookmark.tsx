@@ -11,7 +11,6 @@ export default function Bookmark(props: BookmarkProps) {
 
   const onClick = (e: SyntheticEvent) => {
     setState(!state);
-    console.log("bookmark state " + state);
     e.stopPropagation();
   };
 

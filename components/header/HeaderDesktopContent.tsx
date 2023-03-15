@@ -7,7 +7,7 @@ import { useRouter } from "next/router"
 const HeaderDesktopContent = ({items}: {items: HeaderContent[]}) => {
   const router = useRouter()
 
-    return (<Navbar.Content enableCursorHighlight="true" gap={90} hideIn="sm" className={styles.navbarContent} activeColor="primary">
+    return (<Navbar.Content enableCursorHighlight="true" gap={50} hideIn="sm" className={styles.navbarContent} activeColor="primary">
     {items.map(item =>
       <Navbar.Item
         key={item.title}>

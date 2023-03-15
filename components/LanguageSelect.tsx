@@ -1,5 +1,4 @@
-import { Dropdown, Navbar } from "@nextui-org/react"
-import NextImage from "next/image"
+import { Dropdown, Navbar, Image } from "@nextui-org/react"
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -18,7 +17,7 @@ const LanguageSelect = () => {
     return (
         <Dropdown>
           <Dropdown.Button light>
-            <NextImage width={20} height={20} src="/globe.svg" alt="Select language"/>
+            <Image width="20px" src="/globe.svg" alt="Select language"/>
             <div style={{width: 4}}></div> {/* a spacer because normal padding doesn't seem to work*/}
             {language}
           </Dropdown.Button>

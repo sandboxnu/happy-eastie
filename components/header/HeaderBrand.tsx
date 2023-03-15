@@ -7,11 +7,12 @@ const HeaderBrand = () => {
         <Navbar.Toggle aria-label="toggle navigation" showIn="sm" />
         <NextLink href="/">
           <Link>
-            <NextImage
+            <Image
              src="/HappyEastie.svg" 
              alt="HappyEastie" 
-             width="119px" 
-             height="20px"/>
+             width="220px" 
+             css = {{pr: 10}}
+            />
           </Link>
         </NextLink>
       </Navbar.Brand>)

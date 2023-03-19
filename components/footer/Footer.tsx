@@ -9,7 +9,7 @@ export default function Footer() {
     return (
         <Grid.Container direction='row' className={styles.footerGrid}>
             <FooterBrand/>
-            <FooterLinks/>
+            {/* <FooterLinks/> */}
             <FooterCredits/>
         </Grid.Container>
     )

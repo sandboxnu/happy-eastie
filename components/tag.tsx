@@ -11,12 +11,13 @@ export default function Tag(props: TagProps) {
     <Text
       css={{
         backgroundColor: props.color,
-        padding: "5px 22px",
+        padding: "5px 15px",
         borderRadius: "5px",
         color: "white",
-        fontSize: "12px",
+        fontSize: "14px",
         fontFamily: "Raleway",
-        fontWeight: "600",
+        fontWeight: "500",
+        letterSpacing: "0.5px",
       }}
     >
       {props.text}

@@ -15,7 +15,7 @@ const QuizResultsDisplayContent: React.FC = () => {
     useResources(quizState.encryptedQuizResponse);
 
   if (error) return <div>{error.message}</div>;
-  if (isLoading) return <Loading/>
+  if (isLoading) return <Loading />
   if (requestedResources == undefined || additionalResources == undefined)
     return <div>Internal server error: invalid resources loaded</div>;
 
@@ -61,11 +61,6 @@ const QuizResultsDisplayContent: React.FC = () => {
 
 export const QuizResultsDisplay = () => {
   return (
-    <>
-      <QuizResultsDisplayContent/>
-      <NextLink href='/quiz/3'>
-        <Link className={styles.backButton}>Back</Link>
-        </NextLink>
-    </>
+    <QuizResultsDisplayContent />
   )
 }

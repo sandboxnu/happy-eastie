@@ -1,29 +1,20 @@
-import { Grid, Image, Link } from "@nextui-org/react";
-import NextLink from "next/link";
-import styles from "./Footer.module.css";
-import FooterLinks from "./FooterLinks";
+import { Grid, Image } from "@nextui-org/react";
 
-//TODO: change to NextJs image
 export default function FooterBrand() {
-  const items = [
-    { title: "Quiz", href: "/quiz" },
-    { title: "Resource", href: "/directory" },
-    { title: "Community Events", href: "/future" },
-    { title: "About Us", href: "/about" },
-  ];
-
   return (
     <Grid
       css={{
         display: "flex",
         flexDirection: "row",
         alignItems: "start",
-        paddingLeft: 70,
-        mt: 50,
+        justifyContent: "center",
+        marginTop: 50,
       }}
+      xs={0}
+      sm={12}
+      md={4}
     >
       <Image src="/HappyEastieWhite.svg" alt="HappyEastie" width={300} />
-      <FooterLinks />
     </Grid>
   );
 }

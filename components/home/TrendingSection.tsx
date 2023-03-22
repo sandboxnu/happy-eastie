@@ -79,13 +79,13 @@ export default function TrendingSection() {
         <Spacer x={0.8} />
         <Text h1 className={HomeStyles.sectionHeader}>Trending Near You</Text>
       </Row>
-      <Spacer y={1}/>
+      <Spacer y={1} />
       <Row gap={4} className={styles.eventCardsRow}>
         {events.map((event, index) => (
           <EventCard key={index} event={event} />
         ))}
       </Row>
-      <Spacer y={2}/>
+      <Spacer y={2} />
     </Container>
   );
 }

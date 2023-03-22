@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Card, Row, Text, Col, Link, Image, Spacer } from '@nextui-org/react';
+import React, { SyntheticEvent, useState } from 'react'
+import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
 import { Resource } from '../../models/types2';
 import styles from './ResourceCardDisplay.module.css';
 import Tag from "../../components/tag";
@@ -7,7 +7,7 @@ import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
 import { WithId } from 'mongodb';
-import NextLink from "next/link"
+import { useRouter } from "next/router";
 
 interface ResourceCardDisplayProps {
     resource: WithId<Resource>;
@@ -15,38 +15,39 @@ interface ResourceCardDisplayProps {
 
 export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: ResourceCardDisplayProps) => {
     const [visible, setVisible] = useState(false);
+    const router = useRouter();
+
     const toggleState = () => {
         setVisible(!visible);
     };
 
+    const handleResourceCardPress = (e: any) => {
+        e.preventDefault();
+        router.push("/resources/" + props.resource._id);
+    }
+
     return (
         <>
-            <Card isHoverable variant="flat" className={styles.card}>
+            <Card isHoverable isPressable variant="flat" className={styles.card} onPress={(e) => handleResourceCardPress(e)}>
                 <Card.Header css={{ marginBottom: "0px" }}>
                     <Row css={{ display: "flex", alignItems: "center", marginTop: "25px", paddingRight: "20px" }} justify='space-between'>
-                        <NextLink href={"/resources/" + props.resource._id}>
-                            <Text b className={styles.cardHeaderText}>{props.resource.name}</Text>
-                        </NextLink>
+                        <Text b className={styles.cardHeaderText}>{props.resource.name}</Text>
                         <Bookmark enabled={false} />
                     </Row>
                 </Card.Header>
                 <Card.Body css={{ marginTop: "0px", paddingTop: "0px" }}>
-                    <NextLink href={"/resources/" + props.resource._id}>
-                        <Link>
-                            <Col>
-                                <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20, flexWrap: "wrap" }}>
-                                    {props.resource.category?.map((tag, index) => (
-                                        <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
-                                    ))}
-                                </Row>
-                                <Row>
-                                    <Text className={styles.cardSummary}>
-                                        {props.resource.summary ?? ""}
-                                    </Text>
-                                </Row>
-                            </Col>
-                        </Link>
-                    </NextLink>
+                    <Col>
+                        <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20, flexWrap: "wrap" }}>
+                            {props.resource.category?.map((tag, index) => (
+                                <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
+                            ))}
+                        </Row>
+                        <Row>
+                            <Text className={styles.cardSummary}>
+                                {props.resource.summary ?? ""}
+                            </Text>
+                        </Row>
+                    </Col>
                 </Card.Body>
 
                 <Card.Divider />

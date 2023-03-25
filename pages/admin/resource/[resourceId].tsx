@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import {
   Button,
+  Card,
   Col,
   Container,
   Grid,
@@ -33,60 +34,97 @@ const ResourcePageContent: NextPage = () => {
   //   return <div>Internal server error: invalid resource loaded</div>;
 
   return (
-    <Container fluid>
-      <Grid.Container gap={2} justify="space-between">
-        <Grid xs={12} direction="column">
-          <Text h3>Summary</Text>
-          <Textarea bordered borderWeight="light" fullWidth color="primary" />
-        </Grid>
-        <Spacer y={1} />
-        <Grid xs={12} direction="column">
-          <Text h3>Description</Text>
-          <Textarea bordered borderWeight="light" fullWidth color="primary" />
-        </Grid>
+    <>
+      <Image
+        src="https://www.boston.com/wp-content/uploads/2020/04/BackBay-47-Edit.jpeg?width=900"
+        width="100%"
+        height={254}
+        objectFit="cover"
+        alt="Resource header image"
+      />
+      <Spacer y={2} />
+      <Container fluid>
+        <Grid.Container justify="space-between" css={{ gap: "30px" }}>
+          <Grid xs={12}>
+            <Input size="xl" color="primary" bordered />
+          </Grid>
+          <Grid xs={12}>
+            <Card.Divider css={{ bgColor: "DarkGray" }} />
+          </Grid>
+          <Grid xs={12} direction="column">
+            <Text h3>Summary</Text>
+            <FormInput fullWidth placeholder="Summary" size="md" />
+          </Grid>
+          <Grid xs={12} direction="column">
+            <Text h3>Description</Text>
+            <Textarea bordered borderWeight="light" fullWidth color="primary" />
+          </Grid>
 
-        <Grid xs={12} sm={3} direction="column">
-          <Text h3>Contact</Text>
-          <Row justify="flex-start" align="center" css={{ gap: "12px" }}>
-            <img src="/emailfilled.svg" width="25px" style={{filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))"}} />
-            <FormInput placeholder="Email" />
-          </Row>
-          <Spacer y={0.25} />
-          <Row justify="flex-start" align="center" css={{ gap: "12px" }}>
-            <img src="/phonefilled.svg" width="25px" style={{filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))"}} />
-            <FormInput placeholder="Phone" />
-          </Row>
-        </Grid>
+          <Grid xs={12} sm={3} direction="column">
+            <Text h3>Contact</Text>
+            <Row justify="flex-start" align="center" css={{ gap: "12px" }}>
+              <img
+                src="/emailfilled.svg"
+                width="25px"
+                style={{
+                  filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
+                }}
+              />
+              <FormInput placeholder="Email" />
+            </Row>
+            <Spacer y={0.25} />
+            <Row justify="flex-start" align="center" css={{ gap: "12px" }}>
+              <img
+                src="/phonefilled.svg"
+                width="25px"
+                style={{
+                  filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
+                }}
+              />
+              <FormInput placeholder="Phone" />
+            </Row>
+          </Grid>
 
-        <Grid xs={12} sm={3} direction="column">
-          <Text h3>Website</Text>
-          <FormInput placeholder="Website" />
+          <Grid xs={12} sm={3} direction="column">
+            <Text h3>Website</Text>
+            <FormInput placeholder="Website" />
+            <Spacer y={1} />
+            <Text h3>Address</Text>
+            <FormInput placeholder="Street Address" />
 
-          <Text h3>Address</Text>
-          <FormInput placeholder="Street Address" />
+            <FormInput placeholder="Apartment, suite, etc." />
+            <FormInput placeholder="City" />
 
-          <FormInput placeholder="Apartment, suite, etc." />
-          <FormInput placeholder="City" />
+            <Row css={{ gap: "10px" }}>
+              <Col>
+                <FormInput placeholder="State" fullWidth />
+              </Col>
+              <Col>
+                <FormInput placeholder="Zip Code" fullWidth />
+              </Col>
+            </Row>
+          </Grid>
 
-          <Row css={{gap: "10px"}}>
-            <Col>
-              <FormInput placeholder="State" fullWidth />
-            </Col>
-            <Col>
-              <FormInput placeholder="Zip Code" fullWidth />
-            </Col>
-          </Row>
-        </Grid>
-
-        <Grid xs={12} sm={3} direction="column">
-          <Text h3>Categories</Text>
-          <FormInput placeholder="Category" />
-
-          <Text h3>Keywords</Text>
-          <FormInput placeholder="Keyword" />
-        </Grid>
-      </Grid.Container>
-    </Container>
+          <Grid xs={12} sm={3} direction="column">
+            <Text h3>Categories</Text>
+            <FormInput placeholder="Category" />
+            <Spacer y={1} />
+            <Text h3>Keywords</Text>
+            <FormInput placeholder="Keyword" />
+          </Grid>
+        </Grid.Container>
+      </Container>
+      <Spacer y={1} />
+      <Card.Divider css={{ bgColor: "DarkGray" }} />
+      <Spacer y={1} />
+      <Container fluid>
+        <Row css={{ gap: "22px" }}>
+          <Button>Save Changes</Button>
+          <Button bordered>Cancel</Button>
+        </Row>
+      </Container>
+      <Spacer y={1} />
+    </>
   );
 };
 

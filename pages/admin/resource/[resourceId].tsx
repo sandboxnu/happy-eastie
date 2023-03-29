@@ -36,6 +36,26 @@ const ResourcePageContent: NextPage = () => {
   // if (!resource)
   //   return <div>Internal server error: invalid resource loaded</div>;
 
+  const fakeResource = {
+    "name": "Fake Resource",
+    "description": "I am fake",
+    "summary": "I am fake but shorter",
+    "category": [],
+    "keywords": [],
+    "incomeByHouseholdMembers": [],
+    "documentationRequired": false,
+    "headerImageUrl": "",
+    "website": "www.fake.com",
+    "phone": "617-555-5555",
+    "email": "fake@fake.com",
+    "address": "123 fake st",
+    "location": {"type": "Point", "coordinates": []},
+    "availableLanguages": [],
+    "accessibilityOptions": [],
+    "eligibilityInfo": ""
+  }
+  
+
   return (
     <>
       <Image
@@ -54,6 +74,7 @@ const ResourcePageContent: NextPage = () => {
                 size="xl"
                 placeholder="Resource Name"
                 editing={isEditing}
+                value={fakeResource.name}
               />
               { !isEditing && <Button auto iconRight={<img src="/pencil.svg" />} onPress={
                 () => { setIsEditing(true) }
@@ -72,11 +93,12 @@ const ResourcePageContent: NextPage = () => {
               placeholder="Summary"
               size="md"
               editing={isEditing}
+              value={fakeResource.summary}
             />
           </Grid>
           <Grid xs={12} direction="column">
             <Text h3>Description</Text>
-            <Textarea bordered borderWeight="light" fullWidth color="primary" />
+            <FormInput multiLine editing={isEditing} placeholder={"Description"} />
           </Grid>
 
           <Grid xs={12} sm={3} direction="column">
@@ -89,7 +111,7 @@ const ResourcePageContent: NextPage = () => {
                   filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
                 }}
               />
-              <FormInput placeholder="Email" editing={isEditing} />
+              <FormInput placeholder="Email" editing={isEditing} value={fakeResource.email} />
             </Row>
             <Spacer y={0.25} />
             <Row justify="flex-start" align="center" css={{ gap: "12px" }}>
@@ -100,35 +122,16 @@ const ResourcePageContent: NextPage = () => {
                   filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
                 }}
               />
-              <FormInput placeholder="Phone" editing={isEditing} />
+              <FormInput placeholder="Phone" editing={isEditing} value={fakeResource.phone} />
             </Row>
           </Grid>
 
           <Grid xs={12} sm={3} direction="column">
             <Text h3>Website</Text>
-            <FormInput placeholder="Website" editing={isEditing} />
+            <FormInput placeholder="Website" editing={isEditing} value={fakeResource.website} />
             <Spacer y={1} />
             <Text h3>Address</Text>
-            <FormInput placeholder="Street Address" editing={isEditing} />
-
-            <FormInput
-              placeholder="Apartment, suite, etc."
-              editing={isEditing}
-            />
-            <FormInput placeholder="City" editing={isEditing} />
-
-            <Row css={{ gap: "10px" }}>
-              <Col>
-                <FormInput placeholder="State" fullWidth editing={isEditing} />
-              </Col>
-              <Col>
-                <FormInput
-                  placeholder="Zip Code"
-                  fullWidth
-                  editing={isEditing}
-                />
-              </Col>
-            </Row>
+            <FormInput placeholder="Street Address" editing={isEditing} value={fakeResource.address} />
           </Grid>
 
           <Grid xs={12} sm={3} direction="column">

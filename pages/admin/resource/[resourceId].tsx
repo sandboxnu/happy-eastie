@@ -19,11 +19,14 @@ import {
 import styles from "./[resourceId].module.css";
 import { useResource } from "../../../hooks/useResource";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
+import { useState } from "react";
 // import { ResourceDescription } from "../../components/resources/ResourceDescription";
 // import Loading from "../../components/Loading";
 // import Layout from "../../components/Layout";
 
 const ResourcePageContent: NextPage = () => {
+  const [isEditing, setIsEditing] = useState(false);
+
   const router = useRouter();
   const { resourceId } = router.query;
   const { resource, isLoading, error } = useResource(resourceId);
@@ -46,14 +49,30 @@ const ResourcePageContent: NextPage = () => {
       <Container fluid>
         <Grid.Container justify="space-between" css={{ gap: "30px" }}>
           <Grid xs={12}>
-            <Input size="xl" color="primary" bordered />
+            <Row justify="space-between" align="center">
+              <FormInput
+                size="xl"
+                placeholder="Resource Name"
+                editing={isEditing}
+              />
+              { !isEditing && <Button auto iconRight={<img src="/pencil.svg" />} onPress={
+                () => { setIsEditing(true) }
+              }>
+                Edit Resource
+              </Button>}
+            </Row>
           </Grid>
           <Grid xs={12}>
             <Card.Divider css={{ bgColor: "DarkGray" }} />
           </Grid>
           <Grid xs={12} direction="column">
             <Text h3>Summary</Text>
-            <FormInput fullWidth placeholder="Summary" size="md" />
+            <FormInput
+              fullWidth
+              placeholder="Summary"
+              size="md"
+              editing={isEditing}
+            />
           </Grid>
           <Grid xs={12} direction="column">
             <Text h3>Description</Text>
@@ -70,7 +89,7 @@ const ResourcePageContent: NextPage = () => {
                   filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
                 }}
               />
-              <FormInput placeholder="Email" />
+              <FormInput placeholder="Email" editing={isEditing} />
             </Row>
             <Spacer y={0.25} />
             <Row justify="flex-start" align="center" css={{ gap: "12px" }}>
@@ -81,48 +100,61 @@ const ResourcePageContent: NextPage = () => {
                   filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
                 }}
               />
-              <FormInput placeholder="Phone" />
+              <FormInput placeholder="Phone" editing={isEditing} />
             </Row>
           </Grid>
 
           <Grid xs={12} sm={3} direction="column">
             <Text h3>Website</Text>
-            <FormInput placeholder="Website" />
+            <FormInput placeholder="Website" editing={isEditing} />
             <Spacer y={1} />
             <Text h3>Address</Text>
-            <FormInput placeholder="Street Address" />
+            <FormInput placeholder="Street Address" editing={isEditing} />
 
-            <FormInput placeholder="Apartment, suite, etc." />
-            <FormInput placeholder="City" />
+            <FormInput
+              placeholder="Apartment, suite, etc."
+              editing={isEditing}
+            />
+            <FormInput placeholder="City" editing={isEditing} />
 
             <Row css={{ gap: "10px" }}>
               <Col>
-                <FormInput placeholder="State" fullWidth />
+                <FormInput placeholder="State" fullWidth editing={isEditing} />
               </Col>
               <Col>
-                <FormInput placeholder="Zip Code" fullWidth />
+                <FormInput
+                  placeholder="Zip Code"
+                  fullWidth
+                  editing={isEditing}
+                />
               </Col>
             </Row>
           </Grid>
 
           <Grid xs={12} sm={3} direction="column">
             <Text h3>Categories</Text>
-            <FormInput placeholder="Category" />
+            <FormInput placeholder="Category" editing={isEditing} />
             <Spacer y={1} />
             <Text h3>Keywords</Text>
-            <FormInput placeholder="Keyword" />
+            <FormInput placeholder="Keyword" editing={isEditing} />
           </Grid>
         </Grid.Container>
       </Container>
       <Spacer y={1} />
       <Card.Divider css={{ bgColor: "DarkGray" }} />
       <Spacer y={1} />
-      <Container fluid>
+      {isEditing && <Container fluid>
         <Row css={{ gap: "22px" }}>
-          <Button>Save Changes</Button>
+          <Button
+            onPress={() => {
+              setIsEditing(false);
+            }}
+          >
+            Save Changes
+          </Button>
           <Button bordered>Cancel</Button>
         </Row>
-      </Container>
+      </Container>}
       <Spacer y={1} />
     </>
   );

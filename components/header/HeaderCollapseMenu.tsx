@@ -6,7 +6,7 @@ const HeaderCollapseMenu = ({ items }: { items: HeaderContent[] }) => {
   return (
     <Navbar.Collapse style={{ opacity: 1, backgroundColor: "white", marginLeft: "20px" }} showIn="sm" >
       {items.map((item, index) => (
-        <Navbar.CollapseItem key={item.title} css={{ fontSize: 36 }}>
+        <Navbar.CollapseItem key={item.title} css={{ fontSize: 20, fontWeight: "$semibold" }}>
           <NextLink
             color="inherit"
             href={item.href ?? "#"}

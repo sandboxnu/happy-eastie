@@ -10,7 +10,7 @@ export default function FooterBrand() {
         justifyContent: "center",
         marginTop: 50,
       }}
-      xs={0}
+      xs={12}
       sm={12}
       md={4}
     >

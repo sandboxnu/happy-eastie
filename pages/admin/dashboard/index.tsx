@@ -11,17 +11,17 @@ import {
 import { WithId } from "mongodb";
 import { NextPageContext } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
-import { AdminDashboardHeader } from "../../components/admin/dashboard/adminDashboardHeader";
-import { AdminDashboardSearch } from "../../components/admin/dashboard/adminDashboardSearch";
-import { ResourceRow } from "../../components/admin/dashboard/resourceRow";
-import { Resource } from "../../models/types2";
+import { AdminDashboardHeader } from "../../../components/admin/dashboard/adminDashboardHeader";
+import { AdminDashboardSearch } from "../../../components/admin/dashboard/adminDashboardSearch";
+import { ResourceRow } from "../../../components/admin/dashboard/resourceRow";
+import { Resource } from "../../../models/types2";
 
 type AdminDashboardProps = {
   resources: WithId<Resource>[];
 };
 
 export async function getServerSideProps(ctx: NextPageContext) {
-  const res = await fetch(`http://${ctx.req?.headers.host}/api/admin`);
+  const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`);
   const resources: WithId<Resource>[] = await res.json();
   resources.sort((r1, r2) => r1.name.localeCompare(r2.name));
   return {

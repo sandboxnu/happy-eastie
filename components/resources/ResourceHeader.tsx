@@ -33,7 +33,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (
     <>
       <Text className={styles.resourceHeader}>{props.resource.name}</Text>
 
-      <Grid.Container gap={2} justify="center">
+      <Grid.Container gap={1} justify="center">
         {props.resource.category?.map((c, i) => (
           <Grid key={i}>
             <Tag text={c} color={TagsMap().get(c) ?? "black"} />
@@ -41,13 +41,14 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (
         ))}
       </Grid.Container>
 
-      <Grid.Container gap={2} justify="center">
+      <Grid.Container gap={4} justify="center">
         <Grid>
           <Button
             auto
             color="primary"
             icon={
               <Image
+                width="26px"
                 src="/phonewhite.svg"
                 objectFit="fill"
                 alt="Call the organization"
@@ -65,6 +66,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (
             color="primary"
             icon={
               <Image
+                width="26px"
                 src="/email.svg"
                 objectFit="fill"
                 alt="Email the organization"
@@ -82,7 +84,8 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (
             color="primary"
             icon={
               <Image
-                src="/share.svg"
+                width="29px"
+                src="/website.svg"
                 objectFit="fill"
                 alt="Share the organization"
               />

@@ -1,4 +1,16 @@
-.descriptionText {
-    font-family: 'Raleway';
-    color: var(--secondary-text);
+.descriptionText * {
+  font-family: 'Raleway';
+  color: black;
+}
+
+@media screen and (max-width: 650px) {
+  .addressText {
+    text-align: left;
   }
+}
+
+@media screen and (min-width: 650px) {
+  .addressText {
+    text-align: right;
+  }
+}

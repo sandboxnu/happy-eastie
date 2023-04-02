@@ -3,7 +3,7 @@ import { Resource, SurveyAnswers } from "../../../models/types2"
 import { AES, enc } from "crypto-js";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
-import { RESOURCE_COLLECTION } from "../../../models/constants";
+import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE, RESOURCE_COLLECTION } from "../../../models/constants";
 
 export type ResourceData = {
   requested: WithId<Resource>[];
@@ -26,7 +26,7 @@ export default async function handler(
     // TODO: error handling for invalid bodies sent
     const encryptedFormData = req.body["data"];
     const formData: SurveyAnswers = JSON.parse(
-      AES.decrypt(encryptedFormData, "Secret Passphrase").toString(enc.Utf8)
+      AES.decrypt(encryptedFormData, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE).toString(enc.Utf8)
     );
     const resourceData = await getResources(formData);
     res.status(200).json(resourceData);

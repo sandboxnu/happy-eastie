@@ -7,12 +7,13 @@ import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { AppContext } from "../../context/context";
 import styles from "./Quiz.module.css";
+import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
 
 export const QuizInformation: React.FC = () => {
   const [documentation, setDocumentation] = useState<boolean | null>(null);
   const router = useRouter();
   const quizState = useContext(AppContext);
-  const {t} = useTranslation(["quiz"]);
+  const { t } = useTranslation(["quiz"]);
 
   const errorMessages = {
     negativeError: "Please enter a positive number.",
@@ -37,7 +38,7 @@ export const QuizInformation: React.FC = () => {
   }
 
   let initialValues = JSON.parse(
-    AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(
+    AES.decrypt(quizState.encryptedQuizResponse, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE).toString(
       enc.Utf8
     )
   );
@@ -53,10 +54,10 @@ export const QuizInformation: React.FC = () => {
 
     const encrypted = AES.encrypt(
       JSON.stringify(combinedValues),
-      "Secret Passphrase"
+      QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
     );
 
-    // clear old resources list from cache so cache never gets populated with too many lists
+    // Clear old resources list from cache so cache never gets populated with too many lists
     quizState.changeEncryptedQuizResponse(encrypted.toString());
     if (document.activeElement?.id === "back") {
       router.push("/quiz/1");

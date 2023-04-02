@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useSWRConfig } from "swr";
 import { AppContext } from "../../context/context";
 import styles from "./Quiz.module.css";
+import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
 
 export const QuizAccessibility: React.FC = () => {
   const router = useRouter();
@@ -18,7 +19,6 @@ export const QuizAccessibility: React.FC = () => {
 
   useEffect(() => {
     getLanguages().then((ls) => setLanguages(ls));
-
     getAccessibility().then((as) => setAccessibilities(as));
   }, []);
 
@@ -44,7 +44,7 @@ export const QuizAccessibility: React.FC = () => {
   }
 
   let initialValues = JSON.parse(
-    AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(
+    AES.decrypt(quizState.encryptedQuizResponse, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE).toString(
       enc.Utf8
     )
   );
@@ -53,7 +53,7 @@ export const QuizAccessibility: React.FC = () => {
     const combinedValues = Object.assign(initialValues, values);
     const encrypted = AES.encrypt(
       JSON.stringify(combinedValues),
-      "Secret Passphrase"
+      QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
     );
     // clear old resources list from cache so cache never gets populated with too many lists
     cache.delete("/api/resources");

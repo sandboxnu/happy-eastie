@@ -1,0 +1,403 @@
+[{
+  "_id": {
+    "$oid": "63dea40852245b5195efcfcc"
+  },
+  "name": "ABCD",
+  "description": "At ABCD HEAD START, we prepare your child for preschool and kindergarten using activities and experiences that develop their cognitive and emotional skills. We also have programs for pregnant women and children to fit the needs of your family.\n\n\nHead Start is a family development program that offers comprehensive services for your child as well as your entire family. Part of a highly successful national program, ABCD Head Start has locations throughout Boston, Everett, Malden, and Medford. Our services concentrate on your child’s education, nutrition, and physical and mental health.",
+  "summary": "summaryABCD",
+  "category": [
+    "Childcare"
+  ],
+  "keywords": [],
+  "incomeByHouseholdMembers": [
+    {
+      "maximum": 60000,
+      "minimum": 0
+    }
+  ],
+  "documentationRequired": false,
+  "headerImageUrl": "",
+  "website": "",
+  "phone": "123456",
+  "email": "headstart@bostonabcd.org",
+  "address": "",
+  "location": {
+    "type": "Point",
+    "coordinates": []
+  },
+  "availableLanguages": [
+    "English",
+    "Spanish",
+    "Hindi"
+  ],
+  "accessibilityOptions": [
+    "Vision"
+  ],
+  "eligibilityInfo": "info"
+},{
+  "_id": {
+    "$oid": "63dea42152245b5195f04dd0"
+  },
+  "name": "TAFDC - DTA Chelsea Center",
+  "description": "",
+  "summary": "",
+  "category": [
+    "Financial Assistance"
+  ],
+  "keywords": [],
+  "incomeByHouseholdMembers": [
+    {
+      "maximum": 60000,
+      "minimum": 20000
+    },
+    {
+      "maximum": 80000,
+      "minimum": 61000
+    }
+  ],
+  "documentationRequired": true,
+  "headerImageUrl": "",
+  "website": "",
+  "phone": "",
+  "email": "",
+  "address": "",
+  "location": {
+    "type": "Point",
+    "coordinates": []
+  },
+  "availableLanguages": [
+    "English",
+    "Spanish",
+    "Portuguese",
+    "Chinese",
+    "Vietnamese"
+  ],
+  "accessibilityOptions": [
+    "Hearing"
+  ],
+  "eligibilityInfo": ""
+},{
+  "_id": {
+    "$oid": "63e4359152245b51950f7c2f"
+  },
+  "name": "Good Neighbor Energy Fund",
+  "description": "**The Massachusetts Good Neighbor Energy Fund is available to any Massachusetts resident who, because of temporary financial difficulty, cannot meet a month's energy expense and is not eligible for state or federal energy assistance.** **Services Include:** - Financial assistance to pay for utilities during crisis. **Those who qualify may receive up to $300 per household per heating season. Our hours may change, please call to schedule an appointment.** **Due to the state’s 'Shelter in Place' restrictions, local Salvation Army Community Centers are only taking GNEF applications by phone and are closed for walk-in applications.**",
+  "summary": "Those who qualify may receive up to $300 per household per heating season.",
+  "category": [
+    "Financial Assistance"
+  ],
+  "keywords": [
+    "heating",
+    "energy",
+    "family",
+    "unemployed",
+    "low income",
+    "renter"
+  ],
+  "incomeByHouseholdMembers": [
+    {
+      "minimum": 37361,
+      "maximum": 49813
+    },
+    {
+      "minimum": 48856,
+      "maximum": 65140
+    },
+    {
+      "minimum": 60352,
+      "maximum": 80468
+    },
+    {
+      "minimum": 71847,
+      "maximum": 95795
+    },
+    {
+      "minimum": 83342,
+      "maximum": 111122
+    },
+    {
+      "minimum": 94838,
+      "maximum": 126449
+    },
+    {
+      "minimum": 96993,
+      "maximum": 129323
+    },
+    {
+      "minimum": 99148,
+      "maximum": 132197
+    }
+  ],
+  "documentationRequired": false,
+  "headerImageUrl": "",
+  "website": "https://www.findhelp.org/salvation-army-of-massachusetts--malden-ma--good-neighbor-energy-fund/6141527029448704?postal=02128",
+  "phone": "617-884-0260",
+  "email": "",
+  "address": "258 Chestnut St\nChelsea, MA 02150",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      "42.3938082",
+      "-71.0370046"
+    ]
+  },
+  "availableLanguages": [
+    "English"
+  ],
+  "accessibilityOptions": [],
+  "eligibilityInfo": "Income must fall between 60 and 80 percent of the state's median income levels."
+},{
+  "_id": {
+    "$oid": "63e435fb579bb11437ef7177"
+  },
+  "name": "Head Start & Early Head Start",
+  "description": "Prepare young children for school",
+  "summary": "Educational programs for young children",
+  "category": [
+    "Childcare",
+    "Education"
+  ],
+  "keywords": [],
+  "incomeByHouseholdMembers": [],
+  "documentationRequired": false,
+  "headerImageUrl": "",
+  "website": "https://bostonabcd.org/service/head-start-childrens-services/",
+  "phone": "617.348.6388",
+  "email": "headstart@bostonabcd.org",
+  "address": "64 Bradshaw Street Dorchester, MA 02124",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      42.29807,
+      -71.08355
+    ]
+  },
+  "availableLanguages": [
+    "English"
+  ],
+  "accessibilityOptions": [],
+  "eligibilityInfo": "Family"
+},{
+  "_id": {
+    "$oid": "63e437925b0ca46f42af58bb"
+  },
+  "name": "Know Your Status",
+  "description": "Free HIV/STI testing in Greater Boston area.",
+  "summary": "Free HIV/STI testing in Greater Boston area.",
+  "category": [
+    "Healthcare"
+  ],
+  "keywords": [],
+  "incomeByHouseholdMembers": [],
+  "documentationRequired": false,
+  "headerImageUrl": "",
+  "website": "https://bostonabcd.org/service/know-your-status/",
+  "phone": "617.348.6263",
+  "email": "communityprevention@bostonabcd.org",
+  "address": "105 Chauncy Street, 4th floor Boston, MA",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      42.352982,
+      -71.061089
+    ]
+  },
+  "availableLanguages": [
+    "English"
+  ],
+  "accessibilityOptions": [],
+  "eligibilityInfo": "Boston resident under 25"
+},{
+  "_id": {
+    "$oid": "63e433536ad25b267aba92bf"
+  },
+  "name": "SNAP (EBT)",
+  "description": "SNAP is a federal nutrition program by the Department of Transitional Assistance (DTA) of Massachusetts that includes benefits such as monthly funds on an EBT card to buy food, free education and training opportunities, and connections to other kinds of help like utility discounts, free school meals, and discounted internet.",
+  "summary": "SNAP is a federal nutrition program.",
+  "category": [
+    "Financial Assistance"
+  ],
+  "keywords": [
+    "food",
+    "financial",
+    "benefits"
+  ],
+  "incomeByHouseholdMembers": [
+    {
+      "minimum": 0,
+      "maximum": 27180
+    },
+    {
+      "minimum": 27181,
+      "maximum": 36624
+    },
+    {
+      "minimum": 36625,
+      "maximum": 46056
+    },
+    {
+      "minimum": 46057,
+      "maximum": 55500
+    },
+    {
+      "minimum": 55501,
+      "maximum": 64980
+    },
+    {
+      "minimum": 64981,
+      "maximum": 74376
+    },
+    {
+      "minimum": 74377,
+      "maximum": 83820
+    },
+    {
+      "minimum": 83821,
+      "maximum": 93264
+    }
+  ],
+  "documentationRequired": true,
+  "headerImageUrl": "",
+  "website": "https://www.mass.gov/snap-benefits-formerly-food-stamps",
+  "phone": "8773822363",
+  "email": "",
+  "address": "60 Main Street, Brockton, MA 02301",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      42.0845387,
+      -71.0216
+    ]
+  },
+  "availableLanguages": [
+    "English",
+    "Spanish"
+  ],
+  "accessibilityOptions": [],
+  "eligibilityInfo": "Income-based"
+},{
+  "_id": {
+    "$oid": "63e437bc5b0ca46f42af58bc"
+  },
+  "name": "ABCD Food Delivery",
+  "description": "Food",
+  "summary": "Monthly grocery delivery including fresh produce, meats, and other essential goods.",
+  "category": [
+    "Food"
+  ],
+  "keywords": [],
+  "incomeByHouseholdMembers": [
+    [
+      0,
+      67400
+    ],
+    [
+      0,
+      77000
+    ],
+    [
+      0,
+      86650
+    ],
+    [
+      0,
+      96250
+    ],
+    [
+      0,
+      103950
+    ],
+    [
+      0,
+      111650
+    ],
+    [
+      0,
+      119350
+    ],
+    [
+      0,
+      127050
+    ]
+  ],
+  "documentationRequired": false,
+  "headerImageUrl": "",
+  "website": "https://bostonabcd.org/service/abcd-food-delivery/",
+  "phone": "617-348-6222",
+  "email": "fooddelivery@bostonabcd.org",
+  "address": "",
+  "location": {
+    "type": "Point",
+    "coordinates": []
+  },
+  "availableLanguages": [
+    "English",
+    "Spanish",
+    "Portuguese",
+    "Vietnamese",
+    "Chinese",
+    "Arabic"
+  ],
+  "accessibilityOptions": [],
+  "eligibilityInfo": "55+, disabled, household of 1-2"
+},{
+  "_id": {
+    "$oid": "63e43ac2091948127b2299bc"
+  },
+  "name": "ABCD Food Pop-Ups",
+  "description": "Groceries",
+  "summary": "This program provides fresh groceries to households including produce, meats, and other essential goods.",
+  "category": [
+    "Food"
+  ],
+  "keywords": [],
+  "incomeByHouseholdMembers": [
+    {
+      "minimum": 0,
+      "maximum": 67400
+    },
+    [
+      0,
+      77000
+    ],
+    [
+      0,
+      86650
+    ],
+    [
+      0,
+      96250
+    ],
+    [
+      0,
+      103950
+    ],
+    [
+      0,
+      111650
+    ],
+    [
+      0,
+      119350
+    ],
+    [
+      0,
+      127050
+    ]
+  ],
+  "documentationRequired": false,
+  "headerImageUrl": "",
+  "website": "",
+  "phone": "617-208-8677",
+  "email": "mobilefood@bostonabcd.org",
+  "address": "",
+  "location": {
+    "type": "Point",
+    "coordinates": []
+  },
+  "availableLanguages": [
+    "English"
+  ],
+  "accessibilityOptions": [],
+  "eligibilityInfo": "Be a resident of Boston, Medford, Everett, Belmont, Newton or Winchester. Have a household annual income under 80% AMI."
+}]

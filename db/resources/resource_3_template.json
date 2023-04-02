@@ -1,0 +1,32 @@
+{
+"name": "",
+  "description": "",
+  "summary": "",
+  "category": [
+    ""
+  ],
+  "keywords": [],
+  "incomeByHouseholdMembers": [
+    {
+      "maximum": 60000,
+      "minimum": 0
+    }
+  ],
+  "documentationRequired": false,
+  "headerImageUrl": "",
+  "website": "",
+  "phone": "",
+  "email": "",
+  "address": "",
+  "location": {
+    "type": "Point",
+    "coordinates": []
+  },
+  "availableLanguages": [
+    ""
+  ],
+  "accessibilityOptions": [
+    ""
+  ],
+  "eligibilityInfo": ""
+}

@@ -42,6 +42,11 @@ const ResourcePageContent: NextPage = () => {
   if (!resource)
     return <div>Internal server error: invalid resource loaded</div>;
 
+  const saveResource = async () => {
+    // TODO: Save the resource
+    setIsEditing(false);
+  }
+
   return (
     <>
       <Image
@@ -75,9 +80,7 @@ const ResourcePageContent: NextPage = () => {
               )}
             </Row>
           </Grid>
-          <Grid xs={12}>
-            <Card.Divider css={{ bgColor: "DarkGray" }} />
-          </Grid>
+          <Card.Divider />
           <Grid xs={12} direction="column">
             <Text h3>Summary</Text>
             <FormInput
@@ -169,14 +172,14 @@ const ResourcePageContent: NextPage = () => {
         </Grid.Container>
       </Container>
       <Spacer y={1} />
-      <Card.Divider css={{ bgColor: "DarkGray" }} />
+      <Card.Divider />
       <Spacer y={1} />
       {isEditing && (
         <Container fluid>
           <Row css={{ gap: "22px" }}>
             <Button
               onPress={() => {
-                setIsEditing(false);
+                saveResource();
               }}
             >
               Save Changes

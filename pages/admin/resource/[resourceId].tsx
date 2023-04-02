@@ -11,6 +11,7 @@ import {
   Grid,
   Image,
   Input,
+  Loading,
   Row,
   Spacer,
   Text,
@@ -31,30 +32,10 @@ const ResourcePageContent: NextPage = () => {
   const { resourceId } = router.query;
   const { resource, isLoading, error } = useResource(resourceId);
 
-  // if (error) return <div>{error.message}</div>;
-  // if (isLoading) return <Loading/>;
-  // if (!resource)
-  //   return <div>Internal server error: invalid resource loaded</div>;
-
-  const fakeResource = {
-    "name": "Fake Resource",
-    "description": "I am fake",
-    "summary": "I am fake but shorter",
-    "category": [],
-    "keywords": [],
-    "incomeByHouseholdMembers": [],
-    "documentationRequired": false,
-    "headerImageUrl": "",
-    "website": "www.fake.com",
-    "phone": "617-555-5555",
-    "email": "fake@fake.com",
-    "address": "123 fake st",
-    "location": {"type": "Point", "coordinates": []},
-    "availableLanguages": [],
-    "accessibilityOptions": [],
-    "eligibilityInfo": ""
-  }
-  
+  if (error) return <div>{error.message}</div>;
+  if (isLoading) return <Loading />;
+  if (!resource)
+    return <div>Internal server error: invalid resource loaded</div>;
 
   return (
     <>
@@ -74,13 +55,19 @@ const ResourcePageContent: NextPage = () => {
                 size="xl"
                 placeholder="Resource Name"
                 editing={isEditing}
-                value={fakeResource.name}
+                value={resource.name}
               />
-              { !isEditing && <Button auto iconRight={<img src="/pencil.svg" />} onPress={
-                () => { setIsEditing(true) }
-              }>
-                Edit Resource
-              </Button>}
+              {!isEditing && (
+                <Button
+                  auto
+                  iconRight={<img src="/pencil.svg" />}
+                  onPress={() => {
+                    setIsEditing(true);
+                  }}
+                >
+                  Edit Resource
+                </Button>
+              )}
             </Row>
           </Grid>
           <Grid xs={12}>
@@ -93,12 +80,17 @@ const ResourcePageContent: NextPage = () => {
               placeholder="Summary"
               size="md"
               editing={isEditing}
-              value={fakeResource.summary}
+              value={resource.summary}
             />
           </Grid>
           <Grid xs={12} direction="column">
             <Text h3>Description</Text>
-            <FormInput multiLine editing={isEditing} placeholder={"Description"} />
+            <FormInput
+              multiLine
+              editing={isEditing}
+              placeholder="Description"
+              value={resource.description}
+            />
           </Grid>
 
           <Grid xs={12} sm={3} direction="column">
@@ -111,7 +103,11 @@ const ResourcePageContent: NextPage = () => {
                   filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
                 }}
               />
-              <FormInput placeholder="Email" editing={isEditing} value={fakeResource.email} />
+              <FormInput
+                placeholder="Email"
+                editing={isEditing}
+                value={resource.email}
+              />
             </Row>
             <Spacer y={0.25} />
             <Row justify="flex-start" align="center" css={{ gap: "12px" }}>
@@ -122,16 +118,28 @@ const ResourcePageContent: NextPage = () => {
                   filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
                 }}
               />
-              <FormInput placeholder="Phone" editing={isEditing} value={fakeResource.phone} />
+              <FormInput
+                placeholder="Phone"
+                editing={isEditing}
+                value={resource.phone}
+              />
             </Row>
           </Grid>
 
           <Grid xs={12} sm={3} direction="column">
             <Text h3>Website</Text>
-            <FormInput placeholder="Website" editing={isEditing} value={fakeResource.website} />
+            <FormInput
+              placeholder="Website"
+              editing={isEditing}
+              value={resource.website}
+            />
             <Spacer y={1} />
             <Text h3>Address</Text>
-            <FormInput placeholder="Street Address" editing={isEditing} value={fakeResource.address} />
+            <FormInput
+              placeholder="Street Address"
+              editing={isEditing}
+              value={resource.address}
+            />
           </Grid>
 
           <Grid xs={12} sm={3} direction="column">
@@ -141,23 +149,43 @@ const ResourcePageContent: NextPage = () => {
             <Text h3>Keywords</Text>
             <FormInput placeholder="Keyword" editing={isEditing} />
           </Grid>
+
+          <Card.Divider />
+
+          <Grid xs={12} direction="column">
+            <Text h3>Eligibility Criteria</Text>
+            <FormInput
+              multiLine
+              editing={isEditing}
+              placeholder={"Eligibility Criteria"}
+            />
+          </Grid>
         </Grid.Container>
       </Container>
       <Spacer y={1} />
       <Card.Divider css={{ bgColor: "DarkGray" }} />
       <Spacer y={1} />
-      {isEditing && <Container fluid>
-        <Row css={{ gap: "22px" }}>
-          <Button
-            onPress={() => {
-              setIsEditing(false);
-            }}
-          >
-            Save Changes
-          </Button>
-          <Button bordered>Cancel</Button>
-        </Row>
-      </Container>}
+      {isEditing && (
+        <Container fluid>
+          <Row css={{ gap: "22px" }}>
+            <Button
+              onPress={() => {
+                setIsEditing(false);
+              }}
+            >
+              Save Changes
+            </Button>
+            <Button
+              bordered
+              onPress={() => {
+                setIsEditing(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </Row>
+        </Container>
+      )}
       <Spacer y={1} />
     </>
   );

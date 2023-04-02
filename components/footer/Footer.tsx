@@ -5,13 +5,11 @@ import FooterCredits from './FooterCredits';
 import FooterLinks from './FooterLinks';
 
 export default function Footer() {
-
     return (
-        <Grid.Container direction='row' className={styles.footerGrid}>
-            <FooterBrand/>
-            <FooterLinks/>
-            <FooterCredits/>
+        <Grid.Container className={styles.footerGrid}>
+            <FooterBrand />
+            <FooterLinks />
+            <FooterCredits />
         </Grid.Container>
     )
-
 }

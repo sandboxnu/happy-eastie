@@ -62,7 +62,7 @@ function EventCard({ event }: { event: EastieEvent }) {
       </Card.Body>
 
       <Card.Footer>
-        <Row justify="flex-start" css={{ gap: 15, marginLeft: "8px", marginBottom: "15px" }}>
+        <Row justify="flex-start" css={{ gap: 15, marginLeft: "8px", marginBottom: "5px" }}>
           {event.tags.map((tag, index) => (
             <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
           ))}
@@ -79,11 +79,13 @@ export default function TrendingSection() {
         <Spacer x={0.8} />
         <Text h1 className={HomeStyles.sectionHeader}>Trending Near You</Text>
       </Row>
+      <Spacer y={1} />
       <Row gap={4} className={styles.eventCardsRow}>
         {events.map((event, index) => (
           <EventCard key={index} event={event} />
         ))}
       </Row>
+      <Spacer y={2} />
     </Container>
   );
 }

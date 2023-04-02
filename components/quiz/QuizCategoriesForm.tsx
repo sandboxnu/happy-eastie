@@ -8,12 +8,14 @@ import { Checkbox, Col, Grid, Row } from "@nextui-org/react";
 import styles from "./Quiz.module.css";
 import { CategoryCard } from "./CategoryCard";
 import { useTranslation } from "next-i18next";
+import Loading from '../../components/Loading';
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { t } = useTranslation(['quiz', 'common'])
 
   function cardSelected(cardTitle: string) {
@@ -27,7 +29,11 @@ export const QuizCategoriesForm: React.FC = () => {
   }
 
   useEffect(() => {
-    getCategories().then((cs) => setAllCategories(cs));
+    getCategories().then((cs) => {
+      setIsLoading(false)
+      setAllCategories(cs)
+    });
+
   }, []);
 
   let initialValues: SurveyAnswers = {
@@ -51,6 +57,7 @@ export const QuizCategoriesForm: React.FC = () => {
   async function getCategories(): Promise<string[]> {
     const response = await fetch("/api/resources/categories");
     const categories = await response.json();
+
     return categories;
   }
 
@@ -70,9 +77,12 @@ export const QuizCategoriesForm: React.FC = () => {
     router.push("/quiz/2");
   };
 
-  return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <Form>
+  const getContent = () => {
+    if (isLoading) {
+      return <Loading />
+    }
+    else {
+      return (
         <Grid.Container gap={2}>
           {allCategories.map((c) => (
             <Grid xs={6} sm={4} md={3} key={c}>
@@ -85,7 +95,14 @@ export const QuizCategoriesForm: React.FC = () => {
               {t('Continue')}
             </button>
           </Row>
-        </Grid.Container>
+        </Grid.Container>)
+    }
+  }
+
+  return (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        {getContent()}
       </Form>
     </Formik>
   );

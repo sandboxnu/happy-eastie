@@ -7,6 +7,7 @@ import { AES, enc } from "crypto-js";
 import { ResourcesResponse } from "../../../pages/api/resources";
 import { ResourceSearchBar } from "./ResourceSearchBar";
 import { FormElement } from "@nextui-org/react";
+import Loading from "../../../components/Loading";
 
 const SEARCH_PLACEHOLDER_TEXT = "Search Resources";
 
@@ -38,6 +39,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
   const [accessibilityOptions, setAccessibilityOptions] = useState<string[]>([]);
   const [selectedAccessibility, setSelectedAccessibility] = useState<string[]>([]);
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const getCategoriesLanguagesAccessibility = async () => {
     const allCategories = await fetch("/api/resources/categories");
     const categoriesResult = await allCategories.json()
@@ -65,6 +68,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
       languages: selectedLanguages.length == 0 ? languageOptions : selectedLanguages,
       accessibility: selectedAccessibility.length == 0 ? accessibilityOptions : selectedAccessibility,
     };
+
+    setIsLoading(false);
 
     const fetchFilteredResources = async () => {
       const encryptedQuizResponse = AES.encrypt(
@@ -100,6 +105,35 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
     props.setDisplayResources(searchQueryAppliedResources);
   }, [filteredResources, searchQuery]);
 
+  const getContent = () => {
+    if (isLoading) {
+      return <Loading />
+    }
+    else {
+      return (
+        <>
+          <SidebarCategories
+            categories={categories}
+            setSelectedCategories={setSelectedCategories}
+            selectedCategories={selectedCategories}
+          />
+          <SidebarStatus
+            setHouseholdMembers={setHouseholdMembers}
+            setHouseholdIncome={setHouseholdIncome}
+            setDocumentationNotRequired={setDocumentationNotRequired}
+
+            languageOptions={languageOptions}
+            selectedLanguages={selectedLanguages}
+            setSelectedLanguages={setSelectedLanguages}
+
+            accessibilityOptions={accessibilityOptions}
+            setSelectedAccessibility={setSelectedAccessibility}
+            selectedAccessibility={selectedAccessibility} />
+        </>
+      )
+    }
+  }
+
   return (
     <>
       <ResourceSearchBar
@@ -108,23 +142,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
           setSearchQuery(e.target.value);
         }}
       />
-      <SidebarCategories
-        categories={categories}
-        setSelectedCategories={setSelectedCategories}
-        selectedCategories={selectedCategories}
-      />
-      <SidebarStatus
-        setHouseholdMembers={setHouseholdMembers}
-        setHouseholdIncome={setHouseholdIncome}
-        setDocumentationNotRequired={setDocumentationNotRequired}
-
-        languageOptions={languageOptions}
-        selectedLanguages={selectedLanguages}
-        setSelectedLanguages={setSelectedLanguages}
-
-        accessibilityOptions={accessibilityOptions}
-        setSelectedAccessibility={setSelectedAccessibility}
-        selectedAccessibility={selectedAccessibility} />
+      {getContent()}
     </>
   );
 };

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useSWRConfig } from "swr";
 import { AppContext } from "../../context/context";
 import styles from "./Quiz.module.css";
+import Loading from '../../components/Loading';
 
 export const QuizAccessibility: React.FC = () => {
   const router = useRouter();
@@ -14,12 +15,19 @@ export const QuizAccessibility: React.FC = () => {
   const { cache } = useSWRConfig();
   const [languages, setLanguages] = useState<string[]>([]);
   const [accessibilities, setAccessibilities] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { t } = useTranslation(["quiz"]);
 
   useEffect(() => {
-    getLanguages().then((ls) => setLanguages(ls));
+    getLanguages().then((ls) => {
+      setIsLoading(false)
+      setLanguages(ls)
+    });
 
-    getAccessibility().then((as) => setAccessibilities(as));
+    getAccessibility().then((as) => {
+      setIsLoading(false)
+      setAccessibilities(as)
+    });
   }, []);
 
   async function getLanguages(): Promise<string[]> {
@@ -65,32 +73,13 @@ export const QuizAccessibility: React.FC = () => {
     }
   };
 
-  return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <Form>
-        <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
-          <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>{t("Languages")}</label>
-            <Spacer y={1} />
-            <Checkbox.Group>
-              {languages.map((c) => (
-                <label key={c} className={styles.checkboxItem}>
-                  <Field
-                    type="checkbox"
-                    name="languages"
-                    value={t(c)}
-                    id={c}
-                    className={styles.checkbox}
-                  />
-                  <span className={styles.categoryText}>{c}</span>
-                </label>
-              ))}
-            </Checkbox.Group>
-          </Grid>
-
-          <Grid md={2} xs={0} />
-
-          <Grid md={2} xs={8} direction="column">
+  const getAccessibilityContent = () => {
+    if (isLoading) {
+      return <Loading/>
+    }
+    else {
+      return (
+        <Grid md={2} xs={8} direction="column">
             <Checkbox.Group>
               <label className={styles.quizFieldText}>{t("Accessibility")}</label>
               <Spacer y={1} />
@@ -108,7 +97,45 @@ export const QuizAccessibility: React.FC = () => {
               ))}
             </Checkbox.Group>
           </Grid>
+      )
+    }
+  }
 
+  const getLanguageContent = () => {
+    if (isLoading) {
+      return <Loading/>
+    }
+    else {
+      return (
+        <Grid md={2} xs={8} direction="column">
+            <label className={styles.quizFieldText}>{t("Languages")}</label>
+            <Spacer y={1} />
+            <Checkbox.Group>
+              {languages.map((c) => (
+                <label key={c} className={styles.checkboxItem}>
+                  <Field
+                    type="checkbox"
+                    name="languages"
+                    value={t(c)}
+                    id={c}
+                    className={styles.checkbox}
+                  />
+                  <span className={styles.categoryText}>{c}</span>
+                </label>
+              ))}
+            </Checkbox.Group>
+          </Grid>
+      )
+    }
+  }
+
+  return (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
+          {getLanguageContent()}
+          <Grid md={2} xs={0} />
+          {getAccessibilityContent()}
           <Grid xs={12} justify="space-between">
             <button className={styles.back} type="submit" id="back">
               {t('Back')}

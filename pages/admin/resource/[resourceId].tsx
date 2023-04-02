@@ -6,24 +6,17 @@ import ReactMarkdown from "react-markdown";
 import {
   Button,
   Card,
-  Col,
   Container,
   Grid,
   Image,
-  Input,
   Loading,
   Row,
   Spacer,
   Text,
-  Textarea,
 } from "@nextui-org/react";
-import styles from "./[resourceId].module.css";
 import { useResource } from "../../../hooks/useResource";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
 import { useState } from "react";
-// import { ResourceDescription } from "../../components/resources/ResourceDescription";
-// import Loading from "../../components/Loading";
-// import Layout from "../../components/Layout";
 
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -32,8 +25,20 @@ const ResourcePageContent: NextPage = () => {
   const { resourceId } = router.query;
   const { resource, isLoading, error } = useResource(resourceId);
 
+  const LoadingScreen = () => {
+    return (
+      <Grid.Container>
+        <Grid xs={12} direction="column" justify="center" alignItems="center">
+          <Spacer y={2} />
+          <Loading size="xl" />
+          <Text h3>Loading resources...</Text>
+        </Grid>
+      </Grid.Container>
+    );
+  };
+
   if (error) return <div>{error.message}</div>;
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingScreen />;
   if (!resource)
     return <div>Internal server error: invalid resource loaded</div>;
 
@@ -158,6 +163,7 @@ const ResourcePageContent: NextPage = () => {
               multiLine
               editing={isEditing}
               placeholder={"Eligibility Criteria"}
+              value={resource.eligibilityInfo}
             />
           </Grid>
         </Grid.Container>
@@ -191,7 +197,4 @@ const ResourcePageContent: NextPage = () => {
   );
 };
 
-const ResourcePage = () => {
-  return <></>;
-};
 export default ResourcePageContent;

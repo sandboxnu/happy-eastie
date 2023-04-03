@@ -79,7 +79,7 @@ export const QuizCategoriesForm: React.FC = () => {
 
   const getContent = () => {
     if (isLoading) {
-      return <Loading />
+      return <Loading relative />
     }
     else {
       return (

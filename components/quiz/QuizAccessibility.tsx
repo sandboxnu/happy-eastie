@@ -15,17 +15,19 @@ export const QuizAccessibility: React.FC = () => {
   const { cache } = useSWRConfig();
   const [languages, setLanguages] = useState<string[]>([]);
   const [accessibilities, setAccessibilities] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLanguagesLoading, setIsLanguagesLoading] = useState<boolean>(true);
+  const [isAccessibilityLoading, setIsAccessibilityLoading] = useState<boolean>(true);
+
   const { t } = useTranslation(["quiz"]);
 
   useEffect(() => {
     getLanguages().then((ls) => {
-      setIsLoading(false)
+      setIsLanguagesLoading(false)
       setLanguages(ls)
     });
 
     getAccessibility().then((as) => {
-      setIsLoading(false)
+      setIsAccessibilityLoading(false)
       setAccessibilities(as)
     });
   }, []);
@@ -74,8 +76,8 @@ export const QuizAccessibility: React.FC = () => {
   };
 
   const getAccessibilityContent = () => {
-    if (isLoading) {
-      return <Loading/>
+    if (isAccessibilityLoading) {
+      return <Loading relative/>
     }
     else {
       return (
@@ -102,8 +104,8 @@ export const QuizAccessibility: React.FC = () => {
   }
 
   const getLanguageContent = () => {
-    if (isLoading) {
-      return <Loading/>
+    if (isLanguagesLoading) {
+      return <Loading relative/>
     }
     else {
       return (
@@ -129,23 +131,31 @@ export const QuizAccessibility: React.FC = () => {
     }
   }
 
+  const getContent = () => {
+    if(isLanguagesLoading || isAccessibilityLoading) {
+      return <Loading relative/>
+    } else {
+      return (        <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
+      {getLanguageContent()}
+      <Grid md={2} xs={0} />
+      {getAccessibilityContent()}
+      <Grid xs={12} justify="space-between">
+        <button className={styles.back} type="submit" id="back">
+          {t('Back')}
+        </button>
+
+        <button className={styles.submit} type="submit" id="submit">
+          {t('Submit')}
+        </button>
+      </Grid>
+    </Grid.Container>)
+    }
+  }
+
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
-        <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
-          {getLanguageContent()}
-          <Grid md={2} xs={0} />
-          {getAccessibilityContent()}
-          <Grid xs={12} justify="space-between">
-            <button className={styles.back} type="submit" id="back">
-              {t('Back')}
-            </button>
-
-            <button className={styles.submit} type="submit" id="submit">
-              {t('Submit')}
-            </button>
-          </Grid>
-        </Grid.Container>
+        {getContent()}
       </Form>
     </Formik>
   );

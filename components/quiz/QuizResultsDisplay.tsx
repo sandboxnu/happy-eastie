@@ -56,7 +56,7 @@ export const QuizResultsDisplay: React.FC<QuizResultsDisplayProps> = (props: Qui
           <HelpTooltip diameter={15} text="These are resources that you qualify for and that are under the categories you requested in the first page." />
         </Row>
       </Grid>
-      <Grid direction="column">
+      <Grid direction="column" css={{width: "100%"}}>
         <ResourcesDisplay resources={requestedResources} />
         {additionalResources.length > 0 && (
           <>

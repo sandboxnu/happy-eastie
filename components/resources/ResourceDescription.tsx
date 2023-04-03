@@ -23,10 +23,13 @@ export const ResourceDescription: React.FC<ResourceDescriptionProps> = (
             {props.resource.description}
           </ReactMarkdown>
           <Spacer y={2}/>
-          <Text h3>
+
+          {props.resource.eligibilityInfo && (<>
+            <Text h3>
             Eligibility Criteria
           </Text>
-          {props.resource.eligibilityInfo && <ReactMarkdown className={styles.descriptionText}>{props.resource.eligibilityInfo}</ReactMarkdown>}
+          <ReactMarkdown className={styles.descriptionText}>{props.resource.eligibilityInfo}</ReactMarkdown>
+          </>)}
         </div>
       </Grid>
       {props.resource.location && (

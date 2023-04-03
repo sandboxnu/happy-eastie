@@ -16,7 +16,7 @@ const events = [
   {
     name: "Healthy Baby, Healthy Mama",
     imageFilename: "healthyBabyHealthyMama.png",
-    summary: "Learn if you and your child may be eilgible for this service. If you are eligible, please apply! Adding more text to make this summary longer! One more sentence.",
+    summary: "Learn if you and your child may be eligible for this service. If you are eligible, please apply! Adding more text to make this summary longer! One more sentence.",
     tags: ["Childcare", "Healthcare", "Any Income"],
   },
   {

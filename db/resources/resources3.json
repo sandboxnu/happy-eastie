@@ -1,0 +1,185 @@
+[
+  {
+    "name": "Community Servings Meal Delivery",
+    "description": "Community Servings prepares made-from-scratch meals that are medically tailored – meaning they’re customized to meet the nutritional and medical needs of our clients who are fighting illnesses like HIV/AIDS, diabetes, cancer, kidney disease, and many others. They offer 15 medical diets, with up to three combinations per client and arrive once a week on a specific delivery day.\nThey deliver and ship  medically tailored meals to clients across Massachusetts. For clients that reside outside of our delivery area, meals are shipped. They provide meals for the client and family members including a caregiver (parent/spouse), and children under the age of 18.\nNOTE: Community Servings is not an allergy certified facility, and they are unable to accommodate gluten-free restrictions, and wheat and soy intolerances.",
+    "summary": "Community Servings home-delivers medically tailored fresh meals to individuals and families with critical and chronic illnesses",
+    "category": ["Food", "Healthcare"],
+    "documentationRequired": true,
+    "headerImageUrl": "https://www.tbf.org/-/media/tbf/images/blog/community-servings-logo/community-servings.jpg?sc_lang=en&h=400&w=800&la=en&hash=E4FAC01084C6E83E99F9D56B44DA2CBB",
+    "website": "https://www.servings.org/meal-delivery/",
+    "phone": "617.522.7777",
+    "email": "info@servings.org",
+    "address": "179 Amory Street, Jamaica Plain, MA 02130",
+    "location": {
+      "type": "Point",
+      "coordinates": [42.317648, -71.1027157]
+    },
+    "availableLanguages": ["English", "French", "Spanish", "Portuguese"],
+    "eligibilityInfo": "- Must be a resident of Massachusetts\n- Must be able to fill out medical certification with recent laboratory values, disease specifics, and signature of healthcare provider\n- Primary diagnosis of critical and chronic illnesses include: AIDS (CDC defined), HIV+, Mono-infected Hepatitis C, Cancer, Liver Disease, Multiple Sclerosis, Parkinson’s Disease, Cardiac Disease, Diabetes II or Diabetes I, Lung Disease, Renal Disease.\n- Mobility Factors that impact client’s ability to maintain a healthy diet & independent lifestyle\n    - Bed bound\n    - Can’t stand for more than 15 minutes at a time\n  - Can’t walk more than 50 feet\n  - Can’t carry a weight of more than 15 pounds\n  - Wheelchair\n  - Quadriplegia or Paraplegia\n- Must be able to have someone home on delivery date/time to receive meals"
+  },
+  {
+    "name": "Sitters for Scholars In-Person Babysitting",
+    "description": "Sitters for Scholars is a non-profit organization that provides free volunteer babysitting to low-income mothers around the Greater Boston Area. Volunteers are college students, working professionals, moms, and retirees, all of whom are committed to helping single moms pursue their degree while having fun spending time with children! Sitters for Scholars uses a unique matching model which includes creating profiles detailing the information of families and volunteer sitters. Match requests using profiles are based on the compatibility of experience, availability, and other preferences.",
+    "summary": "Provides free childcare services to low-income caregivers pursuing online or in-person training or educational courses (technical school, GED, college, etc).",
+    "category": ["Childcare"],
+    "keywords": [],
+    "incomeByHouseholdMembers": [
+      {
+        "maximum": 36450,
+        "minimum": 0
+      },
+      {
+        "maximum": 49300,
+        "minimum": 0
+      },
+      {
+        "maximum": 62150,
+        "minimum": 0
+      },
+      {
+        "maximum": 75000,
+        "minimum": 0
+      },
+      {
+        "maximum": 87850,
+        "minimum": 0
+      },
+      {
+        "maximum": 100700,
+        "minimum": 0
+      },
+      {
+        "maximum": 113550,
+        "minimum": 0
+      },
+      {
+        "maximum": 126400,
+        "minimum": 0
+      }
+    ],
+    "documentationRequired": true,
+    "headerImageUrl": "https://images.squarespace-cdn.com/content/v1/608589fd29a43b3bb69fcd19/0d1a8b08-6a10-45bf-8ec1-148c17e7a71a/Sitters-For-Scholars_2021-Logo-Assets-MainNav.png?format=1500w",
+    "website": "https://www.sittersforscholars.org/",
+    "phone": "617-991-8817",
+    "email": "info@sittersforscholars.org",
+    "address": "769 Centre Street, Boston, MA, United States, Massachusetts",
+    "location": {
+      "type": "Point",
+      "coordinates": [42.3102, -71.11537]
+    },
+    "availableLanguages": [
+      "English",
+      "Spanish",
+      "Portuguese",
+      "French",
+      "Haitian-Creole",
+      "Mandarin",
+      "Cantonese",
+      "Vietnamese"
+    ],
+    "accessibilityOptions": [],
+    "eligibilityInfo": "Eligibility requirements for in-person babysitting  include:\n- Be enrolled in online or in-person training or educational course (technical school, GED, college, etc)\n- Have a child 0-12 years of age\n- Qualify as low-income (250% of poverty level; participation in current income-eligible program sufficient)\n- All adults residing in household must be vaccinated for Covid-19"
+  },
+  {
+    "name": "NOAH ESOL/Citizenship Classes",
+    "description": "The program offers a range of courses to meet the needs of diverse communities, including basic, intermediate, and advanced levels of language proficiency. The classes are taught by experienced and certified instructors who use interactive teaching methods to help students develop their listening, speaking, reading, and writing skills in English.\nIn addition to language instruction, the NOAH ESOL program provides students with resources and support services to help them overcome the barriers to success they may encounter as non-native English speakers. This includes assistance with job search and career development, access to healthcare services, and referrals to legal and social services.",
+    "summary": "The mission of NOAH’s ESOL program is to help new Bostonians learn, improve, and practice their use of the written and oral English language in a comfortable, communal environment, and to encourage engagement in building a stronger community.",
+    "category": ["Immigrant"],
+    "documentationRequired": false,
+    "headerImageUrl": "http://noahcdc.org/sites/default/files/noah-logo.png",
+    "website": "https://noahcdc.org/education-leadership-development/english-classes",
+    "phone": "617-418-8242",
+    "email": "mmendez@noahcdc.org",
+    "address": "143 Border St, East Boston, MA 02128",
+    "location": {
+      "type": "Point",
+      "coordinates": [42.37363, -71.04041]
+    }
+  },
+  {
+    "name": "NOAH Senior & Disabled Home Repair",
+    "description": "The program provides a range of services, including minor repairs, modifications to increase accessibility and safety, energy efficiency upgrades, and home assessments to identify potential hazards or areas for improvement. Services are provided by skilled and trained technicians who have experience working with seniors and individuals with disabilities.\nIn addition to the technical services, NOAH Senior & Disabled Home Repair also provides financial assistance and resources to help cover the cost of repairs and upgrades. This may include grants, loans, and other forms of financial support. The program works closely with community partners and volunteers to leverage resources and ensure that seniors and disabled individuals receive the help they need.",
+    "summary": "NOAH is committed to helping low and moderate-income seniors and disabled homeowners by providing affordable home safety repair services including minor repairs, emergency repairs, and senior home rehabilitation.",
+    "category": ["Senior", "Disabled"],
+    "incomeByHouseholdMembers": [
+      {
+        "maximum": 62150,
+        "minimum": 0
+      },
+      {
+        "maximum": 71000,
+        "minimum": 0
+      },
+      {
+        "maximum": 79800,
+        "minimum": 0
+      },
+      {
+        "maximum": 88650,
+        "minimum": 0
+      }
+    ],
+    "documentationRequired": false,
+    "headerImageUrl": "http://noahcdc.org/sites/default/files/noah-logo.png",
+    "website": "https://noahcdc.org/real-estate-development-housing/senior-disabled-home-repair",
+    "phone": " 617-567-5882",
+    "address": "143 Border St, East Boston, MA 02128",
+    "location": {
+      "type": "Point",
+      "coordinates": [42.37363, -71.04041]
+    },
+    "eligibilityInfo": "- Seniors must be over 62 years of age\n- Live in Charlestown, East Boston, North or West End of Boston\n- Occupy/own a 1-4 family property\n- Low-income"
+  },
+  {
+    "name": "Women, Infants, & Children (WIC) Nutrition Program - East Boston Main Clinic",
+    "description": "The Women, Infants, and Children Nutrition Program (WIC) is a federal assistance program that provides nutrition education, healthy food, and support services to pregnant women, new mothers, and young children. The program is designed to help low-income families and those who are at nutritional risk.\nIn Massachusetts, the WIC program is administered by the Department of Public Health. The program provides vouchers for nutritious foods, such as fruits and vegetables, whole grains, milk, cheese, and eggs. Participants can also receive counseling on nutrition, breastfeeding, and healthy eating habits. Additionally, the program offers referrals to other health care and social services, as needed.",
+    "summary": "The Women, Infants and Children (WIC) is designed to promote healthy food habits to low-income pregnant, postpartum, and breastfeeding women and infants and children birth to five years of age.",
+    "category": ["Childcare"],
+    "incomeByHouseholdMembers": [
+      {
+        "maximum": 25142,
+        "minimum": 0
+      },
+      {
+        "maximum": 33874,
+        "minimum": 0
+      },
+      {
+        "maximum": 42606,
+        "minimum": 0
+      },
+      {
+        "maximum": 51338,
+        "minimum": 0
+      },
+      {
+        "maximum": 60070,
+        "minimum": 0
+      },
+      {
+        "maximum": 68802,
+        "minimum": 0
+      },
+      {
+        "maximum": 77534,
+        "minimum": 0
+      },
+      {
+        "maximum": 86266,
+        "minimum": 0
+      }
+    ],
+    "documentationRequired": true,
+    "headerImageUrl": "https://www.mass.gov/files/styles/organization_logo/public/2020-02/WIC-Logo.jpg?itok=Tcy45IUQ",
+    "website": "https://www.mass.gov/locations/east-boston-wic-program-main-clinic",
+    "phone": "(617) 5698-6440",
+    "email": "wicinfo.dph@massmail.state.ma.us",
+    "address": "20 Maverick Square, 1st Floor, East Boston, MA 02128",
+    "location": {
+      "type": "Point",
+      "coordinates": [42.369710,-71.039560]
+    },
+    "accessibilityOptions": ["Wheelchair"],
+    "eligibilityInfo": "- Must live in Massachusetts.\n- Must meet WIC monthly income guidelines\n- Must have a child under 5, or be a new mom, or be a pregnant or breastfeeding woman.\n- Must have a nutritional need (WIC staff can help you determine this).\n- You are automatically income eligible for WIC if you currently receive: MassHealth/Medicaid, Supplemental Nutrition Assistance Program (SNAP), or Transitional Aid to Families with Dependent Children (TAFDC) or cash assistance.\n- Requires the following documents:\n    - Identification\n    - Proof of Income\n    - Proof of Residency"
+  }
+]

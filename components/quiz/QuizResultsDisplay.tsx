@@ -19,7 +19,6 @@ export const QuizResultsDisplay: React.FC<QuizResultsDisplayProps> = (props: Qui
 
   useEffect(() => {
     const fetchFilteredResources = async () => {
-      // TODO: quizState.encryptedQuizResponse is showing as empty string here
       const requestBody = JSON.stringify({ data: props.encryptedQuizResponse });
       const requestSettings = {
         method: "POST",

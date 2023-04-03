@@ -10,7 +10,7 @@ interface ResourcesDisplayProps {
 
 export const ResourcesDisplay: React.FC<ResourcesDisplayProps> = (props: ResourcesDisplayProps) => {
     return (
-        <Grid.Container gap={4} direction="row" justify="flex-start" wrap="wrap" className={styles.contadumbiner}>
+        <Grid.Container gap={4} direction="row" justify="flex-start" wrap="wrap" className={styles.container}>
             {props.resources?.map((resourceResult: WithId<Resource>) => (
                 <Grid md={6} xs={12} justify="center" key={resourceResult._id.toString()}>
                     <ResourceCardDisplay resource={resourceResult}></ResourceCardDisplay>

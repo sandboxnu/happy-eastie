@@ -16,6 +16,6 @@ export const useResources = (encryptedQuizResponse: string = "") => {
       const resources : ResourcesResponse = await response.json()
       return resources.data
   } 
-  const {data, error}= useSWRImmutable<ResourceData, Error>(`/api/resources`, resourcesFetcher)
+  const {data, error} = useSWRImmutable<ResourceData, Error>(`/api/resources`, resourcesFetcher)
   return { requestedResources: data ? data!.requested : [], additionalResources: data?.additional, isLoading: !error && !data, error }
 }

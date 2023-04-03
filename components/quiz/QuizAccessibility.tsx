@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useSWRConfig } from "swr";
 import { AppContext } from "../../context/context";
 import styles from "./Quiz.module.css";
+import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
 import Loading from '../../components/Loading';
 
 export const QuizAccessibility: React.FC = () => {
@@ -54,7 +55,7 @@ export const QuizAccessibility: React.FC = () => {
   }
 
   let initialValues = JSON.parse(
-    AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(
+    AES.decrypt(quizState.encryptedQuizResponse, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE).toString(
       enc.Utf8
     )
   );
@@ -63,7 +64,7 @@ export const QuizAccessibility: React.FC = () => {
     const combinedValues = Object.assign(initialValues, values);
     const encrypted = AES.encrypt(
       JSON.stringify(combinedValues),
-      "Secret Passphrase"
+      QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
     );
     // clear old resources list from cache so cache never gets populated with too many lists
     cache.delete("/api/resources");
@@ -71,7 +72,7 @@ export const QuizAccessibility: React.FC = () => {
     if (document.activeElement?.id === "back") {
       router.push("/quiz/2");
     } else {
-      router.push("/quiz/results");
+      router.push({ pathname: "/quiz/results", query: { encryptedQuizResponse: quizState.encryptedQuizResponse } });
     }
   };
 

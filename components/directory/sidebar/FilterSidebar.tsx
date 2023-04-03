@@ -3,13 +3,13 @@ import { SidebarCategories } from "./SidebarCategories";
 import { SidebarStatus } from "./SidebarStatus";
 import { Resource, SurveyAnswers } from "../../../models/types2";
 import { WithId } from "mongodb";
-import { AES, enc } from "crypto-js";
+import { AES } from "crypto-js";
 import { ResourcesResponse } from "../../../pages/api/resources";
 import { ResourceSearchBar } from "./ResourceSearchBar";
 import { FormElement } from "@nextui-org/react";
+import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE, RESOURCE_SEARCH_PLACEHOLDER_TEXT } from "../../../models/constants";
 import Loading from "../../../components/Loading";
 
-const SEARCH_PLACEHOLDER_TEXT = "Search Resources";
 
 interface FilterSidebarProps {
   setDisplayResources(resources: WithId<Resource>[]): void;
@@ -74,7 +74,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
     const fetchFilteredResources = async () => {
       const encryptedQuizResponse = AES.encrypt(
         JSON.stringify(filters),
-        "Secret Passphrase"
+        QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
       ).toString();
       const requestBody = JSON.stringify({ data: encryptedQuizResponse });
       const requestSettings = {
@@ -95,7 +95,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
   }, [selectedCategories, householdMembers, householdIncome, documentationNotRequired, selectedLanguages, selectedAccessibility, categories, languageOptions, accessibilityOptions]);
 
   useEffect(() => {
-    if (searchQuery === SEARCH_PLACEHOLDER_TEXT)
+    if (searchQuery === RESOURCE_SEARCH_PLACEHOLDER_TEXT)
       return props.setDisplayResources(filteredResources);
     const searchQueryAppliedResources = filteredResources.filter(
       (r) =>
@@ -137,7 +137,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = (
   return (
     <>
       <ResourceSearchBar
-        placeholder={SEARCH_PLACEHOLDER_TEXT}
+        placeholder={RESOURCE_SEARCH_PLACEHOLDER_TEXT}
         onChange={(e: ChangeEvent<FormElement>) => {
           setSearchQuery(e.target.value);
         }}

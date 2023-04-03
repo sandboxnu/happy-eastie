@@ -1,23 +1,37 @@
-import { Link, Progress, Row } from "@nextui-org/react";
-import { useContext } from "react";
-import { AppContext } from "../../context/context";
-import { useResources } from "../../hooks/useResources";
+import { Progress, Row } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 import styles from "./QuizResultsDisplay.module.css";
 import { ResourcesDisplay } from "../directory/ResourcesDisplay";
 import { Grid, Spacer, Text, Image } from "@nextui-org/react";
 import { HelpTooltip } from "../HelpTooltip";
-import Loading from "../Loading";
-import NextLink from "next/link";
+import { ResourcesResponse } from "../../pages/api/resources";
+import { Resource } from "../../models/types2";
+import { WithId } from "mongodb";
 
-const QuizResultsDisplayContent: React.FC = () => {
-  const quizState = useContext(AppContext);
-  const { requestedResources, additionalResources, isLoading, error } =
-    useResources(quizState.encryptedQuizResponse);
+interface QuizResultsDisplayProps {
+  encryptedQuizResponse: string;
+}
 
-  if (error) return <div>{error.message}</div>;
-  if (isLoading) return <Loading/>
-  if (requestedResources == undefined || additionalResources == undefined)
-    return <div>Internal server error: invalid resources loaded</div>;
+export const QuizResultsDisplay: React.FC<QuizResultsDisplayProps> = (props: QuizResultsDisplayProps) => {
+  const [requestedResources, setRequestedResources] = useState<WithId<Resource>[]>([]);
+  const [additionalResources, setAdditionalResources] = useState<WithId<Resource>[]>([]);
+
+  useEffect(() => {
+    const fetchFilteredResources = async () => {
+      const requestBody = JSON.stringify({ data: props.encryptedQuizResponse });
+      const requestSettings = {
+        method: "POST",
+        body: requestBody,
+        headers: { "Content-Type": "application/json" },
+      };
+      const response: Response = await fetch("/api/resources", requestSettings);
+      const resources: ResourcesResponse = await response.json();
+      setRequestedResources(resources.data.requested);
+      setAdditionalResources(resources.data.additional);
+    };
+
+    fetchFilteredResources().catch(console.error);
+  }, []);
 
   return (
     <Grid.Container
@@ -41,7 +55,7 @@ const QuizResultsDisplayContent: React.FC = () => {
           <HelpTooltip diameter={15} text="These are resources that you qualify for and that are under the categories you requested in the first page." />
         </Row>
       </Grid>
-      <Grid direction="column">
+      <Grid direction="column" css={{width: "100%"}}>
         <ResourcesDisplay resources={requestedResources} />
         {additionalResources.length > 0 && (
           <>
@@ -58,9 +72,3 @@ const QuizResultsDisplayContent: React.FC = () => {
     </Grid.Container>
   );
 };
-
-export const QuizResultsDisplay = () => {
-  return (
-    <QuizResultsDisplayContent />
-  )
-}

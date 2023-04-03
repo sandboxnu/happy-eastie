@@ -32,10 +32,6 @@ export const QuizResultsDisplay: React.FC<QuizResultsDisplayProps> = (props: Qui
 
     fetchFilteredResources().catch(console.error);
   }, []);
-  if (error) return <div>{error.message}</div>;
-  if (isLoading) return <Loading/>
-  if (requestedResources == undefined || additionalResources == undefined)
-    return <div>Internal server error: invalid resources loaded</div>;
 
   return (
     <Grid.Container

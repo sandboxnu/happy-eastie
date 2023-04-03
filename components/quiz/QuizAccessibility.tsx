@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 import { useSWRConfig } from "swr";
 import { AppContext } from "../../context/context";
 import styles from "./Quiz.module.css";
+import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
+import Loading from '../../components/Loading';
 
 export const QuizAccessibility: React.FC = () => {
   const router = useRouter();
@@ -14,12 +16,21 @@ export const QuizAccessibility: React.FC = () => {
   const { cache } = useSWRConfig();
   const [languages, setLanguages] = useState<string[]>([]);
   const [accessibilities, setAccessibilities] = useState<string[]>([]);
+  const [isLanguagesLoading, setIsLanguagesLoading] = useState<boolean>(true);
+  const [isAccessibilityLoading, setIsAccessibilityLoading] = useState<boolean>(true);
+
   const { t } = useTranslation(["quiz"]);
 
   useEffect(() => {
-    getLanguages().then((ls) => setLanguages(ls));
+    getLanguages().then((ls) => {
+      setIsLanguagesLoading(false)
+      setLanguages(ls)
+    });
 
-    getAccessibility().then((as) => setAccessibilities(as));
+    getAccessibility().then((as) => {
+      setIsAccessibilityLoading(false)
+      setAccessibilities(as)
+    });
   }, []);
 
   async function getLanguages(): Promise<string[]> {
@@ -44,7 +55,7 @@ export const QuizAccessibility: React.FC = () => {
   }
 
   let initialValues = JSON.parse(
-    AES.decrypt(quizState.encryptedQuizResponse, "Secret Passphrase").toString(
+    AES.decrypt(quizState.encryptedQuizResponse, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE).toString(
       enc.Utf8
     )
   );
@@ -53,7 +64,7 @@ export const QuizAccessibility: React.FC = () => {
     const combinedValues = Object.assign(initialValues, values);
     const encrypted = AES.encrypt(
       JSON.stringify(combinedValues),
-      "Secret Passphrase"
+      QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
     );
     // clear old resources list from cache so cache never gets populated with too many lists
     cache.delete("/api/resources");
@@ -61,36 +72,17 @@ export const QuizAccessibility: React.FC = () => {
     if (document.activeElement?.id === "back") {
       router.push("/quiz/2");
     } else {
-      router.push("/quiz/results");
+      router.push({ pathname: "/quiz/results", query: { encryptedQuizResponse: quizState.encryptedQuizResponse } });
     }
   };
 
-  return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <Form>
-        <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
-          <Grid md={2} xs={8} direction="column">
-            <label className={styles.quizFieldText}>{t("Languages")}</label>
-            <Spacer y={1} />
-            <Checkbox.Group>
-              {languages.map((c) => (
-                <label key={c} className={styles.checkboxItem}>
-                  <Field
-                    type="checkbox"
-                    name="languages"
-                    value={t(c)}
-                    id={c}
-                    className={styles.checkbox}
-                  />
-                  <span className={styles.categoryText}>{c}</span>
-                </label>
-              ))}
-            </Checkbox.Group>
-          </Grid>
-
-          <Grid md={2} xs={0} />
-
-          <Grid md={2} xs={8} direction="column">
+  const getAccessibilityContent = () => {
+    if (isAccessibilityLoading) {
+      return <Loading relative/>
+    }
+    else {
+      return (
+        <Grid md={2} xs={8} direction="column">
             <Checkbox.Group>
               <label className={styles.quizFieldText}>{t("Accessibility")}</label>
               <Spacer y={1} />
@@ -108,17 +100,63 @@ export const QuizAccessibility: React.FC = () => {
               ))}
             </Checkbox.Group>
           </Grid>
+      )
+    }
+  }
 
-          <Grid xs={12} justify="space-between">
-            <button className={styles.back} type="submit" id="back">
-              {t('Back')}
-            </button>
-
-            <button className={styles.submit} type="submit" id="submit">
-              {t('Submit')}
-            </button>
+  const getLanguageContent = () => {
+    if (isLanguagesLoading) {
+      return <Loading relative/>
+    }
+    else {
+      return (
+        <Grid md={2} xs={8} direction="column">
+            <label className={styles.quizFieldText}>{t("Languages")}</label>
+            <Spacer y={1} />
+            <Checkbox.Group>
+              {languages.map((c) => (
+                <label key={c} className={styles.checkboxItem}>
+                  <Field
+                    type="checkbox"
+                    name="languages"
+                    value={t(c)}
+                    id={c}
+                    className={styles.checkbox}
+                  />
+                  <span className={styles.categoryText}>{c}</span>
+                </label>
+              ))}
+            </Checkbox.Group>
           </Grid>
-        </Grid.Container>
+      )
+    }
+  }
+
+  const getContent = () => {
+    if(isLanguagesLoading || isAccessibilityLoading) {
+      return <Loading relative/>
+    } else {
+      return (        <Grid.Container gap={4} justify="center" css={{ w: "100vw" }}>
+      {getLanguageContent()}
+      <Grid md={2} xs={0} />
+      {getAccessibilityContent()}
+      <Grid xs={12} justify="space-between">
+        <button className={styles.back} type="submit" id="back">
+          {t('Back')}
+        </button>
+
+        <button className={styles.submit} type="submit" id="submit">
+          {t('Submit')}
+        </button>
+      </Grid>
+    </Grid.Container>)
+    }
+  }
+
+  return (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        {getContent()}
       </Form>
     </Formik>
   );

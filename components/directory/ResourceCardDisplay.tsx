@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Row, Text, Col, Link, Image, Spacer } from '@nextui-org/react';
+import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
 import { Resource } from '../../models/types2';
 import styles from './ResourceCardDisplay.module.css';
 import Tag from "../../components/tag";

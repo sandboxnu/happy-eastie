@@ -61,7 +61,7 @@ export const QuizAccessibility: React.FC = () => {
     if (document.activeElement?.id === "back") {
       router.push("/quiz/2");
     } else {
-      router.push("/quiz/results");
+      router.push({ pathname: "/quiz/results", query: { encryptedQuizResponse: quizState.encryptedQuizResponse } });
     }
   };
 

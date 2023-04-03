@@ -1,30 +1,26 @@
 import { Progress, Row } from "@nextui-org/react";
-import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../context/context";
-import { useResources } from "../../hooks/useResources";
+import { useEffect, useState } from "react";
 import styles from "./QuizResultsDisplay.module.css";
 import { ResourcesDisplay } from "../directory/ResourcesDisplay";
 import { Grid, Spacer, Text, Image } from "@nextui-org/react";
 import { HelpTooltip } from "../HelpTooltip";
-import Loading from "../Loading";
 import { ResourcesResponse } from "../../pages/api/resources";
 import { Resource } from "../../models/types2";
 import { WithId } from "mongodb";
 
 
-const QuizResultsDisplayContent: React.FC = () => {
-  const quizState = useContext(AppContext);
+interface QuizResultsDisplayProps {
+  encryptedQuizResponse: string;
+}
+
+export const QuizResultsDisplay: React.FC<QuizResultsDisplayProps> = (props: QuizResultsDisplayProps) => {
   const [requestedResources, setRequestedResources] = useState<WithId<Resource>[]>([]);
   const [additionalResources, setAdditionalResources] = useState<WithId<Resource>[]>([]);
-
-  // TODO: this is the old resource fetching for the quiz results
-  // const { requestedResources, additionalResources, isLoading, error } =
-  //   useResources(quizState.encryptedQuizResponse);
 
   useEffect(() => {
     const fetchFilteredResources = async () => {
       // TODO: quizState.encryptedQuizResponse is showing as empty string here
-      const requestBody = JSON.stringify({ data: quizState.encryptedQuizResponse });
+      const requestBody = JSON.stringify({ data: props.encryptedQuizResponse });
       const requestSettings = {
         method: "POST",
         body: requestBody,
@@ -37,13 +33,7 @@ const QuizResultsDisplayContent: React.FC = () => {
     };
 
     fetchFilteredResources().catch(console.error);
-  }, [quizState.encryptedQuizResponse]);
-
-  // TODO: this is the old error/loading handling for the quiz results
-  // if (error) return <div>{error.message}</div>;
-  // if (isLoading) return <Loading />
-  // if (requestedResources == undefined || additionalResources == undefined)
-  //   return <div>Internal server error: invalid resources loaded</div>;
+  }, []);
 
   return (
     <Grid.Container
@@ -84,9 +74,3 @@ const QuizResultsDisplayContent: React.FC = () => {
     </Grid.Container>
   );
 };
-
-export const QuizResultsDisplay = () => {
-  return (
-    <QuizResultsDisplayContent />
-  )
-}

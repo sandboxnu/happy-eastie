@@ -1,19 +1,22 @@
 import { AES, enc } from "crypto-js";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/context";
 import { SurveyAnswers } from "../../models/types2";
-import { Checkbox, Col, Grid, Row } from "@nextui-org/react";
+import { Grid, Row } from "@nextui-org/react";
 import styles from "./Quiz.module.css";
 import { CategoryCard } from "./CategoryCard";
 import { useTranslation } from "next-i18next";
+import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
+import Loading from '../../components/Loading';
 
 export const QuizCategoriesForm: React.FC = () => {
   const router = useRouter();
   const quizState = useContext(AppContext);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { t } = useTranslation(['quiz', 'common'])
 
   function cardSelected(cardTitle: string) {
@@ -27,23 +30,27 @@ export const QuizCategoriesForm: React.FC = () => {
   }
 
   useEffect(() => {
-    getCategories().then((cs) => setAllCategories(cs));
+    getCategories().then((cs) => {
+      setIsLoading(false)
+      setAllCategories(cs)
+    });
+
   }, []);
 
   let initialValues: SurveyAnswers = {
     categories: [],
-    householdMembers: 1,
     householdIncome: 0,
+    householdMembers: 1,
     documentation: undefined,
     languages: [],
-    accessibility: [],
+    accessibility: []
   };
 
   if (quizState.encryptedQuizResponse != "") {
     initialValues = JSON.parse(
       AES.decrypt(
         quizState.encryptedQuizResponse,
-        "Secret Passphrase"
+        QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
       ).toString(enc.Utf8)
     );
   }
@@ -51,6 +58,7 @@ export const QuizCategoriesForm: React.FC = () => {
   async function getCategories(): Promise<string[]> {
     const response = await fetch("/api/resources/categories");
     const categories = await response.json();
+
     return categories;
   }
 
@@ -63,16 +71,19 @@ export const QuizCategoriesForm: React.FC = () => {
     }
     const encrypted = AES.encrypt(
       JSON.stringify(initialValues),
-      "Secret Passphrase"
+      QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
     );
     // clear old resources list from cache so cache never gets populated with too many lists
     quizState.changeEncryptedQuizResponse(encrypted.toString());
     router.push("/quiz/2");
   };
 
-  return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <Form>
+  const getContent = () => {
+    if (isLoading) {
+      return <Loading relative />
+    }
+    else {
+      return (
         <Grid.Container gap={2}>
           {allCategories.map((c) => (
             <Grid xs={6} sm={4} md={3} key={c}>
@@ -85,7 +96,14 @@ export const QuizCategoriesForm: React.FC = () => {
               {t('Continue')}
             </button>
           </Row>
-        </Grid.Container>
+        </Grid.Container>)
+    }
+  }
+
+  return (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        {getContent()}
       </Form>
     </Formik>
   );

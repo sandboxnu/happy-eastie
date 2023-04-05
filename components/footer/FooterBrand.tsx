@@ -1,10 +1,20 @@
 import { Grid, Image } from "@nextui-org/react";
 
-
-//TODO: change to NextJs image
 export default function FooterBrand() {
-    return (            
-    <Grid xs={3} alignItems='flex-start' style={{paddingLeft: 10}}>
-    <Image src="/HappyEastieWhite.svg" alt="HappyEastie" style={{marginTop: 50}}/>
-</Grid>)
+  return (
+    <Grid
+      css={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "start",
+        justifyContent: "center",
+        marginTop: 50,
+      }}
+      xs={12}
+      sm={12}
+      md={4}
+    >
+      <Image src="/HappyEastieWhite.svg" alt="HappyEastie" width={300} />
+    </Grid>
+  );
 }

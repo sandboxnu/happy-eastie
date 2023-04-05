@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import type { Resource } from "../../../models/types2";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { WithId } from "mongodb";
+import { RESOURCE_COLLECTION } from "../../../models/constants";
 
 export type ResourceResponse = {
   data?: WithId<Resource>;
@@ -27,5 +28,5 @@ export default async function handler(
 }
 
 async function getResource(id: string): Promise<WithId<Resource> | null> {
-  return await mongoDbInteractor.getDocument<Resource>("resources", id);
+  return await mongoDbInteractor.getDocument<Resource>(RESOURCE_COLLECTION, id);
 }

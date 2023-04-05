@@ -16,7 +16,7 @@ const events = [
   {
     name: "Healthy Baby, Healthy Mama",
     imageFilename: "healthyBabyHealthyMama.png",
-    summary: "Learn if you and your child may be eilgible for this service. If you are eligible, please apply! Adding more text to make this summary longer! One more sentence.",
+    summary: "Learn if you and your child may be eligible for this service. If you are eligible, please apply! Adding more text to make this summary longer! One more sentence.",
     tags: ["Childcare", "Healthcare", "Any Income"],
   },
   {
@@ -62,7 +62,7 @@ function EventCard({ event }: { event: EastieEvent }) {
       </Card.Body>
 
       <Card.Footer>
-        <Row justify="flex-start" css={{ gap: 15, marginLeft: "8px", marginBottom: "15px" }}>
+        <Row justify="flex-start" css={{ gap: 15, marginLeft: "8px", marginBottom: "5px" }}>
           {event.tags.map((tag, index) => (
             <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
           ))}
@@ -79,11 +79,13 @@ export default function TrendingSection() {
         <Spacer x={0.8} />
         <Text h1 className={HomeStyles.sectionHeader}>Trending Near You</Text>
       </Row>
+      <Spacer y={1} />
       <Row gap={4} className={styles.eventCardsRow}>
         {events.map((event, index) => (
           <EventCard key={index} event={event} />
         ))}
       </Row>
+      <Spacer y={2} />
     </Container>
   );
 }

@@ -1,11 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
 import { Admin, ResponseMessage } from "../../../../models/types2";
 import { ADMIN_COLLECTION } from "../../../../models/constants";
+import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 
 
-export default async function handler(
+async function handler(
     req: NextApiRequest,
     res: NextApiResponse<WithId<Admin> | ResponseMessage>
 ) {
@@ -33,6 +34,12 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
         res.status(400).json({message: "Invalid credential"})
     } else {
         res.status(200).json(accounts[0])
+        req.session.user = {
+            username: "test@gmail.com",
+            isAdmin: true
+        };
+        await req.session.save();
+        res.send({ ok: true });
     }
 }
 
@@ -55,3 +62,15 @@ async function handleSignUp(req : NextApiRequest, res: NextApiResponse<WithId<Ad
         res.status(400).json({message: "Email address was already taken."})
     }
 }
+
+const ironOptions = {
+    cookieName: "MY_APP_COOKIE",
+    password: "yPo4T7apfbdvctV1Bso1oAndQH9qwC94",
+    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
+    cookieOptions: {
+        secure: process.env.NODE_ENV === "production",
+  },
+}
+
+
+export default withIronSessionApiRoute(handler, ironOptions)

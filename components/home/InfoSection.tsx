@@ -4,7 +4,7 @@ import NextLink from "next/link"
 import NextImage from "next/image"
 export default function InfoSection() {
     return (
-      <Grid.Container gap={2} justify="center">
+      <Grid.Container gap={2} justify="center" css={{mt: 10, mb: 20}}>
         <Grid xs={12} sm={5}>
           <Image alt="Default Image" src="/homeImage2.svg" objectFit="scale-down"/>
         </Grid>

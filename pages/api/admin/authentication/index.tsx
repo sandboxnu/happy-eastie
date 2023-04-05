@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
-import { Filter, ObjectId, WithId } from "mongodb";
+import { Filter, WithId } from "mongodb";
 import { Admin, ResponseMessage } from "../../../../models/types2";
 import { ADMIN_COLLECTION } from "../../../../models/constants";
 

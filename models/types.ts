@@ -19,22 +19,6 @@ export interface User {
     incomeLevel: number;
 }
 
-export interface Admin {
-    email: string;
-    hashedPassword: string;
-    firstName: string;
-    lastName: string;
-    permissionGroups: PermissionGroup[];
-    title: string;
-    organization: string;
-    phoneNumber: string;
-    profilePicture?: string;
-}
-
-export enum PermissionGroup {
-    Admin = "Admin"
-}
-
 export interface Address {
     streetNumber: number;
     streetName: string;
@@ -50,10 +34,6 @@ export interface FormQuestion {
 }
 
 export type UID = string;
-
-export type ResponseMessage = {
-    message: string
-}
 
 // TODO: update this type once Firestore is updated
 // export interface Event extends EventInfo {

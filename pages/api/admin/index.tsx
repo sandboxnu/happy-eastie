@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
-import { Admin, ResponseMessage } from "../../../models/types";
+import { Admin, ResponseMessage } from "../../../models/types2";
 import { ADMIN_COLLECTION } from "../../../models/constants";
 
 
@@ -10,16 +10,16 @@ export default async function handler(
     res: NextApiResponse<WithId<Admin> | ResponseMessage>
 ) {
     if (req.method == "POST") {
-        createAdminAccount(req, res);
+        await createAdminAccount(req, res);
     }
     else if (req.method == "GET") {
-        readAdminAccount(req, res);
+        await readAdminAccount(req, res);
     }
     else if (req.method == "PUT") {
-        updateAdminAccount(req, res);
+        await updateAdminAccount(req, res);
     }
     else if (req.method == "DELETE") {
-        deleteAdminAccount(req, res);
+        await deleteAdminAccount(req, res);
     }
     else {
         res.status(400).json({ message: `Invalid method type ${req.method} for handling admin accounts` })

@@ -110,3 +110,24 @@ export interface Resource {
      */
     eligibilityInfo?: string;
 }
+
+
+export interface Admin {
+    email: string;
+    hashedPassword: string;
+    firstName: string;
+    lastName: string;
+    permissionGroups: PermissionGroup[];
+    title: string;
+    organization: string;
+    phoneNumber: string;
+    profilePicture?: string;
+}
+
+export enum PermissionGroup {
+    Admin = "Admin"
+}
+
+export type ResponseMessage = {
+    message: string
+}

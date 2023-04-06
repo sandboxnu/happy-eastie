@@ -31,15 +31,16 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
     }
     const hashedPassword = accounts[0]["hashedPassword"]
     if (hashedPassword !== req.body["hashedPassword"]) {
+        // console.log("input ", req.body["hashedPassword"])
+        // console.log("in db ", hashedPassword)
         res.status(400).json({message: "Invalid credential"})
     } else {
-        res.status(200).json(accounts[0])
         req.session.user = {
-            username: "test@gmail.com",
+            email: req.body["email"],
             isAdmin: true
         };
         await req.session.save();
-        res.send({ ok: true });
+        res.status(200).json(accounts[0])
     }
 }
 
@@ -71,6 +72,5 @@ const ironOptions = {
         secure: process.env.NODE_ENV === "production",
   },
 }
-
 
 export default withIronSessionApiRoute(handler, ironOptions)

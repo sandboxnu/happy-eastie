@@ -1,50 +1,87 @@
-import { Button, Checkbox, FormElement, Input, Spacer } from "@nextui-org/react";
+import {
+  Button,
+  Checkbox,
+  FormElement,
+  Input,
+  Spacer,
+} from "@nextui-org/react";
 import { ChangeEvent, useState } from "react";
-import styles from "../../components/quiz/Quiz.module.css"
+import styles from "../../components/quiz/Quiz.module.css";
 import { Admin } from "../../models/types2";
 import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
 import { AES } from "crypto-js";
+import { useRouter } from "next/router";
 
 const LogIn = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [keepSignIn, setKeepSignIn] = useState(false)
-  const [message, setMessage] = useState("")
-  
+  const [email, setEmail] = useState("");
+  const [hashedPassword, setPassword] = useState("");
+  const [keepSignIn, setKeepSignIn] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+
   const onEmailChange = (e: ChangeEvent<FormElement>) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+  };
 
   const onPasswordChange = (e: ChangeEvent<FormElement>) => {
-    const hashedPassword = AES.encrypt(e.target.value, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE).toString()
-    setPassword(hashedPassword)
-  }
+    const hashedPassword = AES.encrypt(
+      e.target.value,
+      QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
+    ).toString();
+    console.log("hashing ", hashedPassword);
+    setPassword(hashedPassword);
+  };
 
   const submit = async () => {
-    const requestBody = JSON.stringify({type: "login", email, password})
-    const requestSettings =  { method: 'POST', body: requestBody, headers: {'Content-Type': 'application/json'}}
-    const response = await fetch('/api/admin/authentication', requestSettings)
+    setMessage("");
+    const requestBody = JSON.stringify({
+      type: "login",
+      email,
+      hashedPassword,
+    });
+    const requestSettings = {
+      method: "POST",
+      body: requestBody,
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await fetch("/api/admin/authentication", requestSettings);
     if (response.status !== 200) {
-        setMessage(response.statusText)
+      setMessage("authentication failed" + response.status);
     } else {
-
+      router.push("/admin/dashboard");
     }
-  }
+  };
 
   return (
     <>
-        <Input clearable bordered labelPlaceholder="Name" onChange={onEmailChange} />
-        <Spacer y={2.5} />
-        <Input.Password
+      {" "}
+      <p>{message}</p>
+      <Input
+        clearable
+        bordered
+        labelPlaceholder="Name"
+        onChange={onEmailChange}
+      />
+      <Spacer y={2.5} />
+      <Input.Password
         labelPlaceholder="Password"
-        onChange={onPasswordChange}/>
-        <Spacer y={2.5} />
-        <Checkbox onChange={checked => setKeepSignIn(checked)}>Keep me signed in</Checkbox>
-        <Button id="continue" className={styles.continue} type="submit">
-            Log In
-        </Button>
+        bordered
+        onChange={onPasswordChange}
+      />
+      <Spacer y={2.5} />
+      <Checkbox onChange={(checked) => setKeepSignIn(checked)}>
+        Keep me signed in
+      </Checkbox>
+      <Button
+        id="continue"
+        className={styles.continue}
+        type="submit"
+        onClick={submit}
+      >
+        Log In
+      </Button>
     </>
   );
-}
+};
 
-export default LogIn
+export default LogIn;

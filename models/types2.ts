@@ -131,3 +131,8 @@ export enum PermissionGroup {
 export type ResponseMessage = {
     message: string
 }
+
+export type User = {
+    email: string, 
+    isAdmin: boolean
+}

@@ -125,7 +125,6 @@ const ResourcePageContent: NextPage = () => {
             <Grid xs={12} direction="column">
               <Text h3>Summary</Text>
               <FormInput
-                multiLine
                 name="summary"
                 fullWidth
                 placeholder="Summary"
@@ -137,11 +136,10 @@ const ResourcePageContent: NextPage = () => {
             </Grid>
             <Grid xs={12} direction="column">
               <Text h3>Description</Text>
-              <Textarea
-                bordered
-                color="primary"
+              <FormInput
+                multiLine
                 name="description"
-                readOnly={!isEditing}
+                editing={isEditing}
                 placeholder="Description"
                 value={resource.description}
                 onChange={handleInputChange}
@@ -227,11 +225,10 @@ const ResourcePageContent: NextPage = () => {
 
             <Grid xs={12} direction="column">
               <Text h3>Eligibility Criteria</Text>
-              <Textarea
-                bordered
-                color="primary"
+              <FormInput
+                multiLine
                 name="eligibilityInfo"
-                readOnly={!isEditing}
+                editing={isEditing}
                 placeholder={"Eligibility Criteria"}
                 value={resource.eligibilityInfo}
                 onChange={handleInputChange}

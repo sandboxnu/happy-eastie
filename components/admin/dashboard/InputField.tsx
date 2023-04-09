@@ -75,5 +75,5 @@ export const FormInput = ({
   multiLine,
   onChange
 }: InputFieldProps) => {
-  return editing ? <InputField name={name} placeholder={placeholder} fullWidth={fullWidth} size={size} editing={editing} value={value} multiLine={multiLine}/> : <TextValue name={name} placeholder={placeholder} fullWidth={fullWidth} size={size} editing={editing} value={value} multiLine={multiLine}/>;
+  return editing ? <InputField name={name} placeholder={placeholder} fullWidth={fullWidth} size={size} editing={editing} value={value} multiLine={multiLine} onChange={onChange}/> : <TextValue name={name} placeholder={placeholder} fullWidth={fullWidth} size={size} editing={editing} value={value} multiLine={multiLine}/>;
 };

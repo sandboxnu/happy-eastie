@@ -10,8 +10,7 @@ type InputFieldProps = {
   value?: string;
   onChange?: (e: React.ChangeEvent<FormElement>) => void;
 };
-
-export const FormInput = ({
+const InputField = ({
   name,
   placeholder,
   fullWidth,
@@ -20,8 +19,7 @@ export const FormInput = ({
   value,
   multiLine,
   onChange
-}: InputFieldProps) => {
-  const InputField = () =>
+}: InputFieldProps) =>
     multiLine ? (
       <Textarea
       name={name}
@@ -50,7 +48,16 @@ export const FormInput = ({
       />
     );
 
-  const TextValue = () =>
+    const TextValue = ({
+      name,
+      placeholder,
+      fullWidth,
+      size = "xs",
+      editing,
+      value,
+      multiLine,
+      onChange
+    }: InputFieldProps) =>
     size === "xl" ? (
       <Text h1 color="primary">
         {value}
@@ -58,6 +65,15 @@ export const FormInput = ({
     ) : (
       <Text size={16}>{value}</Text>
     );
-
-  return editing ? <InputField /> : <TextValue />;
+export const FormInput = ({
+  name,
+  placeholder,
+  fullWidth,
+  size = "xs",
+  editing,
+  value,
+  multiLine,
+  onChange
+}: InputFieldProps) => {
+  return editing ? <InputField name={name} placeholder={placeholder} fullWidth={fullWidth} size={size} editing={editing} value={value} multiLine={multiLine}/> : <TextValue name={name} placeholder={placeholder} fullWidth={fullWidth} size={size} editing={editing} value={value} multiLine={multiLine}/>;
 };

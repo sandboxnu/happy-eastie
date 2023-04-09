@@ -20,6 +20,7 @@ import { useResource } from "../../../hooks/useResource";
 import { useEffect, useState } from "react";
 import { Resource } from "../../../models/types2";
 import { ObjectId, WithId } from "mongodb";
+import { FormInput } from "../../../components/admin/dashboard/InputField";
 
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -80,6 +81,7 @@ const ResourcePageContent: NextPage = () => {
     };
     const response: Response = await fetch("/api/admin", requestSettings);
     const result = await response.json();
+    console.log(result)
     return result.modifiedCount;
   };
 
@@ -98,13 +100,11 @@ const ResourcePageContent: NextPage = () => {
           <Grid.Container justify="space-between" css={{ gap: "30px" }}>
             <Grid xs={12}>
               <Row justify="space-between" align="center">
-                <Input
-                  bordered
-                  color="primary"
+                <FormInput
                   name="name"
                   size="xl"
                   placeholder="Resource Name"
-                  readOnly={!isEditing}
+                  editing={isEditing}
                   value={inputtedResource.name}
                   onChange={handleInputChange}
                 />
@@ -124,14 +124,13 @@ const ResourcePageContent: NextPage = () => {
             <Card.Divider />
             <Grid xs={12} direction="column">
               <Text h3>Summary</Text>
-              <Input
-                bordered
-                color="primary"
+              <FormInput
+                multiLine
                 name="summary"
                 fullWidth
                 placeholder="Summary"
                 size="md"
-                readOnly={!isEditing}
+                editing={isEditing}
                 value={resource.summary}
                 onChange={handleInputChange}
               />
@@ -159,12 +158,10 @@ const ResourcePageContent: NextPage = () => {
                     filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
                   }}
                 />
-                <Input
-                  bordered
-                  color="primary"
+                <FormInput
                   name="email"
                   placeholder="Email"
-                  readOnly={!isEditing}
+                  editing={isEditing}
                   value={resource.email}
                   onChange={handleInputChange}
                 />
@@ -178,12 +175,10 @@ const ResourcePageContent: NextPage = () => {
                     filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4))",
                   }}
                 />
-                <Input
-                  bordered
-                  color="primary"
+                <FormInput
                   name="phone"
                   placeholder="Phone"
-                  readOnly={!isEditing}
+                  editing={isEditing}
                   value={resource.phone}
                   onChange={handleInputChange}
                 />
@@ -192,23 +187,19 @@ const ResourcePageContent: NextPage = () => {
 
             <Grid xs={12} sm={3} direction="column">
               <Text h3>Website</Text>
-              <Input
-                bordered
-                color="primary"
+              <FormInput
                 name="website"
                 placeholder="Website"
-                readOnly={!isEditing}
+                editing={isEditing}
                 value={resource.website}
                 onChange={handleInputChange}
               />
               <Spacer y={1} />
               <Text h3>Address</Text>
-              <Input
-                bordered
-                color="primary"
+              <FormInput
                 name="address"
                 placeholder="Street Address"
-                readOnly={!isEditing}
+                editing={isEditing}
                 value={resource.address}
                 onChange={handleInputChange}
               />
@@ -217,22 +208,18 @@ const ResourcePageContent: NextPage = () => {
             <Grid xs={12} sm={3} direction="column">
               <Text h3>Categories</Text>
               {/* TODO: Handle input and change here */}
-              <Input
-                bordered
-                color="primary"
+              <FormInput
                 name="category"
                 placeholder="Category"
-                readOnly={!isEditing}
+                editing={isEditing}
               />
               <Spacer y={1} />
               <Text h3>Keywords</Text>
               {/* TODO: Handle input and change here */}
-              <Input
-                bordered
-                color="primary"
+              <FormInput
                 name="keywords"
                 placeholder="Keyword"
-                readOnly={!isEditing}
+                editing={isEditing}
               />
             </Grid>
 

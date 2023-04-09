@@ -17,6 +17,8 @@ import {
 import { useResource } from "../../../hooks/useResource";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
 import { useState } from "react";
+import { Resource } from "../../../models/types2";
+import { WithId } from "mongodb";
 
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -42,10 +44,22 @@ const ResourcePageContent: NextPage = () => {
   if (!resource)
     return <div>Internal server error: invalid resource loaded</div>;
 
-  const saveResource = async () => {
-    // TODO: Save the resource
-    setIsEditing(false);
-  }
+    const updateResource = async (resourceId: string, r: WithId<Resource>) => {
+      const { _id, ...replacement } = r;
+      const requestBody = {
+        _id: resourceId,
+        replacement: replacement,
+      };
+    
+      const requestSettings: RequestInit = {
+        method: "PUT",
+        body: JSON.stringify(requestBody),
+        headers: { "Content-Type": "application/json" },
+      };
+      const response: Response = await fetch("/api/admin", requestSettings);
+      const result = await response.json();
+      return result.modifiedCount;
+    };
 
   return (
     <>
@@ -179,9 +193,9 @@ const ResourcePageContent: NextPage = () => {
           <Row css={{ gap: "22px" }}>
             <Button
               onPress={() => {
-                saveResource();
+                updateResource(resourceId as string, resource).then(n => setIsEditing(false));
               }}
-            >
+            > 
               Save Changes
             </Button>
             <Button

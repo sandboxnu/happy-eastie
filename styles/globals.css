@@ -33,6 +33,7 @@ body {
     color: black;
     margin-top: 0;
     margin-bottom: 0;
+    letter-spacing: normal;
   }
 
   h3 {
@@ -40,6 +41,7 @@ body {
     font-family: 'Raleway';
     font-weight: 600;
     color: var(--primary-text);
+    letter-spacing: normal;
   }
   
   table {
@@ -67,6 +69,7 @@ body {
     font-family: 'Raleway';
     font-weight: 400;
     color: var(--secondary-text);
+    letter-spacing: normal;
   }
   
   li {

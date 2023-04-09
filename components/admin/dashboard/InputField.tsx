@@ -1,25 +1,30 @@
-import { Input, Text, Textarea } from "@nextui-org/react";
+import { FormElement, Input, Text, Textarea } from "@nextui-org/react";
 
 type InputFieldProps = {
+  name: string;
   editing: boolean;
   placeholder: string;
   fullWidth?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   multiLine?: boolean;
   value?: string;
+  onChange?: (e: React.ChangeEvent<FormElement>) => void;
 };
 
 export const FormInput = ({
+  name,
   placeholder,
   fullWidth,
   size = "xs",
   editing,
   value,
   multiLine,
+  onChange
 }: InputFieldProps) => {
   const InputField = () =>
     multiLine ? (
       <Textarea
+      name={name}
         placeholder={placeholder}
         fullWidth={fullWidth}
         size={size}
@@ -28,9 +33,11 @@ export const FormInput = ({
         color="primary"
         css={{ my: "5px" }}
         value={value}
+        onChange={onChange}
       />
     ) : (
       <Input
+      name={name}
         placeholder={placeholder}
         fullWidth={fullWidth}
         size={size}
@@ -39,6 +46,7 @@ export const FormInput = ({
         color="primary"
         css={{ my: "5px" }}
         value={value}
+        onChange={onChange}
       />
     );
 

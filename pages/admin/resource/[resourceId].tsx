@@ -19,6 +19,7 @@ import {
 import { useResource } from "../../../hooks/useResource";
 import { useEffect, useState } from "react";
 import { Resource } from "../../../models/types2";
+import { ObjectId, WithId } from "mongodb";
 
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,24 +30,7 @@ const ResourcePageContent: NextPage = () => {
   // This is the resource as it's being edited
   // - Upon saving, this will be applied to the actual resource
   // - Upon cancel, this will be discarded
-  const [inputtedResource, setInputtedResource] = useState<Resource>({
-    name: "",
-    description: "",
-    summary: "",
-    category: [],
-    keywords: [],
-    incomeByHouseholdMembers: [],
-    documentationRequired: false,
-    headerImageUrl: "",
-    website: "",
-    phone: "",
-    email: "",
-    address: "",
-    location: { type: "Point", coordinates: [] },
-    availableLanguages: [],
-    accessibilityOptions: [],
-    eligibilityInfo: "",
-  });
+  const [inputtedResource, setInputtedResource] = useState<WithId<Resource>>();
 
   // Set the inputted resource to the resource when it is loaded
   useEffect(() => {
@@ -67,20 +51,36 @@ const ResourcePageContent: NextPage = () => {
 
   if (error) return <div>{error.message}</div>;
   if (isLoading) return <LoadingScreen />;
-  if (!resource)
+  if (!resource || !inputtedResource)
     return <div>Internal server error: invalid resource loaded</div>;
 
   const handleInputChange = (event: React.ChangeEvent<FormElement>) => {
     const name = event.target.name;
     const value = event.target.value;
     console.log({ ...inputtedResource, [name]: value });
-    setInputtedResource((values) => ({ ...values, [name]: value }));
+    setInputtedResource((values) => values && { ...values, [name]: value });
   };
 
   const saveResource = async (event: React.FormEvent) => {
     event.preventDefault();
-    // TODO: Save the resource
-    setIsEditing(false);
+    updateResource(inputtedResource).then(() => router.reload());
+  };
+
+  const updateResource = async (r: WithId<Resource>) => {
+    const { _id, ...replacement } = r;
+    const requestBody = {
+      _id: resourceId,
+      replacement: replacement,
+    };
+
+    const requestSettings: RequestInit = {
+      method: "PUT",
+      body: JSON.stringify(requestBody),
+      headers: { "Content-Type": "application/json" },
+    };
+    const response: Response = await fetch("/api/admin", requestSettings);
+    const result = await response.json();
+    return result.modifiedCount;
   };
 
   return (
@@ -247,7 +247,7 @@ const ResourcePageContent: NextPage = () => {
                 readOnly={!isEditing}
                 placeholder={"Eligibility Criteria"}
                 value={resource.eligibilityInfo}
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
               />
             </Grid>
           </Grid.Container>

@@ -16,6 +16,7 @@ import { ResourceRow } from "../../../components/admin/dashboard/resourceRow";
 import { Resource } from "../../../models/types2";
 import { withIronSessionSsr } from "iron-session/next";
 import { IRON_OPTION } from "../../../models/constants";
+import { getIronSession } from "iron-session";
 
 type AdminDashboardProps = {
   resources: WithId<Resource>[];
@@ -36,7 +37,7 @@ export const getServerSideProps = withIronSessionSsr(
       };
     }
 
-    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`, {credentials: 'same-origin'});
+    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`);
 
     if (res.status !== 200) {
       console.log("status not ok " + res.status)

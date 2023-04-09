@@ -7,6 +7,7 @@ import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
 import { RESOURCE_COLLECTION } from "../../../../models/constants";
 import { IRON_OPTION } from "../../../../models/constants";
+import { getIronSession } from "iron-session";
 
 
 
@@ -22,6 +23,10 @@ export default async function handler(
     //     res.status(401).json({message: "User not authorized"})
     //     return
     // }
+
+    console.log("cookies ", req.cookies)
+    console.log("iron session ", await getIronSession(req, res, IRON_OPTION))
+    // console.log(" ", req.)
 
 
     // get request

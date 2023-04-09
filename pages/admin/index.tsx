@@ -9,14 +9,39 @@ import { ChangeEvent, useState } from "react";
 import styles from "../../components/quiz/Quiz.module.css";
 import { Admin } from "../../models/types2";
 import CryptoJS from "crypto-js";
+
 import { useRouter } from "next/router";
+import { IRON_OPTION, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
+import { withIronSessionSsr } from "iron-session/next";
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({req}) {
+    console.log("context ", req.session)
+
+    const user = req.session.user;
+
+    if (user &&  user.isAdmin) {
+      return {
+        redirect: {
+          destination: '/admin/dashboard',
+          permanent: false,
+        }
+      };
+    }
+    else {
+      return {
+        props: {}
+      }
+    }
+  }, IRON_OPTION)
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [keepSignIn, setKeepSignIn] = useState(false);
+  const [keepSignedIn, setKeepSignedIn] = useState(false);
   const [message, setMessage] = useState("");
   const router = useRouter();
+
 
   const onEmailChange = (e: ChangeEvent<FormElement>) => {
     setEmail(e.target.value);
@@ -32,7 +57,8 @@ const LogIn = () => {
     const requestBody = JSON.stringify({
       type: "login",
       email,
-      hashedPassword
+      hashedPassword,
+      keepSignedIn
     });
     const requestSettings = {
       method: "POST",
@@ -64,7 +90,7 @@ const LogIn = () => {
         onChange={onPasswordChange}
       />
       <Spacer y={2.5} />
-      <Checkbox onChange={(checked) => setKeepSignIn(checked)}>
+      <Checkbox onChange={(checked) => setKeepSignedIn(checked)}>
         Keep me signed in
       </Checkbox>
       <Button

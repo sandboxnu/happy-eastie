@@ -28,19 +28,23 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
         res.status(400).json({message: "Invalid credential"})
     } else if (accounts.length > 1) {
         res.status(500).json({message: "Unable to login with this email."})
-    }
-    const hashedPassword = accounts[0]["hashedPassword"]
-    if (hashedPassword !== req.body["hashedPassword"]) {
-        console.log("input ", req.body["hashedPassword"])
-        console.log("in db ", hashedPassword)
-        res.status(400).json({message: "Invalid credential"})
     } else {
-        req.session.user = {
-            email: req.body["email"],
-            isAdmin: true
-        };
-        await req.session.save();
-        res.status(200).json(accounts[0])
+        // found a matching email
+        const hashedPassword = accounts[0]["hashedPassword"]
+        if (hashedPassword !== req.body["hashedPassword"]) {
+            console.log("input ", req.body["hashedPassword"])
+            console.log("in db ", hashedPassword)
+            res.status(400).json({message: "Invalid credential"})
+            return;
+        } else {
+            req.session.user = {
+                email: req.body["email"],
+                isAdmin: true
+            };
+            await req.session.save();
+            res.status(200).json(accounts[0])
+            return;
+        }
     }
 }
 

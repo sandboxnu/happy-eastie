@@ -6,6 +6,7 @@ import {
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
 import { RESOURCE_COLLECTION } from "../../../../models/constants";
+import { IRON_OPTION } from "../../../../models/constants";
 
 
 
@@ -14,6 +15,15 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<WithId<Resource>[] | WithId<Resource> | ResponseMessage>
 ) {
+    // authorization
+    const cookies = req.cookies
+    if (!cookies[IRON_OPTION.cookieName]) {
+        console.log(cookies)
+        res.status(401).json({message: "User not authorized"})
+        return
+    }
+
+
     // get request
     if (req.method === 'GET') {
         if (req.body["_id"]) {

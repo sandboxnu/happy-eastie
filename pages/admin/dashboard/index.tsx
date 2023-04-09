@@ -36,7 +36,17 @@ export const getServerSideProps = withIronSessionSsr(
       };
     }
 
-    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`);
+    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`, {credentials: 'same-origin'});
+
+    if (res.status !== 200) {
+      console.log("status not ok " + res.status)
+      return {
+        props: {
+          resources: []
+        }
+      }
+    }
+
     const resources: WithId<Resource>[] = await res.json();
     resources.sort((r1, r2) => r1.name.localeCompare(r2.name));
     return {

@@ -16,12 +16,12 @@ export default async function handler(
     res: NextApiResponse<WithId<Resource>[] | WithId<Resource> | ResponseMessage>
 ) {
     // authorization
-    const cookies = req.cookies
-    if (!cookies[IRON_OPTION.cookieName]) {
-        console.log(cookies)
-        res.status(401).json({message: "User not authorized"})
-        return
-    }
+    // const cookies = req.cookies
+    // if (!cookies[IRON_OPTION.cookieName]) {
+    //     console.log(cookies)
+    //     res.status(401).json({message: "User not authorized"})
+    //     return
+    // }
 
 
     // get request

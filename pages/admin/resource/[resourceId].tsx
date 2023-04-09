@@ -5,9 +5,31 @@ import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import { Image, Spacer, Text } from "@nextui-org/react";
 import styles from "./[resourceId].module.css";
+import { withIronSessionSsr } from "iron-session/next";
+import { IRON_OPTION } from "../../../models/constants";
 // import { ResourceDescription } from "../../components/resources/ResourceDescription";
 // import Loading from "../../components/Loading";
 // import Layout from "../../components/Layout";
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps(ctx) {
+    const user = ctx.req?.session.user;
+
+    if (!user || user.isAdmin !== true) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: {
+        user: ctx.req.session.user,
+      },
+    };
+  },
+  IRON_OPTION
+);
+
 
 const ResourcePageContent: NextPage = () => {
     const router = useRouter();

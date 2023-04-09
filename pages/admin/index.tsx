@@ -8,13 +8,12 @@ import {
 import { ChangeEvent, useState } from "react";
 import styles from "../../components/quiz/Quiz.module.css";
 import { Admin } from "../../models/types2";
-import { QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
-import { AES } from "crypto-js";
+import CryptoJS from "crypto-js";
 import { useRouter } from "next/router";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
-  const [hashedPassword, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [keepSignIn, setKeepSignIn] = useState(false);
   const [message, setMessage] = useState("");
   const router = useRouter();
@@ -24,20 +23,16 @@ const LogIn = () => {
   };
 
   const onPasswordChange = (e: ChangeEvent<FormElement>) => {
-    const hashedPassword = AES.encrypt(
-      e.target.value,
-      QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE
-    ).toString();
-    console.log("hashing ", hashedPassword);
-    setPassword(hashedPassword);
+    setPassword(e.target.value);
   };
 
   const submit = async () => {
     setMessage("");
+    const hashedPassword = CryptoJS.SHA256(password).toString()
     const requestBody = JSON.stringify({
       type: "login",
       email,
-      hashedPassword,
+      hashedPassword
     });
     const requestSettings = {
       method: "POST",
@@ -76,7 +71,7 @@ const LogIn = () => {
         id="continue"
         className={styles.continue}
         type="submit"
-        onClick={submit}
+        onPress={submit}
       >
         Log In
       </Button>

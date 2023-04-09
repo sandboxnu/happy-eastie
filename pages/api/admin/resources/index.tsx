@@ -8,6 +8,7 @@ import { ObjectId, WithId } from "mongodb";
 import { RESOURCE_COLLECTION } from "../../../../models/constants";
 
 
+
 // this endpoint get resources by calling the methods on api/resources
 export default async function handler(
     req: NextApiRequest,

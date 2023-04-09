@@ -1,9 +1,9 @@
-import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
 import { Admin, ResponseMessage } from "../../../../models/types2";
-import { ADMIN_COLLECTION } from "../../../../models/constants";
-import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
+import { ADMIN_COLLECTION, IRON_OPTION } from "../../../../models/constants";
+import { withIronSessionApiRoute } from "iron-session/next";
 
 
 async function handler(
@@ -31,8 +31,8 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
     }
     const hashedPassword = accounts[0]["hashedPassword"]
     if (hashedPassword !== req.body["hashedPassword"]) {
-        // console.log("input ", req.body["hashedPassword"])
-        // console.log("in db ", hashedPassword)
+        console.log("input ", req.body["hashedPassword"])
+        console.log("in db ", hashedPassword)
         res.status(400).json({message: "Invalid credential"})
     } else {
         req.session.user = {
@@ -64,13 +64,4 @@ async function handleSignUp(req : NextApiRequest, res: NextApiResponse<WithId<Ad
     }
 }
 
-const ironOptions = {
-    cookieName: "MY_APP_COOKIE",
-    password: "yPo4T7apfbdvctV1Bso1oAndQH9qwC94",
-    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
-    cookieOptions: {
-        secure: process.env.NODE_ENV === "production",
-  },
-}
-
-export default withIronSessionApiRoute(handler, ironOptions)
+export default withIronSessionApiRoute(handler, IRON_OPTION)

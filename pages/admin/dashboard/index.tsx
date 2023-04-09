@@ -9,27 +9,45 @@ import {
   Image
 } from "@nextui-org/react";
 import { WithId } from "mongodb";
-import { NextPageContext } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AdminDashboardHeader } from "../../../components/admin/dashboard/adminDashboardHeader";
 import { AdminDashboardSearch } from "../../../components/admin/dashboard/adminDashboardSearch";
 import { ResourceRow } from "../../../components/admin/dashboard/resourceRow";
 import { Resource } from "../../../models/types2";
+import { withIronSessionSsr } from "iron-session/next";
+import { IRON_OPTION } from "../../../models/constants";
 
 type AdminDashboardProps = {
   resources: WithId<Resource>[];
 };
 
-export async function getServerSideProps(ctx: NextPageContext) {
-  const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`);
-  const resources: WithId<Resource>[] = await res.json();
-  resources.sort((r1, r2) => r1.name.localeCompare(r2.name));
-  return {
-    props: {
-      resources,
-    },
-  };
-}
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps(ctx) {
+    console.log("context ", ctx.req.session)
+    const user = ctx.req?.session.user;
+
+    if (!user || user.isAdmin !== true) {
+      return {
+        redirect: {
+          destination: '/admin',
+          permanent: false,
+        }
+      };
+    }
+
+    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`);
+    const resources: WithId<Resource>[] = await res.json();
+    resources.sort((r1, r2) => r1.name.localeCompare(r2.name));
+    return {
+      props: {
+        user: ctx.req.session.user,
+        resources,
+      },
+    };
+  },
+  IRON_OPTION
+);
 
 function AdminDashboard({ resources }: AdminDashboardProps) {
   const [resourcesDisplayed, setResourcesDisplayed] =

@@ -7,27 +7,22 @@ import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
 import { RESOURCE_COLLECTION } from "../../../../models/constants";
 import { IRON_OPTION } from "../../../../models/constants";
-import { getIronSession } from "iron-session";
+import { withIronSessionApiRoute } from "iron-session/next";
 
-
+export default withIronSessionApiRoute(handler, IRON_OPTION);
 
 // this endpoint get resources by calling the methods on api/resources
-export default async function handler(
+async function handler(
     req: NextApiRequest,
     res: NextApiResponse<WithId<Resource>[] | WithId<Resource> | ResponseMessage>
 ) {
     // authorization
-    // const cookies = req.cookies
-    // if (!cookies[IRON_OPTION.cookieName]) {
-    //     console.log(cookies)
-    //     res.status(401).json({message: "User not authorized"})
-    //     return
-    // }
-
-    console.log("cookies ", req.cookies)
-    console.log("iron session ", await getIronSession(req, res, IRON_OPTION))
-    // console.log(" ", req.)
-
+    const user = req.session.user
+    if (!user || !user.isAdmin) {
+        // console.log(req.cookies)
+        res.status(401).json({message: "User not authorized"})
+        return
+    }
 
     // get request
     if (req.method === 'GET') {

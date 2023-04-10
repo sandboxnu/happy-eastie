@@ -7,7 +7,6 @@ import {
 } from "@nextui-org/react";
 import { ChangeEvent, useState } from "react";
 import styles from "../../components/quiz/Quiz.module.css";
-import { Admin } from "../../models/types2";
 import CryptoJS from "crypto-js";
 
 import { useRouter } from "next/router";

@@ -16,7 +16,6 @@ import { ResourceRow } from "../../../components/admin/dashboard/resourceRow";
 import { Resource } from "../../../models/types2";
 import { withIronSessionSsr } from "iron-session/next";
 import { IRON_OPTION } from "../../../models/constants";
-import { getIronSession } from "iron-session";
 
 type AdminDashboardProps = {
   resources: WithId<Resource>[];
@@ -25,8 +24,7 @@ type AdminDashboardProps = {
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps(ctx) {
-    console.log("context ", ctx.req.session)
-    const user = ctx.req?.session.user;
+    const user = ctx.req.session.user;
 
     if (!user || user.isAdmin !== true) {
       return {
@@ -37,7 +35,9 @@ export const getServerSideProps = withIronSessionSsr(
       };
     }
 
-    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`);
+    // since serverSideProps is run on the server's side while cookie belongs to the browser, need to set and send the cookie in the request's header
+    const headers : HeadersInit = [["Cookie", ctx.req.headers.cookie!]]
+    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`, {credentials: "same-origin", headers});
 
     if (res.status !== 200) {
       console.log("status not ok " + res.status)

@@ -32,7 +32,7 @@ export const getServerSideProps = withIronSessionSsr(
         props: {}
       }
     }
-  }, IRON_OPTION)
+  }, IRON_OPTION())
 
 const LogIn = () => {
   const [email, setEmail] = useState("");

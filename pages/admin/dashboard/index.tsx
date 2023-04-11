@@ -57,7 +57,7 @@ export const getServerSideProps = withIronSessionSsr(
       },
     };
   },
-  IRON_OPTION
+  IRON_OPTION()
 );
 
 function AdminDashboard({ resources }: AdminDashboardProps) {

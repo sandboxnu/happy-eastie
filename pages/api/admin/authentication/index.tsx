@@ -2,11 +2,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
 import { Admin, ResponseMessage } from "../../../../models/types2";
-import { ADMIN_COLLECTION, IRON_OPTION, IRON_OPTION_PERM } from "../../../../models/constants";
+import { ADMIN_COLLECTION, IRON_OPTION } from "../../../../models/constants";
 import { withIronSessionApiRoute } from "iron-session/next";
 
-
-async function handler(
+export default withIronSessionApiRoute(async function handler(
     req: NextApiRequest,
     res: NextApiResponse<WithId<Admin> | ResponseMessage>
 ) {
@@ -21,7 +20,7 @@ async function handler(
             res.status(400).json({message: "Unable to authenticate user"})
         }
     }
-}
+}, IRON_OPTION())
 
 async function handleLogOut(req : NextApiRequest, res: NextApiResponse<ResponseMessage>) {
     if (req.session) {
@@ -50,9 +49,9 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
                 email: req.body["email"],
                 isAdmin: true
             };
-            if (req.body["keepSignedIn"] == true) {
-                console.log("keeped me signed in")
-            }
+            // if (req.body["keepSignedIn"] == true) {
+            //     console.log("keeped me signed in")
+            // }
             await req.session.save();
             res.status(200).json(accounts[0])
             return;
@@ -80,4 +79,3 @@ async function handleSignUp(req : NextApiRequest, res: NextApiResponse<WithId<Ad
     }
 }
 
-export default withIronSessionApiRoute(handler, IRON_OPTION)

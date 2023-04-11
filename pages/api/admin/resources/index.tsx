@@ -9,7 +9,7 @@ import { RESOURCE_COLLECTION } from "../../../../models/constants";
 import { IRON_OPTION } from "../../../../models/constants";
 import { withIronSessionApiRoute } from "iron-session/next";
 
-export default withIronSessionApiRoute(handler, IRON_OPTION);
+export default withIronSessionApiRoute(handler, IRON_OPTION());
 
 // this endpoint get resources by calling the methods on api/resources
 async function handler(

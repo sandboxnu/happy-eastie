@@ -1,3 +1,5 @@
+import { IronSession } from "iron-session";
+
 export interface SurveyAnswers {
     /**
      * OR relationship
@@ -132,7 +134,14 @@ export type ResponseMessage = {
     message: string
 }
 
+
 export type User = {
     email: string, 
     isAdmin: boolean
+}
+
+declare module "iron-session" {
+    interface IronSessionData {
+        user: User
+    }
 }

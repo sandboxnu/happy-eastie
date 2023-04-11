@@ -36,8 +36,8 @@ export const getServerSideProps = withIronSessionSsr(
     }
 
     // since serverSideProps is run on the server's side while cookie belongs to the browser, need to set and send the cookie in the request's header
-    const headers : HeadersInit = [["Cookie", ctx.req.headers.cookie!]]
-    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`, {credentials: "same-origin", headers});
+    const headers : HeadersInit = [["Cookie", ctx.req.headers.cookie!], ["Content-Type", "application/json"]]
+    const res = await fetch(`http://${ctx.req?.headers.host}/api/admin/resources`, {headers});
 
     if (res.status !== 200) {
       console.log("status not ok " + res.status)

@@ -21,6 +21,9 @@ export const IRON_OPTION_ : IronSessionOptions = {
 }
 
 export const IRON_OPTION = function(req? : NextApiRequest, res?: NextApiResponse) {
+  if (req) {
+    console.log("requesttttt ", req)
+  }
   let ttl =  60*60*24
   if (req && req.body["keepMeSignedIn"]) {
     ttl *= 365

@@ -20,7 +20,7 @@ export default withIronSessionApiRoute(async function handler(
             res.status(400).json({message: "Unable to authenticate user"})
         }
     }
-}, IRON_OPTION())
+}, IRON_OPTION)
 
 async function handleLogOut(req : NextApiRequest, res: NextApiResponse<ResponseMessage>) {
     if (req.session) {
@@ -47,7 +47,7 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
         } else {
             req.session.user = {
                 email: req.body["email"],
-                isAdmin: true
+                isAdmin: true,
             };
             // if (req.body["keepSignedIn"] == true) {
             //     console.log("keeped me signed in")

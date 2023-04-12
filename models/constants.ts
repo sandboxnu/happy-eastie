@@ -1,3 +1,5 @@
+import { ServerResponse } from "http"
+import { IncomingMessage } from "http"
 import { IronSessionOptions } from "iron-session"
 import { NextApiRequest, NextApiResponse } from "next"
 
@@ -20,13 +22,12 @@ export const IRON_OPTION_ : IronSessionOptions = {
   },
 }
 
-export const IRON_OPTION = function(req? : NextApiRequest, res?: NextApiResponse) {
-  if (req) {
-    console.log("requesttttt ", req)
-  }
+export const LOGIN_IRON_OPTION = function(req : NextApiRequest, res: NextApiResponse) {
+  console.log("signed in")
   let ttl =  60*60*24
-  if (req && req.body["keepMeSignedIn"]) {
-    ttl *= 365
+  if (req.body["keepSignedIn"]) {
+    console.log("wants to stay sign in")
+    ttl *= 30
   }
   return {
     cookieName: "MY_APP_COOKIE",
@@ -36,5 +37,14 @@ export const IRON_OPTION = function(req? : NextApiRequest, res?: NextApiResponse
     cookieOptions: {
         secure: process.env.NODE_ENV === "production",
   },
+  }
+}
+
+export const NORMAL_IRON_OPTION = {
+    cookieName: "MY_APP_COOKIE",
+    password: "yPo4T7apfbdvctV1Bso1oAndQH9qwC94",
+    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
+    cookieOptions: {
+        secure: process.env.NODE_ENV === "production",
   }
 }

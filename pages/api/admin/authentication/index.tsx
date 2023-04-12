@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
 import { Admin, ResponseMessage } from "../../../../models/types2";
-import { ADMIN_COLLECTION, IRON_OPTION } from "../../../../models/constants";
+import { ADMIN_COLLECTION, LOGIN_IRON_OPTION } from "../../../../models/constants";
 import { withIronSessionApiRoute } from "iron-session/next";
 
 export default withIronSessionApiRoute(async function handler(
@@ -20,7 +20,7 @@ export default withIronSessionApiRoute(async function handler(
             res.status(400).json({message: "Unable to authenticate user"})
         }
     }
-}, IRON_OPTION)
+}, LOGIN_IRON_OPTION)
 
 async function handleLogOut(req : NextApiRequest, res: NextApiResponse<ResponseMessage>) {
     if (req.session) {

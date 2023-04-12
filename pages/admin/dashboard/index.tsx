@@ -15,7 +15,7 @@ import { AdminDashboardSearch } from "../../../components/admin/dashboard/adminD
 import { ResourceRow } from "../../../components/admin/dashboard/resourceRow";
 import { Resource } from "../../../models/types2";
 import { withIronSessionSsr } from "iron-session/next";
-import { IRON_OPTION } from "../../../models/constants";
+import { LOGIN_IRON_OPTION, NORMAL_IRON_OPTION } from "../../../models/constants";
 
 type AdminDashboardProps = {
   resources: WithId<Resource>[];
@@ -57,7 +57,7 @@ export const getServerSideProps = withIronSessionSsr(
       },
     };
   },
-  IRON_OPTION() 
+  NORMAL_IRON_OPTION
 );
 
 function AdminDashboard({ resources }: AdminDashboardProps) {

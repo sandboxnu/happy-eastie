@@ -10,7 +10,7 @@ import styles from "../../components/quiz/Quiz.module.css";
 import CryptoJS from "crypto-js";
 
 import { useRouter } from "next/router";
-import { IRON_OPTION, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE } from "../../models/constants";
+import { LOGIN_IRON_OPTION, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE, NORMAL_IRON_OPTION } from "../../models/constants";
 import { withIronSessionSsr } from "iron-session/next";
 
 export const getServerSideProps = withIronSessionSsr(
@@ -32,7 +32,7 @@ export const getServerSideProps = withIronSessionSsr(
         props: {}
       }
     }
-  }, IRON_OPTION())
+  }, NORMAL_IRON_OPTION)
 
 const LogIn = () => {
   const [email, setEmail] = useState("");

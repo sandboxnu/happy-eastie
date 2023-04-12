@@ -1,6 +1,6 @@
 import { withIronSessionSsr } from "iron-session/next";
 import { NextPage } from "next"
-import { IRON_OPTION } from "../../../models/constants";
+import { LOGIN_IRON_OPTION, NORMAL_IRON_OPTION } from "../../../models/constants";
 
 export const getServerSideProps = withIronSessionSsr(
     async function getServerSideProps(ctx) {
@@ -18,7 +18,7 @@ export const getServerSideProps = withIronSessionSsr(
         },
       };
     },
-    IRON_OPTION()
+    NORMAL_IRON_OPTION
   );
 
 const AddNewResource: NextPage = () => {

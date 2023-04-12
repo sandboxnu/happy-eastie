@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { Image, Spacer, Text } from "@nextui-org/react";
 import styles from "./[resourceId].module.css";
 import { withIronSessionSsr } from "iron-session/next";
-import { IRON_OPTION } from "../../../models/constants";
+import { LOGIN_IRON_OPTION, NORMAL_IRON_OPTION } from "../../../models/constants";
 // import { ResourceDescription } from "../../components/resources/ResourceDescription";
 // import Loading from "../../components/Loading";
 // import Layout from "../../components/Layout";
@@ -27,7 +27,7 @@ export const getServerSideProps = withIronSessionSsr(
       },
     };
   },
-  IRON_OPTION()
+  NORMAL_IRON_OPTION
 );
 
 

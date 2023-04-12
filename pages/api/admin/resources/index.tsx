@@ -6,7 +6,6 @@ import {
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
 import { RESOURCE_COLLECTION, NORMAL_IRON_OPTION } from "../../../../models/constants";
-import { LOGIN_IRON_OPTION } from "../../../../models/constants";
 import { withIronSessionApiRoute } from "iron-session/next";
 
 export default withIronSessionApiRoute(handler, NORMAL_IRON_OPTION);
@@ -19,7 +18,6 @@ async function handler(
     // authorization
     const user = req.session.user
     if (!user || !user.isAdmin) {
-        // console.log(req.cookies)
         res.status(401).json({message: "User not authorized"})
         return
     }

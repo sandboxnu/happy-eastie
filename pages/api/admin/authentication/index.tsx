@@ -40,8 +40,6 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
         // found a matching email
         const hashedPassword = accounts[0]["hashedPassword"]
         if (hashedPassword !== req.body["hashedPassword"]) {
-            console.log("input ", req.body["hashedPassword"])
-            console.log("in db ", hashedPassword)
             res.status(400).json({message: "Invalid credential"})
             return;
         } else {
@@ -49,9 +47,6 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
                 email: req.body["email"],
                 isAdmin: true,
             };
-            // if (req.body["keepSignedIn"] == true) {
-            //     console.log("keeped me signed in")
-            // }
             await req.session.save();
             res.status(200).json(accounts[0])
             return;

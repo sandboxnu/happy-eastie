@@ -11,7 +11,6 @@ export const AdminDashboardHeader = () => {
           };
         const response = await fetch("/api/admin/authentication", requestSettings);
         if (response.status !== 200) { 
-            console.log("logout unsuccessfully")
         } else {
             router.push("/admin")
         }

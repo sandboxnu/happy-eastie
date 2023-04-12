@@ -10,13 +10,11 @@ import styles from "../../components/quiz/Quiz.module.css";
 import CryptoJS from "crypto-js";
 
 import { useRouter } from "next/router";
-import { LOGIN_IRON_OPTION, QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE, NORMAL_IRON_OPTION } from "../../models/constants";
+import { NORMAL_IRON_OPTION } from "../../models/constants";
 import { withIronSessionSsr } from "iron-session/next";
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({req}) {
-    console.log("context ", req.session)
-
     const user = req.session.user;
 
     if (user &&  user.isAdmin) {

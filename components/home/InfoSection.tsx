@@ -12,7 +12,7 @@ export default function InfoSection() {
           <Text className={styles.title}>Here to help find the resources for you!</Text>
           <Spacer y={2} />
           <Text className={styles.subtitle}>
-            Tap &quot;Help My Search&quot; to answer questions and get personalized resoure results.
+            Tap &quot;Help My Search&quot; to answer questions and get personalized resource results.
           </Text>
           <Spacer y={2} />
           <Button className={styles.button} shadow>

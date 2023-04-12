@@ -9,7 +9,7 @@ const AboutPage = () => {
             <Spacer y={2}></Spacer>
             <Text>HappyEastie is a tool that helps match you with helpful resources that you qualify for. Our mission is to make this search as easy as possible, creating a community hub for information. 
             </Text>
-            <Text h2>You can:</Text>
+            <Text h3>You can:</Text>
             <ul>
                 <li>
                     <Text>Follow the path of answering questions to get resources that you’re eligible for</Text>
@@ -23,7 +23,7 @@ const AboutPage = () => {
                     <Text>Manually search our database for what you’re looking for</Text>    
                 </li>
             </ul>
-            <Text h2>On The Way:</Text>
+            <Text h3>On The Way:</Text>
             <ul>
                 <li>
                     <Text>Multiple Language Support</Text>

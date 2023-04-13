@@ -13,7 +13,7 @@ export const LOGIN_IRON_OPTION = function(req : NextApiRequest, res: NextApiResp
   }
   return {
     cookieName: "MY_APP_COOKIE",
-    password: "yPo4T7apfbdvctV1Bso1oAndQH9qwC94",
+    password: process.env.COOKIES_PASSWORD!,
     ttl,
     // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
     cookieOptions: {
@@ -24,7 +24,7 @@ export const LOGIN_IRON_OPTION = function(req : NextApiRequest, res: NextApiResp
 
 export const NORMAL_IRON_OPTION = {
     cookieName: "MY_APP_COOKIE",
-    password: "yPo4T7apfbdvctV1Bso1oAndQH9qwC94",
+    password: process.env.COOKIES_PASSWORD!,
     // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
     cookieOptions: {
         secure: process.env.NODE_ENV === "production",

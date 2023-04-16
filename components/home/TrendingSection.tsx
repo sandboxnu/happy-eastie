@@ -1,10 +1,9 @@
-import { Card, Row, Spacer, Text, Image, Container, Link } from "@nextui-org/react";
-import TagsMap from "../../models/TagsMap";
+import { Card, Row, Spacer, Text, Image, Container, Link, Grid } from "@nextui-org/react";
 import Bookmark from "../bookmark";
-import Tag from "./tag";
 import styles from "./TrendingSection.module.css"
 import NextLink from "next/link"
 import HomeStyles from "./Home.module.css"
+import Tag from "../tag";
 
 const events = [
   {
@@ -62,11 +61,13 @@ function EventCard({ event }: { event: EastieEvent }) {
       </Card.Body>
 
       <Card.Footer>
-        <Row justify="flex-start" css={{ gap: 15, marginLeft: "8px", marginBottom: "5px" }}>
+        <Grid.Container css={{ gap: 10 }}>
           {event.tags.map((tag, index) => (
-            <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
+            <Grid key={index}>
+              <Tag text={tag} key={index} />
+            </Grid>
           ))}
-        </Row>
+        </Grid.Container>
       </Card.Footer>
     </Card >
   )

@@ -3,7 +3,6 @@ import { Button, Grid, Image, Text } from "@nextui-org/react";
 import Tag from "../tag";
 import styles from "./ResourceHeader.module.css";
 import { useRouter } from "next/router";
-import TagsMap from "../../models/TagsMap";
 
 interface ResourceHeaderProps {
   resource: Resource;

@@ -3,7 +3,6 @@ import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
 import { Resource } from '../../models/types2';
 import styles from './ResourceCardDisplay.module.css';
 import Tag from "../../components/tag";
-import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
 import { WithId } from 'mongodb';

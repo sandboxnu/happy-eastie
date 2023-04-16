@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.adminLoginInput {
+    background: #F6F6F6;
+    border: 0.5px solid #757575;
+    border-radius: 14px;
+}
+
+.adminLoginText {
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 35px;
+}
+
+.forgotPassword {
+    background: none;
+    border-color: #fff;
+    color: #0D9EF0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    padding: 0px;
+}
+
+.errorMessageContainer {
+    background: #FFEBEB;
+    border: 1px solid #C90000;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.errorMessage {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #C90000;
+}

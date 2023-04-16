@@ -36,7 +36,7 @@ export const ResourceHeader: React.FC<ResourceHeaderProps> = (
       <Grid.Container gap={1} justify="center">
         {props.resource.category?.map((c, i) => (
           <Grid key={i}>
-            <Tag text={c} color={TagsMap().get(c) ?? "black"} />
+            <Tag text={c} />
           </Grid>
         ))}
       </Grid.Container>

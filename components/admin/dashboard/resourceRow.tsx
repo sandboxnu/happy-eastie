@@ -204,7 +204,6 @@ export const ResourceRow = (props: ResourceRowProps) => {
             {props.resourceData.category.map((tag, index) => (
               <Tag
                 text={tag}
-                color={TagsMap().get(tag) ?? "black"}
                 key={index}
               />
             ))}

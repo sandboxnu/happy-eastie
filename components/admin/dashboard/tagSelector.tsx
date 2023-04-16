@@ -21,9 +21,19 @@ export const TagSelector = ({
         name,
         value: tags.filter((tag) => tag !== tagName),
       },
-      // We have to cast the event to unknown and then to FormElement because
-      // the onChange prop is expecting a FormElement, but we're not actually
-      // using a FormElement here.
+    } as unknown as React.ChangeEvent<FormElement>);
+  };
+
+  const addTag = (newTagName: string) => {
+    // Don't add the tag if it's already in the list
+    if (tags.includes(newTagName)) return;
+
+    // Add the tag to the list of tags
+    onChange?.({
+      target: {
+        name,
+        value: [...tags, newTagName],
+      },
     } as unknown as React.ChangeEvent<FormElement>);
   };
 
@@ -31,6 +41,14 @@ export const TagSelector = ({
     <div>
       {editing && (
         <Input
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              // Prevent form submission when pressing enter
+              e.preventDefault();
+              addTag(e.currentTarget.value);
+              e.currentTarget.value = "";
+            }
+          }}
           bordered
           borderWeight="light"
           color="primary"
@@ -44,7 +62,6 @@ export const TagSelector = ({
           <Grid>
             <Tag
               text={tag}
-              color="pink"
               editing={editing}
               onXClick={handleXClick}
             />

@@ -3,22 +3,36 @@ import { Text, Image, Row } from "@nextui-org/react";
 
 type TagProps = {
   text: string;
-  color: string;
   editing?: boolean;
   onXClick?: (s: string) => void;
 };
 
 export default function Tag({
   text,
-  color,
   editing = false,
   onXClick,
 }: TagProps) {
+  const tagColor = (tagName: string) => {
+    const tagColors = [
+      "var(--brand-blue)",
+      "var(--brand-purple)",
+      "var(--brand-green)",
+      "#D00DF0",
+      "var(--brand-orange)",
+      "var(--brand-primary)",
+      "rgb(230, 172, 0)",
+      "#e35cce"
+    ]
+    const index = tagName.length % tagColors.length;
+    return tagColors[index];
+  }
+
+
   return (
     <Row
       align="center"
       css={{
-        backgroundColor: color,
+        backgroundColor: tagColor(text),
         padding: "5px 8px",
         borderRadius: "5px",
         color: "white",

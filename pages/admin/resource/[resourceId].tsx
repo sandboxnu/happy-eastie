@@ -246,6 +246,8 @@ const ResourcePageContent: NextPage = () => {
               <Button
                 bordered
                 onPress={() => {
+                  // Reset inputted resource to original resource
+                  setInputtedResource(resource)
                   setIsEditing(false);
                 }}
               >

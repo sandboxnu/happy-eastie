@@ -59,7 +59,6 @@ const ResourcePageContent: NextPage = () => {
   const handleInputChange = (event: React.ChangeEvent<FormElement>) => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log({ ...inputtedResource, [name]: value });
     setInputtedResource((values) => values && { ...values, [name]: value });
   };
 
@@ -82,7 +81,6 @@ const ResourcePageContent: NextPage = () => {
     };
     const response: Response = await fetch("/api/admin", requestSettings);
     const result = await response.json();
-    console.log(result)
     return result.modifiedCount;
   };
 
@@ -209,8 +207,9 @@ const ResourcePageContent: NextPage = () => {
               {/* TODO: Handle input and change here */}
               <TagSelector
                 name="category"
-                tags={resource.category}
+                tags={inputtedResource.category}
                 editing={isEditing}
+                onChange={handleInputChange}
               />
               <Spacer y={1} />
               <Text h3>Keywords</Text>

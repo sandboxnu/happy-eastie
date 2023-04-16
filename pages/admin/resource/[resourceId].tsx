@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { Resource } from "../../../models/types2";
 import { ObjectId, WithId } from "mongodb";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
+import { TagSelector } from "../../../components/admin/dashboard/tagSelector";
 
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -206,9 +207,9 @@ const ResourcePageContent: NextPage = () => {
             <Grid xs={12} sm={3} direction="column">
               <Text h3>Categories</Text>
               {/* TODO: Handle input and change here */}
-              <FormInput
+              <TagSelector
                 name="category"
-                placeholder="Category"
+                tags={resource.category}
                 editing={isEditing}
               />
               <Spacer y={1} />

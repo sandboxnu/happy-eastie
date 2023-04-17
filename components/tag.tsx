@@ -4,12 +4,14 @@ import { Text, Image, Row } from "@nextui-org/react";
 type TagProps = {
   text: string;
   editing?: boolean;
+  colorful: boolean;
   onXClick?: (s: string) => void;
 };
 
 export default function Tag({
   text,
   editing = false,
+  colorful,
   onXClick,
 }: TagProps) {
   const tagColor = (tagName: string) => {
@@ -32,7 +34,7 @@ export default function Tag({
     <Row
       align="center"
       css={{
-        backgroundColor: tagColor(text),
+        backgroundColor: colorful ? tagColor(text):"#757575",
         padding: "5px 8px",
         borderRadius: "5px",
         color: "white",

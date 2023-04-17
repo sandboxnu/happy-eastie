@@ -84,6 +84,25 @@ const ResourcePageContent: NextPage = () => {
     return result.modifiedCount;
   };
 
+  async function getCategories(): Promise<string[]> {
+    const response = await fetch("/api/resources/categories");
+    const categories = await response.json();
+
+    return categories;
+  }
+
+  async function getLanguages(): Promise<string[]> {
+    const response = await fetch("/api/resources/languages");
+    const languages = await response.json();
+    return languages;
+  }
+
+  async function getAccessibility(): Promise<string[]> {
+    const response = await fetch("/api/resources/accessibility");
+    const accessibility = await response.json();
+    return accessibility;
+  }
+
   return (
     <>
       <Image
@@ -204,20 +223,21 @@ const ResourcePageContent: NextPage = () => {
 
             <Grid xs={12} sm={3} direction="column">
               <Text h3>Categories</Text>
-              {/* TODO: Handle input and change here */}
               <TagSelector
                 name="category"
                 tags={inputtedResource.category}
                 editing={isEditing}
+                colorful={true}
                 onChange={handleInputChange}
+                fetchDatalist={getCategories}
               />
               <Spacer y={1} />
               <Text h3>Keywords</Text>
-              {/* TODO: Handle input and change here */}
-              <FormInput
+              <TagSelector
                 name="keywords"
-                placeholder="Keyword"
+                tags={inputtedResource.keywords??[]}
                 editing={isEditing}
+                onChange={handleInputChange}
               />
             </Grid>
 
@@ -233,6 +253,30 @@ const ResourcePageContent: NextPage = () => {
                 value={resource.eligibilityInfo}
                 onChange={handleInputChange}
               />
+            </Grid>
+            <Card.Divider />
+        <Grid xs={12} sm={3} direction="column" justify="flex-start">
+              <Text h3>Accessibility</Text>
+              <TagSelector
+                name="accessibilityOptions"
+                tags={inputtedResource.accessibilityOptions??[]}
+                editing={isEditing}
+                onChange={handleInputChange}
+                fetchDatalist={getAccessibility}
+              />
+            </Grid>
+            <Grid xs={12} sm={3} direction="column" justify="flex-start">
+            <Text h3>Languages</Text>
+              <TagSelector
+                name="availableLanguages"
+                tags={inputtedResource.availableLanguages}
+                editing={isEditing}
+                onChange={handleInputChange}
+                fetchDatalist={getLanguages}
+              />
+            </Grid>
+            <Grid xs={0} sm={3}>
+
             </Grid>
           </Grid.Container>
         </Container>

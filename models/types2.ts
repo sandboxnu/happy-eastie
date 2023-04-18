@@ -1,3 +1,5 @@
+import { IronSession } from "iron-session";
+
 export interface SurveyAnswers {
     /**
      * OR relationship
@@ -109,4 +111,37 @@ export interface Resource {
      * put documentation requirements here
      */
     eligibilityInfo?: string;
+}
+
+
+export interface Admin {
+    email: string;
+    hashedPassword: string;
+    firstName: string;
+    lastName: string;
+    permissionGroups: PermissionGroup[];
+    title: string;
+    organization: string;
+    phoneNumber: string;
+    profilePicture?: string;
+}
+
+export enum PermissionGroup {
+    Admin = "Admin"
+}
+
+export type ResponseMessage = {
+    message: string
+}
+
+
+export type User = {
+    email: string, 
+    isAdmin: boolean
+}
+
+declare module "iron-session" {
+    interface IronSessionData {
+        user: User
+    }
 }

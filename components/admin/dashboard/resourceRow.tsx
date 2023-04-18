@@ -44,7 +44,7 @@ const renameResource = async (newName: string, r: WithId<Resource>) => {
     body: JSON.stringify(requestBody),
     headers: { "Content-Type": "application/json" },
   };
-  const response: Response = await fetch("/api/admin", requestSettings);
+  const response: Response = await fetch("/api/admin/resources", requestSettings);
   const result = await response.json();
   return result.modifiedCount;
 };

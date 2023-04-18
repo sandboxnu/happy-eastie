@@ -1,112 +1,105 @@
 import {
   Button,
-  Container,
+  Checkbox,
   FormElement,
-  Grid,
-  Link,
-  Row,
+  Input,
   Spacer,
-  Image
 } from "@nextui-org/react";
-import { WithId } from "mongodb";
-import { NextPageContext } from "next";
-import { ChangeEvent, useEffect, useState } from "react";
-import { AdminDashboardHeader } from "../../components/admin/dashboard/adminDashboardHeader";
-import { AdminDashboardSearch } from "../../components/admin/dashboard/adminDashboardSearch";
-import { ResourceRow } from "../../components/admin/dashboard/resourceRow";
-import { Resource } from "../../models/types2";
+import { ChangeEvent, useState } from "react";
+import styles from "../../components/quiz/Quiz.module.css";
+import CryptoJS from "crypto-js";
 
-type AdminDashboardProps = {
-  resources: WithId<Resource>[];
-};
+import { useRouter } from "next/router";
+import { NORMAL_IRON_OPTION } from "../../models/constants";
+import { withIronSessionSsr } from "iron-session/next";
 
-export async function getServerSideProps(ctx: NextPageContext) {
-  const res = await fetch(`http://${ctx.req?.headers.host}/api/admin`);
-  const resources: WithId<Resource>[] = await res.json();
-  resources.sort((r1, r2) => r1.name.localeCompare(r2.name));
-  return {
-    props: {
-      resources,
-    },
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({req}) {
+    const user = req.session.user;
+
+    if (user &&  user.isAdmin) {
+      return {
+        redirect: {
+          destination: '/admin/dashboard',
+          permanent: false,
+        }
+      };
+    }
+    else {
+      return {
+        props: {}
+      }
+    }
+  }, NORMAL_IRON_OPTION)
+
+const LogIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [keepSignedIn, setKeepSignedIn] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+
+
+  const onEmailChange = (e: ChangeEvent<FormElement>) => {
+    setEmail(e.target.value);
   };
-}
 
-function AdminDashboard({ resources }: AdminDashboardProps) {
-  const [resourcesDisplayed, setResourcesDisplayed] =
-    useState<WithId<Resource>[]>(resources);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  // list layout == true, grid layout == false
-  const [listLayout, setListLayout] = useState<Boolean>(true);
+  const onPasswordChange = (e: ChangeEvent<FormElement>) => {
+    setPassword(e.target.value);
+  };
 
-  useEffect(() => {
-    if (searchQuery === "") return setResourcesDisplayed(resources);
-    const searchQueryAppliedResources = resources.filter(
-      (r) =>
-        r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.summary.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setResourcesDisplayed(searchQueryAppliedResources);
-  }, [searchQuery, resources]);
+  const submit = async () => {
+    setMessage("");
+    const hashedPassword = CryptoJS.SHA256(password).toString()
+    const requestBody = JSON.stringify({
+      type: "login",
+      email,
+      hashedPassword,
+      keepSignedIn
+    });
+    const requestSettings = {
+      method: "POST",
+      body: requestBody,
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await fetch("/api/admin/authentication", requestSettings);
+    if (response.status !== 200) {
+      setMessage("authentication failed" + response.status);
+    } else {
+      router.push("/admin/dashboard");
+    }
+  };
 
   return (
-    <div>
-      <AdminDashboardHeader />
-      <Container fluid>
-        <Row css={{ gap: 22, maxWidth: "70vw", mt: 63 }}>
-          <AdminDashboardSearch
-            onChange={(e: ChangeEvent<FormElement>) =>
-              setSearchQuery(e.target.value)
-            }
-          />
-        </Row>
-        <Spacer y={2} />
-        <Row css={{ gap: 10 }}>
-          <Button
-            as={Link}
-            href="/admin/addNew"
-            css={{ px: 20 }}
-            size="lg"
-            auto
-            icon={<Image src="/plus.svg" />}
-          >
-            Add New
-          </Button>
-
-          <Button
-            aria-label="Grid Layout"
-            css={{ p: 10, bgColor: listLayout ? "$gray600" : "primary" }}
-            auto
-            size="lg"
-            onPress={() => setListLayout(false)}
-          >
-            <Image src="/gridLayout.svg" width={26} />
-          </Button>
-
-          <Button
-            aria-label="List Layout"
-            css={{ p: 10, bgColor: listLayout ? "primary" : "$gray600" }}
-            auto
-            size="lg"
-            onPress={() => setListLayout(true)}
-          >
-            <Image src="/listLayout.svg" width={26} />
-          </Button>
-        </Row>
-
-        <Spacer y={1} />
-        <Grid.Container gap={listLayout ? 0 : 2} css={{ px: 0 }}>
-          {resourcesDisplayed.map((r) => (
-            <ResourceRow
-              key={`${r._id}`}
-              resourceData={r}
-              listLayout={listLayout}
-            />
-          ))}
-        </Grid.Container>
-      </Container>
-    </div>
+    <>
+      {" "}
+      <p>{message}</p>
+      <Input
+        clearable
+        bordered
+        labelPlaceholder="Name"
+        onChange={onEmailChange}
+      />
+      <Spacer y={2.5} />
+      <Input.Password
+        labelPlaceholder="Password"
+        bordered
+        onChange={onPasswordChange}
+      />
+      <Spacer y={2.5} />
+      <Checkbox onChange={(checked) => setKeepSignedIn(checked)}>
+        Keep me signed in
+      </Checkbox>
+      <Button
+        id="continue"
+        className={styles.continue}
+        type="submit"
+        onPress={submit}
+      >
+        Log In
+      </Button>
+    </>
   );
-}
+};
 
-export default AdminDashboard;
+export default LogIn;

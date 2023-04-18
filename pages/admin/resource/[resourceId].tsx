@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-// import { useResource } from "../../hooks/useResource";
 import { useRouter } from "next/router";
-// import { ResourceHeader } from "../../components/resources/ResourceHeader";
+import { withIronSessionSsr } from "iron-session/next";
+import { NORMAL_IRON_OPTION } from "../../../models/constants";
 import {
   Button,
   Card,
@@ -9,18 +9,36 @@ import {
   FormElement,
   Grid,
   Image,
-  Input,
   Loading,
   Row,
   Spacer,
   Text,
-  Textarea,
 } from "@nextui-org/react";
 import { useResource } from "../../../hooks/useResource";
 import { useEffect, useState } from "react";
 import { Resource } from "../../../models/types2";
-import { ObjectId, WithId } from "mongodb";
+import { WithId } from "mongodb";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps(ctx) {
+    const user = ctx.req?.session.user;
+
+    if (!user || user.isAdmin !== true) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: {
+        user: ctx.req.session.user,
+      },
+    };
+  },
+  NORMAL_IRON_OPTION
+);
+
 
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);

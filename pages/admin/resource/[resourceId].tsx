@@ -129,7 +129,7 @@ const ResourcePageContent: NextPage = () => {
                 {!isEditing && (
                   <Button
                     auto
-                    iconRight={<img src="/pencil.svg" />}
+                    iconRight={<img src="/pencilwhite.svg" />}
                     onPress={() => {
                       setIsEditing(true);
                     }}
@@ -148,7 +148,7 @@ const ResourcePageContent: NextPage = () => {
                 placeholder="Summary"
                 size="md"
                 editing={isEditing}
-                value={resource.summary}
+                value={inputtedResource.summary}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -159,7 +159,7 @@ const ResourcePageContent: NextPage = () => {
                 name="description"
                 editing={isEditing}
                 placeholder="Description"
-                value={resource.description}
+                value={inputtedResource.description}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -178,7 +178,7 @@ const ResourcePageContent: NextPage = () => {
                   name="email"
                   placeholder="Email"
                   editing={isEditing}
-                  value={resource.email}
+                  value={inputtedResource.email}
                   onChange={handleInputChange}
                 />
               </Row>
@@ -195,7 +195,7 @@ const ResourcePageContent: NextPage = () => {
                   name="phone"
                   placeholder="Phone"
                   editing={isEditing}
-                  value={resource.phone}
+                  value={inputtedResource.phone}
                   onChange={handleInputChange}
                 />
               </Row>
@@ -207,7 +207,7 @@ const ResourcePageContent: NextPage = () => {
                 name="website"
                 placeholder="Website"
                 editing={isEditing}
-                value={resource.website}
+                value={inputtedResource.website}
                 onChange={handleInputChange}
               />
               <Spacer y={1} />
@@ -216,7 +216,7 @@ const ResourcePageContent: NextPage = () => {
                 name="address"
                 placeholder="Street Address"
                 editing={isEditing}
-                value={resource.address}
+                value={inputtedResource.address}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -250,7 +250,7 @@ const ResourcePageContent: NextPage = () => {
                 name="eligibilityInfo"
                 editing={isEditing}
                 placeholder={"Eligibility Criteria"}
-                value={resource.eligibilityInfo}
+                value={inputtedResource.eligibilityInfo}
                 onChange={handleInputChange}
               />
             </Grid>

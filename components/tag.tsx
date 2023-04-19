@@ -15,38 +15,25 @@ export default function Tag({
   onXClick,
 }: TagProps) {
   const tagColor = (tagName: string) => {
-    const tagColors = [
-      "#C7F1FF",
-      "#E1CFFF",
-      "#DFFCD2",
-      "#FDE5FF",
-      "#FFE9CF"
-    ]
+    const tagColors = ["#C7F1FF", "#E1CFFF", "#DFFCD2", "#FDE5FF", "#FFE9CF"];
     const index = tagName.length % tagColors.length;
     return tagColors[index];
-  }
+  };
 
   const borderColor = (tagName: string) => {
-    const tagColors = [
-      "#005A8F",
-      "#6200FF",
-      "#32631D",
-      "#9800A3",
-      "#854700"
-    ]
+    const tagColors = ["#005A8F", "#6200FF", "#32631D", "#9800A3", "#854700"];
     const index = tagName.length % tagColors.length;
     return tagColors[index];
-  }
-
+  };
 
   return (
     <Row
       align="center"
       css={{
-        backgroundColor: colorful ? tagColor(text):"#757575",
+        backgroundColor: colorful ? tagColor(text) : "#E9EDF5",
         padding: "5px 8px",
         borderRadius: "5px",
-        border: `0.5px solid ${borderColor(text)}`,
+        border: `0.5px solid ${colorful ? borderColor(text) : "#757575"}`,
         color: "black",
         fontSize: "14px",
         fontFamily: "Raleway",

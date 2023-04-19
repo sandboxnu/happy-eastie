@@ -23,7 +23,7 @@ export const TagSelector = ({
   const [dropdownTags, setDropdownTags] = useState<string[]>([]);
   useEffect(() => {
     fetchDatalist?.().then((data) => setDropdownTags(data));
-  }, []);
+  }, [fetchDatalist]);
   const handleXClick = (tagName: string) => {
     // Remove the tag from the list of tags
     onChange?.({
@@ -77,16 +77,17 @@ export const TagSelector = ({
               )
               .filter((dt) => inputValue !== dt)
               .filter((dt) => !tags.includes(dt))
-              .map((dt) => (
-                <option style={{ fontSize: "16px" }}>{dt}</option>
+              .map((dt, i) => (
+                <option key={i} style={{ fontSize: "16px" }}>{dt}</option>
               ))}
           </datalist>
         </>
       )}
       <Grid.Container gap={0.75} css={{ px: 0 }}>
-        {tags.map((tag) => (
+        {tags.map((tag, i) => (
           <Grid>
             <Tag
+              key={i}
               text={tag}
               editing={editing}
               colorful={colorful}

@@ -5,35 +5,36 @@ import {
   Input,
   Spacer,
   Grid,
-  Text
+  Text,
+  Row,
+  Image
 } from "@nextui-org/react";
 import { ChangeEvent, useState } from "react";
-import quizStyles from "../../components/quiz/Quiz.module.css";
 import styles from "./admin.module.css";
 import CryptoJS from "crypto-js";
 
 import { useRouter } from "next/router";
 import { NORMAL_IRON_OPTION } from "../../models/constants";
-// import { withIronSessionSsr } from "iron-session/next";
+import { withIronSessionSsr } from "iron-session/next";
 
-// export const getServerSideProps = withIronSessionSsr(
-//   async function getServerSideProps({req}) {
-//     const user = req.session.user;
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    const user = req.session.user;
 
-//     if (user &&  user.isAdmin) {
-//       return {
-//         redirect: {
-//           destination: '/admin/dashboard',
-//           permanent: false,
-//         }
-//       };
-//     }
-//     else {
-//       return {
-//         props: {}
-//       }
-//     }
-//   }, NORMAL_IRON_OPTION)
+    if (user && user.isAdmin) {
+      return {
+        redirect: {
+          destination: '/admin/dashboard',
+          permanent: false,
+        }
+      };
+    }
+    else {
+      return {
+        props: {}
+      }
+    }
+  }, NORMAL_IRON_OPTION)
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
@@ -73,24 +74,35 @@ const LogIn = () => {
   };
 
   const handleForgotPassword = async () => {
-
+    router.push("/admin/forgotPassword");
   }
 
   return (
-    <div className={styles.container}>
-      <Grid.Container gap={2} alignItems="center" direction="column">
+    <div className={styles.page}>
+      <div className={styles.loginContainer}>
         <Grid>
+          <Spacer y={3} />
+
+          <Image
+            src="/HappyEastie.png"
+            alt="HappyEastie"
+            className={styles.logoImage}
+          />
+
           {message &&
-            <div className={styles.errorMessageContainer}>
-              <p className={styles.errorMessage}>{message}</p>
-            </div>
+            <>
+              <Spacer y={0.75} />
+              <div className={styles.errorMessageContainer}>
+                <p className={styles.errorMessage}>{message}</p>
+              </div>
+            </>
           }
 
-          <Spacer y={0.5} />
+          <Spacer y={1} />
 
           <Text className={styles.adminLoginText}>Administrator Login</Text>
 
-          <Spacer y={0.5} />
+          <Spacer y={0.75} />
 
           <Input
             clearable
@@ -101,7 +113,7 @@ const LogIn = () => {
             size="md"
             animated={false}
           />
-          <Spacer y={0.5} />
+          <Spacer y={0.75} />
           <Input.Password
             placeholder="Password"
             bordered
@@ -111,49 +123,36 @@ const LogIn = () => {
             animated={false}
           />
 
-          <Spacer y={0.5} />
+          <Spacer y={0.75} />
 
           <Checkbox onChange={(checked) => setKeepSignedIn(checked)}>
             Keep me signed in
           </Checkbox>
 
+          <Spacer y={0.75} />
+
           <Button
-            id="continue"
-            className={quizStyles.continue}
+            id="login"
+            className={styles.loginButton}
             type="submit"
             onPress={handleSubmit}
           >
-            Log In
+            <Text className={styles.loginButtonText}>Login</Text>
           </Button>
 
-          <Button
-            id="forgot-password"
-            className={styles.forgotPassword}
-            onPress={handleForgotPassword}
-          >
-            Forgot Password?
-          </Button>
+          <Spacer y={0.5} />
+
+          <Row className={styles.forgotPasswordButtonContainer}>
+            <Button
+              id="forgot-password"
+              className={styles.forgotPassword}
+              onPress={handleForgotPassword}
+            >
+              Forgot Password?
+            </Button>
+          </Row>
         </Grid>
-      </Grid.Container>
-
-      {/* <Spacer y={2.5} />
-      <Input.Password
-        labelPlaceholder="Password"
-        bordered
-        onChange={onPasswordChange}
-      />
-      <Spacer y={2.5} />
-      <Checkbox onChange={(checked) => setKeepSignedIn(checked)}>
-        Keep me signed in
-      </Checkbox>
-      <Button
-        id="continue"
-        className={quizStyles.continue}
-        type="submit"
-        onPress={submit}
-      >
-        Log In
-      </Button> */}
+      </div>
     </div>
   );
 };

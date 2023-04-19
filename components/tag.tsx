@@ -4,14 +4,14 @@ import { Text, Image, Row } from "@nextui-org/react";
 type TagProps = {
   text: string;
   editing?: boolean;
-  colorful: boolean;
+  colorful?: boolean;
   onXClick?: (s: string) => void;
 };
 
 export default function Tag({
   text,
   editing = false,
-  colorful,
+  colorful = true,
   onXClick,
 }: TagProps) {
   const tagColor = (tagName: string) => {

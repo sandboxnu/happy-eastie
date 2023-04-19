@@ -85,9 +85,8 @@ export const TagSelector = ({
       )}
       <Grid.Container gap={0.75} css={{ px: 0 }}>
         {tags.map((tag, i) => (
-          <Grid>
+          <Grid key={i}>
             <Tag
-              key={i}
               text={tag}
               editing={editing}
               colorful={colorful}

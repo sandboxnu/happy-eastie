@@ -15,7 +15,7 @@ export const TagSelector = ({
   name,
   tags,
   editing,
-  colorful = false,
+  colorful = true,
   onChange,
   fetchDatalist
 }: TagSelectorProps) => {

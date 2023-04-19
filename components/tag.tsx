@@ -16,14 +16,23 @@ export default function Tag({
 }: TagProps) {
   const tagColor = (tagName: string) => {
     const tagColors = [
-      "var(--brand-blue)",
-      "var(--brand-purple)",
-      "var(--brand-green)",
-      "#D00DF0",
-      "var(--brand-orange)",
-      "var(--brand-primary)",
-      "rgb(230, 172, 0)",
-      "#e35cce"
+      "#C7F1FF",
+      "#E1CFFF",
+      "#DFFCD2",
+      "#FDE5FF",
+      "#FFE9CF"
+    ]
+    const index = tagName.length % tagColors.length;
+    return tagColors[index];
+  }
+
+  const borderColor = (tagName: string) => {
+    const tagColors = [
+      "#005A8F",
+      "#6200FF",
+      "#32631D",
+      "#9800A3",
+      "#854700"
     ]
     const index = tagName.length % tagColors.length;
     return tagColors[index];
@@ -37,7 +46,8 @@ export default function Tag({
         backgroundColor: colorful ? tagColor(text):"#757575",
         padding: "5px 8px",
         borderRadius: "5px",
-        color: "white",
+        border: `0.5px solid ${borderColor(text)}`,
+        color: "black",
         fontSize: "14px",
         fontFamily: "Raleway",
         fontWeight: "500",

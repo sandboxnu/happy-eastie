@@ -227,7 +227,6 @@ const ResourcePageContent: NextPage = () => {
                 name="category"
                 tags={inputtedResource.category}
                 editing={isEditing}
-                colorful={true}
                 onChange={handleInputChange}
                 fetchDatalist={getCategories}
               />
@@ -235,7 +234,8 @@ const ResourcePageContent: NextPage = () => {
               <Text h3>Keywords</Text>
               <TagSelector
                 name="keywords"
-                tags={inputtedResource.keywords??[]}
+                tags={inputtedResource.keywords ?? []}
+                colorful={false}
                 editing={isEditing}
                 onChange={handleInputChange}
               />
@@ -255,50 +255,61 @@ const ResourcePageContent: NextPage = () => {
               />
             </Grid>
             <Card.Divider />
-        <Grid xs={12} sm={3} direction="column" justify="flex-start">
+            <Grid xs={12} sm={3} direction="column" justify="flex-start">
               <Text h3>Accessibility</Text>
               <TagSelector
                 name="accessibilityOptions"
-                tags={inputtedResource.accessibilityOptions??[]}
+                tags={inputtedResource.accessibilityOptions ?? []}
                 editing={isEditing}
+                colorful={false}
                 onChange={handleInputChange}
                 fetchDatalist={getAccessibility}
               />
             </Grid>
             <Grid xs={12} sm={3} direction="column" justify="flex-start">
-            <Text h3>Languages</Text>
+              <Text h3>Languages</Text>
               <TagSelector
                 name="availableLanguages"
                 tags={inputtedResource.availableLanguages}
                 editing={isEditing}
+                colorful={false}
                 onChange={handleInputChange}
                 fetchDatalist={getLanguages}
               />
             </Grid>
-            <Grid xs={0} sm={3}>
-
-            </Grid>
+            <Grid xs={0} sm={3}></Grid>
           </Grid.Container>
         </Container>
-        <Spacer y={1} />
-        <Card.Divider />
-        <Spacer y={1} />
         {isEditing && (
-          <Container fluid>
-            <Row css={{ gap: "22px" }}>
-              <Button type="submit">Save Changes</Button>
-              <Button
-                bordered
-                onPress={() => {
-                  // Reset inputted resource to original resource
-                  setInputtedResource(resource)
-                  setIsEditing(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </Row>
-          </Container>
+          <>
+            {/* Extra space to account for the fixed buttons at the bottom */}
+            <Spacer y={6} />
+            {/* Fixed buttons at the bottom */}
+            <div
+              style={{
+                position: "fixed",
+                bottom: 0,
+                width: "100%",
+                backgroundColor: "white",
+                padding: "40px 5%",
+                boxShadow: "0px -4px 4px rgba(0, 0, 0, 0.25)",
+              }}
+            >
+              <Row css={{ gap: "22px" }}>
+                <Button type="submit">Save Changes</Button>
+                <Button
+                  bordered
+                  onPress={() => {
+                    // Reset inputted resource to original resource
+                    setInputtedResource(resource);
+                    setIsEditing(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Row>
+            </div>
+          </>
         )}
       </form>
       <Spacer y={1} />

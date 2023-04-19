@@ -17,13 +17,13 @@ export const TagSelector = ({
   editing,
   colorful = true,
   onChange,
-  fetchDatalist
+  fetchDatalist,
 }: TagSelectorProps) => {
-  const [inputValue, setInputValue] = useState("")
-  const [dropdownTags, setDropdownTags] = useState<string[]>([])
-  useEffect(()=>{
-    fetchDatalist?.().then(data => setDropdownTags(data))
-  }, [] )
+  const [inputValue, setInputValue] = useState("");
+  const [dropdownTags, setDropdownTags] = useState<string[]>([]);
+  useEffect(() => {
+    fetchDatalist?.().then((data) => setDropdownTags(data));
+  }, []);
   const handleXClick = (tagName: string) => {
     // Remove the tag from the list of tags
     onChange?.({
@@ -49,33 +49,38 @@ export const TagSelector = ({
 
   return (
     <div>
-      {editing && ( <>
-        <Input
-        value={inputValue}
-        list={name}
-        onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              // Prevent form submission when pressing enter
-              e.preventDefault();
-              addTag(e.currentTarget.value);
-              setInputValue("");
-            }
-          }}
-          bordered
-          borderWeight="light"
-          color="primary"
-          fullWidth
-          size="xs"
-          css={{ my: "5px" }}
-        ></Input>
-        <datalist id={name}>
-          {dropdownTags
-          .filter(dt => dt.toLowerCase().startsWith(inputValue.toLowerCase())) 
-          .filter(dt => inputValue !== dt)
-          .filter(dt => !tags.includes(dt))
-          .map(dt => <option style={{fontSize: "16px"}}>{dt}</option>)}
-        </datalist>
+      {editing && (
+        <>
+          <Input
+            value={inputValue}
+            list={name}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                // Prevent form submission when pressing enter
+                e.preventDefault();
+                addTag(e.currentTarget.value);
+                setInputValue("");
+              }
+            }}
+            bordered
+            borderWeight="light"
+            color="primary"
+            fullWidth
+            size="xs"
+            css={{ my: "5px" }}
+          ></Input>
+          <datalist id={name}>
+            {dropdownTags
+              .filter((dt) =>
+                dt.toLowerCase().startsWith(inputValue.toLowerCase())
+              )
+              .filter((dt) => inputValue !== dt)
+              .filter((dt) => !tags.includes(dt))
+              .map((dt) => (
+                <option style={{ fontSize: "16px" }}>{dt}</option>
+              ))}
+          </datalist>
         </>
       )}
       <Grid.Container gap={0.75} css={{ px: 0 }}>

@@ -201,8 +201,8 @@ export const ResourceRow = (props: ResourceRowProps) => {
         <Card.Footer css={{ pb: "$10" }}>
           <Grid.Container css={{ gap: 10 }} direction="row">
             {props.resourceData.category.map((tag, index) => (
-              <Grid>
-                <Tag text={tag} key={index} />
+              <Grid key={index}>
+                <Tag text={tag} />
               </Grid>
             ))}
           </Grid.Container>

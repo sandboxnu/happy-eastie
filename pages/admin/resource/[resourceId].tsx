@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { Resource } from "../../../models/types2";
 import { WithId } from "mongodb";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
+import IncomeRangeContainer from "../../../components/admin/dashboard/incomeRangeContainer";
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps(ctx) {
@@ -97,7 +98,7 @@ const ResourcePageContent: NextPage = () => {
       body: JSON.stringify(requestBody),
       headers: { "Content-Type": "application/json" },
     };
-    const response: Response = await fetch("/api/admin", requestSettings);
+    const response: Response = await fetch("/api/admin/resources", requestSettings);
     const result = await response.json();
     console.log(result)
     return result.modifiedCount;
@@ -240,6 +241,15 @@ const ResourcePageContent: NextPage = () => {
             </Grid>
 
             <Card.Divider />
+
+            <Grid>
+              <Text h3>Income Range per Household Size</Text>
+              <IncomeRangeContainer ranges={inputtedResource.incomeByHouseholdMembers} editing={isEditing} onChange={(mutator) => {
+                const r = {...inputtedResource}
+                r.incomeByHouseholdMembers = mutator(r.incomeByHouseholdMembers)
+                setInputtedResource(r)
+              }}/>
+            </Grid>
 
             <Grid xs={12} direction="column">
               <Text h3>Eligibility Criteria</Text>

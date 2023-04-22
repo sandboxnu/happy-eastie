@@ -10,6 +10,7 @@ import {
   Grid,
   Image,
   Loading,
+  Radio,
   Row,
   Spacer,
   Text,
@@ -80,6 +81,10 @@ const ResourcePageContent: NextPage = () => {
     setInputtedResource((values) => values && { ...values, [name]: value });
   };
 
+  const handleRadioChange = (value : string, name: string) => {
+    setInputtedResource((values) => values && { ...values, [name]: value === "true"});
+  }
+
   const saveResource = async (event: React.FormEvent) => {
     event.preventDefault();
     updateResource(inputtedResource).then(() => router.reload());
@@ -97,7 +102,7 @@ const ResourcePageContent: NextPage = () => {
       body: JSON.stringify(requestBody),
       headers: { "Content-Type": "application/json" },
     };
-    const response: Response = await fetch("/api/admin", requestSettings);
+    const response: Response = await fetch("/api/admin/resources", requestSettings);
     const result = await response.json();
     return result.modifiedCount;
   };
@@ -261,7 +266,7 @@ const ResourcePageContent: NextPage = () => {
 
             <Card.Divider />
 
-            <Grid xs={12} direction="column">
+            <Grid xs={5} direction="column">
               <Text h3>Eligibility Criteria</Text>
               <FormInput
                 multiLine
@@ -271,6 +276,17 @@ const ResourcePageContent: NextPage = () => {
                 value={inputtedResource.eligibilityInfo}
                 onChange={handleInputChange}
               />
+            </Grid>
+            <Grid xs={5} direction="column">
+              <Text h3>Is Documentation Required?</Text>
+              {isEditing ? 
+                          <Radio.Group defaultValue={resource.documentationRequired.toString()} onChange={(value) => {
+                            handleRadioChange(value, "documentationRequired")
+                          }}>
+                            <Radio value="true">Yes</Radio>
+                            <Radio value="false">No</Radio>
+                          </Radio.Group>
+                        : <Text>{resource.documentationRequired ? "Yes" : "No"}</Text>}
             </Grid>
             <Card.Divider />
             <Grid xs={12} sm={3} direction="column" justify="flex-start">

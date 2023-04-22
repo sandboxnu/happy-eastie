@@ -67,7 +67,8 @@ const LogIn = () => {
     };
     const response = await fetch("/api/admin/authentication", requestSettings);
     if (response.status !== 200) {
-      setMessage("authentication failed" + response.status);
+      response.json().then(val => setMessage("Authentication failed: " + val.message))
+      ;
     } else {
       router.push("/admin/dashboard");
     }

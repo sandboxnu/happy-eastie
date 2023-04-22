@@ -14,9 +14,8 @@ import {
 import { WithId } from "mongodb";
 import { useRouter } from "next/router";
 import { ChangeEvent, KeyboardEventHandler, useState } from "react";
-import TagsMap from "../../../models/TagsMap";
 import { Resource } from "../../../models/types2";
-import Tag from "../../home/tag";
+import Tag from "../../tag";
 
 type ResourceRowProps = {
   resourceData: WithId<Resource>;
@@ -200,15 +199,13 @@ export const ResourceRow = (props: ResourceRowProps) => {
           </Row>
         </Card.Body>
         <Card.Footer css={{ pb: "$10" }}>
-          <Row css={{ gap: 10 }}>
+          <Grid.Container css={{ gap: 10 }} direction="row">
             {props.resourceData.category.map((tag, index) => (
-              <Tag
-                text={tag}
-                color={TagsMap().get(tag) ?? "black"}
-                key={index}
-              />
+              <Grid key={index}>
+                <Tag text={tag} />
+              </Grid>
             ))}
-          </Row>
+          </Grid.Container>
         </Card.Footer>
       </Card>
     </Grid>

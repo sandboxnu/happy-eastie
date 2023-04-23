@@ -40,6 +40,7 @@ export default function Tag({
         fontWeight: "500",
         letterSpacing: "0.5px",
         gap: "4px",
+        width: 'fit-content'
       }}
     >
       {text}

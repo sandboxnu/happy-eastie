@@ -3,7 +3,6 @@ import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
 import { Resource } from '../../models/types2';
 import styles from './ResourceCardDisplay.module.css';
 import Tag from "../../components/tag";
-import TagsMap from "../../models/TagsMap";
 import Bookmark from "../../components/bookmark";
 import Dialog from '../dialog';
 import { WithId } from 'mongodb';
@@ -36,7 +35,7 @@ export const ResourceCardDisplay: React.FC<ResourceCardDisplayProps> = (props: R
                             <Col>
                                 <Row justify="flex-start" css={{ gap: 10, pb: "$10", paddingLeft: 20, flexWrap: "wrap" }}>
                                     {props.resource.category?.map((tag, index) => (
-                                        <Tag text={tag} color={TagsMap().get(tag) ?? "black"} key={index} />
+                                        <Tag text={tag} key={index} />
                                     ))}
                                 </Row>
                                 <Row>

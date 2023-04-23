@@ -42,26 +42,6 @@ export const getServerSideProps = withIronSessionSsr(
 );
 
 
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps(ctx) {
-    const user = ctx.req?.session.user;
-
-    if (!user || user.isAdmin !== true) {
-      return {
-        notFound: true,
-      };
-    }
-
-    return {
-      props: {
-        user: ctx.req.session.user,
-      },
-    };
-  },
-  NORMAL_IRON_OPTION
-);
-
-
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);
 

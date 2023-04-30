@@ -23,7 +23,6 @@ export default function FooterLinks() {
                 justifyContent: "center",
                 marginTop: 50
             }}
-            xs={12}
             sm={12}
             md={4}
         >

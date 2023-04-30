@@ -1,16 +1,17 @@
 import { Grid, Image } from "@nextui-org/react";
+import styles from "./Footer.module.css"
 
 export default function FooterBrand() {
   return (
     <Grid
+      className={styles.footerBrand}
       css={{
         display: "flex",
         flexDirection: "row",
         alignItems: "start",
         justifyContent: "center",
-        marginTop: 50,
+        marginTop: 50,        
       }}
-      xs={12}
       sm={12}
       md={4}
     >
@@ -18,3 +19,5 @@ export default function FooterBrand() {
     </Grid>
   );
 }
+
+

@@ -1,5 +1,5 @@
 import { IncomeRange } from "../../../models/types2";
-import {FormElement, Input, Text, Textarea} from "@nextui-org/react"
+import {Button, FormElement, Input, Text, Textarea} from "@nextui-org/react"
 
 interface IncomeRangeRowProps {
     size: number
@@ -33,6 +33,14 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
             return ranges
         })
     }
+
+    const deleteRange = () => {
+        onChange((ranges) => {
+            if(ranges === undefined) return undefined
+            ranges = ranges.filter(r => r.id !== range.id)
+            return ranges
+        })
+    }
     const minimum = editing ? 
     <Input
     value={range.minimum}
@@ -58,5 +66,13 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
     /> : 
     range.maximum
 
-    return <Text>{size}🕴️${minimum} - ${maximum}</Text>
+    const deleteButton = <Button
+    css={{
+        minWidth: '0',
+        display: 'inline'}}
+        onClick={deleteRange}>
+            x
+    </Button>
+
+    return <Text>{size}🕴️${minimum} - ${maximum} {editing && deleteButton}</Text>
 }

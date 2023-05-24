@@ -1,5 +1,5 @@
 import { IncomeRange } from "../../../models/types2";
-import {FormElement, Text, Textarea} from "@nextui-org/react"
+import {FormElement, Input, Text, Textarea} from "@nextui-org/react"
 
 interface IncomeRangeRowProps {
     size: number
@@ -25,16 +25,25 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
     };
 
     const minimum = editing ? 
-    <Textarea
+    <Input
     value={range.minimum}
     onChange={handleInputChange}
+    bordered
+    borderWeight="light"
+    color="primary"
+    css={{ my: "5px" }}
+    
     /> : 
     range.minimum
 
     const maximum = editing ?
-    <Textarea
+    <Input
     value={range.maximum}
     onChange={handleInputChange}
+    bordered
+    borderWeight="light"
+    color="primary"
+    css={{ my: "5px" }}
     /> : 
     range.maximum
 

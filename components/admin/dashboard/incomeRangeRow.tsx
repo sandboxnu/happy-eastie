@@ -12,22 +12,31 @@ interface IncomeRangeRowProps {
   
 export default function IncomeRangeRow({size, range, editing, onChange} : IncomeRangeRowProps){
 
-    const handleInputChange = (event: React.ChangeEvent<FormElement>) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        //todo: there's gotta be a better way to do this, currently there is no data validation and it's not even typesafe
+    const handleMinimumChange = (event: React.ChangeEvent<FormElement>) => {
+        const value = event.target.value
+
         onChange((ranges) => {
-            if(ranges == undefined) return undefined
+            if(ranges === undefined) return undefined
             ranges = [...ranges]
-            ranges[size - 1] = { ...range, [name]: value}
+            ranges[size-1].minimum = parseInt(value)
             return ranges
         })
-    };
+    }
 
+    const handleMaximumChange = (event: React.ChangeEvent<FormElement>) => {
+        const value = event.target.value
+
+        onChange((ranges) => {
+            if(ranges === undefined) return undefined
+            ranges = [...ranges]
+            ranges[size-1].maximum = parseInt(value)
+            return ranges
+        })
+    }
     const minimum = editing ? 
     <Input
     value={range.minimum}
-    onChange={handleInputChange}
+    onChange={handleMinimumChange}
     bordered
     name="minimum"
     borderWeight="light"
@@ -40,7 +49,7 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
     const maximum = editing ?
     <Input
     value={range.maximum}
-    onChange={handleInputChange}
+    onChange={handleMaximumChange}
     bordered
     borderWeight="light"
     name="maximum"

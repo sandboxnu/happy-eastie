@@ -10,6 +10,6 @@ interface IncomeRangeContainerProps {
 }
 export default function IncomeRangeContainer({ranges, editing, onChange} : IncomeRangeContainerProps) {
     return <>
-        {ranges?.map((range,i) => <IncomeRangeRow key={i} size={i+1} range={range} editing={editing} onChange={onChange}/>) ?? <Text>No income ranges specified.</Text>}
+        {ranges?.map((range,i) => <IncomeRangeRow key={range.id} size={i+1} range={range} editing={editing} onChange={onChange}/>) ?? <Text>No income ranges specified.</Text>}
     </>
 }

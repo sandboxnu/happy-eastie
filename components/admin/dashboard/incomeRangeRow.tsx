@@ -15,11 +15,11 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
     const handleInputChange = (event: React.ChangeEvent<FormElement>) => {
         const name = event.target.name;
         const value = event.target.value;
-
+        //todo: there's gotta be a better way to do this, currently there is no data validation and it's not even typesafe
         onChange((ranges) => {
             if(ranges == undefined) return undefined
             ranges = [...ranges]
-            ranges[size + 1] = { ...range, [name]: value}
+            ranges[size - 1] = { ...range, [name]: value}
             return ranges
         })
     };
@@ -29,6 +29,7 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
     value={range.minimum}
     onChange={handleInputChange}
     bordered
+    name="minimum"
     borderWeight="light"
     color="primary"
     css={{ my: "5px" }}
@@ -42,6 +43,7 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
     onChange={handleInputChange}
     bordered
     borderWeight="light"
+    name="maximum"
     color="primary"
     css={{ my: "5px" }}
     /> : 

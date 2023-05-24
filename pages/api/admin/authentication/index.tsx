@@ -17,30 +17,30 @@ export default withIronSessionApiRoute(async function handler(
         } else if (req.body["type"] == "logout") {
             await handleLogOut(req, res)
         } else {
-            res.status(400).json({message: "Unable to authenticate user"})
+            res.status(400).json({ message: "Unable to authenticate user" })
         }
     }
 }, LOGIN_IRON_OPTION)
 
-async function handleLogOut(req : NextApiRequest, res: NextApiResponse<ResponseMessage>) {
+async function handleLogOut(req: NextApiRequest, res: NextApiResponse<ResponseMessage>) {
     if (req.session) {
         req.session.destroy()
-        res.status(200).json({message: "log out successfully"})
-    } 
+        res.status(200).json({ message: "log out successfully" })
+    }
 }
 
-async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Admin> | ResponseMessage>) {
-    const filter : Filter<Admin> = {email: req.body["email"]}
-    let accounts : WithId<Admin>[] = await mongoDbInteractor.getDocuments<Admin>(ADMIN_COLLECTION, filter)
+async function handleLogIn(req: NextApiRequest, res: NextApiResponse<WithId<Admin> | ResponseMessage>) {
+    const filter: Filter<Admin> = { email: req.body["email"] }
+    let accounts: WithId<Admin>[] = await mongoDbInteractor.getDocuments<Admin>(ADMIN_COLLECTION, filter)
     if (accounts.length == 0) {
-        res.status(400).json({message: "Invalid credential"})
+        res.status(400).json({ message: "Invalid credential" })
     } else if (accounts.length > 1) {
-        res.status(500).json({message: "Unable to login with this email."})
+        res.status(500).json({ message: "Unable to login with this email." })
     } else {
         // found a matching email
         const hashedPassword = accounts[0]["hashedPassword"]
         if (hashedPassword !== req.body["hashedPassword"]) {
-            res.status(400).json({message: "Invalid credential"})
+            res.status(400).json({ message: "Invalid credential" })
             return;
         } else {
             req.session.user = {
@@ -54,23 +54,22 @@ async function handleLogIn(req : NextApiRequest, res: NextApiResponse<WithId<Adm
     }
 }
 
-async function handleSignUp(req : NextApiRequest, res: NextApiResponse<WithId<Admin> | ResponseMessage>) {
-    const filter : Filter<Admin> = {email: req.body["email"]}
-    let accounts : Admin[] = await mongoDbInteractor.getDocuments<Admin>(ADMIN_COLLECTION, filter)
+async function handleSignUp(req: NextApiRequest, res: NextApiResponse<WithId<Admin> | ResponseMessage>) {
+    const filter: Filter<Admin> = { email: req.body["email"] }
+    let accounts: Admin[] = await mongoDbInteractor.getDocuments<Admin>(ADMIN_COLLECTION, filter)
     if (accounts.length == 0) {
         const { type, ...adminProfile } = req.body;
         const requestBody = adminProfile
-        
+
         const requestSettings: RequestInit = {
-        method: "POST",
-        body: JSON.stringify(requestBody),
-        headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify(requestBody),
+            headers: { "Content-Type": "application/json" },
         };
         const response: Response = await fetch("/api/admin", requestSettings);
         const result = await response.json();
         res.status(result.status).json(result)
     } else {
-        res.status(400).json({message: "Email address was already taken."})
+        res.status(400).json({ message: "Email address was already taken." })
     }
 }
-

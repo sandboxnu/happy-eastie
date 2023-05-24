@@ -10,6 +10,7 @@ import {
   Grid,
   Image,
   Loading,
+  Radio,
   Row,
   Spacer,
   Text,
@@ -20,6 +21,7 @@ import { Resource } from "../../../models/types2";
 import { WithId } from "mongodb";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
 import IncomeRangeContainer from "../../../components/admin/dashboard/incomeRangeContainer";
+import { TagSelector } from "../../../components/admin/dashboard/tagSelector";
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps(ctx) {
@@ -77,9 +79,12 @@ const ResourcePageContent: NextPage = () => {
   const handleInputChange = (event: React.ChangeEvent<FormElement>) => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log({ ...inputtedResource, [name]: value });
     setInputtedResource((values) => values && { ...values, [name]: value });
   };
+
+  const handleRadioChange = (value : string, name: string) => {
+    setInputtedResource((values) => values && { ...values, [name]: value === "true"});
+  }
 
   const saveResource = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -100,9 +105,27 @@ const ResourcePageContent: NextPage = () => {
     };
     const response: Response = await fetch("/api/admin/resources", requestSettings);
     const result = await response.json();
-    console.log(result)
     return result.modifiedCount;
   };
+
+  async function getCategories(): Promise<string[]> {
+    const response = await fetch("/api/resources/categories");
+    const categories = await response.json();
+
+    return categories;
+  }
+
+  async function getLanguages(): Promise<string[]> {
+    const response = await fetch("/api/resources/languages");
+    const languages = await response.json();
+    return languages;
+  }
+
+  async function getAccessibility(): Promise<string[]> {
+    const response = await fetch("/api/resources/accessibility");
+    const accessibility = await response.json();
+    return accessibility;
+  }
 
   return (
     <>
@@ -130,7 +153,7 @@ const ResourcePageContent: NextPage = () => {
                 {!isEditing && (
                   <Button
                     auto
-                    iconRight={<img src="/pencil.svg" />}
+                    iconRight={<img src="/pencilwhite.svg" />}
                     onPress={() => {
                       setIsEditing(true);
                     }}
@@ -149,7 +172,7 @@ const ResourcePageContent: NextPage = () => {
                 placeholder="Summary"
                 size="md"
                 editing={isEditing}
-                value={resource.summary}
+                value={inputtedResource.summary}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -160,7 +183,7 @@ const ResourcePageContent: NextPage = () => {
                 name="description"
                 editing={isEditing}
                 placeholder="Description"
-                value={resource.description}
+                value={inputtedResource.description}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -179,7 +202,7 @@ const ResourcePageContent: NextPage = () => {
                   name="email"
                   placeholder="Email"
                   editing={isEditing}
-                  value={resource.email}
+                  value={inputtedResource.email}
                   onChange={handleInputChange}
                 />
               </Row>
@@ -196,7 +219,7 @@ const ResourcePageContent: NextPage = () => {
                   name="phone"
                   placeholder="Phone"
                   editing={isEditing}
-                  value={resource.phone}
+                  value={inputtedResource.phone}
                   onChange={handleInputChange}
                 />
               </Row>
@@ -208,7 +231,7 @@ const ResourcePageContent: NextPage = () => {
                 name="website"
                 placeholder="Website"
                 editing={isEditing}
-                value={resource.website}
+                value={inputtedResource.website}
                 onChange={handleInputChange}
               />
               <Spacer y={1} />
@@ -217,26 +240,28 @@ const ResourcePageContent: NextPage = () => {
                 name="address"
                 placeholder="Street Address"
                 editing={isEditing}
-                value={resource.address}
+                value={inputtedResource.address}
                 onChange={handleInputChange}
               />
             </Grid>
 
             <Grid xs={12} sm={3} direction="column">
               <Text h3>Categories</Text>
-              {/* TODO: Handle input and change here */}
-              <FormInput
+              <TagSelector
                 name="category"
-                placeholder="Category"
+                tags={inputtedResource.category}
                 editing={isEditing}
+                onChange={handleInputChange}
+                fetchDatalist={getCategories}
               />
               <Spacer y={1} />
               <Text h3>Keywords</Text>
-              {/* TODO: Handle input and change here */}
-              <FormInput
+              <TagSelector
                 name="keywords"
-                placeholder="Keyword"
+                tags={inputtedResource.keywords ?? []}
+                colorful={false}
                 editing={isEditing}
+                onChange={handleInputChange}
               />
             </Grid>
 
@@ -251,36 +276,84 @@ const ResourcePageContent: NextPage = () => {
               }}/>
             </Grid>
 
-            <Grid xs={12} direction="column">
+            <Grid xs={5} direction="column">
               <Text h3>Eligibility Criteria</Text>
               <FormInput
                 multiLine
                 name="eligibilityInfo"
                 editing={isEditing}
                 placeholder={"Eligibility Criteria"}
-                value={resource.eligibilityInfo}
+                value={inputtedResource.eligibilityInfo}
                 onChange={handleInputChange}
               />
             </Grid>
+            <Grid xs={5} direction="column">
+              <Text h3>Is Documentation Required?</Text>
+              {isEditing ? 
+                          <Radio.Group defaultValue={resource.documentationRequired.toString()} onChange={(value) => {
+                            handleRadioChange(value, "documentationRequired")
+                          }}>
+                            <Radio value="true">Yes</Radio>
+                            <Radio value="false">No</Radio>
+                          </Radio.Group>
+                        : <Text>{resource.documentationRequired ? "Yes" : "No"}</Text>}
+            </Grid>
+            <Card.Divider />
+            <Grid xs={12} sm={3} direction="column" justify="flex-start">
+              <Text h3>Accessibility</Text>
+              <TagSelector
+                name="accessibilityOptions"
+                tags={inputtedResource.accessibilityOptions ?? []}
+                editing={isEditing}
+                colorful={false}
+                onChange={handleInputChange}
+                fetchDatalist={getAccessibility}
+              />
+            </Grid>
+            <Grid xs={12} sm={3} direction="column" justify="flex-start">
+              <Text h3>Languages</Text>
+              <TagSelector
+                name="availableLanguages"
+                tags={inputtedResource.availableLanguages}
+                editing={isEditing}
+                colorful={false}
+                onChange={handleInputChange}
+                fetchDatalist={getLanguages}
+              />
+            </Grid>
+            <Grid xs={0} sm={3}></Grid>
           </Grid.Container>
         </Container>
-        <Spacer y={1} />
-        <Card.Divider />
-        <Spacer y={1} />
         {isEditing && (
-          <Container fluid>
-            <Row css={{ gap: "22px" }}>
-              <Button type="submit">Save Changes</Button>
-              <Button
-                bordered
-                onPress={() => {
-                  setIsEditing(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </Row>
-          </Container>
+          <>
+            {/* Extra space to account for the fixed buttons at the bottom */}
+            <Spacer y={6} />
+            {/* Fixed buttons at the bottom */}
+            <div
+              style={{
+                position: "fixed",
+                bottom: 0,
+                width: "100%",
+                backgroundColor: "white",
+                padding: "40px 5%",
+                boxShadow: "0px -4px 4px rgba(0, 0, 0, 0.25)",
+              }}
+            >
+              <Row css={{ gap: "22px" }}>
+                <Button type="submit">Save Changes</Button>
+                <Button
+                  bordered
+                  onPress={() => {
+                    // Reset inputted resource to original resource
+                    setInputtedResource(resource);
+                    setIsEditing(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Row>
+            </div>
+          </>
         )}
       </form>
       <Spacer y={1} />

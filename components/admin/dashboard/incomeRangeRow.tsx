@@ -8,7 +8,23 @@ interface IncomeRangeRowProps {
     onChange: (mutator: (ranges?: IncomeRange[]) => IncomeRange[] | undefined) => void
 }
 
+interface IncomeRangeInputProps {
+    value: number
+    onChange: (e: React.ChangeEvent<FormElement>) => void
+}
 
+function IncomeRangeInput({value, onChange}: IncomeRangeInputProps) {
+    return  <Input
+    value={value}
+    onChange={onChange}
+    bordered
+    name="minimum"
+    borderWeight="light"
+    color="primary"
+    css={{ my: "5px", width: "20%", mx:"" }}
+    
+    />
+}
   
 export default function IncomeRangeRow({size, range, editing, onChange} : IncomeRangeRowProps){
 
@@ -42,27 +58,16 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
         })
     }
     const minimum = editing ? 
-    <Input
+    <IncomeRangeInput
     value={range.minimum}
-    onChange={handleMinimumChange}
-    bordered
-    name="minimum"
-    borderWeight="light"
-    color="primary"
-    css={{ my: "5px" }}
-    
+    onChange={handleMinimumChange}    
     /> : 
     range.minimum
 
     const maximum = editing ?
-    <Input
+    <IncomeRangeInput
     value={range.maximum}
     onChange={handleMaximumChange}
-    bordered
-    borderWeight="light"
-    name="maximum"
-    color="primary"
-    css={{ my: "5px" }}
     /> : 
     range.maximum
 

@@ -267,7 +267,7 @@ const ResourcePageContent: NextPage = () => {
 
             <Card.Divider />
 
-            <Grid>
+            <Grid xs={12} sm={3} direction="column">
               <Text h3>Income Range per Household Size</Text>
               <IncomeRangeContainer ranges={inputtedResource.incomeByHouseholdMembers} editing={isEditing} onChange={(mutator) => {
                 const r = {...inputtedResource}
@@ -276,7 +276,7 @@ const ResourcePageContent: NextPage = () => {
               }}/>
             </Grid>
 
-            <Grid xs={5} direction="column">
+            <Grid xs={12} sm={3} direction="column">
               <Text h3>Eligibility Criteria</Text>
               <FormInput
                 multiLine
@@ -287,7 +287,7 @@ const ResourcePageContent: NextPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            <Grid xs={5} direction="column">
+            <Grid xs={12} sm={3} direction="column">
               <Text h3>Is Documentation Required?</Text>
               {isEditing ? 
                           <Radio.Group defaultValue={resource.documentationRequired.toString()} onChange={(value) => {

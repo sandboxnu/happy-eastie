@@ -61,15 +61,15 @@ async function handleSignUp(req: NextApiRequest, res: NextApiResponse<WithId<Adm
         const { type, ...adminProfile } = req.body;
         const requestBody = adminProfile
 
-        const requestSettings: RequestInit = {
-            method: "POST",
-            body: JSON.stringify(requestBody),
-            headers: { "Content-Type": "application/json" },
-        };
-        const response: Response = await fetch("/api/admin", requestSettings);
-        const result = await response.json();
-        res.status(result.status).json(result)
+        try {
+            const admin = await mongoDbInteractor.createDocument<WithId<Admin>>(requestBody, ADMIN_COLLECTION)
+            res.status(200).json(admin)
+        } catch (e) {
+            res.status(400).json({ message: "Failed to insert admin document into MongoDB collection" })
+        }
+
     } else {
         res.status(400).json({ message: "Email address was already taken." })
     }
 }
+

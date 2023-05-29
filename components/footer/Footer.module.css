@@ -2,11 +2,12 @@
     display: "flex";
     flex-direction: "row";
     justify-content: "center";
-    align-items: "start";
+    align-items: "center";
     background-color: var(--brand-primary);
     width: 100%;
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
     margin-top: 20px;
+    min-height: 150px;
   }
 
   .footerLinkColumn {
@@ -17,13 +18,15 @@
   .footerLink {
     color: white;
     font-family: 'Raleway';
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 600;
     word-break: break-all;
   }
   
   .footerLinkDescription {
     color: white;
     font-family: 'Raleway';
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 600;
     word-break: break-word;
   }

@@ -8,7 +8,9 @@ export default function FooterCredits() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                marginTop: 50
+                justifyContent: "center",
+                marginTop: 50,
+                marginBottom: 50
             }}
             xs={12}
             sm={12}

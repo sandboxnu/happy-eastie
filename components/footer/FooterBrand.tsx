@@ -6,9 +6,9 @@ export default function FooterBrand() {
       css={{
         display: "flex",
         flexDirection: "row",
-        alignItems: "start",
+        alignItems: "center",
         justifyContent: "center",
-        marginTop: 50,
+        marginTop: 30,
       }}
       xs={12}
       sm={12}

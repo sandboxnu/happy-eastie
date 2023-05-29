@@ -21,7 +21,9 @@ export default function FooterLinks() {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "center",
-                marginTop: 50
+                alignItems: "center"
+                // marginTop: 20
+            
             }}
             xs={12}
             sm={12}

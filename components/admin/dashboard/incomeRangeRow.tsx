@@ -69,7 +69,7 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
     value={range.maximum}
     onChange={handleMaximumChange}
     /> : 
-    <Text>range.maximum</Text>
+    <Text>{range.maximum}</Text>
 
     const deleteButton = <Button
     css={{

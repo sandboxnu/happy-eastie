@@ -1,5 +1,5 @@
 import { IncomeRange } from "../../../models/types2";
-import {Button, FormElement, Input, Text, Textarea} from "@nextui-org/react"
+import {Button, FormElement, Input, Text, Textarea, Image, Container} from "@nextui-org/react"
 
 interface IncomeRangeRowProps {
     size: number
@@ -62,22 +62,51 @@ export default function IncomeRangeRow({size, range, editing, onChange} : Income
     value={range.minimum}
     onChange={handleMinimumChange}    
     /> : 
-    range.minimum
+    <Text>{range.minimum}</Text>
 
     const maximum = editing ?
     <IncomeRangeInput
     value={range.maximum}
     onChange={handleMaximumChange}
     /> : 
-    range.maximum
+    <Text>range.maximum</Text>
 
     const deleteButton = <Button
     css={{
         minWidth: '0',
-        display: 'inline'}}
+        backgroundImage: "url('/greyx.svg')",
+        backgroundSize: "90% 90%",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundColor: "transparent",
+        maxHeight: "40%",
+        maxWidth: "40%"}}
         onClick={deleteRange}>
-            x
+            
     </Button>
 
-    return <Text>{size}🕴️${minimum} - ${maximum} {editing && deleteButton}</Text>
+    const person = <Image src="/personBlack.svg" alt=""
+    containerCss={{
+        width: "5%",
+        height: "100%",
+        margin: "0 2%",
+        top: "2%"
+    }}/>
+
+
+    return <Container
+            direction="row"
+            display="flex"
+            alignItems="center"
+            css={{
+                padding: 0
+            }}>
+            <Text>{size}</Text>
+            {person} 
+            <Text>$</Text>
+            {minimum}
+            <Text css={{marginLeft: 5}}> - $</Text>
+            {maximum}
+            {editing && deleteButton}
+            </Container>
 }

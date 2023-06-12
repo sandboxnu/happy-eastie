@@ -12,7 +12,7 @@ export default function IncomeRangeContainer({ranges, editing, onChange} : Incom
 
     const addSize = () => {
         onChange((ranges) => {
-            if(ranges === undefined) return undefined
+            if(ranges === undefined) ranges = []
 
             //taken from https://stackoverflow.com/a/12502559
             let id = Math.random().toString(36).slice(2);

@@ -25,34 +25,42 @@
     "keywords": [],
     "incomeByHouseholdMembers": [
       {
+        "id": "a",
         "maximum": 36450,
         "minimum": 0
       },
       {
+        "id": "b",
         "maximum": 49300,
         "minimum": 0
       },
       {
+        "id": "c",
         "maximum": 62150,
         "minimum": 0
       },
       {
+        "id": "d",
         "maximum": 75000,
         "minimum": 0
       },
       {
+        "id": "e",
         "maximum": 87850,
         "minimum": 0
       },
       {
+        "id": "f",
         "maximum": 100700,
         "minimum": 0
       },
       {
+        "id": "g",
         "maximum": 113550,
         "minimum": 0
       },
       {
+        "id": "h",
         "maximum": 126400,
         "minimum": 0
       }
@@ -103,18 +111,22 @@
     "category": ["Senior", "Disabled"],
     "incomeByHouseholdMembers": [
       {
+        "id": "a",
         "maximum": 62150,
         "minimum": 0
       },
       {
+        "id": "b",
         "maximum": 71000,
         "minimum": 0
       },
       {
+        "id": "c",
         "maximum": 79800,
         "minimum": 0
       },
       {
+        "id": "d",
         "maximum": 88650,
         "minimum": 0
       }
@@ -137,34 +149,42 @@
     "category": ["Childcare"],
     "incomeByHouseholdMembers": [
       {
+        "id": "a",
         "maximum": 25142,
         "minimum": 0
       },
       {
+        "id": "b",
         "maximum": 33874,
         "minimum": 0
       },
       {
+        "id": "c",
         "maximum": 42606,
         "minimum": 0
       },
       {
+        "id": "d",
         "maximum": 51338,
         "minimum": 0
       },
       {
+        "id": "e",
         "maximum": 60070,
         "minimum": 0
       },
       {
+        "id": "f",
         "maximum": 68802,
         "minimum": 0
       },
       {
+        "id": "g",
         "maximum": 77534,
         "minimum": 0
       },
       {
+        "id": "h",
         "maximum": 86266,
         "minimum": 0
       }

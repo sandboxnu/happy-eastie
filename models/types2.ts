@@ -38,6 +38,7 @@ export interface SurveyAnswers {
 }
 
 export type IncomeRange = {
+    id: string;
     minimum: number;
     maximum: number;
 }

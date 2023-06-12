@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { Resource } from "../../../models/types2";
 import { WithId } from "mongodb";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
+import IncomeRangeContainer from "../../../components/admin/dashboard/incomeRangeContainer";
 import { TagSelector } from "../../../components/admin/dashboard/tagSelector";
 
 export const getServerSideProps = withIronSessionSsr(
@@ -266,7 +267,16 @@ const ResourcePageContent: NextPage = () => {
 
             <Card.Divider />
 
-            <Grid xs={5} direction="column">
+            <Grid xs={12} sm={3} direction="column">
+              <Text h3>Income Range per Household Size</Text>
+              <IncomeRangeContainer ranges={inputtedResource.incomeByHouseholdMembers} editing={isEditing} onChange={(mutator) => {
+                const r = {...inputtedResource}
+                r.incomeByHouseholdMembers = mutator(r.incomeByHouseholdMembers)
+                setInputtedResource(r)
+              }}/>
+            </Grid>
+
+            <Grid xs={12} sm={3} direction="column">
               <Text h3>Eligibility Criteria</Text>
               <FormInput
                 multiLine
@@ -277,7 +287,7 @@ const ResourcePageContent: NextPage = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            <Grid xs={5} direction="column">
+            <Grid xs={12} sm={3} direction="column">
               <Text h3>Is Documentation Required?</Text>
               {isEditing ? 
                           <Radio.Group defaultValue={resource.documentationRequired.toString()} onChange={(value) => {

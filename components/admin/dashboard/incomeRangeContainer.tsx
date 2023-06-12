@@ -26,8 +26,8 @@ export default function IncomeRangeContainer({ranges, editing, onChange} : Incom
         })
     }
 
-    const addButton = <Button onClick={addSize}>
-    <Text span css={{fontSize: "36px", mx: "5px", fontWeight: "300", color: "White"}}>+</Text> Add Size
+    const addButton = <Button onClick={addSize} css={{width: "40%", minWidth: "0"}}>
+    <Text span css={{fontSize: "36px", marginRight: 5, fontWeight: "300", color: "White"}}>+</Text> Add Size
     </Button>
 
     return <>

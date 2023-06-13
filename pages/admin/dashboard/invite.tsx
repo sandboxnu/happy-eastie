@@ -41,7 +41,9 @@ export default function InvitePage() {
                     <Input placeholder="Email" fullWidth onInput={(e) => {
                         setEmail(e.currentTarget.value)
                     }}/>
-                    <Button onPress={async () => {
+                    <Button 
+                    disabled={isSending}
+                    onPress={async () => {
                         if(!isSending) {
                             setIsSending(true)
                             setResponseMessage("")

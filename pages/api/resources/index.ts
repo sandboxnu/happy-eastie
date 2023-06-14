@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Resource, SurveyAnswers } from "../../../models/types2"
+import { Resource, SurveyAnswers } from "../../../models/types"
 import { AES, enc } from "crypto-js";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";

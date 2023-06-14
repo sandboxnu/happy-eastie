@@ -1,4 +1,4 @@
-import { Resource } from "../../models/types2";
+import { Resource } from "../../models/types";
 import { Button, Grid, Image, Text } from "@nextui-org/react";
 import Tag from "../tag";
 import styles from "./ResourceHeader.module.css";

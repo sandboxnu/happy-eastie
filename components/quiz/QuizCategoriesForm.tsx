@@ -3,7 +3,7 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/context";
-import { SurveyAnswers } from "../../models/types2";
+import { SurveyAnswers } from "../../models/types";
 import { Grid, Row } from "@nextui-org/react";
 import styles from "./Quiz.module.css";
 import { CategoryCard } from "./CategoryCard";

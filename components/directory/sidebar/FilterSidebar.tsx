@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { SidebarCategories } from "./SidebarCategories";
 import { SidebarStatus } from "./SidebarStatus";
-import { Resource, SurveyAnswers } from "../../../models/types2";
+import { Resource, SurveyAnswers } from "../../../models/types";
 import { WithId } from "mongodb";
 import { AES } from "crypto-js";
 import { ResourcesResponse } from "../../../pages/api/resources";

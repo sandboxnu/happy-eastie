@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Card, Row, Text, Col, Link, Image } from '@nextui-org/react';
-import { Resource } from '../../models/types2';
+import { Resource } from '../../models/types';
 import styles from './ResourceCardDisplay.module.css';
 import Tag from "../../components/tag";
 import Bookmark from "../../components/bookmark";

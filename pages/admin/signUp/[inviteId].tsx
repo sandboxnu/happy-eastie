@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 import { GetServerSideProps } from "next";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { INVITE_COLLECTION } from "../../../models/constants";
-import { Invite } from "../../../models/types2";
+import { Invite } from "../../../models/types";
 import { isInviteValid } from "../../../util/utils";
 
 export const getServerSideProps : GetServerSideProps = async ({params}) => {

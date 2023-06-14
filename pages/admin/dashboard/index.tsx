@@ -13,7 +13,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { AdminDashboardHeader } from "../../../components/admin/dashboard/adminDashboardHeader";
 import { AdminDashboardSearch } from "../../../components/admin/dashboard/adminDashboardSearch";
 import { ResourceRow } from "../../../components/admin/dashboard/resourceRow";
-import { Resource } from "../../../models/types2";
+import { Resource } from "../../../models/types";
 import { withIronSessionSsr } from "iron-session/next";
 import { NORMAL_IRON_OPTION } from "../../../models/constants";
 

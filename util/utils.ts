@@ -1,5 +1,5 @@
 import { INVITE_COLLECTION } from "../models/constants";
-import { Invite } from "../models/types2";
+import { Invite } from "../models/types";
 import mongoDbInteractor from "../db/mongoDbInteractor";
 
 export async function isInviteValid(inviteId: string) {

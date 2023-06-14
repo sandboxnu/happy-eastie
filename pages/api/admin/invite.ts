@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Invite, ResponseMessage } from "../../../models/types2";
+import { Invite, ResponseMessage } from "../../../models/types";
 import { INVITE_COLLECTION, NORMAL_IRON_OPTION } from "../../../models/constants";
 import { sendEmail } from "../../../util/mailService";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";

@@ -1,4 +1,4 @@
-import { IncomeRange } from "../../../models/types2";
+import { IncomeRange } from "../../../models/types";
 import {Button, FormElement, Input, Text, Textarea, Image, Container} from "@nextui-org/react"
 
 interface IncomeRangeRowProps {

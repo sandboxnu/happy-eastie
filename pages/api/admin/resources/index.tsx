@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import {
     Resource,
     ResponseMessage
-} from "../../../../models/types2";
+} from "../../../../models/types";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
 import { RESOURCE_COLLECTION, NORMAL_IRON_OPTION } from "../../../../models/constants";

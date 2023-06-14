@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import styles from "./directory.module.css"
-import { Resource } from "../models/types2";
+import { Resource } from "../models/types";
 import { useResources } from "../hooks/useResources";
 import { ResourcesDisplay } from "../components/directory/ResourcesDisplay";
 import { FilterSidebar } from "../components/directory/sidebar/FilterSidebar";

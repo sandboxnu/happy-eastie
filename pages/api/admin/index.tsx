@@ -3,6 +3,7 @@ import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
 import { Admin, ResponseMessage } from "../../../models/types2";
 import { ADMIN_COLLECTION } from "../../../models/constants";
+import { isInviteValid } from "../../../db/utils";
 
 
 export default async function handler(
@@ -31,8 +32,13 @@ async function createAdminAccount(
     res: NextApiResponse<WithId<Admin> | ResponseMessage>
 ) {
     try {
-        const admin = await mongoDbInteractor.createDocument<WithId<Admin>>(req.body, ADMIN_COLLECTION)
-        res.status(200).json(admin)
+        const inviteId: string = req.body.inviteId
+        if(await isInviteValid(inviteId)) {
+            const admin = await mongoDbInteractor.createDocument<WithId<Admin>>(req.body, ADMIN_COLLECTION)
+            res.status(200).json(admin)
+        } else {
+            res.status(401).json({message: "\nInvite is invalid or expired.\nPlease ask for a new invite."})
+        }
     } catch (e) {
         res.status(400).json({ message: "Failed to insert admin document into MongoDB collection" })
     }

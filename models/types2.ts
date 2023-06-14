@@ -146,3 +146,8 @@ declare module "iron-session" {
         user: User
     }
 }
+
+export type Invite = {
+    _id: string,
+    expiration: Date
+}

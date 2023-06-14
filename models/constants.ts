@@ -6,6 +6,8 @@ export const RESOURCE_COLLECTION = "resources3"
 export const QUIZ_RESPONSE_ENCRYPTION_PASSPHRASE = "Secret Passphrase"
 export const RESOURCE_SEARCH_PLACEHOLDER_TEXT = "Search Resources"
 export const INVITE_COLLECTION = "invites"
+export const FORGOT_PASSWORD_COLLECTION = "forgotPasswordSessions"
+export const LOCALHOST = "localhost:3000"
 
 export const LOGIN_IRON_OPTION = function(req : NextApiRequest, res: NextApiResponse) {
   let ttl =  60*60*24

@@ -15,3 +15,17 @@ export const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_
 export function isValidEmail(email: string) {
     return emailRegex.test(email)
 }
+
+export async function createSingleUseLink(collectionName: string,host: string, path: string, otherProps: {[key: string]: unknown} = {}) {
+    const _id = crypto.randomUUID()
+    //link expires after 1 hour
+    const expiration = new Date(Date.now() + 1*60*60*1000)
+    const link = `http://${host}${path}${_id}`
+
+    const session = {
+        _id, expiration, ...otherProps
+    }
+    await mongoDbInteractor.createDocument(session,collectionName)
+
+    return link
+}

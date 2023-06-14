@@ -7,14 +7,13 @@ import { GetServerSideProps } from "next";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { INVITE_COLLECTION } from "../../../models/constants";
 import { Invite } from "../../../models/types2";
+import { isInviteValid } from "../../../db/utils";
 
 export const getServerSideProps : GetServerSideProps = async ({params}) => {
     if(typeof params?.inviteId === "string") {
         const inviteId = params.inviteId
 
-        const invites = await mongoDbInteractor.getDocuments<Invite>(INVITE_COLLECTION,{_id: inviteId})
-
-        if(invites.length > 0 && invites[0].expiration.getTime() >= Date.now()) {
+        if(await isInviteValid(inviteId)) {
             return {
                 props: {
                     inviteId
@@ -98,7 +97,7 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
                     {message &&
                         <>
                             <Spacer y={0.75} />
-                            <div className={styles.errorMessageContainer}>
+                            <div className={styles.errorMessageContainer} style={{width: 382}}>
                                 <p className={styles.errorMessage}>{message}</p>
                             </div>
                         </>

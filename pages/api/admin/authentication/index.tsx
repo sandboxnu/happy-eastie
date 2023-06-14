@@ -2,8 +2,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
 import { Admin, ResponseMessage } from "../../../../models/types2";
-import { ADMIN_COLLECTION, LOGIN_IRON_OPTION } from "../../../../models/constants";
+import { ADMIN_COLLECTION, INVITE_COLLECTION, LOGIN_IRON_OPTION } from "../../../../models/constants";
 import { withIronSessionApiRoute } from "iron-session/next";
+import { isInviteValid } from "../../../../db/utils";
 
 export default withIronSessionApiRoute(async function handler(
     req: NextApiRequest,
@@ -58,12 +59,17 @@ async function handleSignUp(req: NextApiRequest, res: NextApiResponse<WithId<Adm
     const filter: Filter<Admin> = { email: req.body["email"] }
     let accounts: Admin[] = await mongoDbInteractor.getDocuments<Admin>(ADMIN_COLLECTION, filter)
     if (accounts.length == 0) {
-        const { type, ...adminProfile } = req.body;
+        const { type, inviteId, ...adminProfile } = req.body;
         const requestBody = adminProfile
 
         try {
-            const admin = await mongoDbInteractor.createDocument<WithId<Admin>>(requestBody, ADMIN_COLLECTION)
-            res.status(200).json(admin)
+            if(await isInviteValid(inviteId)) {
+                const admin = await mongoDbInteractor.createDocument<WithId<Admin>>(requestBody, ADMIN_COLLECTION)
+                res.status(200).json(admin)
+                mongoDbInteractor.deleteDocument(INVITE_COLLECTION, {_id: inviteId})
+            } else {
+                res.status(401).json({message: "Invite is invalid or expired. Please ask for a new invite."})
+            }
         } catch (e) {
             res.status(400).json({ message: "Failed to insert admin document into MongoDB collection" })
         }

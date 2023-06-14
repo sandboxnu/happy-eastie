@@ -3,7 +3,7 @@ import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
 import { Admin, ResponseMessage } from "../../../models/types2";
 import { ADMIN_COLLECTION } from "../../../models/constants";
-import { isInviteValid } from "../../../db/utils";
+import { isInviteValid } from "../../../util/utils";
 
 
 export default async function handler(

@@ -2,13 +2,10 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Invite, ResponseMessage } from "../../../models/types2";
 import { INVITE_COLLECTION, NORMAL_IRON_OPTION } from "../../../models/constants";
-import { sendEmail } from "../../../db/mailService";
+import { sendEmail } from "../../../util/mailService";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import crypto from "crypto"
-
-//apparently email address validation is a pain. this regex taken from here:
-//https://stackoverflow.com/a/1373724
-const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+import { emailRegex, isValidEmail } from "../../../util/utils";
 
 
 export default withIronSessionApiRoute(async function handler(
@@ -28,7 +25,7 @@ export default withIronSessionApiRoute(async function handler(
                 return
             }
 
-            if(!emailValidator.test(email)) {
+            if(!isValidEmail(email)) {
                 res.status(400).json({message: "Invalid e-mail. Please enter an e-mail in the format example@happyeastie.org."})
                 return
             }

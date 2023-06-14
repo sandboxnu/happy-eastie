@@ -151,3 +151,9 @@ export type Invite = {
     _id: string,
     expiration: Date
 }
+
+export type ForgotPasswordSession = {
+    _id: string,
+    expiration: Date,
+    email: string
+}

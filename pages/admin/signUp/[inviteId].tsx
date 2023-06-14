@@ -7,7 +7,7 @@ import { GetServerSideProps } from "next";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { INVITE_COLLECTION } from "../../../models/constants";
 import { Invite } from "../../../models/types2";
-import { isInviteValid } from "../../../db/utils";
+import { isInviteValid } from "../../../util/utils";
 
 export const getServerSideProps : GetServerSideProps = async ({params}) => {
     if(typeof params?.inviteId === "string") {

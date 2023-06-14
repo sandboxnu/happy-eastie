@@ -1,6 +1,7 @@
 import { INVITE_COLLECTION } from "../models/constants";
 import { Invite } from "../models/types";
 import mongoDbInteractor from "../db/mongoDbInteractor";
+import crypto from "crypto"
 
 export async function isInviteValid(inviteId: string) {
     const invites = await mongoDbInteractor.getDocuments<Invite>(INVITE_COLLECTION,{_id: inviteId})

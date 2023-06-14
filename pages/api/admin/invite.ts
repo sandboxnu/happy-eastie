@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ResponseMessage } from "../../../models/types2";
+import { Invite, ResponseMessage } from "../../../models/types2";
 import { INVITE_COLLECTION, NORMAL_IRON_OPTION } from "../../../models/constants";
 import { sendEmail } from "../../../db/mailService";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
@@ -39,7 +39,10 @@ export default withIronSessionApiRoute(async function handler(
                 const expiration = new Date(Date.now() + 1*60*60*1000)
                 const link = `http://${req.headers.host}/admin/signUp/${_id}`
 
-                await mongoDbInteractor.createDocument({_id, expiration},INVITE_COLLECTION)
+                const invite: Invite = {
+                    _id, expiration
+                }
+                await mongoDbInteractor.createDocument(invite,INVITE_COLLECTION)
 
                 await sendEmail(email, "You have been invited as an admin to HappyEastie!", `<p>Someone at HappyEastie has invited you to become an admin. Visit the link below or copy and paste it into your browser in order to create an account. The link expires after 1 hour.</p>
                 <br/>

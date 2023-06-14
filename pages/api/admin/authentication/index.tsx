@@ -65,8 +65,8 @@ async function handleSignUp(req: NextApiRequest, res: NextApiResponse<WithId<Adm
         try {
             if(await isInviteValid(inviteId)) {
                 const admin = await mongoDbInteractor.createDocument<WithId<Admin>>(requestBody, ADMIN_COLLECTION)
-                res.status(200).json(admin)
                 await mongoDbInteractor.deleteDocument(INVITE_COLLECTION, {_id: inviteId})
+                res.status(200).json(admin)
             } else {
                 res.status(401).json({message: "Invite is invalid or expired. Please ask for a new invite."})
             }

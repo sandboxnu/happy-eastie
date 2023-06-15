@@ -1,4 +1,4 @@
-import { Resource } from "../../models/types2";
+import { Resource } from "../../models/types";
 import { Grid, red, Spacer, Text } from "@nextui-org/react";
 import styles from "./ResourceDescription.module.css";
 import './ResourceDescription.module.css';

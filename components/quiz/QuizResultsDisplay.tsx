@@ -5,7 +5,7 @@ import { ResourcesDisplay } from "../directory/ResourcesDisplay";
 import { Grid, Spacer, Text, Image } from "@nextui-org/react";
 import { HelpTooltip } from "../HelpTooltip";
 import { ResourcesResponse } from "../../pages/api/resources";
-import { Resource } from "../../models/types2";
+import { Resource } from "../../models/types";
 import { WithId } from "mongodb";
 
 interface QuizResultsDisplayProps {

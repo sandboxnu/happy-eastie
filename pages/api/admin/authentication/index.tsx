@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { Filter, WithId } from "mongodb";
-import { Admin, ResponseMessage } from "../../../../models/types2";
+import { Admin, ResponseMessage } from "../../../../models/types";
 import { ADMIN_COLLECTION, INVITE_COLLECTION, LOGIN_IRON_OPTION } from "../../../../models/constants";
 import { withIronSessionApiRoute } from "iron-session/next";
-import { isInviteValid } from "../../../../db/utils";
+import { isInviteValid } from "../../../../util/utils";
 
 export default withIronSessionApiRoute(async function handler(
     req: NextApiRequest,

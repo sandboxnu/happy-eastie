@@ -6,6 +6,8 @@ import {
   MongoClient,
   ObjectId,
   OptionalUnlessRequiredId,
+  UpdateFilter,
+  UpdateResult,
   WithId,
   WithoutId,
 } from "mongodb";
@@ -13,9 +15,9 @@ import {
 const uri = `mongodb+srv://happy-eastie:${process.env.PASSWORD}@cluster0.ekxdybn.mongodb.net/?retryWrites=true&w=majority`;
 
 export class MongoDbInteractor {
-  async getDocument<T extends Document>(
+  async getDocumentByDirectId<T extends Document>(
     collectionName: string,
-    id: string
+    id: any
   ): Promise<WithId<T>> {
     const tempClient: MongoClient = new MongoClient(uri);
     try {
@@ -23,7 +25,7 @@ export class MongoDbInteractor {
       const database = tempClient.db("happy-eastie");
       const results = database
         .collection(collectionName)
-        .find({ _id: new ObjectId(id) });
+        .find({ _id: id });
       const resources = (await results.toArray()) as WithId<T>[];
       await tempClient.close();
       return resources[0];
@@ -34,6 +36,12 @@ export class MongoDbInteractor {
     }
   }
 
+  async getDocument <T extends Document>(
+    collectionName: string,
+    id: string
+  ): Promise<WithId<T>> {
+    return this.getDocumentByDirectId<T>(collectionName, new ObjectId(id))
+  }
   async getDistinctValues<U>(collectionName : string, fieldName: string) : Promise<Array<U>> {
       const tempClient : MongoClient = new MongoClient(uri)
       await tempClient.connect();
@@ -100,7 +108,7 @@ export class MongoDbInteractor {
     }
   }
 
-  async updateDocument<T extends Document>(
+  async replaceDocument<T extends Document>(
     collectionName: string,
     filter: Filter<T>,
     replacement: WithoutId<T>
@@ -112,6 +120,26 @@ export class MongoDbInteractor {
       const result = await database
         .collection<T>(collectionName)
         .replaceOne(filter, replacement);
+      tempClient.close();
+      return result;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  async updateDocument<T extends Document>(
+    collectionName: string,
+    filter: Filter<T>,
+    update: UpdateFilter<T>
+  ): Promise<UpdateResult> {
+    const tempClient: MongoClient = new MongoClient(uri)
+    try {
+      await tempClient.connect();
+      const database = tempClient.db("happy-eastie");
+      const result = await database
+        .collection<T>(collectionName)
+        .updateOne(filter, update);
       tempClient.close();
       return result;
     } catch (e) {

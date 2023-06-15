@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import {IncomeRange} from "./../../../models/types2"
+import {IncomeRange} from "../../../models/types"
 import IncomeRangeRow from "./incomeRangeRow"
 import {Button, Text} from "@nextui-org/react"
 

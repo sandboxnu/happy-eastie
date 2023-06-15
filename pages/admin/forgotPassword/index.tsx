@@ -15,14 +15,33 @@ import { useRouter } from "next/router";
 const ForgotPassword = () => {
     const router = useRouter();
     const [email, setEmail] = useState<string>("");
-    const [emailSent, setEmailSent] = useState<boolean>(false);
+    const [isSending, setIsSending] = useState<boolean>(false);
+    const [error, setError] = useState("")
 
     const onEmailChange = (e: ChangeEvent<FormElement>) => {
         setEmail(e.target.value);
     };
 
     const handleSubmit = async () => {
-        setEmailSent(true);
+        setIsSending(true)
+        setError("")
+
+        const requestBody = JSON.stringify({
+            email
+        });
+        const requestSettings = {
+            method: "POST",
+            body: requestBody,
+            headers: { "Content-Type": "application/json" },
+        };
+        const response = await fetch("/api/admin/forgotPassword", requestSettings);
+
+        if(response.ok) {
+            router.push("/admin/forgotPassword/success")
+        }else {
+            setError((await response.json()).message)
+            setIsSending(false)
+        }
     };
 
     const handleBack = async () => {
@@ -67,17 +86,18 @@ const ForgotPassword = () => {
                         className={styles.loginButton}
                         type="submit"
                         onPress={handleSubmit}
+                        disabled={isSending}
                     >
                         <Text className={styles.loginButtonText}>Request a reset link</Text>
                     </Button>
 
                     <Spacer y={0.5} />
 
-                    {emailSent &&
+                    {error &&
                         <>
                             <Spacer y={0.75} />
                             <div className={styles.forgotPasswordMessageContainer}>
-                                <p className={styles.forgotPasswordMessage}>Password reset link sent</p>
+                                <p className={styles.forgotPasswordMessage}>{error}</p>
                             </div>
                         </>
                     }

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Resource } from "../../../models/types2";
+import type { Resource } from "../../../models/types";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { WithId } from "mongodb";
 import { RESOURCE_COLLECTION } from "../../../models/constants";

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import {
     Resource,
     ResponseMessage
-} from "../../../../models/types2";
+} from "../../../../models/types";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { ObjectId, WithId } from "mongodb";
 import { RESOURCE_COLLECTION, NORMAL_IRON_OPTION } from "../../../../models/constants";
@@ -58,7 +58,7 @@ async function handler(
     } else if (req.method === 'PUT') {
         try {
             const filter = { _id: new ObjectId(req.body["_id"]) }
-            const resource = await mongoDbInteractor.updateDocument(RESOURCE_COLLECTION, filter, req.body["replacement"])
+            const resource = await mongoDbInteractor.replaceDocument(RESOURCE_COLLECTION, filter, req.body["replacement"])
             res.status(200).json(resource)
         } catch (error) {
             console.log(error)

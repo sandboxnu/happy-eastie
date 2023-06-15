@@ -14,7 +14,7 @@ import {
 import { WithId } from "mongodb";
 import { useRouter } from "next/router";
 import { ChangeEvent, KeyboardEventHandler, useState } from "react";
-import { Resource } from "../../../models/types2";
+import { Resource } from "../../../models/types";
 import Tag from "../../tag";
 
 type ResourceRowProps = {

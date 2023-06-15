@@ -17,7 +17,7 @@ import {
 } from "@nextui-org/react";
 import { useResource } from "../../../hooks/useResource";
 import { useEffect, useState } from "react";
-import { Resource } from "../../../models/types2";
+import { Resource } from "../../../models/types";
 import { WithId } from "mongodb";
 import { FormInput } from "../../../components/admin/dashboard/InputField";
 import IncomeRangeContainer from "../../../components/admin/dashboard/incomeRangeContainer";

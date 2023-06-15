@@ -1,3 +1,5 @@
 import StatusPage from "../../../components/admin/dashboard/statusPage";
 
-export default <StatusPage message="Your password was updated successfully."/>
+const ResetPasswordSuccess = () => <StatusPage message="Your password was updated successfully."/>
+
+export default ResetPasswordSuccess

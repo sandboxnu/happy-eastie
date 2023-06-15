@@ -1,6 +1,6 @@
 import { Spacer, Button, Text} from "@nextui-org/react";
 import { useRouter } from "next/router";
-import styles from "../admin.module.css";
+import styles from "../../../pages/admin/admin.module.css";
 
 
 const StatusPage = ({message}: {message: string}) => {

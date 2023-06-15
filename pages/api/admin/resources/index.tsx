@@ -58,7 +58,7 @@ async function handler(
     } else if (req.method === 'PUT') {
         try {
             const filter = { _id: new ObjectId(req.body["_id"]) }
-            const resource = await mongoDbInteractor.updateDocument(RESOURCE_COLLECTION, filter, req.body["replacement"])
+            const resource = await mongoDbInteractor.replaceDocument(RESOURCE_COLLECTION, filter, req.body["replacement"])
             res.status(200).json(resource)
         } catch (error) {
             console.log(error)

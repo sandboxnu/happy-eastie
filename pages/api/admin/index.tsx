@@ -62,7 +62,7 @@ async function updateAdminAccount(
 ) {
     try {
         const filter = { _id: new ObjectId(req.body["_id"]) }
-        const admin = await mongoDbInteractor.updateDocument<WithId<Admin>>(ADMIN_COLLECTION, filter, req.body["replacement"])
+        const admin = await mongoDbInteractor.replaceDocument<WithId<Admin>>(ADMIN_COLLECTION, filter, req.body["replacement"])
         res.status(200).json(admin)
     } catch (e) {
         res.status(400).json({ message: "Failed to update admin document in MongoDB collection" })

@@ -17,7 +17,7 @@ export const getServerSideProps : GetServerSideProps = async ({params}) => {
     return {redirect: {destination: "/admin/resetPassword/error", permanent: false}}
 }
 
-const ResetPassword = ({inviteId}: {inviteId: string}) => {
+const ResetPassword = ({resetId}: {resetId: string}) => {
     const [message, setMessage] = useState("");
     const [password, setPassword] = useState("");
     const [retypePass, setRetypePassword] = useState("");
@@ -42,7 +42,7 @@ const ResetPassword = ({inviteId}: {inviteId: string}) => {
             const hashedPassword = CryptoJS.SHA256(password).toString()
             const requestBody = JSON.stringify({
                 hashedPassword,
-                inviteId
+                resetId
             });
             const requestSettings = {
                 method: "POST",

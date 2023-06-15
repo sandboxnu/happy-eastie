@@ -1,44 +1,27 @@
-import { Button, Checkbox, Grid, Input, Row, Spacer, Image, Text, FormElement } from "@nextui-org/react";
-import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
-import styles from "../admin.module.css";
-import CryptoJS from "crypto-js";
 import { GetServerSideProps } from "next";
-import { isInviteValid } from "../../../util/utils";
-
+import { isPasswordResetValid } from "../../../util/utils";
+import { FormElement, Grid, Spacer, Input, Button, Image, Text } from "@nextui-org/react";
+import { useRouter } from "next/router";
+import styles from "../admin.module.css";
+import { useState, ChangeEvent } from "react";
+import CryptoJS from "crypto-js";
 export const getServerSideProps : GetServerSideProps = async ({params}) => {
-    if(typeof params?.inviteId === "string") {
-        const inviteId = params.inviteId
+    if(typeof params?.resetId === "string") {
+        const resetId = params.resetId
 
-        if(await isInviteValid(inviteId)) {
-            return {
-                props: {
-                    inviteId
-                }
-            }
+        if(await isPasswordResetValid(resetId)) {
+            return { props: {resetId}}
         }
     }
 
-    return {
-        redirect: {
-            destination: "/admin/signUp/error",
-            permanent: false
-        }
-    }
+    return {redirect: {destination: "/admin/resetPassword/error", permanent: false}}
 }
 
-const SignUp = ({inviteId}: {inviteId: string}) => {
+const ResetPassword = ({inviteId}: {inviteId: string}) => {
     const [message, setMessage] = useState("");
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [retypePass, setRetypePassword] = useState("");
     const router = useRouter();
-
-
-
-    const onEmailChange = (e: ChangeEvent<FormElement>) => {
-        setEmail(e.target.value);
-    };
 
     const onPasswordChange = (e: ChangeEvent<FormElement>) => {
         setPassword(e.target.value);
@@ -54,13 +37,10 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
         if (retypePass !== password) {
             setMessage("Passwords do not match.");
         }
-        //TODO: check that email address isn't already in use
 
         else {
             const hashedPassword = CryptoJS.SHA256(password).toString()
             const requestBody = JSON.stringify({
-                type: "signup",
-                email,
                 hashedPassword,
                 inviteId
             });
@@ -69,9 +49,9 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
                 body: requestBody,
                 headers: { "Content-Type": "application/json" },
             };
-            const response = await fetch("/api/admin/authentication", requestSettings);
+            const response = await fetch("/api/admin/resetPassword", requestSettings);
             if (!response.ok) {
-                response.json().then(val => setMessage("Authentication failed: " + val.message))
+                response.json().then(val => setMessage("Reset failed: " + val.message))
                 ;
               } else {
                 router.push("/admin/signUp/success");
@@ -102,22 +82,13 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
 
                     <Spacer y={1} />
 
-                    <Text className={styles.adminLoginText}>Create an admin account</Text>
+                    <Text className={styles.adminLoginText}>Password Reset</Text>
 
                     <Spacer y={0.75} />
 
-                    <Input
-                        clearable
-                        bordered
-                        placeholder="Email address"
-                        onChange={onEmailChange}
-                        className={styles.adminLoginInput}
-                        size="md"
-                        animated={false}
-                    />
                     <Spacer y={0.75} />
                     <Input.Password
-                        placeholder="Password"
+                        placeholder="Enter new password"
                         bordered
                         onChange={onPasswordChange}
                         className={styles.adminLoginInput}
@@ -128,7 +99,7 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
                     <Spacer y={0.75} />
 
                     <Input.Password
-                        placeholder="Re-type password"
+                        placeholder="Re-type new password"
                         bordered
                         onChange={onRetypePasswordChange}
                         className={styles.adminLoginInput}
@@ -147,7 +118,7 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
                         type="submit"
                         onPress={handleSubmit}
                     >
-                        <Text className={styles.loginButtonText}>Create admin account</Text>
+                        <Text className={styles.loginButtonText}>Reset Password</Text>
                     </Button>
 
                     <Spacer y={0.5} />
@@ -159,6 +130,4 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
     )
 };
 
-
-
-export default SignUp;
+export default ResetPassword

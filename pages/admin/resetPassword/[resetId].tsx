@@ -54,7 +54,7 @@ const ResetPassword = ({resetId}: {resetId: string}) => {
                 response.json().then(val => setMessage("Reset failed: " + val.message))
                 ;
               } else {
-                router.push("/admin/signUp/success");
+                router.push("/admin/resetPassword/success");
               }
         }
     }

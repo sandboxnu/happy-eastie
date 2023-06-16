@@ -11,6 +11,7 @@ const getServerSideProps : GetServerSideProps = async () => {
         const trendingResources = (await mongoDbInteractor.getDocuments<Resource>(RESOURCE_COLLECTION, {"trendingInfo.isTrending": true})).sort((a,b) => a.trendingInfo!.trendingDate.getTime() >= b.trendingInfo!.trendingDate.getTime()? -1 : 1) //these should have trending info because we filtered on them
 
         const events : EastieEvent[] = trendingResources.map(r => ({
+            id: r._id.toString(),
             name: r.name,
             summary: r.summary,
             imageFilename: r.headerImageUrl ?? "",

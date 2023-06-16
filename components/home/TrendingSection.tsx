@@ -4,6 +4,7 @@ import styles from "./TrendingSection.module.css"
 import NextLink from "next/link"
 import HomeStyles from "./Home.module.css"
 import Tag from "../tag";
+import { useRouter } from "next/router";
 
 const defaultEvents = [
   {
@@ -33,6 +34,7 @@ const defaultEvents = [
 ];
 
 export type EastieEvent = {
+  id?: string
   name: string,
   imageFilename: string,
   summary: string,
@@ -40,14 +42,16 @@ export type EastieEvent = {
 }
 
 function EventCard({ event }: { event: EastieEvent }) {
+
+  const router = useRouter()
   return (
     <Card isPressable className={styles.eventCard}>
       <Card.Header css={{ p: 0, borderBottom: "10px solid var(--brand-primary)", height: "50%", marginBottom: "15px" }}>
-        <Card.Image src={event.imageFilename} objectFit="cover" width="100%" />
+        <Card.Image src={event.imageFilename} objectFit="scale-down" width="100%" />
       </Card.Header>
 
       <Card.Body css={{ paddingTop: "0px", paddingLeft: "21px", paddingRight: "21px", overflowY: "hidden" }}>
-        <NextLink href="/future">
+        <NextLink href={event.id? `/resources/${event.id}` : '/future'}>
           <Link css={{ flexDirection: "column" }}>
             <Row css={{ display: "flex", alignItems: "center" }} justify="space-between">
               <Text b className={styles.eventCardHeaderText}>{event.name}</Text>

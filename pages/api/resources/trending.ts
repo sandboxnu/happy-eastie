@@ -6,12 +6,6 @@ import { NextApiResponse } from "next";
 import { ObjectId, WithId } from "mongodb";
 
 const handler = withIronSessionApiRoute(async function (req,res: NextApiResponse<WithId<Resource>[] | ResponseMessage>) {
-    if(req.method === "GET") {
-        const trendingResources = (await mongoDbInteractor.getDocuments<Resource>(RESOURCE_COLLECTION, {"trendingInfo.isTrending": true})).sort((a,b) => a.trendingInfo!.trendingDate.getTime() >= b.trendingInfo!.trendingDate.getTime()? -1 : 1) //these should have trending info because we filtered on them
-
-        res.status(200).json(trendingResources)
-        return
-    } else {
         const user = req.session.user
         if (!user || !user.isAdmin) {
             res.status(401).json({message: "User not authorized"})
@@ -46,7 +40,7 @@ const handler = withIronSessionApiRoute(async function (req,res: NextApiResponse
         } else {
             res.status(404).json({message: `Unsupported method type '${req.method}'.`})
         }
-    }
+    
 },NORMAL_IRON_OPTION)
 
 export default handler

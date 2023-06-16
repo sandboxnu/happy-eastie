@@ -5,7 +5,7 @@ import NextLink from "next/link"
 import HomeStyles from "./Home.module.css"
 import Tag from "../tag";
 
-const events = [
+const defaultEvents = [
   {
     name: "Women, Infants, & Children",
     imageFilename: "happychildliftingbarbell.png",
@@ -32,7 +32,7 @@ const events = [
   },
 ];
 
-type EastieEvent = {
+export type EastieEvent = {
   name: string,
   imageFilename: string,
   summary: string,
@@ -72,7 +72,7 @@ function EventCard({ event }: { event: EastieEvent }) {
     </Card >
   )
 }
-export default function TrendingSection() {
+export default function TrendingSection({events = defaultEvents}: {events?: EastieEvent[]} ) {
   return (
     <Container className={styles.container} fluid>
       <Row align="baseline">

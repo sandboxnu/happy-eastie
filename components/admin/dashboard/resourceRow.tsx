@@ -90,6 +90,33 @@ export const ResourceRow = (props: ResourceRowProps) => {
     setDeletePopup(false);
   };
 
+  const trendingButtonCss = {
+    backgroundColor: "transparent"
+  }
+
+  const setTrending = async (isTrending: boolean) => {
+    const requestSettings: RequestInit = {
+      headers: {"Content-Type": "application/json"},
+      method: isTrending? "POST" : "DELETE",
+      body: JSON.stringify({id: props.resourceData._id.toString()})
+    }
+    const response = await fetch("/api/resources/trending", requestSettings)
+    if(response.ok) {
+      router.reload()
+    }
+  }
+
+  const buttonWhenNotTrending = <Button 
+  auto
+  css={trendingButtonCss}
+  onPress={() => setTrending(true)}
+  icon={<Image alt="Add Resource to Trending" src='/starEmpty.svg'/>}></Button>
+  const buttonWhenTrending = <Button
+  auto
+  onPress={() => setTrending(false)}
+  css={trendingButtonCss}
+  icon= {<Image alt="Remove Resource from Trending" src='/star.svg'/>}/>
+
   return (
     <Grid xs={12} sm={props.listLayout ? 12 : 6} md={props.listLayout ? 12 : 4}>
       <Card
@@ -157,11 +184,13 @@ export const ResourceRow = (props: ResourceRowProps) => {
                 {props.resourceData.summary}
               </Text>
             </Col>
-            <Col span={1}>
+            <Col span={1} >
+              <Row>
+              {props.resourceData.trendingInfo?.isTrending? buttonWhenTrending: buttonWhenNotTrending}
               <Button
                 light
                 auto
-                icon={<Image src="/delete.svg" />}
+                icon={<Image alt="Delete Resource" src="/delete.svg" />}
                 onPress={() => setDeletePopup(true)}
               ></Button>
               <Modal
@@ -195,6 +224,7 @@ export const ResourceRow = (props: ResourceRowProps) => {
                   </Button>
                 </Modal.Footer>
               </Modal>
+              </Row>
             </Col>
           </Row>
         </Card.Body>

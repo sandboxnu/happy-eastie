@@ -1,4 +1,4 @@
-import { withIronSessionApiRoute } from "iron-session/next/dist";
+import { withIronSessionApiRoute } from "iron-session/next";
 import { NORMAL_IRON_OPTION, RESOURCE_COLLECTION } from "../../../models/constants";
 import mongoDbInteractor from "../../../db/mongoDbInteractor";
 import { Resource, ResponseMessage } from "../../../models/types";
@@ -49,3 +49,4 @@ const handler = withIronSessionApiRoute(async function (req,res: NextApiResponse
     }
 },NORMAL_IRON_OPTION)
 
+export default handler

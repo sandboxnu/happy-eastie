@@ -26,7 +26,7 @@ const ResourcePageContent: NextPage = () => {
         {"< Back"} 
       </button>
       <Image src={resource.headerImageUrl || "https://thumbs.dreamstime.com/b/tobin-bridge-zakim-bridge-boston-skyline-panorama-sunset-77994808.jpg"}
-        width="100%" height={300} objectFit="cover" alt="Resource header image" />
+        width="100%" height={300} objectFit="scale-down" alt="Resource header image" />
 
       <div style={{ margin: "0 40px" }}>
         <ResourceHeader resource={resource} />

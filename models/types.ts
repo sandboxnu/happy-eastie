@@ -112,6 +112,13 @@ export interface Resource {
      * put documentation requirements here
      */
     eligibilityInfo?: string;
+    
+    trendingInfo?: TrendingInfo
+}
+
+type TrendingInfo = {
+    isTrending: boolean,
+    trendingDate: Date
 }
 
 

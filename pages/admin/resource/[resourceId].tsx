@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useFilePicker } from 'use-file-picker';
 import { useRouter } from "next/router";
 import { withIronSessionSsr } from "iron-session/next";
 import { NORMAL_IRON_OPTION } from "../../../models/constants";
@@ -45,6 +46,12 @@ export const getServerSideProps = withIronSessionSsr(
 
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [openFileSelector, { filesContent, loading }] = useFilePicker({
+    readAs: 'DataURL',
+    accept: 'image/*',
+    multiple: true,
+    limitFilesConfig: { max: 1 },
+  });
 
   const router = useRouter();
   const { resourceId } = router.query;
@@ -129,13 +136,29 @@ const ResourcePageContent: NextPage = () => {
 
   return (
     <>
-      <Image
+    <div style={{position:"relative"}}>
+    <Image
         src="https://www.boston.com/wp-content/uploads/2020/04/BackBay-47-Edit.jpeg?width=900"
         width="100%"
         height={254}
         objectFit="cover"
         alt="Resource header image"
       />
+      {
+        isEditing && (<Button onClick={() => openFileSelector()} css={{position:"absolute", bottom:20, right:30}}>
+        <Image src="/changeImageIcon.svg" css={{paddingRight:"10px"}}/> Change Header Image 
+      </Button>)
+      }
+      {/* for saving image to server */}
+      {filesContent.map((file, index) => (
+        <div key={index}>
+          <h2>{file.name}</h2>
+          <img alt={file.name} src={file.content}></img>
+          <br />
+        </div>
+      ))}
+
+    </div>
       <Spacer y={2} />
       <form onSubmit={saveResource}>
         <Container fluid>

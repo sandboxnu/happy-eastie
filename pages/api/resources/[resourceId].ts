@@ -30,3 +30,11 @@ export default async function handler(
 async function getResource(id: string): Promise<WithId<Resource> | null> {
   return await mongoDbInteractor.getDocument<Resource>(RESOURCE_COLLECTION, id);
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '4mb',
+    },
+  },
+}

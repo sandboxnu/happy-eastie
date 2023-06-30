@@ -51,6 +51,10 @@ const ResourcePageContent: NextPage = () => {
     accept: 'image/*',
     multiple: true,
     limitFilesConfig: { max: 1 },
+    maxFileSize: 3.5,
+    onFilesSuccessfulySelected: ({ filesContent }) => {
+      setInputtedResource((values) => values && { ...values, headerImageUrl:filesContent[0].content});
+    }
   });
 
   const router = useRouter();
@@ -65,6 +69,10 @@ const ResourcePageContent: NextPage = () => {
   useEffect(() => {
     if (resource) setInputtedResource(resource);
   }, [resource]);
+
+  useEffect(() => {
+    console.log(filesContent)
+  }, [filesContent]);
 
   const LoadingScreen = () => {
     return (
@@ -138,7 +146,7 @@ const ResourcePageContent: NextPage = () => {
     <>
     <div style={{position:"relative"}}>
     <Image
-        src="https://www.boston.com/wp-content/uploads/2020/04/BackBay-47-Edit.jpeg?width=900"
+        src= {resource.headerImageUrl ?? "https://www.boston.com/wp-content/uploads/2020/04/BackBay-47-Edit.jpeg?width=900"}
         width="100%"
         height={254}
         objectFit="cover"
@@ -149,14 +157,6 @@ const ResourcePageContent: NextPage = () => {
         <Image src="/changeImageIcon.svg" css={{paddingRight:"10px"}}/> Change Header Image 
       </Button>)
       }
-      {/* for saving image to server */}
-      {filesContent.map((file, index) => (
-        <div key={index}>
-          <h2>{file.name}</h2>
-          <img alt={file.name} src={file.content}></img>
-          <br />
-        </div>
-      ))}
 
     </div>
       <Spacer y={2} />

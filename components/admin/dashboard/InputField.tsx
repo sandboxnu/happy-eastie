@@ -1,4 +1,5 @@
 import { FormElement, Input, Text, Textarea } from "@nextui-org/react";
+import ReactMarkdown from "react-markdown";
 
 type InputFieldProps = {
   name: string;
@@ -63,7 +64,7 @@ const InputField = ({
         {value}
       </Text>
     ) : (
-      <Text size={16}>{value}</Text>
+      <ReactMarkdown>{value ?? ""}</ReactMarkdown>
     );
 export const FormInput = ({
   name,

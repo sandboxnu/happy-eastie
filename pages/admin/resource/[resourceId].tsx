@@ -1,7 +1,3 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { withIronSessionSsr } from "iron-session/next";
-import { NORMAL_IRON_OPTION } from "../../../models/constants";
 import {
   Button,
   Card,
@@ -15,13 +11,19 @@ import {
   Spacer,
   Text,
 } from "@nextui-org/react";
-import { useResource } from "../../../hooks/useResource";
-import { useEffect, useState } from "react";
-import { Resource } from "../../../models/types";
+import { withIronSessionSsr } from "iron-session/next";
 import { WithId } from "mongodb";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useFilePicker } from 'use-file-picker';
 import { FormInput } from "../../../components/admin/dashboard/InputField";
 import IncomeRangeContainer from "../../../components/admin/dashboard/incomeRangeContainer";
 import { TagSelector } from "../../../components/admin/dashboard/tagSelector";
+import Dialog from "../../../components/dialog";
+import { useResource } from "../../../hooks/useResource";
+import { NORMAL_IRON_OPTION } from "../../../models/constants";
+import { Resource } from "../../../models/types";
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps(ctx) {
@@ -45,6 +47,25 @@ export const getServerSideProps = withIronSessionSsr(
 
 const ResourcePageContent: NextPage = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [openFileSelector, { filesContent, loading }] = useFilePicker({
+    readAs: 'DataURL',
+    accept: 'image/*',
+    multiple: true,
+    limitFilesConfig: { max: 1 },
+    maxFileSize: 3.5,
+    onFilesSuccessfulySelected: ({ filesContent }) => {
+      setInputtedResource((values) => values && { ...values, headerImageUrl:filesContent[0].content});
+    },
+    onFilesRejected: (data) => {
+        const tooBigError = data.errors.find(error => error.fileSizeToolarge);
+        if(tooBigError) {
+          setErrorMessage(`Banner image too large. Please ensure your image is smaller than 3.5 MB.`);
+        } else {
+          setErrorMessage("An unknown error occured. Please try again later.");
+        }
+    },
+  });
 
   const router = useRouter();
   const { resourceId } = router.query;
@@ -129,13 +150,21 @@ const ResourcePageContent: NextPage = () => {
 
   return (
     <>
-      <Image
-        src="https://www.boston.com/wp-content/uploads/2020/04/BackBay-47-Edit.jpeg?width=900"
+    <div style={{position:"relative"}}>
+    <Image
+        src= {inputtedResource.headerImageUrl ?? "https://www.boston.com/wp-content/uploads/2020/04/BackBay-47-Edit.jpeg?width=900"}
         width="100%"
         height={254}
         objectFit="cover"
         alt="Resource header image"
       />
+      {
+        isEditing && (<Button onClick={() => openFileSelector()} css={{position:"absolute", bottom:20, right:30}}>
+        <Image src="/changeImageIcon.svg" css={{paddingRight:"10px"}}/> Change Header Image 
+      </Button>)
+      }
+
+    </div>
       <Spacer y={2} />
       <form onSubmit={saveResource}>
         <Container fluid>
@@ -357,6 +386,12 @@ const ResourcePageContent: NextPage = () => {
         )}
       </form>
       <Spacer y={1} />
+      <Dialog
+        title="Error uploading image"
+        message={errorMessage}
+        visible={Boolean(errorMessage)}
+        onCloseHandler={() => { setErrorMessage("") }}
+      />
     </>
   );
 };

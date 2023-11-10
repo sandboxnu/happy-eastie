@@ -81,3 +81,11 @@ async function handler(
         res.status(400).json({ message: "Request not supported" })
     }
 }
+
+export const config = {
+    api: {
+      bodyParser: {
+        sizeLimit: '4mb',
+      },
+    },
+  }

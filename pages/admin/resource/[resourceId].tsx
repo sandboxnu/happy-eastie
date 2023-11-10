@@ -80,10 +80,6 @@ const ResourcePageContent: NextPage = () => {
     if (resource) setInputtedResource(resource);
   }, [resource]);
 
-  useEffect(() => {
-    console.log(filesContent)
-  }, [filesContent]);
-
   const LoadingScreen = () => {
     return (
       <Grid.Container>

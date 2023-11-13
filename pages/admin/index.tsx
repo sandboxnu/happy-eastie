@@ -2,20 +2,19 @@ import {
   Button,
   Checkbox,
   FormElement,
-  Input,
-  Spacer,
   Grid,
-  Text,
+  Image,
+  Input,
   Row,
-  Image
+  Spacer,
+  Text
 } from "@nextui-org/react";
 import { ChangeEvent, useState } from "react";
 import styles from "./admin.module.css";
-import CryptoJS from "crypto-js";
 
+import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 import { NORMAL_IRON_OPTION } from "../../models/constants";
-import { withIronSessionSsr } from "iron-session/next";
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
@@ -53,11 +52,10 @@ const LogIn = () => {
 
   const handleSubmit = async () => {
     setMessage("");
-    const hashedPassword = CryptoJS.SHA256(password).toString()
     const requestBody = JSON.stringify({
       type: "login",
       email,
-      hashedPassword,
+      password,
       keepSignedIn
     });
     const requestSettings = {

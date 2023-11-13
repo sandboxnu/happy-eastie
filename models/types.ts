@@ -125,13 +125,7 @@ type TrendingInfo = {
 export interface Admin {
     email: string;
     hashedPassword: string;
-    firstName: string;
-    lastName: string;
-    permissionGroups: PermissionGroup[];
-    title: string;
-    organization: string;
-    phoneNumber: string;
-    profilePicture?: string;
+    salt: string;
 }
 
 export enum PermissionGroup {

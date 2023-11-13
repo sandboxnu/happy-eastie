@@ -1,11 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import mongoDbInteractor from "../../../../db/mongoDbInteractor";
-import { Filter, WithId } from "mongodb";
-import { Admin, ResponseMessage } from "../../../../models/types";
-import { ADMIN_COLLECTION, INVITE_COLLECTION, LOGIN_IRON_OPTION } from "../../../../models/constants";
+import * as crypto from "crypto";
 import { withIronSessionApiRoute } from "iron-session/next";
+import { Filter, WithId } from "mongodb";
+import type { NextApiRequest, NextApiResponse } from "next";
+import passwordValidator from "password-validator";
+import mongoDbInteractor from "../../../../db/mongoDbInteractor";
+import { ADMIN_COLLECTION, INVITE_COLLECTION, LOGIN_IRON_OPTION } from "../../../../models/constants";
+import { Admin, ResponseMessage } from "../../../../models/types";
 import { isInviteValid } from "../../../../util/utils";
-
 export default withIronSessionApiRoute(async function handler(
     req: NextApiRequest,
     res: NextApiResponse<WithId<Admin> | ResponseMessage>
@@ -39,8 +40,13 @@ async function handleLogIn(req: NextApiRequest, res: NextApiResponse<WithId<Admi
         res.status(500).json({ message: "Unable to login with this email." })
     } else {
         // found a matching email
-        const hashedPassword = accounts[0]["hashedPassword"]
-        if (hashedPassword !== req.body["hashedPassword"]) {
+        const correctHash = accounts[0]["hashedPassword"]
+        const salt = accounts[0]["salt"]
+        const password = req.body["password"]
+
+        const submittedHash = crypto.pbkdf2Sync(password, salt, 10000, 512, "sha256").toString();
+
+        if (correctHash !== submittedHash) {
             res.status(400).json({ message: "Invalid credential" })
             return;
         } else {
@@ -55,22 +61,49 @@ async function handleLogIn(req: NextApiRequest, res: NextApiResponse<WithId<Admi
     }
 }
 
-async function handleSignUp(req: NextApiRequest, res: NextApiResponse<WithId<Admin> | ResponseMessage>) {
+const passwordSchema = new passwordValidator();
+
+passwordSchema
+.min(12, "Password must be at least 12 characters.")
+.digits(1, "Password must have at least 1 digit.")
+.uppercase(1, "Password must have at least 1 uppercase letter.")
+.lowercase(1, "Password must have at least 1 lowercase letter.")
+.symbols(1, "Password must have at least 1 special character.")
+
+async function handleSignUp(req: NextApiRequest, res: NextApiResponse<ResponseMessage>) {
     const filter: Filter<Admin> = { email: req.body["email"] }
     let accounts: Admin[] = await mongoDbInteractor.getDocuments<Admin>(ADMIN_COLLECTION, filter)
     if (accounts.length == 0) {
-        const { type, inviteId, ...adminProfile } = req.body;
-        const requestBody = adminProfile
+        const { type, inviteId, ...adminRequest } = req.body;
 
         try {
             if(await isInviteValid(inviteId)) {
-                const admin = await mongoDbInteractor.createDocument<WithId<Admin>>(requestBody, ADMIN_COLLECTION)
+                const password: string = adminRequest.password;
+
+                const errors = passwordSchema.validate(password, {details: true}) as {message: string}[];
+
+                if(errors.length !== 0) {
+                    res.status(401).json({message: errors.map(error => error.message).join("\n")});
+                    return;
+                }
+
+
+                const salt = crypto.randomBytes(16).toString("hex")
+                const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 512, "sha256").toString();
+                const adminProfile: Admin = {
+                    email: adminRequest.email,
+                    hashedPassword,
+                    salt
+                }
+
+                const admin = await mongoDbInteractor.createDocument<Admin>(adminProfile, ADMIN_COLLECTION)
                 await mongoDbInteractor.deleteDocument(INVITE_COLLECTION, {_id: inviteId})
-                res.status(200).json(admin)
+                res.status(200).json({message: "Successfully signed up."})
             } else {
                 res.status(401).json({message: "Invite is invalid or expired. Please ask for a new invite."})
             }
         } catch (e) {
+            console.log(e)
             res.status(400).json({ message: "Failed to insert admin document into MongoDB collection" })
         }
 

@@ -1,10 +1,9 @@
-import { Button, Checkbox, Grid, Input, Row, Spacer, Image, Text, FormElement } from "@nextui-org/react";
+import { Button, FormElement, Grid, Image, Input, Spacer, Text } from "@nextui-org/react";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
-import styles from "../admin.module.css";
-import CryptoJS from "crypto-js";
-import { GetServerSideProps } from "next";
 import { isInviteValid } from "../../../util/utils";
+import styles from "../admin.module.css";
 
 export const getServerSideProps : GetServerSideProps = async ({params}) => {
     if(typeof params?.inviteId === "string") {
@@ -54,14 +53,12 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
         if (retypePass !== password) {
             setMessage("Passwords do not match.");
         }
-        //TODO: check that email address isn't already in use
 
         else {
-            const hashedPassword = CryptoJS.SHA256(password).toString()
             const requestBody = JSON.stringify({
                 type: "signup",
                 email,
-                hashedPassword,
+                password,
                 inviteId
             });
             const requestSettings = {

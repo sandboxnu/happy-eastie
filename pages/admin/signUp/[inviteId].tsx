@@ -92,7 +92,7 @@ const SignUp = ({inviteId}: {inviteId: string}) => {
                         <>
                             <Spacer y={0.75} />
                             <div className={styles.errorMessageContainer} style={{width: 382}}>
-                                <p className={styles.errorMessage}>{message}</p>
+                                {message.split("\n").map(messagePart => <p className={styles.errorMessage} key={messagePart}>{messagePart}</p>)}
                             </div>
                         </>
                     }

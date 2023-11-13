@@ -2,6 +2,7 @@ import * as crypto from "crypto";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { Filter, WithId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
+import passwordValidator from "password-validator";
 import mongoDbInteractor from "../../../../db/mongoDbInteractor";
 import { ADMIN_COLLECTION, INVITE_COLLECTION, LOGIN_IRON_OPTION } from "../../../../models/constants";
 import { Admin, ResponseMessage } from "../../../../models/types";
@@ -60,6 +61,15 @@ async function handleLogIn(req: NextApiRequest, res: NextApiResponse<WithId<Admi
     }
 }
 
+const passwordSchema = new passwordValidator();
+
+passwordSchema
+.min(12, "Password must be at least 12 characters.")
+.digits(1, "Password must have at least 1 digit.")
+.uppercase(1, "Password must have at least 1 uppercase letter.")
+.lowercase(1, "Password must have at least 1 lowercase letter.")
+.symbols(1, "Password must have at least 1 special character.")
+
 async function handleSignUp(req: NextApiRequest, res: NextApiResponse<ResponseMessage>) {
     const filter: Filter<Admin> = { email: req.body["email"] }
     let accounts: Admin[] = await mongoDbInteractor.getDocuments<Admin>(ADMIN_COLLECTION, filter)
@@ -68,9 +78,15 @@ async function handleSignUp(req: NextApiRequest, res: NextApiResponse<ResponseMe
 
         try {
             if(await isInviteValid(inviteId)) {
-                const password = adminRequest.password;
+                const password: string = adminRequest.password;
 
-                //verify password strength
+                const errors = passwordSchema.validate(password, {details: true}) as {message: string}[];
+
+                if(errors.length !== 0) {
+                    res.status(401).json({message: errors.map(error => error.message).join("\n")});
+                    return;
+                }
+
 
                 const salt = crypto.randomBytes(16).toString("hex")
                 const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 512, "sha256").toString();
